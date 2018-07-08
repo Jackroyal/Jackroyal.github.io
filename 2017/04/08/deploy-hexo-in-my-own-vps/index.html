@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>将hexo部署到自己的个人服务器上 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Linux,hexo,Nginx,ubuntu," />
+  
+
+  <meta name="description" content="本文假设你已经配置好了hexo了,这是前提  前面两篇文章主要是用来配置自己的服务器.服务器部署完成后,后面就可以开始写博客了.但是每次hexo d推送到gihub的服务器上了,还需要手动将文件复制到自己的服务器对应网站的根目录,对的,要手动,当然不能忍. 1 ugly的解决办法于是我写了一个脚本,在服务器上定时去访问我的github,如果检测到文件有变动,就把github的内容clone到服务">
+<meta name="keywords" content="Linux,hexo,Nginx,ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="将hexo部署到自己的个人服务器上">
+<meta property="og:url" content="https://bblove.me/2017/04/08/deploy-hexo-in-my-own-vps/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="本文假设你已经配置好了hexo了,这是前提  前面两篇文章主要是用来配置自己的服务器.服务器部署完成后,后面就可以开始写博客了.但是每次hexo d推送到gihub的服务器上了,还需要手动将文件复制到自己的服务器对应网站的根目录,对的,要手动,当然不能忍. 1 ugly的解决办法于是我写了一个脚本,在服务器上定时去访问我的github,如果检测到文件有变动,就把github的内容clone到服务">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fefka44bdmj20gj094glp.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fefkzl7f04j20eq07wq34.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1feflmcy70yj20g5070ab1.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fek9m0bm0wj20fs0573yk.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fek9nadydfj20g102adfr.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fefmq9g0tsj20gj094aad.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fefmtf7x24j20ie0kxjsn.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="将hexo部署到自己的个人服务器上">
+<meta name="twitter:description" content="本文假设你已经配置好了hexo了,这是前提  前面两篇文章主要是用来配置自己的服务器.服务器部署完成后,后面就可以开始写博客了.但是每次hexo d推送到gihub的服务器上了,还需要手动将文件复制到自己的服务器对应网站的根目录,对的,要手动,当然不能忍. 1 ugly的解决办法于是我写了一个脚本,在服务器上定时去访问我的github,如果检测到文件有变动,就把github的内容clone到服务">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fefka44bdmj20gj094glp.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-ugly的解决办法"><span class="toc-text">1 ugly的解决办法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-完美的搞法"><span class="toc-text">2 完美的搞法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-在vps上安装git"><span class="toc-text">2.1 在vps上安装git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-创建git用户"><span class="toc-text">2.2 创建git用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-设置密码登录"><span class="toc-text">2.3 设置密码登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-配置ssh证书"><span class="toc-text">2.4 配置ssh证书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-1-生成ssh证书"><span class="toc-text">2.4.1 生成ssh证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-2-上传公钥"><span class="toc-text">2.4.2 上传公钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-3-测试ssh连接"><span class="toc-text">2.4.3 测试ssh连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-4-ssh测试失败"><span class="toc-text">2.4.4 ssh测试失败</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-4-1-客户端ssh配置"><span class="toc-text">2.4.4.1 客户端ssh配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-4-2-服务器ssh配置"><span class="toc-text">2.4.4.2 服务器ssh配置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-配置服务器git仓库"><span class="toc-text">2.5 配置服务器git仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-6-修改hexo的配置文件"><span class="toc-text">2.6 修改hexo的配置文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-deploy-hexo-in-my-own-vps" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">将hexo部署到自己的个人服务器上</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.04.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <blockquote>
+<p>本文假设你已经配置好了hexo了,这是前提</p>
+</blockquote>
+<p>前面两篇文章主要是用来配置自己的服务器.服务器部署完成后,后面就可以开始写博客了.但是每次<code>hexo d</code>推送到gihub的服务器上了,还需要手动将文件复制到自己的服务器对应网站的根目录,对的,要手动,当然不能忍.</p>
+<h1 id="1-ugly的解决办法"><a href="#1-ugly的解决办法" class="headerlink" title="1 ugly的解决办法"></a>1 ugly的解决办法</h1><p>于是我写了一个脚本,在服务器上定时去访问我的github,如果检测到文件有变动,就把github的内容clone到服务器上,然后再布置到网站根目录.<br>代码很简单,就这几行.主要是检测<code>/archives/index.html</code>这个文件的大小是否变化了,选择它,是由于这个文件较小,而且每次发布新文章大小都会发生变化.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">cd</span> ~/blogsync</span><br><span class="line">length=`ls -l github.json| awk <span class="string">'&#123;print $5&#125;'</span>`</span><br><span class="line">curl -o github.json  https://raw.githubusercontent.com/huirong/huirong.github.io/master/archives/index.html</span><br><span class="line">newlength=`ls -l github.json| awk <span class="string">'&#123;print $5&#125;'</span>`</span><br><span class="line"><span class="built_in">test</span> <span class="variable">$length</span> -eq <span class="variable">$newlength</span> &amp;&amp; <span class="built_in">exit</span> 0 <span class="comment">#if same so quit</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/huirong/huirong.github.io.git huirongis_me</span><br><span class="line">rm -fr ~/www/huirongis_me</span><br><span class="line">mv huirongis_me ~/www/</span><br></pre></td></tr></table></figure></p>
+<p>这样搞法,是不需要手动了,但是做不到实时,而且,如果你没有新增或删减文章,其他的改动,可能不会反应在<code>/archives/index.html</code>,那他就不会自动去更新了.</p>
+<h1 id="2-完美的搞法"><a href="#2-完美的搞法" class="headerlink" title="2 完美的搞法"></a>2 完美的搞法</h1><p>既然有ugly的解决方法,自然有完美的解决方法.本文主要是参考 <a href="http://www.swiftyper.com/2016/04/17/deploy-hexo-with-git-hook/" target="_blank" rel="noopener">使用 Git Hook 自动部署 Hexo 到个人 VPS</a>.<br>这个方法的原理,用一句话总结就是:<strong>在自己的服务器上搭建一个git服务器,然后依靠<code>git hook</code>程序,将git仓库代码更新到自己的网站根目录</strong>.</p>
+<h2 id="2-1-在vps上安装git"><a href="#2-1-在vps上安装git" class="headerlink" title="2.1 在vps上安装git"></a>2.1 在vps上安装git</h2><p>我的服务器是ubuntu 16.04 lts,安装git服务非常简单<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-2-创建git用户"><a href="#2-2-创建git用户" class="headerlink" title="2.2 创建git用户"></a>2.2 创建git用户</h2><p>这一步的原因是,我们需要一个小权限的账号来操作git.比如我们后面会限制这个git账号,不让他登录shell等等.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser git</span><br></pre></td></tr></table></figure></p>
+<p>我们在<strong>服务器</strong>的ubuntu执行这条命令就好了,非常简单,而且还帮你在<code>home</code>下建立了对应的目录.<br>接下来要配置<code>git</code>用户的认证,有两种办法:</p>
+<ul>
+<li>给<code>git</code>用户设置一个密码,以后每次执行<code>hexo d</code>的时候,会要求你输入密码,才能继续操作</li>
+<li>给<code>git</code>用户配置ssh证书,当把公钥传到服务器后,每次<code>hexo d</code>免密,直接操作完成</li>
+</ul>
+<h2 id="2-3-设置密码登录"><a href="#2-3-设置密码登录" class="headerlink" title="2.3 设置密码登录"></a>2.3 设置密码登录</h2><p>设置密码使用Linux命令<code>passwd</code>即可<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd git</span><br></pre></td></tr></table></figure></p>
+<p>上述命令执行完成后,按照提示输入两次密码,即配置完成</p>
+<h2 id="2-4-配置ssh证书"><a href="#2-4-配置ssh证书" class="headerlink" title="2.4 配置ssh证书"></a>2.4 配置ssh证书</h2><p>配置ssh证书,设置的时候比较麻烦,但是后面每次使用比较简单.后面再说原因.</p>
+<h3 id="2-4-1-生成ssh证书"><a href="#2-4-1-生成ssh证书" class="headerlink" title="2.4.1 生成ssh证书"></a>2.4.1 生成ssh证书</h3><p>首先,我们需要生成证书,这一步我们在自己本地电脑进行.<strong>注意</strong>:生成证书不在服务器上操作,在自己<strong>本地电脑</strong>上进行.</p>
+<p><strong>Mac或者Linux</strong><br>对于Mac或者LInux用户,直接使用系统自带的终端就好<br><strong>windows</strong>:<br>对于windows用户,hexo配置完成后,你应该有一个执行shell命令的软件,比如我的是github desktop自带的shell程序,或者你自己安装的git shell,也是可以的,大概长这样<br><img src="https://ws1.sinaimg.cn/large/692869a3gy1fefka44bdmj20gj094glp.jpg" alt="git shell程序界面"></p>
+<p>首先,我们打开shell程序,输入以下命令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -b 4096 -C <span class="string">"你的email地址"</span></span><br></pre></td></tr></table></figure></p>
+<p>接着提示让我们输入文件保存的路径,如果你不输入就按照默认的保存,输入完成,回车<br>下一步,提示我们输入密码,这个密码只是证书的密码,即,当使用这个证书登录的时候要输入的密码,它不是服务器用户的密码,而是单纯给ssh证书设置的密码.<br>我这里选择不设置,直接回车,提示确认起码,再回车<br><img src="https://ws1.sinaimg.cn/large/692869a3gy1fefkzl7f04j20eq07wq34.jpg" alt="生成证书"><br>证书生成完毕.<br>我们进入刚才证书保存的目录,可以看到<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件(也有可能是其他名字,反正一个有pub一个没pub),分别就是私钥和公钥.</p>
+<p><strong>PS</strong>:其实生成证书这一步,在服务器上,或者任何一个机器上都可以,只要你最后把这个公钥传到服务器,用这个私钥链接你的服务器就行,这里为求简单,在本地的git shell中生成</p>
+<h3 id="2-4-2-上传公钥"><a href="#2-4-2-上传公钥" class="headerlink" title="2.4.2 上传公钥"></a>2.4.2 上传公钥</h3><p>接下来,我们还是在<strong>本地终端</strong>操作.将上一步生成的<code>id_rsa.pub</code>文件内容追加到服务器的<code>authorized_keys</code>中.<br>OpenSSH提供了一个命令<code>ssh-copy-id</code>,直接将文件添加到服务器,简直不能更方便<br>用法如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-copy-id git@yourserver</span><br></pre></td></tr></table></figure></p>
+<p>比如我输入<code>ssh-copy-id -i ~/.ssh/id_rsa.pub git@bblove.me</code>,这里的yourserver可以输入域名或者ip,<code>-i</code>用来指定具体的公钥文件,适用于存在多个公钥或者找不到公钥的情况,最好手动指定它.输入该命令后,会要求你输入服务器上<code>git</code>用户的密码.</p>
+<p><img src="https://ws1.sinaimg.cn/large/692869a3gy1feflmcy70yj20g5070ab1.jpg" alt="authorized_keys文件内容"></p>
+<p>如果此法不通,你可以直接在服务器上编辑<code>authorized_keys</code>文件,把<code>id_rsa.pub</code>内容追加到文件后面即可<br>请务必确认<code>authorized_keys</code>文件的权限是<code>rw-------</code>,如果不是,使用<code>chmod 600 authorized_keys</code>来修改.</p>
+<h3 id="2-4-3-测试ssh连接"><a href="#2-4-3-测试ssh连接" class="headerlink" title="2.4.3 测试ssh连接"></a>2.4.3 测试ssh连接</h3><p>接下来,我们还是在<strong>本地终端</strong>操作.我们测试一下,看是否能成功连接到服务器.主要使用<code>ssh -T git@yourserver</code>命令来测试,此处<code>git</code>是指用户名,<code>yourserver</code>填你的服务器域名或者ip即可.测试结果如下:<br><img src="https://ws1.sinaimg.cn/large/692869a3gy1fek9m0bm0wj20fs0573yk.jpg" alt="个人vps的ssh测试结果"></p>
+<p>如果测试不成功,他会返回给你错误提示.如果像我上图这样,那就是测试成功了,需要手动<code>ctr+c</code>,让git终端回复到正常输入命令的状态.下面附上github的测试结果,与我的vps略有不同,反正都是成功的.<br><img src="https://ws1.sinaimg.cn/large/692869a3gy1fek9nadydfj20g102adfr.jpg" alt="github的测试结果"></p>
+<h3 id="2-4-4-ssh测试失败"><a href="#2-4-4-ssh测试失败" class="headerlink" title="2.4.4 ssh测试失败"></a>2.4.4 ssh测试失败</h3><p>如果你测试失败,可能有多方面的原因,客户端或者服务器都有可能.</p>
+<h4 id="2-4-4-1-客户端ssh配置"><a href="#2-4-4-1-客户端ssh配置" class="headerlink" title="2.4.4.1 客户端ssh配置"></a>2.4.4.1 客户端ssh配置</h4><p>接下来,还是在<strong>本地终端</strong>操作.我们首先检查一下客户端ssh的配置,文件的位置在<code>/etc/ssh/ssh_config</code>,我们使用<code>vi /etc/ssh/ssh_config</code>命令打开和编辑该文件.本文服务器域名是<code>bblove.me</code>,请检查你的<code>ssh_config</code>文件,是否存在一条<code>Host *</code>记录,并且该记录的<code>IdentityFile</code>值,是否是你刚才生成的那个私钥的地址.<br>这个配置文件的意思是,针对某个<code>Host</code>,程序使用<code>IdentityFile</code>指定的私钥文件去进行ssh连接.<br>如果我们上一步测试ssh连接失败,有可能就是针对我们自己的域名,我们未指定正确的私钥文件.附上我的<code>ssh_config</code>文件的内容,<br><img src="https://ws1.sinaimg.cn/large/692869a3gy1fefmq9g0tsj20gj094aad.jpg" alt="修改ssh_config文件"></p>
+<p>这也就意味着,我们可以针对多个网站各自配置不同的ssh证书,比如我github一套,自己服务器一套.当然偷懒的话,也可以所有网站使用一套ssh证书.只需要添加配置<code>Host *</code>的配置即可.你的配置文件内容可能和我的不同,关注下<code>host</code>和<code>IdentityFile</code>的内容就好.<br><img src="https://ws1.sinaimg.cn/large/692869a3gy1fefmtf7x24j20ie0kxjsn.jpg" alt="ubuntu中ssh_config文件"><br><strong>PS</strong>:如果host配置了<code>*</code>,请务必保证它在其他域名配置的后面,因为系统是从前到后匹配,所以<code>*</code>必须在具体域名的后面.</p>
+<h4 id="2-4-4-2-服务器ssh配置"><a href="#2-4-4-2-服务器ssh配置" class="headerlink" title="2.4.4.2 服务器ssh配置"></a>2.4.4.2 服务器ssh配置</h4><p>接下来,我们在<strong>服务器</strong>上操作.我们检查一下服务器端ssh配置是否有误.文件的位置在<code>/etc/ssh/sshd_config</code>,我们使用<code>sudo vi /etc/ssh/sshd_config</code>打开和编辑该文件.例如我的ubuntu虚拟机的内容经过修改后,就是这样的:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Package generated configuration file</span></span><br><span class="line"><span class="comment"># See the sshd_config(5) manpage for details</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># What ports, IPs and protocols we listen for</span></span><br><span class="line"><span class="comment">#这个是用来指定ssh端口的,不用改</span></span><br><span class="line">Port 22</span><br><span class="line"><span class="comment"># Use these options to restrict which interfaces/protocols sshd will bind to</span></span><br><span class="line"><span class="comment">#ListenAddress 10.105.224.192</span></span><br><span class="line"><span class="comment">#ListenAddress 10.105.224.192</span></span><br><span class="line">Protocol 2</span><br><span class="line"><span class="comment"># HostKeys for protocol version 2</span></span><br><span class="line">HostKey /etc/ssh/ssh_host_rsa_key</span><br><span class="line">HostKey /etc/ssh/ssh_host_dsa_key</span><br><span class="line">HostKey /etc/ssh/ssh_host_ecdsa_key</span><br><span class="line">HostKey /etc/ssh/ssh_host_ed25519_key</span><br><span class="line"><span class="comment">#Privilege Separation is turned on for security</span></span><br><span class="line">UsePrivilegeSeparation yes</span><br><span class="line"></span><br><span class="line"><span class="comment"># Lifetime and size of ephemeral version 1 server key</span></span><br><span class="line">KeyRegenerationInterval 3600</span><br><span class="line">ServerKeyBits 1024</span><br><span class="line"></span><br><span class="line"><span class="comment"># Logging</span></span><br><span class="line">SyslogFacility AUTH</span><br><span class="line">LogLevel INFO</span><br><span class="line"></span><br><span class="line"><span class="comment"># Authentication:</span></span><br><span class="line">LoginGraceTime 120</span><br><span class="line">PermitRootLogin no</span><br><span class="line">StrictModes yes</span><br><span class="line"></span><br><span class="line">RSAAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile	%h/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="comment"># Don't read the user's ~/.rhosts and ~/.shosts files</span></span><br><span class="line">IgnoreRhosts yes</span><br><span class="line"><span class="comment"># For this to work you will also need host keys in /etc/ssh_known_hosts</span></span><br><span class="line">RhostsRSAAuthentication no</span><br><span class="line"><span class="comment"># similar for protocol version 2</span></span><br><span class="line">HostbasedAuthentication no</span><br><span class="line"><span class="comment"># Uncomment if you don't trust ~/.ssh/known_hosts for RhostsRSAAuthentication</span></span><br><span class="line"><span class="comment">#IgnoreUserKnownHosts yes</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># To enable empty passwords, change to yes (NOT RECOMMENDED)</span></span><br><span class="line">PermitEmptyPasswords no</span><br><span class="line"></span><br><span class="line"><span class="comment"># Change to yes to enable challenge-response passwords (beware issues with</span></span><br><span class="line"><span class="comment"># some PAM modules and threads)</span></span><br><span class="line">ChallengeResponseAuthentication no</span><br><span class="line"></span><br><span class="line"><span class="comment"># Change to no to disable tunnelled clear text passwords</span></span><br><span class="line">PasswordAuthentication yes</span><br><span class="line"></span><br><span class="line"><span class="comment"># Kerberos options</span></span><br><span class="line"><span class="comment">#KerberosAuthentication no</span></span><br><span class="line"><span class="comment">#KerberosGetAFSToken no</span></span><br><span class="line"><span class="comment">#KerberosOrLocalPasswd yes</span></span><br><span class="line"><span class="comment">#KerberosTicketCleanup yes</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># GSSAPI options</span></span><br><span class="line"><span class="comment">#GSSAPIAuthentication no</span></span><br><span class="line"><span class="comment">#GSSAPICleanupCredentials yes</span></span><br><span class="line"></span><br><span class="line">X11Forwarding yes</span><br><span class="line">X11DisplayOffset 10</span><br><span class="line">PrintMotd no</span><br><span class="line">PrintLastLog yes</span><br><span class="line">TCPKeepAlive yes</span><br><span class="line"><span class="comment">#UseLogin no</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#MaxStartups 10:30:60</span></span><br><span class="line"><span class="comment">#Banner /etc/issue.net</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Allow client to pass locale environment variables</span></span><br><span class="line">AcceptEnv LANG LC_*</span><br><span class="line">AllowUsers chen git zhou</span><br><span class="line">Subsystem sftp /usr/lib/openssh/sftp-server</span><br><span class="line"></span><br><span class="line"><span class="comment"># Set this to 'yes' to enable PAM authentication, account processing,</span></span><br><span class="line"><span class="comment"># and session processing. If this is enabled, PAM authentication will</span></span><br><span class="line"><span class="comment"># be allowed through the ChallengeResponseAuthentication and</span></span><br><span class="line"><span class="comment"># PasswordAuthentication.  Depending on your PAM configuration,</span></span><br><span class="line"><span class="comment"># PAM authentication via ChallengeResponseAuthentication may bypass</span></span><br><span class="line"><span class="comment"># the setting of "PermitRootLogin without-password".</span></span><br><span class="line"><span class="comment"># If you just want the PAM account and session checks to run without</span></span><br><span class="line"><span class="comment"># PAM authentication, then enable this but set PasswordAuthentication</span></span><br><span class="line"><span class="comment"># and ChallengeResponseAuthentication to 'no'.</span></span><br><span class="line">UsePAM yes</span><br><span class="line">Ciphers aes128-cbc,aes192-cbc,aes256-cbc,aes128-ctr,aes192-ctr,aes256-ctr,3des-cbc,arcfour128,arcfour256,arcfour,blowfish-cbc,cast128-cbc</span><br><span class="line">MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160,hmac-sha1-96,hmac-md5-96</span><br><span class="line">KexAlgorithms diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group-exchange-sha256,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group1-sha1,curve25519-sha256@libssh.org</span><br><span class="line">UseDNS no</span><br></pre></td></tr></table></figure></p>
+<p>我们只需要重点关注下这几个值,</p>
+<ul>
+<li><code>PermitRootLogin no</code>,也就是不允许使用root登录,这是为了安全起见</li>
+<li><code>AuthorizedKeysFile    %h/.ssh/authorized_keys</code>,指定公钥存放的文件,这个要重点关注下,注意去掉前面的注释</li>
+</ul>
+<p>其他的配置,基本不用修改.以上配置修改完成后,我们重启一下服务器端的ssh服务,使用命令<code>sudo service ssh restart</code>即可.最后,我们再回到<strong>客户端</strong>,测试一下ssh连接是否成功.<code>ssh -T git@yourserver</code>.还不行的话,你就去google查一查错误</p>
+<h2 id="2-5-配置服务器git仓库"><a href="#2-5-配置服务器git仓库" class="headerlink" title="2.5 配置服务器git仓库"></a>2.5 配置服务器git仓库</h2><p>上一步,我们配置好了客户端ssh连服务器,这一步我们回到<strong>服务器</strong>上去操作.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在服务器新建一个文件夹,用来存放git仓库</span></span><br><span class="line">sudo mkdir /home/chen/bblove</span><br><span class="line"><span class="built_in">cd</span> /home/chen/bblove</span><br><span class="line"><span class="comment">#进入文件夹,对git仓库进行初始化</span></span><br><span class="line">sudo git init --bare blog.git</span><br><span class="line"><span class="comment">#初始化完成后,进入hooks文件夹</span></span><br><span class="line"><span class="built_in">cd</span> /home/chen/bblove/blog.git/hooks</span><br><span class="line"><span class="comment">#新建一个钩子程序,这个文件名可以自定义,我取名为post-receive</span></span><br><span class="line">vi post-receive</span><br></pre></td></tr></table></figure></p>
+<p>我们在post-receive中,写入如下代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">git --work-tree=/home/chen/www/bblove_me --git-dir=/home/chen/bblove/blog.git checkout -f</span><br></pre></td></tr></table></figure></p>
+<p>此处,<code>--work-tree</code>指的是你的网站根目录,<code>--git-dir</code>指的是你的git仓库的目录.<br>编辑完城后,<code>wq</code>退出并保存<code>post-receive</code>文件.下面给钩子程序加上可执行权限<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#给钩子程序加上可执行权限</span></span><br><span class="line">sudo chmod +x /home/chen/bblove/blog.git/hooks/post-receive</span><br></pre></td></tr></table></figure></p>
+<p>最后,修改git仓库权限,否则客户端无法提交代码到这个仓库<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#接下来修改git仓库的权限</span></span><br><span class="line">sudo chown -R git:git blog.git</span><br></pre></td></tr></table></figure></p>
+<p>此处还要注意一点,我们还要修改网站根目录的权限,否则钩子程序执行的时候,无法修改网站根目录的内容.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R git:git /home/chen/www/bblove_me</span><br></pre></td></tr></table></figure></p>
+<p>至此,服务器端配置完成</p>
+<h2 id="2-6-修改hexo的配置文件"><a href="#2-6-修改hexo的配置文件" class="headerlink" title="2.6 修改hexo的配置文件"></a>2.6 修改hexo的配置文件</h2><p>终于,走到了这一步.<br>我们打开我们自己hexo博客根目录的<code>_config.yml</code>文件.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">- <span class="built_in">type</span>: git</span><br><span class="line">  repo: <span class="string">'https://github.com/Jackroyal/Jackroyal.github.io.git'</span></span><br><span class="line">  branch: master</span><br><span class="line">- <span class="built_in">type</span>: git</span><br><span class="line">  repo: git@bblove.me:/home/git/bblove/blog.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></p>
+<p>因为,hexo本身是支持多点发布的,所以我们每次deploy的时候,让他同时推到github和自己的服务器上去.<br>你只需要改<code>repo: git@bblove.me:/home/git/bblove/blog.git</code>这一行,<code>git@yourserver:/your-git-dir</code>.<br>ok,大功告成啦,赶快<code>hexo d -g</code>看看效果吧</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ul>
+<li><a href="http://www.swiftyper.com/2016/04/17/deploy-hexo-with-git-hook/" target="_blank" rel="noopener">使用 Git Hook 自动部署 Hexo 到个人 VPS</a></li>
+<li><a href="http://blog.csdn.net/linghe301/article/details/8211305#" target="_blank" rel="noopener">Linux启动或禁止SSH用户及IP的登录</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/04/05/nginx-https-setting-on-multiple-sites/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/04/24/repair-chinese-input-in-ubuntu/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

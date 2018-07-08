@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>ubuntu下使用scrapy抓取cnblogs | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="python,爬虫,scrapy," />
+  
+
+  <meta name="description" content="今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。">
+<meta name="keywords" content="python,爬虫,scrapy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu下使用scrapy抓取cnblogs">
+<meta property="og:url" content="https://bblove.me/2015/04/26/ubuntu-scrapy-stackoverflow/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1erjct36jnrj20df038dgf.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1erjv5to5w3j20w70g8wio.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.327Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu下使用scrapy抓取cnblogs">
+<meta name="twitter:description" content="今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。">
+<meta name="twitter:image" content="https://ww4.sinaimg.cn/large/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#软件安装"><span class="toc-text">软件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#scrapy"><span class="toc-text">scrapy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PyMongo"><span class="toc-text">PyMongo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mongodb"><span class="toc-text">Mongodb</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用scrapy新建工程"><span class="toc-text">使用scrapy新建工程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#输出到文件"><span class="toc-text">输出到文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#存储到mongodb"><span class="toc-text">存储到mongodb</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一步"><span class="toc-text">第一步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二步"><span class="toc-text">第二步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#执行效果如下"><span class="toc-text">执行效果如下</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ubuntu-scrapy-stackoverflow" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">ubuntu下使用scrapy抓取cnblogs</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.04.26</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/python学习笔记/">python学习笔记</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。<br><a id="more"></a></p>
+<h1 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h1><p>我的环境是：ubuntu 14.04 lts<br>需要安装相关软件</p>
+<h2 id="scrapy"><a href="#scrapy" class="headerlink" title="scrapy"></a>scrapy</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> Scrapy</span><br></pre></td></tr></table></figure>
+<h2 id="PyMongo"><a href="#PyMongo" class="headerlink" title="PyMongo"></a>PyMongo</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip <span class="keyword">install</span> pymongo</span><br></pre></td></tr></table></figure>
+<h2 id="Mongodb"><a href="#Mongodb" class="headerlink" title="Mongodb"></a>Mongodb</h2><p>上面安装的是python使用Mongodb的接口，很显然，我们要安装Mongodb才能使用<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install mongodb-server</span><br></pre></td></tr></table></figure></p>
+<p>至此，要使用的软件都已经安装完毕</p>
+<h1 id="使用scrapy新建工程"><a href="#使用scrapy新建工程" class="headerlink" title="使用scrapy新建工程"></a>使用scrapy新建工程</h1><p>使用scrapy新建工程很简单，如下所示，我们新建一个stack的项目，他会在你的当前目录新建一个stack文件夹<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject <span class="built_in">stack</span></span><br></pre></td></tr></table></figure></p>
+<p>并且会建成如下所示的目录树结构<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">chen@chen-P31:~$ tree stack</span><br><span class="line">stack</span><br><span class="line">├── stack</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   ├── items.py</span><br><span class="line">│   ├── pipelines.py</span><br><span class="line">│   ├── settings.py</span><br><span class="line">│   └── spiders</span><br><span class="line">│       └── __init__.py</span><br><span class="line">└── scrapy.cfg</span><br></pre></td></tr></table></figure></p>
+<p>接下来，我们修改items.py的内容，这个文件用于定义存储“容器”，用来存储将要抓取的数据。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.item <span class="keyword">import</span> Item,Field</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StackItem</span><span class="params">(Item)</span>:</span></span><br><span class="line">    <span class="comment"># define the fields for your item here like:</span></span><br><span class="line">    <span class="comment"># name = scrapy.Field()</span></span><br><span class="line">    title = Field()<span class="comment"># 我们添加两个字段，我们等会儿会抓取一个标题和url两个字段</span></span><br><span class="line">    url = Field()</span><br></pre></td></tr></table></figure></p>
+<p>接着，还有一个很重要的东西，对，就是我们的蜘蛛，我们在spider目录下，新建一个stack_spider.py文件。顾名思义，这就是我们的蜘蛛。我们需要定义我们爬虫的起点，爬虫的规则等等<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> Spider</span><br><span class="line"><span class="keyword">from</span> stack.items <span class="keyword">import</span> StackItem  <span class="comment"># 导入我们上面定义的容器类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StackSpider</span><span class="params">(Spider)</span>:</span></span><br><span class="line">    name = <span class="string">'stack'</span>   <span class="comment"># 定义我们爬虫的名字</span></span><br><span class="line">    allowed_domains = [<span class="string">"cnblogs.com"</span>]   <span class="comment"># 规定爬虫爬取的域名</span></span><br><span class="line">    start_urls = [<span class="string">'http://www.cnblogs.com/geqianst/p/'</span>,]   <span class="comment"># 爬虫工作的起点</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span><span class="comment"># 爬虫用来做数据解析的</span></span><br><span class="line">        questions = response.xpath(<span class="string">'//div[@id="myposts"]//a[@id]'</span>)</span><br><span class="line">        <span class="comment"># xpath选择器，这里的含义是取所有id为myposts的div，在它下面找所有带id的超链接a</span></span><br><span class="line">        <span class="comment"># 实际结果是这样的</span></span><br><span class="line">        <span class="comment"># [&lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_0" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_1" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_2" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_3" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_4" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_5" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_6" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_7" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_8" hr'&gt;,</span></span><br><span class="line">        <span class="comment"># &lt;Selector xpath='//div[@id="myposts"]//a[@id]' data=u'&lt;a id="PostsList1_rpPosts_TitleUrl_9" hr'&gt;]</span></span><br><span class="line">        <span class="comment">#</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> question <span class="keyword">in</span> questions:</span><br><span class="line">            item = StackItem()</span><br><span class="line">            item[<span class="string">'title'</span>] = question.xpath(</span><br><span class="line">                <span class="string">'text()'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">            item[<span class="string">'url'</span>] = question.xpath(</span><br><span class="line">                <span class="string">'@href'</span>).extract()[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">print</span> item</span><br><span class="line">            <span class="keyword">yield</span> item</span><br></pre></td></tr></table></figure></p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><p>ok，上述工作基本完成，我们来测试一下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl stack</span><br></pre></td></tr></table></figure></p>
+<p>还可以这样测试一下，使用shell命令<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg" alt="用shell测试xpath"><br>妈蛋，我的竟然出错了，输出如下<br><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">chen@chen-P31:~/<span class="keyword">stack</span>$ scrapy crawl <span class="keyword">stack</span></span><br><span class="line">2015-04-26 16:49:11+0800 [scrapy] INFO: Scrapy 0.24.6 started (bot: <span class="keyword">stack</span>)</span><br><span class="line">2015-04-26 16:49:11+0800 [scrapy] INFO: Optional features available: ssl, http11</span><br><span class="line">2015-04-26 16:49:11+0800 [scrapy] INFO: Overridden settings: &#123;'NEWSPIDER_MODULE': '<span class="keyword">stack</span>.spiders', 'SPIDER_MODULES': ['<span class="keyword">stack</span>.spiders'], 'BOT_NAME': '<span class="keyword">stack</span>'&#125;</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/bin/scrapy"</span>, <span class="keyword">line</span> 11, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    sys.<span class="keyword">exit</span>(execute())</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py"</span>, <span class="keyword">line</span> 143, <span class="keyword">in</span> execute</span><br><span class="line">    _run_print_help(parser, _run_command, cmd, <span class="keyword">args</span>, opts)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py"</span>, <span class="keyword">line</span> 89, <span class="keyword">in</span> _run_print_help</span><br><span class="line">    func(*a, **kw)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py"</span>, <span class="keyword">line</span> 150, <span class="keyword">in</span> _run_command</span><br><span class="line">    cmd.<span class="keyword">run</span>(<span class="keyword">args</span>, opts)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/commands/crawl.py"</span>, <span class="keyword">line</span> 60, <span class="keyword">in</span> <span class="keyword">run</span></span><br><span class="line">    self.crawler_process.start()</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py"</span>, <span class="keyword">line</span> 92, <span class="keyword">in</span> start</span><br><span class="line">    <span class="keyword">if</span> self.start_crawling():</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py"</span>, <span class="keyword">line</span> 124, <span class="keyword">in</span> start_crawling</span><br><span class="line">    <span class="keyword">return</span> self._start_crawler() is not None</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py"</span>, <span class="keyword">line</span> 139, <span class="keyword">in</span> _start_crawler</span><br><span class="line">    crawler.configure()</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py"</span>, <span class="keyword">line</span> 46, <span class="keyword">in</span> configure</span><br><span class="line">    self.extensions = ExtensionManager.from_crawler(self)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/middleware.py"</span>, <span class="keyword">line</span> 50, <span class="keyword">in</span> from_crawler</span><br><span class="line">    <span class="keyword">return</span> cls.from_settings(crawler.settings, crawler)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/middleware.py"</span>, <span class="keyword">line</span> 29, <span class="keyword">in</span> from_settings</span><br><span class="line">    mwcls = load_object(clspath)</span><br><span class="line">  <span class="keyword">File</span> <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/utils/misc.py"</span>, <span class="keyword">line</span> 42, <span class="keyword">in</span> load_object</span><br><span class="line">    raise ImportError(<span class="string">"Error loading object '%s': %s"</span> % (path, <span class="keyword">e</span>))</span><br><span class="line">ImportError: <span class="keyword">Error</span> loading object 'scrapy.telnet.TelnetConsole': <span class="keyword">No</span> module named conch</span><br></pre></td></tr></table></figure></p>
+<p>这是什么gui？<br>还好我有stackoverflow，google一番，找到解决办法（其实这不是最后的解决办法，请往后看）<br>网上说是twisted的问题，重新安装一下就好了，ok，走起<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">chen@chen-P31:~/stack$ sudo apt-<span class="built_in">get</span> install twisted</span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree       </span><br><span class="line">Reading state information... Done</span><br><span class="line">E: Unable <span class="keyword">to</span> locate package twisted</span><br><span class="line">chen@chen-P31:~/stack$ sudo apt-<span class="built_in">get</span> install twisted.conch</span><br><span class="line">Reading package lists... Done</span><br><span class="line">Building dependency tree       </span><br><span class="line">Reading state information... Done</span><br><span class="line">Note, selecting <span class="string">'python-twisted-conch'</span> <span class="keyword">for</span> regex <span class="string">'twisted.conch'</span></span><br><span class="line">Note, selecting <span class="string">'python2.7-twisted-conch'</span> <span class="keyword">for</span> regex <span class="string">'twisted.conch'</span></span><br><span class="line">Note, selecting <span class="string">'python-twisted-conch'</span> instead of <span class="string">'python2.7-twisted-conch'</span></span><br><span class="line">The following packages were automatically installed <span class="built_in">and</span> are <span class="keyword">no</span> longer required:</span><br><span class="line">  cli-common dockmanager freepats gstreamer1.<span class="number">0</span>-plugins-<span class="keyword">bad</span>-faad</span><br><span class="line">  gstreamer1.<span class="number">0</span>-plugins-<span class="keyword">bad</span>-videoparsers libbotan-<span class="number">1.10</span>-<span class="number">0</span>:i386 libcdaudio1</span><br><span class="line">  libdbus-glib2.<span class="number">0</span>-cil libdbus2.<span class="number">0</span>-cil libdbusmenu-glib4:i386</span><br><span class="line">  libdbusmenu-gtk4:i386 libegl1-<span class="keyword">mes</span><span class="variable">a:i386</span> libegl1-mesa-driver<span class="variable">s:i386</span> libflite1</span><br><span class="line">  libfluidsynth1 libgbm1:i386 libgconf2.<span class="number">0</span>-cil libgdiplus libgif4</span><br><span class="line">  libgles2-<span class="keyword">mes</span><span class="variable">a:i386</span> libglib2.<span class="number">0</span>-cil libgme0 libgmp10:i386</span><br><span class="line">  libgnome-desktop-<span class="number">2</span>-<span class="number">17</span> libgnome-keyring1.<span class="number">0</span>-cil libgnomedesktop2.<span class="number">20</span>-cil</span><br><span class="line">  libgstreamer-plugins-bad0.<span class="number">10</span>-<span class="number">0</span> libgstreamer-plugins-bad1.<span class="number">0</span>-<span class="number">0</span> libgtk2.<span class="number">0</span>-cil</span><br><span class="line">  libicu52:i386 libmimic0 libmms0 libmono-addins0.<span class="number">2</span>-cil libmono-cairo4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-corlib4.<span class="number">0</span>-cil libmono-corlib4.<span class="number">5</span>-cil libmono-data-tds4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-i18n-west4.<span class="number">0</span>-cil libmono-i18n4.<span class="number">0</span>-cil libmono-posix4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-security4.<span class="number">0</span>-cil libmono-sharpzip4.<span class="number">84</span>-cil libmono-sqlite4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-<span class="built_in">system</span>-configuration4.<span class="number">0</span>-cil libmono-<span class="built_in">system</span>-core4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-<span class="built_in">system</span>-data4.<span class="number">0</span>-cil libmono-<span class="built_in">system</span>-drawing4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-<span class="built_in">system</span>-enterpriseservices4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-<span class="built_in">system</span>-<span class="keyword">runtime</span>-serialization-formatters-soap4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-<span class="built_in">system</span>-security4.<span class="number">0</span>-cil libmono-<span class="built_in">system</span>-transactions4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-<span class="built_in">system</span>-web-applicationservices4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-<span class="built_in">system</span>-web-services4.<span class="number">0</span>-cil libmono-<span class="built_in">system</span>-web4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-<span class="built_in">system</span>-xml-linq4.<span class="number">0</span>-cil libmono-<span class="built_in">system</span>-xml4.<span class="number">0</span>-cil</span><br><span class="line">  libmono-system4.<span class="number">0</span>-cil libmono-web4.<span class="number">0</span>-cil libmpg123-<span class="number">0</span> libnotify0.<span class="number">4</span>-cil</span><br><span class="line">  libofa0 libopenal-data libopenal1 libopenvg1-<span class="keyword">mes</span><span class="variable">a:i386</span> libqrencode3:i386</span><br><span class="line">  libqt5core5<span class="variable">a:i386</span> libqt5dbus5:i386 libqt5gui5:i386 libqt5network5:i386</span><br><span class="line">  libqt5widgets5:i386 libqtshadowsock<span class="variable">s:i386</span> librsvg2-<span class="number">2.18</span>-cil libslv2-<span class="number">9</span></span><br><span class="line">  libsoundtouch0 libspandsp2 libsrtp0 libssl1.<span class="number">0.0</span>:i386 libv4l-<span class="number">0</span>:i386</span><br><span class="line">  libv4lconvert0:i386 libvo-aacenc0 libvo-amrwbenc0 libwayland-client0:i386</span><br><span class="line">  libwayland-egl1-<span class="keyword">mes</span><span class="variable">a:i386</span> libwayland-server0:i386 libwildmidi-config</span><br><span class="line">  libwildmidi1 libwnck2.<span class="number">20</span>-cil libxcb-icccm4:i386 libxcb-image0:i386</span><br><span class="line">  libxcb-keysyms1:i386 libxcb-randr0:i386 libxcb-render-util0:i386</span><br><span class="line">  libxcb-shape0:i386 libxcb-util0:i386 libxcb-xfixes0:i386 libxcb-xkb1:i386</span><br><span class="line">  libxkbcommon-x11-<span class="number">0</span>:i386 libxkbcommon0:i386 libzbar0:i386 mono-<span class="number">4.0</span>-gac</span><br><span class="line">  mono-gac mono-<span class="keyword">runtime</span> mono-<span class="keyword">runtime</span>-common mono-<span class="keyword">runtime</span>-sgen <span class="keyword">python</span>-mpd</span><br><span class="line">  <span class="keyword">python</span>-mutagen <span class="keyword">python</span>-twisted-names</span><br><span class="line">Use <span class="string">'apt-get autoremove'</span> <span class="keyword">to</span> <span class="built_in">remove</span> them.</span><br><span class="line">The following extra packages will <span class="keyword">be</span> installed:</span><br><span class="line">  <span class="keyword">python</span>-pyasn1</span><br><span class="line">The following NEW packages will <span class="keyword">be</span> installed:</span><br><span class="line">  <span class="keyword">python</span>-pyasn1 <span class="keyword">python</span>-twisted-conch</span><br><span class="line"><span class="number">0</span> upgraded, <span class="number">2</span> newly installed, <span class="number">0</span> <span class="keyword">to</span> <span class="built_in">remove</span> <span class="built_in">and</span> <span class="number">6</span> not upgraded.</span><br><span class="line">Need <span class="keyword">to</span> <span class="built_in">get</span> <span class="number">286</span> kB of archives.</span><br><span class="line">After this operation, <span class="number">1</span>,<span class="number">793</span> kB of additional disk space will <span class="keyword">be</span> used.</span><br><span class="line">Do you want <span class="keyword">to</span> <span class="keyword">continue</span>? [Y/n] </span><br><span class="line">Ge<span class="variable">t:1</span> http://mirrors.ustc.edu.<span class="keyword">cn</span>/ubuntu/ trusty/main <span class="keyword">python</span>-pyasn1 <span class="keyword">all</span> <span class="number">0.1</span>.<span class="number">7</span>-<span class="number">1</span>ubuntu2 [<span class="number">44.2</span> kB]</span><br><span class="line">Ge<span class="variable">t:2</span> http://mirrors.ustc.edu.<span class="keyword">cn</span>/ubuntu/ trusty/main <span class="keyword">python</span>-twisted-conch <span class="keyword">all</span> <span class="number">1</span>:<span class="number">13.2</span>.<span class="number">0</span>-<span class="number">1</span>ubuntu1 [<span class="number">242</span> kB]</span><br><span class="line">Fetched <span class="number">286</span> kB in <span class="number">0</span>s (<span class="number">1</span>,<span class="number">595</span> kB/s)         </span><br><span class="line">Selecting previously unselected package <span class="keyword">python</span>-pyasn1.</span><br><span class="line">(Reading database ... <span class="number">359746</span> <span class="keyword">files</span> <span class="built_in">and</span> directories currently installed.)</span><br><span class="line">Preparing <span class="keyword">to</span> unpack .../<span class="keyword">python</span>-pyasn1_0.<span class="number">1.7</span>-<span class="number">1</span>ubuntu2_all.<span class="keyword">deb</span> ...</span><br><span class="line">Unpacking <span class="keyword">python</span>-pyasn1 (<span class="number">0.1</span>.<span class="number">7</span>-<span class="number">1</span>ubuntu2) ...</span><br><span class="line">Selecting previously unselected package <span class="keyword">python</span>-twisted-conch.</span><br><span class="line">Preparing <span class="keyword">to</span> unpack .../<span class="keyword">python</span>-twisted-conch_1%<span class="number">3</span>a13.<span class="number">2.0</span>-<span class="number">1</span>ubuntu1_all.<span class="keyword">deb</span> ...</span><br><span class="line">Unpacking <span class="keyword">python</span>-twisted-conch (<span class="number">1</span>:<span class="number">13.2</span>.<span class="number">0</span>-<span class="number">1</span>ubuntu1) ...</span><br><span class="line">Processing triggers <span class="keyword">for</span> doc-base (<span class="number">0.10</span>.<span class="number">5</span>) ...</span><br><span class="line">Processing <span class="number">1</span> added doc-base <span class="keyword">file</span>...</span><br><span class="line">Processing triggers <span class="keyword">for</span> man-db (<span class="number">2.6</span>.<span class="number">7.1</span>-<span class="number">1</span>ubuntu1) ...</span><br><span class="line">Setting <span class="keyword">up</span> <span class="keyword">python</span>-pyasn1 (<span class="number">0.1</span>.<span class="number">7</span>-<span class="number">1</span>ubuntu2) ...</span><br><span class="line">Setting <span class="keyword">up</span> <span class="keyword">python</span>-twisted-conch (<span class="number">1</span>:<span class="number">13.2</span>.<span class="number">0</span>-<span class="number">1</span>ubuntu1) ...</span><br></pre></td></tr></table></figure></p>
+<p>安装总算完成，再试一次，妈蛋，又来一个新错误，这是什么gui？？？<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">chen@chen-P31:~/stack$ scrapy crawl stack</span><br><span class="line">2015-04-26 16:50:44+0800 [scrapy] INFO: Scrapy 0.24.6 started (bot: stack)</span><br><span class="line">2015-04-26 16:50:44+0800 [scrapy] INFO: Optional features available: ssl, http11</span><br><span class="line">2015-04-26 16:50:44+0800 [scrapy] INFO: Overridden settings: &#123;<span class="string">'NEWSPIDER_MODULE'</span>: <span class="string">'stack.spiders'</span>, <span class="string">'SPIDER_MODULES'</span>: [<span class="string">'stack.spiders'</span>], <span class="string">'BOT_NAME'</span>: <span class="string">'stack'</span>&#125;</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"/usr/local/bin/scrapy"</span>, line 11, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    sys.exit(execute())</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py"</span>, line 143, <span class="keyword">in</span> execute</span><br><span class="line">    _run_print_help(parser, _run_command, cmd, args, opts)</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py"</span>, line 89, <span class="keyword">in</span> _run_print_help</span><br><span class="line">    func(*a, **kw)</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py"</span>, line 150, <span class="keyword">in</span> _run_command</span><br><span class="line">    cmd.run(args, opts)</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/commands/crawl.py"</span>, line 60, <span class="keyword">in</span> run</span><br><span class="line">    self.crawler_process.start()</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py"</span>, line 92, <span class="keyword">in</span> start</span><br><span class="line">    <span class="keyword">if</span> self.start_crawling():</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py"</span>, line 124, <span class="keyword">in</span> start_crawling</span><br><span class="line">    <span class="built_in">return</span> self._start_crawler() is not None</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py"</span>, line 139, <span class="keyword">in</span> _start_crawler</span><br><span class="line">    crawler.configure()</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py"</span>, line 46, <span class="keyword">in</span> configure</span><br><span class="line">    self.extensions = ExtensionManager.from_crawler(self)</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/middleware.py"</span>, line 50, <span class="keyword">in</span> from_crawler</span><br><span class="line">    <span class="built_in">return</span> cls.from_settings(crawler.settings, crawler)</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/middleware.py"</span>, line 29, <span class="keyword">in</span> from_settings</span><br><span class="line">    mwcls = load_object(clspath)</span><br><span class="line">  File <span class="string">"/usr/local/lib/python2.7/dist-packages/scrapy/utils/misc.py"</span>, line 42, <span class="keyword">in</span> load_object</span><br><span class="line">    raise ImportError(<span class="string">"Error loading object '%s': %s"</span> % (path, e))</span><br><span class="line">ImportError: Error loading object <span class="string">'scrapy.contrib.memusage.MemoryUsage'</span>: No module named mail.smtp</span><br></pre></td></tr></table></figure></p>
+<p>最后的最后，我在我们万能的github上找到<a href="https://github.com/scrapy/scrapy/issues/958" target="_blank" rel="noopener">答案</a>，原来是我们没有安装python-twisted，安装一下，世界都美好了<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install python-twisted</span><br></pre></td></tr></table></figure></p>
+<h2 id="输出到文件"><a href="#输出到文件" class="headerlink" title="输出到文件"></a>输出到文件</h2><p>为了更直观的看到结果，我们将结果输出到一个json文件<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">scrapy </span>crawl stack -o items.<span class="keyword">json </span>-t <span class="keyword">json</span></span><br></pre></td></tr></table></figure></p>
+<p>噢耶，第一个爬虫成功</p>
+<h1 id="存储到mongodb"><a href="#存储到mongodb" class="headerlink" title="存储到mongodb"></a>存储到mongodb</h1><p>接下来，我们做最后一件事，我们将结果存储到mongodb的数据库中<br>在这里，我遇到一个大坑，无论是伯乐在线翻译的博客<br>还是网上搜索到的一般教程，都是使用pymongo.Connection来连接数据库，可是妈蛋，你使用<code>pip install pymongo</code>安装的版本都是最新版本3.0.1，那个Connection的写法已经不支持，被丢弃了，擦。<br>我们来看一下版本，我学到一个新命令<code>pip show pymongo</code>，用来查看某一个包的版本的。<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1erjct36jnrj20df038dgf.jpg" alt="查看pymongo版本"><br>在pymongo 3.0的版本中，已经不再支持pymongo.Connection，而是使用pymongo.MongoClient来替代。</p>
+<h2 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h2><p>创建一个用来保存我们抓取数据的数据库。打开<code>settings.py</code>,指定管道，然后加入数据库的相关设置<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">BOT_NAME = <span class="string">'stack'</span></span><br><span class="line"></span><br><span class="line">SPIDER_MODULES = [<span class="string">'stack.spiders'</span>]</span><br><span class="line">NEWSPIDER_MODULE = <span class="string">'stack.spiders'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Crawl responsibly by identifying yourself (and your website) on the user-agent</span></span><br><span class="line"><span class="comment"># USER_AGENT = 'stack (+http://www.yourdomain.com)'</span></span><br><span class="line"></span><br><span class="line">ITEM_PIPELINES = [<span class="string">'stack.pipelines.MongoDBPipeline'</span>, ]</span><br><span class="line"><span class="comment"># 关于mongodb的相关设置，包括服务器的ip，端口号，数据库名，表名，</span></span><br><span class="line"><span class="comment"># 我也是第一次使用mongodb竟然不需要用户验证信息，而且这表名确实奇怪，叫做MONGODB_COLLECTION</span></span><br><span class="line">MONGODB_SERVER = <span class="string">"localhost"</span></span><br><span class="line">MONGODB_PORT = <span class="number">27017</span></span><br><span class="line">MONGODB_DB = <span class="string">"stackoverflow"</span></span><br><span class="line">MONGODB_COLLECTION = <span class="string">"questions"</span></span><br><span class="line"></span><br><span class="line">DOWNLOAD_DELAY = <span class="number">5</span>  <span class="comment"># 抓取的延迟</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h2><p>我们已经能够爬取和解析html数据了，而且已经配置了数据库，接下来，我们通过<code>pipelines.py</code>中建立一个管道去连接这两个部分。<br>我们首先来完成数据库的连接部分<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</span><br><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        connection = pymongo.MongoClient(</span><br><span class="line">            settings[<span class="string">'MONGODB_SERVER'</span>],</span><br><span class="line">            settings[<span class="string">'MONGODB_PORT'</span>]</span><br><span class="line">        )</span><br><span class="line">        db = connection[settings[<span class="string">'MONGODB_DB'</span>]]</span><br><span class="line">        self.collection = db[settings[<span class="string">'MONGODB_COLLECTION'</span>]]</span><br></pre></td></tr></table></figure></p>
+<p>接下来定义一个处理函数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> item:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">            <span class="keyword">raise</span> DropItem(<span class="string">"Missing data!"</span>)</span><br><span class="line">    self.collection.update(&#123;<span class="string">'url'</span>: item[<span class="string">'url'</span>]&#125;, dict(item), upsert=<span class="keyword">True</span>)</span><br><span class="line">    log.msg(<span class="string">"Question added to MongoDB database!"</span>,</span><br><span class="line">            level=log.DEBUG, spider=spider)</span><br><span class="line">    <span class="keyword">return</span> item</span><br></pre></td></tr></table></figure></p>
+<p>ok,搞定，我们再测试一把<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl stack</span><br></pre></td></tr></table></figure></p>
+<h2 id="执行效果如下"><a href="#执行效果如下" class="headerlink" title="执行效果如下"></a>执行效果如下</h2><p><img src="https://ww1.sinaimg.cn/large/692869a3gw1erjv5to5w3j20w70g8wio.jpg" alt="mongodb数据库管理"></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 <a href="https://github.com/scrapy/scrapy/issues/958" target="_blank" rel="noopener">ImportError: Error loading object ‘scrapy.contrib.memusage.MemoryUsage’: No module named mail.smtp</a><br>2 <a href="http://stackoverflow.com/questions/8671071/error-to-execute-python-scrappy-module" target="_blank" rel="noopener">http://stackoverflow.com/questions/8671071/error-to-execute-python-scrappy-module</a><br>3 <a href="http://python.jobbole.com/81320/" target="_blank" rel="noopener">Python下用Scrapy和MongoDB构建爬虫系统（1）</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/04/26/face-detection/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/04/28/ubuntu-denyhosts/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

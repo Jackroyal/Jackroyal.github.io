@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>git使用笔记(1) | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Linux,github,git," />
+  
+
+  <meta name="description" content="git也用了一段时间了,还是写点笔记,记录一下.">
+<meta name="keywords" content="Linux,github,git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git使用笔记(1)">
+<meta property="og:url" content="https://bblove.me/2015/11/04/my-git-note1/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="git也用了一段时间了,还是写点笔记,记录一下.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1exoxiu5jyij20it0933zl.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1exoxp6duu1j20it07o0th.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1exp17u1ltjj208r0boq38.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.314Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git使用笔记(1)">
+<meta name="twitter:description" content="git也用了一段时间了,还是写点笔记,记录一下.">
+<meta name="twitter:image" content="https://ww1.sinaimg.cn/large/692869a3gw1exoxiu5jyij20it0933zl.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#准备条件"><span class="toc-text">准备条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-初始化git设置"><span class="toc-text">1 初始化git设置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-新建第一个仓库"><span class="toc-text">2 新建第一个仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-完全新建一个仓库"><span class="toc-text">2.1 完全新建一个仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-克隆一个现有仓库"><span class="toc-text">2.2 克隆一个现有仓库</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-提交更新"><span class="toc-text">3 提交更新</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-提交工作空间文件到暂存区"><span class="toc-text">3.1 提交工作空间文件到暂存区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-将暂存区文件保存到本地仓库"><span class="toc-text">3.2 将暂存区文件保存到本地仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-将本地仓库内容提交到远程仓库"><span class="toc-text">3.3 将本地仓库内容提交到远程仓库</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#友情链接"><span class="toc-text">友情链接</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-my-git-note1" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">git使用笔记(1)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.11.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>git也用了一段时间了,还是写点笔记,记录一下.<br><a id="more"></a></p>
+<h1 id="准备条件"><a href="#准备条件" class="headerlink" title="准备条件"></a>准备条件</h1><p>首先假装你已经安装好了git</p>
+<ul>
+<li>在Linux下<br>  我用的是<code>ubuntu</code>,安装非常easy,使用<code>sudo apt-get install git</code></li>
+<li>在windows下<br>  在windows下安装,就使用<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-downloads</a>,点击下载,安装,就ok.<br>ps:如果你足够幸运,可以试试<a href="https://desktop.github.com/" target="_blank" rel="noopener">github的windows版</a>,这个的好处是,带有图形化界面.</li>
+</ul>
+<h1 id="1-初始化git设置"><a href="#1-初始化git设置" class="headerlink" title="1 初始化git设置"></a>1 初始化git设置</h1><p>新装好git后,我们先配置个人的用户名和email,这两条配置很重要,因为在git的日志中,都会带上这两条信息.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"John Doe"</span></span><br><span class="line">$ git config --global user.email johndoe@example.com</span><br></pre></td></tr></table></figure></p>
+<p>如果用了<code>--global</code>选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉<code>--global</code>选项重新配置即可，新的设定保存在当前项目的<code>.git/config</code>文件里。</p>
+<h1 id="2-新建第一个仓库"><a href="#2-新建第一个仓库" class="headerlink" title="2 新建第一个仓库"></a>2 新建第一个仓库</h1><p>建立第一个仓库有两种方式,一种是完全新建一个仓库,第二种是克隆一个现有仓库.</p>
+<h4 id="2-1-完全新建一个仓库"><a href="#2-1-完全新建一个仓库" class="headerlink" title="2.1 完全新建一个仓库"></a>2.1 完全新建一个仓库</h4><p>你先切换到你想建项目的地方,比如<code>f:/blog/</code>,然后执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure></p>
+<p>初始化后再在当前目录新建一个名为<code>.git</code>的目录,git所有的东西都存在这里面.当然我们不用管.</p>
+<h4 id="2-2-克隆一个现有仓库"><a href="#2-2-克隆一个现有仓库" class="headerlink" title="2.2 克隆一个现有仓库"></a>2.2 克隆一个现有仓库</h4><p>这个也是很easy,直接一条命令搞定<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/Jackroyal/blog.git</span><br></pre></td></tr></table></figure></p>
+<p>他会在你的当前目录新建一个<code>blog</code>文件夹,在<code>blog</code>文件夹里面他会把相关的文件都下载下来,就可以用了.</p>
+<h1 id="3-提交更新"><a href="#3-提交更新" class="headerlink" title="3 提交更新"></a>3 提交更新</h1><h4 id="3-1-提交工作空间文件到暂存区"><a href="#3-1-提交工作空间文件到暂存区" class="headerlink" title="3.1 提交工作空间文件到暂存区"></a>3.1 提交工作空间文件到暂存区</h4><p>执行<code>touch a.txt</code>,我们在目录中新建一个文件名叫<code>a.txt</code>,然后我们修改它的内容.<br>接下来,我们来查看下状态<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure></p>
+<p>执行结果如下图:<br><img src="https://ww1.sinaimg.cn/large/692869a3gw1exoxiu5jyij20it0933zl.jpg" alt="执行git status查看工作区文件状态"><br>就像图片中提示的,我们新加的<code>a.txt</code>是未跟踪文件,我们执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add a.txt</span><br></pre></td></tr></table></figure></p>
+<p>我们把<code>a.txt</code>添加到暂存区,再次执行<code>git status</code>,查看状态,执行结果如图所示<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1exoxp6duu1j20it07o0th.jpg" alt="添加到暂存区后再次执行git status"></p>
+<h4 id="3-2-将暂存区文件保存到本地仓库"><a href="#3-2-将暂存区文件保存到本地仓库" class="headerlink" title="3.2 将暂存区文件保存到本地仓库"></a>3.2 将暂存区文件保存到本地仓库</h4><p>假如你要做的修改已经改完,已经保存到暂存区了,我们准备提交到本地仓库.执行<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git</span> commit -m <span class="string">"这是提交内容"</span></span><br></pre></td></tr></table></figure></p>
+<p>参数<code>-m</code>,就是添加说明,方便以后查看,你就可以知道自己做了哪些更改</p>
+<h4 id="3-3-将本地仓库内容提交到远程仓库"><a href="#3-3-将本地仓库内容提交到远程仓库" class="headerlink" title="3.3 将本地仓库内容提交到远程仓库"></a>3.3 将本地仓库内容提交到远程仓库</h4><p>上面的步骤都弄好以后,我们提交到远程仓库<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">push</span> <span class="built_in">origin</span> master</span><br></pre></td></tr></table></figure></p>
+<p>然后就行了,一个基本的流程就是这样.<br>推荐看看下面友情链接里面的那本书,pro git<br><img src="https://ww1.sinaimg.cn/large/692869a3gw1exp17u1ltjj208r0boq38.jpg" alt="pro git封面"></p>
+<h1 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h1><p>1 <a href="http://iissnan.com/progit/" target="_blank" rel="noopener">pro git中文书籍在线版</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/10/25/weixin-app-pay-v3-0/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/11/04/my-git-note2/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

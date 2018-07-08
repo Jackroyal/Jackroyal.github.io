@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>python学习笔记--python和beautifulsoup遇到的编码问题 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="python,爬虫," />
+  
+
+  <meta name="description" content="在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.  项目主页: https://github.com/Jackroyal/blog2markdown  最近刚好在学习python,刚好就把它给优化了一下,顺">
+<meta name="keywords" content="python,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python学习笔记--python和beautifulsoup遇到的编码问题">
+<meta property="og:url" content="https://bblove.me/2015/03/29/python-blog-spider/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.  项目主页: https://github.com/Jackroyal/blog2markdown  最近刚好在学习python,刚好就把它给优化了一下,顺">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1eqmn535qb7j208u028t8k.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1eqmnd8fgrjj20b205kabi.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eqmnfd29u7j20k5047wfv.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.322Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python学习笔记--python和beautifulsoup遇到的编码问题">
+<meta name="twitter:description" content="在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.  项目主页: https://github.com/Jackroyal/blog2markdown  最近刚好在学习python,刚好就把它给优化了一下,顺">
+<meta name="twitter:image" content="https://ww2.sinaimg.cn/large/692869a3gw1eqmn535qb7j208u028t8k.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-编码类型"><span class="toc-text">1 编码类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-常用方法"><span class="toc-text">2 常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-encode和decode"><span class="toc-text">2.1 encode和decode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-isinstance"><span class="toc-text">2.2 isinstance()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-beautifulsoup编码问题"><span class="toc-text">3 beautifulsoup编码问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Beautiful-Soup-会按顺序尝试不同的编码将你的文档转换为Unicode："><span class="toc-text">Beautiful Soup 会按顺序尝试不同的编码将你的文档转换为Unicode：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-新技能get"><span class="toc-text">4 新技能get</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-python-blog-spider" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">python学习笔记--python和beautifulsoup遇到的编码问题</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.03.29</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/python学习笔记/">python学习笔记</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.</p>
+<blockquote>
+<p>项目主页: <a href="https://github.com/Jackroyal/blog2markdown" target="_blank" rel="noopener">https://github.com/Jackroyal/blog2markdown</a></p>
+</blockquote>
+<p>最近刚好在学习python,刚好就把它给优化了一下,顺便做了个跨平台(哈哈,win和ubuntu都可以跑哈),昨天遇到很蛋疼的问题,一它给了我很多思路帮助我定位问题,.直搞到凌晨两点才弄好.<br>非常非常感谢<a href="http://www.crifan.com/summary_python_2_x_common_string_encode_decode_error_reason_and_solution/" target="_blank" rel="noopener">【总结】Python 2.x中常见字符编码和解码方面的错误及其解决办法</a><br>作者做了一个很好的总结,帮助我们定位问题.<br><a id="more"></a></p>
+<h1 id="1-编码类型"><a href="#1-编码类型" class="headerlink" title="1 编码类型"></a>1 编码类型</h1><p>首先确定好你的编码类型,比如一般推荐用utf-8.当确定编码类型后,就要保持统一,不要又弄些GBK的编码在里面.</p>
+<ul>
+<li>1.1  编辑器编码<ul>
+<li>我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.<br>在sublime下如图所示<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmn535qb7j208u028t8k.jpg" alt="sublime显示当前文件编码"></li>
+<li>文件编码声明,我们要在py文件的头部添加一行<code># -*- coding: utf-8 -*-</code>,表明我接下来要使用utf-8编码</li>
+</ul>
+</li>
+<li>1.2  python解释器<ul>
+<li>如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1eqmnd8fgrjj20b205kabi.jpg" alt="win中python解释器编码"><br><img src="https://ww3.sinaimg.cn/large/692869a3gw1eqmnfd29u7j20k5047wfv.jpg" alt="ubuntu终端解释器的编码"></li>
+</ul>
+</li>
+<li>1.3  执行python代码<ul>
+<li>其中，很常见的几种动作是：<ul>
+<li>打印print对应的所获得的字符<ul>
+<li>对于字符串打印,Python的逻辑:<ul>
+<li>如果是Unicode字符串,则可以,自动地,编码为对应的终端所用编码,然后正确的显示出来</li>
+<li>比如unicode的字符串,输出到windows的默认编码为GBK的cmd中,则Python可以自动将Unicode编码为GBK,然后输出到cmd中</li>
+<li>个别特殊情况,也会出错:<ul>
+<li>当此unicode字符串中包含某特殊字符,而目标终端的编码集合中,没有此字符,则很明显也是无法实现将Unicode编码为对应的特定编码的字符串,无法正确显示的</li>
+</ul>
+</li>
+<li>如果是某种编码类型的str,则需要该str的编码类型,和目标终端编码匹配<ul>
+<li>比如GBK的字符串,输出到windows的默认编码为GBK的cmd,则是可以正常输出的</li>
+<li>此处后来经过代码测试，就发现一个有趣或者说诡异的问题，虽然我们python文件声明的UTF-8编码，但是实际上实际上是用GBK编码，而此时，文件中的字符串，很明显是用GBK存储的，所以，将此GBK字符，输出到GBK的cmd中，是可以正常输出的。即，此处字符串的类型，很明显只和文件所用的实际编码有关，而和文件所声明的代码无关。</li>
+</ul>
+</li>
+<li>如果是UTF-8的字符串,输出到windows的默认编码为GBK的cmd,就会出错<ul>
+<li>对相应的字符，进行编码（为某种特定类型的字符str），或解码（为对应的unicode类型的字符）</li>
+<li>比如将当前的某种编码的字符串，解码为Unicode字符串<ul>
+<li>很明显，也是要保证，你字符串本身的编码和所指定的编码，两者之间要一致的</li>
+<li>比如：decodedUnicode = someUtf8Str.decode(“UTF-8”)</li>
+<li>而如果用这样的：decodedUnicode = someGbkStr.decode(“UTF-8”)，那就会出现错误</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="2-常用方法"><a href="#2-常用方法" class="headerlink" title="2 常用方法"></a>2 常用方法</h1><h3 id="2-1-encode和decode"><a href="#2-1-encode和decode" class="headerlink" title="2.1 encode和decode"></a>2.1 encode和decode</h3><p>encode()  unicode编码-&gt;其他编码</p>
+<p>decode()  其他编码-&gt;unicode编码</p>
+<p>使用这两个方法的前提是,你要知道当前是什么编码.然后用对应的编码去进行解码<br>比如对于s字符串可以用<br><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s.encode('utf-8') <span class="meta"># 将s由unicode转码成utf-8</span></span><br><span class="line">s.decode('GBK') <span class="meta"># s是GBK编码,将s转换成unicode</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="2-2-isinstance"><a href="#2-2-isinstance" class="headerlink" title="2.2 isinstance()"></a>2.2 isinstance()</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">isinstance(s , unicode) <span class="meta"># 检测s是否是unicode编码</span></span><br><span class="line"></span><br><span class="line">isinstance(s , <span class="keyword">str</span>) <span class="meta"># 检测s是否是str格式</span></span><br></pre></td></tr></table></figure>
+<h1 id="3-beautifulsoup编码问题"><a href="#3-beautifulsoup编码问题" class="headerlink" title="3 beautifulsoup编码问题"></a>3 beautifulsoup编码问题</h1><h3 id="Beautiful-Soup-会按顺序尝试不同的编码将你的文档转换为Unicode："><a href="#Beautiful-Soup-会按顺序尝试不同的编码将你的文档转换为Unicode：" class="headerlink" title="Beautiful Soup 会按顺序尝试不同的编码将你的文档转换为Unicode："></a>Beautiful Soup 会按顺序尝试不同的编码将你的文档转换为Unicode：</h3><ul>
+<li>可以通过from_encoding参数传递编码类型给soup的构造器</li>
+<li>通过文档本身找到编码类型：例如XML的声明或者HTML文档http-equiv的META标签。 </li>
+<li>如果Beautiful Soup在文档中发现编码类型，它试着使用找到的类型转换文档。 +</li>
+<li>但是，如果你明显的指定一个编码类型， </li>
+<li>并且成功使用了编码：这时它会忽略任何它在文档中发现的编码类型。</li>
+<li>通过嗅探文件开头的一下数据，判断编码。如果编码类型可以被检测到，</li>
+<li>它将是这些中的一个：UTF-*编码，EBCDIC或者ASCII。</li>
+<li>通过chardet库,嗅探编码，如果你安装了这个库。</li>
+<li>UTF-8</li>
+<li>Windows-1252</li>
+</ul>
+<p>一般来说,bs的自动识别,是不会有问题的,但是在我这里除了问题,具体原因不太清楚<br>我的网页上已经声明了是<code>utf-8</code>编码<br>原来代码如下<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 这是原来的编码,在win下面乱码</span></span><br><span class="line"><span class="built_in">self</span>.soup = bs((response.read()))</span><br><span class="line"><span class="built_in">print</span> <span class="built_in">self</span>.soup.originalEncoding<span class="meta">   # 此处结果竟然返回Windows-1252</span></span><br></pre></td></tr></table></figure></p>
+<p>修改后代码如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># win下乱码的关键在这里,beautifulsoup解析的编码不对,我们这里直接指定编码</span></span><br><span class="line"><span class="keyword">self</span>.soup = bs((response.read()), from_encoding=<span class="string">'utf-8'</span>)</span><br><span class="line"><span class="keyword">print</span> <span class="keyword">self</span>.soup.originalEncoding   <span class="comment"># 修正后代码正确返回'utf-8'</span></span><br></pre></td></tr></table></figure></p>
+<p>看来beautifulsoup的自动识别编码不能全部依赖.<br>好不容易才定位到这里的问题,折腾了一天啊<br>这里用了一个方法来检测编码.就是soup.iriginalEncoding属性<br><figure class="highlight monkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span> <span class="built_in">self</span>.soup.originalEncoding<span class="meta">   # 修正后代码正确返回'utf-8'</span></span><br></pre></td></tr></table></figure></p>
+<p>这篇博客好水,毕竟不是很懂,所以说不出来</p>
+<p>update:2015-03-30</p>
+<h1 id="4-新技能get"><a href="#4-新技能get" class="headerlink" title="4 新技能get"></a>4 新技能get</h1><p>之前都没好好理解原作者的博客,觉得没办法一个程序在win和ubuntu中不更改正常运行,现在发现,如果把编码改为unicode格式输出,那么系统会自动转换,这样就不存在utf-8编码在windows下cmd乱码了.</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 <a href="http://www.crifan.com/summary_python_2_x_common_string_encode_decode_error_reason_and_solution/" target="_blank" rel="noopener">【总结】Python 2.x中常见字符编码和解码方面的错误及其解决办法</a><br>2 <a href="http://www.crifan.com/resolved_python_garbled_chinese_characters_gb2312_gbk_gb18030-related_issues/" target="_blank" rel="noopener">【已解决】python中文字符乱码（GB2312，GBK，GB18030相关的问题）</a><br>参考资料太多,贴不过来啊,主要都是cifan的博客,里面资料很多,一步一步都有过程,非常好用,谢谢cifan作者</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/03/26/python-im/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/03/29/hexo-deploy-error/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

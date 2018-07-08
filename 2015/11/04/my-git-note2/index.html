@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>git使用笔记(2) | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Linux,github,git," />
+  
+
+  <meta name="description" content="上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.">
+<meta name="keywords" content="Linux,github,git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git使用笔记(2)">
+<meta property="og:url" content="https://bblove.me/2015/11/04/my-git-note2/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1exp9lmtz38j20cl0383yn.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1exp9ngk82jj20it07i75f.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1expa1cbny2j20ge0790td.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1expa3azt15j20hg09twft.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1expa8o47yvj20fi087gmv.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1expb97iondj20it0catb7.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1expt5luwo4j20io06cq3w.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1exptkjlw1fj20jg09fq3k.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1exp93i04qtj20it0cajua.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.330Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="git使用笔记(2)">
+<meta name="twitter:description" content="上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.">
+<meta name="twitter:image" content="https://ww2.sinaimg.cn/large/692869a3gw1exp9lmtz38j20cl0383yn.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#撤销操作"><span class="toc-text">撤销操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-撤销工作空间最近的修改"><span class="toc-text">1 撤销工作空间最近的修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-撤销暂存区最近的修改"><span class="toc-text">2 撤销暂存区最近的修改</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-撤销提交到本地仓库的修改"><span class="toc-text">3 撤销提交到本地仓库的修改</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-方案一-再新建一次提交"><span class="toc-text">1.3.1 方案一  再新建一次提交</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-3-方案三-修改最后一次提交"><span class="toc-text">3.3 方案三  修改最后一次提交</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-总结"><span class="toc-text">4 总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#附言"><span class="toc-text">附言</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#友情链接"><span class="toc-text">友情链接</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-my-git-note2" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">git使用笔记(2)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.11.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.<br><a id="more"></a></p>
+<h1 id="撤销操作"><a href="#撤销操作" class="headerlink" title="撤销操作"></a>撤销操作</h1><p>撤销操作,我经常会用到,有时候写的代码没有考虑周全,或者有疏漏,需要重新提交什么的.</p>
+<h1 id="1-撤销工作空间最近的修改"><a href="#1-撤销工作空间最近的修改" class="headerlink" title="1 撤销工作空间最近的修改"></a>1 撤销工作空间最近的修改</h1><p>应用场景:比如上次push以后的完整干净的目录,工作空间没有任何修改,暂存区也没有任何修改,如下图:<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1exp9lmtz38j20cl0383yn.jpg" alt="上一次提交后干净的工作目录"><br>这时候,你手贱,改了一下其中的一个文件,但是这次更改是没有意义的.我们继续使用<code>git status</code>来查看<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1exp9ngk82jj20it07i75f.jpg" alt="修改一个文件后执行git status的结果"><br>我们现在想撤销这次修改.<br>解决方法:现在这个修改只是工作区的修改,我们要撤销很简单执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout a.txt</span><br></pre></td></tr></table></figure></p>
+<p>搞定</p>
+<h1 id="2-撤销暂存区最近的修改"><a href="#2-撤销暂存区最近的修改" class="headerlink" title="2 撤销暂存区最近的修改"></a>2 撤销暂存区最近的修改</h1><p>应用场景:假如在上面说的那种情况下,你手贱改错了文件,而且你没有撤销,你还执行<code>git add a.txt</code>,将修改提交到暂存区了.具体情况如下图<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1expa1cbny2j20ge0790td.jpg" alt="错误的修改被提交到了暂存区"><br>现在我们要从暂存区撤回那个修改<br>解决办法:我们使用<code>git reset HEAD a.txt</code>,将文件从暂存区撤出来,又回到上面的工作空间被修改的状态,如图<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1expa3azt15j20hg09twft.jpg" alt="从暂存区撤回"><br>ps:上面的命令也可以用下面的命令,语法格式是<code>git reset &lt;path&gt;</code>,括号中填路径<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset a.txt</span><br></pre></td></tr></table></figure></p>
+<p>总的来说,<code>git reset &lt;path&gt;</code>就是<code>git add &lt;path&gt;</code>的反向操作</p>
+<h1 id="3-撤销提交到本地仓库的修改"><a href="#3-撤销提交到本地仓库的修改" class="headerlink" title="3 撤销提交到本地仓库的修改"></a>3 撤销提交到本地仓库的修改</h1><p>应用场景:假如你在<code>1.2</code>还没有回头,一路手贱下去,将暂存区的修改<code>commit</code>到本地仓库了<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1expa8o47yvj20fi087gmv.jpg" alt="错误的修改被提交到本地仓库"><br>我们现在要从仓库撤销这次没用的提交<br>解决方法:</p>
+<h4 id="1-3-1-方案一-再新建一次提交"><a href="#1-3-1-方案一-再新建一次提交" class="headerlink" title="1.3.1 方案一  再新建一次提交"></a>1.3.1 方案一  再新建一次提交</h4><p>我们可以新建一次提交,然后让所修改的文件回到之前的状态,执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br></pre></td></tr></table></figure></p>
+<p>含义很简单,逆转,这样你的<code>log</code>里面会多一次提交,然后文件也回到的之前的状态<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1expb97iondj20it0catb7.jpg" alt="执行git revert 后的log"></p>
+<p>#3.2 方案二  干净的撤销上一次commit<br>上面的方案一对于一个强迫症来说,不能忍啊,本来就是一次错误的提交,为了弥补这个错误,我却还要多提交一次,完全不能忍受.<br>方案二,我们使用<code>git reset</code>命令.我们执行<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">reset</span> <span class="keyword">HEAD</span>^</span><br></pre></td></tr></table></figure></p>
+<p>这个命令表示重置HEAD指针,我们要指向上一次提交(也就是取消最近的一次,HEAD表示当前指针,HEAD^是上一次,HEAD^^是上上次,HEAD^^^是上三次),<code>git reset</code>命令可以添加<code>--mixed</code>,<code>--soft</code>,<code>--hard</code>三种参数,<code>--soft</code>程度最轻,只会撤销提交,对当前暂存区和当前工作空间不会有任何更改,默认的参数是<code>--mixed</code>,他会将暂存区的文件撤销<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="keyword">reset</span> <span class="comment">--soft :取消了commit  </span></span><br><span class="line"></span><br><span class="line">git <span class="keyword">reset</span> <span class="comment">--mixed（默认） :取消了commit ，取消了add</span></span><br><span class="line"></span><br><span class="line">git <span class="keyword">reset</span> <span class="comment">--hard :取消了commit ，取消了add，取消源文件修改</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="3-3-方案三-修改最后一次提交"><a href="#3-3-方案三-修改最后一次提交" class="headerlink" title="3.3 方案三  修改最后一次提交"></a>3.3 方案三  修改最后一次提交</h1><p><strong>首先强调,下面说的实在本地仓库的操作.</strong><br>应用场景:对于上面提到的错误的提交,我们还可以修改他的内容,删除我们错误的修改,将它恢复到原来的样子,我们可以使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit --amend</span><br></pre></td></tr></table></figure></p>
+<p>这个方法是将当前暂存区快照提交,也就是你后面的修改合在一起,然后再提交.最后查看<code>log</code>的时候,会只有一次提交,前面的一次提交就被删除,在<code>log</code>中只看到这次提交.<br>用具体例子来说.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"这是第一次提交"</span></span><br><span class="line"><span class="comment">#commit完,我们修改工作空间的内容,然后再执行</span></span><br><span class="line">git add b.txt</span><br><span class="line">git commit --amend</span><br><span class="line"><span class="comment">#这条命令会弹出一个编辑窗口,你可以修改提交信息</span></span><br><span class="line"><span class="comment">#假设我们将提交信息修改为"这是第二次提交"</span></span><br></pre></td></tr></table></figure></p>
+<p>接着当我们使用<code>git log</code>来查看的时候,你只会看到提交信息是”这是第二次提交”.<br>解决方法:<br>我们先将文件内容恢复到上一次(当前是HEAD,上一次就是HEAD^)提交时候的样子,然后执行<code>git commit --amend</code>,看到如下错误提示,就是说这次文件没有任何修改(废话,我已经恢复正确的样子了,当然一模一样了),默认是不允许空提交的,你只有强制使用<code>--allow-empty</code>才行,或者执行方案二<br><img src="https://ww1.sinaimg.cn/large/692869a3gw1expt5luwo4j20io06cq3w.jpg" alt="执行git commit --amend内容没有变化的错误提示"></p>
+<h1 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h1><p>盗图一张,总结上面说的内容<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1exptkjlw1fj20jg09fq3k.jpg" alt="工作空间,暂存区,本地仓库之间的关机和转换"><br>打完收工</p>
+<h3 id="附言"><a href="#附言" class="headerlink" title="附言"></a>附言</h3><p><strong>PS</strong>:现在再来解释开头说的,这是本地仓库的操作.<br>因为,我们本地仓库执行了<code>git commit</code>后,所做的更改只会在本地,如果接着执行了<code>git push</code>那么,所做的更改就会被提交到<code>git</code>,在上面的例子中那么首先提交到github的就是<code>&quot;这是第一次提交&quot;</code>.这时候,当你执行完<code>git commit --amend</code>的时候,本地仓库的上次提交会被删除,也就是不存在提示信息为<code>&quot;这是第一次提交&quot;</code>,此时本地仓库完成了修改,你想提交到github,就会报错了.如图所示<br><img src="https://ww1.sinaimg.cn/large/692869a3gw1exp93i04qtj20it0cajua.jpg" alt="本地执行--amend操作后直接提交到github报错"><br>解决方法就是,<strong>Force</strong><br>没错,强制提交<code>git push -f</code>,这样他就会像本地一样,删除上一次提交,添加这一次提交</p>
+<h1 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h1><p>1 <a href="https://help.github.com/articles/changing-a-commit-message/" target="_blank" rel="noopener">修改提交信息</a><br>2 <a href="https://github.com/blog/2019-how-to-undo-almost-anything-with-git" target="_blank" rel="noopener">如何撤销在git上的各种修改,好文</a><br>3 <a href="http://my.oschina.net/MinGKai/blog/144932" target="_blank" rel="noopener">git revert和git reset的区别</a><br>4 <a href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html" target="_blank" rel="noopener">git常用命令介绍,带效果图的</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/11/04/my-git-note1/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

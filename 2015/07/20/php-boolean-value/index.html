@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>php中的bool值和类型转换 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="php,bool," />
+  
+
+  <meta name="description" content="最近在写php,发现有个问题一直无法避免,那就是关于php的bool值和类型转换.以前每次遇到要校验一个变量$a,是否为空,都是使用$a==&amp;#39;&amp;#39;去判断,感觉不是很懂,反正一直这样用,也没出太多纰漏,而没有理会什么NUll,’’,0之类的其他值.今天决定研究下,把它彻底搞清楚.">
+<meta name="keywords" content="php,bool">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php中的bool值和类型转换">
+<meta property="og:url" content="https://bblove.me/2015/07/20/php-boolean-value/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="最近在写php,发现有个问题一直无法避免,那就是关于php的bool值和类型转换.以前每次遇到要校验一个变量$a,是否为空,都是使用$a==&amp;#39;&amp;#39;去判断,感觉不是很懂,反正一直这样用,也没出太多纰漏,而没有理会什么NUll,’’,0之类的其他值.今天决定研究下,把它彻底搞清楚.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1euak04nwitj20nf0i2432.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.313Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php中的bool值和类型转换">
+<meta name="twitter:description" content="最近在写php,发现有个问题一直无法避免,那就是关于php的bool值和类型转换.以前每次遇到要校验一个变量$a,是否为空,都是使用$a==&amp;#39;&amp;#39;去判断,感觉不是很懂,反正一直这样用,也没出太多纰漏,而没有理会什么NUll,’’,0之类的其他值.今天决定研究下,把它彻底搞清楚.">
+<meta name="twitter:image" content="https://ww4.sinaimg.cn/large/692869a3gw1euak04nwitj20nf0i2432.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-php的数据类型"><span class="toc-text">1 php的数据类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-常用的比较函数"><span class="toc-text">2 常用的比较函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#empty"><span class="toc-text">empty()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#is-set"><span class="toc-text">is_set()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#is-null"><span class="toc-text">is_null()</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-php-boolean-value" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">php中的bool值和类型转换</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.07.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/php/">php</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>最近在写php,发现有个问题一直无法避免,那就是关于php的bool值和类型转换.<br>以前每次遇到要校验一个变量<code>$a</code>,是否为空,都是使用<code>$a==&#39;&#39;</code>去判断,感觉不是很懂,反正一直这样用,也没出太多纰漏,而没有理会什么NUll,’’,0之类的其他值.今天决定研究下,把它彻底搞清楚.<br><a id="more"></a></p>
+<h1 id="1-php的数据类型"><a href="#1-php的数据类型" class="headerlink" title="1 php的数据类型"></a>1 php的数据类型</h1><p>php支持原始的8总数据类型.<br>4总标量类型:</p>
+<ul>
+<li>boolean</li>
+<li>integer</li>
+<li>float(也称作double类型)</li>
+<li>string<br>2种复合类型</li>
+<li>array(数组)</li>
+<li>object(对象)<br>2种特殊类型</li>
+<li>resource(资源)</li>
+<li>NULL(无类型)<br>实际上 double 和 float 是相同的，由于一些历史的原因，这两个名称同时存在。<br>变量的类型通常不是由程序员设定的，确切地说，是由PHP根据该变量使用的上下文在运行时决定的。<br>前面几种类型很好理解,现在重点看一下resource类型和NULL类型</li>
+</ul>
+<ol>
+<li><code>resource</code> 是一种特殊变量，保存了到外部资源的一个引用。资源是通过专门的函数来建立和使用的。由于资源类型变量保存有为打开文件、数据库连接、图形画布区域等的特殊句柄，因此将其它类型的值转换为资源没有意义。</li>
+<li><code>NULL</code>,特殊的NULL值表示一个变量没有值。NULL类型唯一可能的值就是 NULL。在下列情况下一个变量被认为是NULL：</li>
+</ol>
+<ul>
+<li>被赋值为 NULL。</li>
+<li>尚未被赋值。</li>
+<li>被 unset()。</li>
+</ul>
+<h1 id="2-常用的比较函数"><a href="#2-常用的比较函数" class="headerlink" title="2 常用的比较函数"></a>2 常用的比较函数</h1><h3 id="empty"><a href="#empty" class="headerlink" title="empty()"></a>empty()</h3><p>这个函数最近经常见到,它比较有特点.<br>如果 var 是非空或非零的值，则empty()返回<code>FALSE</code>。<br>换句话说，””、0、”0”、NULL、FALSE、array()、var $var以及没有任何属性的对象都将<br>被认为是空的，返回 TRUE。<br>如果变量没有赋值,empty()也不会报错.</p>
+<h3 id="is-set"><a href="#is-set" class="headerlink" title="is_set()"></a>is_set()</h3><p>这个函数和is_null()刚好相反,如果一个函数的is_null()返回<code>true</code>,那么它的is_set()则必定返回相反值,<code>false</code>.</p>
+<h3 id="is-null"><a href="#is-null" class="headerlink" title="is_null()"></a>is_null()</h3><p>所有的<code>is_</code>开头的函数,都不会进行类型转换,例如is_bool(‘0’),返回false,因为’0’不是一个布尔类型的值.<br>详细对比看下图<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1euak04nwitj20nf0i2432.jpg" alt="使用 PHP 函数对变量 $x 进行比较"></p>
+<p>更多更详细的比较,大家看这里<a href="http://php.net/manual/zh/types.comparisons.php" target="_blank" rel="noopener">php类型比较表</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/06/29/ubuntu-14-04-setting-about-thinkphp-url-rewrite/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/10/15/ubuntu-lamp-alias-setting/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

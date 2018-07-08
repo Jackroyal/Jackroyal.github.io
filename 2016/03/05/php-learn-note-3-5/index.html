@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>php学习笔记(3.5)--关于引用赋值和一般赋值 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="php," />
+  
+
+  <meta name="description" content="上一篇提到了,对象赋值的时候有两种赋值方式,一种是直接$a=$b,第二种是引用赋值$a=&amp;amp;$b.不仅对象赋值的时候会有这两种情况,普通变量赋值也会有这两种情况,为了简单说明,我们先使用简单的普通变量来做说明.">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php学习笔记(3.5)--关于引用赋值和一般赋值">
+<meta property="og:url" content="https://bblove.me/2016/03/05/php-learn-note-3-5/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="上一篇提到了,对象赋值的时候有两种赋值方式,一种是直接$a=$b,第二种是引用赋值$a=&amp;amp;$b.不仅对象赋值的时候会有这两种情况,普通变量赋值也会有这两种情况,为了简单说明,我们先使用简单的普通变量来做说明.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1f1m1ximwj1j20wn098dj6.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php学习笔记(3.5)--关于引用赋值和一般赋值">
+<meta name="twitter:description" content="上一篇提到了,对象赋值的时候有两种赋值方式,一种是直接$a=$b,第二种是引用赋值$a=&amp;amp;$b.不仅对象赋值的时候会有这两种情况,普通变量赋值也会有这两种情况,为了简单说明,我们先使用简单的普通变量来做说明.">
+<meta name="twitter:image" content="https://ww4.sinaimg.cn/large/692869a3gw1f1m1ximwj1j20wn098dj6.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-普通变量的结构"><span class="toc-text">1 普通变量的结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-php环境的设置"><span class="toc-text">2 php环境的设置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-refcount和is-ref"><span class="toc-text">3 refcount和is_ref</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-1-一般赋值"><span class="toc-text">3.1 一般赋值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-2-引用赋值"><span class="toc-text">3.2 引用赋值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-3-两种赋值方式混合"><span class="toc-text">3.3 两种赋值方式混合</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-推广到对象"><span class="toc-text">4 推广到对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-关于debug-zval-dump函数"><span class="toc-text">5 关于debug_zval_dump函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-php-learn-note-3-5" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">php学习笔记(3.5)--关于引用赋值和一般赋值</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.03.05</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/php学习笔记/">php学习笔记</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>上一篇提到了,对象赋值的时候有两种赋值方式,一种是直接<code>$a=$b</code>,第二种是引用赋值<code>$a=&amp;$b</code>.<br>不仅对象赋值的时候会有这两种情况,普通变量赋值也会有这两种情况,为了简单说明,我们先使用简单的普通变量来做说明.<br><a id="more"></a></p>
+<h1 id="1-普通变量的结构"><a href="#1-普通变量的结构" class="headerlink" title="1 普通变量的结构"></a>1 普通变量的结构</h1><p>在PHP中,所有的变量都是用一个结构zval来保存的,zval大概的结构如下所示:<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">zval_struct</span> &#123;</span></span><br><span class="line">        <span class="comment">/* Variable information */</span></span><br><span class="line">        zvalue_value value;             <span class="comment">/* value */</span></span><br><span class="line">        zend_uint refcount;</span><br><span class="line">        zend_uchar type;        <span class="comment">/* active type */</span></span><br><span class="line">        zend_uchar is_ref;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>我们这里主要用到的是两个变量,一个是refcount,即是引用计数,一个是is_ref,用来标记是否是引用.</p>
+<h1 id="2-php环境的设置"><a href="#2-php环境的设置" class="headerlink" title="2 php环境的设置"></a>2 php环境的设置</h1><p>我们在实验过程中,需要去查看refcount和is_ref的变化,所以需要使用php的<br><code>xdebug_debug_zval</code>函数,你的环境可能默认没有开启这个配置,你需要修改<code>php.ini</code>文件开启这个配置.<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1f1m1ximwj1j20wn098dj6.jpg" alt="修改php.ini文件"></p>
+<h1 id="3-refcount和is-ref"><a href="#3-refcount和is-ref" class="headerlink" title="3 refcount和is_ref"></a>3 refcount和is_ref</h1><p>我们通常的赋值方式:一般赋值和引用赋值.</p>
+<h1 id="3-1-一般赋值"><a href="#3-1-一般赋值" class="headerlink" title="3.1 一般赋值"></a>3.1 一般赋值</h1><p>当使用一般给新变量赋值的时候,php的内存策略,并不是重新申请一个新的空间,而是把原来的那个recount+1.比如下面的例子:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$a=<span class="string">'aaa'</span>;<span class="comment">//此时$a的recount=1,ref=0</span></span><br><span class="line">$b=$a;<span class="comment">//赋值过后,$a的recount=2,ref=0,$b因为指向和$a一样,所以结果和$a一样</span></span><br><span class="line">xdebug_debug_zval(<span class="string">'a'</span>,<span class="string">'b'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(refcount=<span class="number">2</span>, is_ref=<span class="number">0</span>),<span class="type">string</span> 'aaa' (length=<span class="number">3</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-2-引用赋值"><a href="#3-2-引用赋值" class="headerlink" title="3.2 引用赋值"></a>3.2 引用赋值</h1><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$a=<span class="string">'aaa'</span>;<span class="comment">//此时$a的recount=1,ref=0</span></span><br><span class="line">$c=&amp;$a;<span class="comment">//赋值过后,$a的recount=2,ref=0,$b因为指向和$a一样,所以结果和$a一样</span></span><br><span class="line">xdebug_debug_zval(<span class="string">'a'</span>,<span class="string">'b'</span>);<span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<p>输出结果如下<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(refcount=<span class="number">2</span>, is_ref=<span class="number">1</span>),<span class="type">string</span> 'aaa' (length=<span class="number">3</span>)</span><br></pre></td></tr></table></figure></p>
+<p>由上面可知,也就是每次进行赋值的时候,refcount都会+1,如果是引用赋值,is_ref就会被置为一.</p>
+<h1 id="3-3-两种赋值方式混合"><a href="#3-3-两种赋值方式混合" class="headerlink" title="3.3 两种赋值方式混合"></a>3.3 两种赋值方式混合</h1><p>那如果我们混合上面的两种赋值方式呢?比如下面的代码<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$a=<span class="string">'aaa'</span>;</span><br><span class="line">$b=&amp;$a;</span><br><span class="line">$c=$a;</span><br><span class="line">xdebug_debug_zval(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>你猜输出结果是什么?<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">a</span>: (refcount=<span class="number">2</span>, is_ref=<span class="number">1</span>),<span class="keyword">string</span> <span class="string">'aaa'</span> (<span class="built_in">length</span>=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">b: (refcount=<span class="number">2</span>, is_ref=<span class="number">1</span>),<span class="keyword">string</span> <span class="string">'aaa'</span> (<span class="built_in">length</span>=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">c: (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),<span class="keyword">string</span> <span class="string">'aaa'</span> (<span class="built_in">length</span>=<span class="number">3</span>)</span><br></pre></td></tr></table></figure></p>
+<p>为什么会这样呢?<br>我们一行一行的分析.</p>
+<ol>
+<li>首先第一行代码执行完以后,$a的结果应该是<code>(refcount=1, is_ref=0),string &#39;aaa&#39; (length=3)</code></li>
+<li>第二行代码执行引用赋值,因为refcount=1,所以$a的refcount直接+1,is_ref变成1,输出即是`(refcount=2, is_ref=1),string ‘aaa’ </li>
+<li>第三行代码执行一般赋值,那我们是不是再把refcount+1呢?不是的,因为此时的refcount&gt;1并且is_ref不为0,所以不能执行那个操作,而是直接把$a复制了另外一份,而不是修改$a的计数器.<br>所以,最后的输出结果,$c的refcount是1,因为它完全另外申请了一个副本</li>
+</ol>
+<p>我们把上面的代码换个位置<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$a=<span class="string">'aaa'</span>;</span><br><span class="line">$c=$a;</span><br><span class="line">$b=&amp;$a;</span><br><span class="line">xdebug_debug_zval(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>你再猜猜输出结果是什么?<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">a</span>: (refcount=<span class="number">2</span>, is_ref=<span class="number">1</span>),<span class="keyword">string</span> <span class="string">'aaa'</span> (<span class="built_in">length</span>=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">b: (refcount=<span class="number">2</span>, is_ref=<span class="number">1</span>),<span class="keyword">string</span> <span class="string">'aaa'</span> (<span class="built_in">length</span>=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line">c: (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),<span class="keyword">string</span> <span class="string">'aaa'</span> (<span class="built_in">length</span>=<span class="number">3</span>)</span><br></pre></td></tr></table></figure></p>
+<p>咦?结果是一样的哈?<br>对的,结果是一样的,不过执行的过程却是不同的,我们再来一行一行的分析下</p>
+<ol>
+<li>首先第一行代码执行完以后,$a的结果应该是<code>(refcount=1, is_ref=0),string &#39;aaa&#39; (length=3)</code></li>
+<li>第二行代码执行一般赋值,同理,因为refcount=1,所以$a的refcount直接+1,is_ref不变,输出即是`(refcount=2, is_ref=0),string ‘aaa’ </li>
+<li>第三行代码执行引用赋值,跟上面一样,因为refcount=2了,所以不能直接进行计数器+1,我们先检查is_ref,发现是0.这时,php首先做一个分离操作,也就是把上面一般赋值的那个值,给分离出去,分离后,$a的refcount减去1,也就是$c独立了,那么此时$a和$c的输出结果应该是<code>(refcount=1, is_ref=0),string &#39;aaa&#39; (length=3)</code>.在分离操作完成后,再做引用赋值的问题,这时候就简单了,因为$a的refcount是1,所以我们直接refcount+1,is_ref=1就搞定</li>
+<li>最后输出结果就是上面的结果了</li>
+</ol>
+<p><strong>php把上面的过程叫做写时复制(copy on write),也就是说,一般赋值$c=$a时候,php并不是立即去申请一个新的变量空间.,而是等到执行引用赋值或者其他写操作的时候(比如这个时候修改$c的值),php才会去开辟一个新的空间给赋值后的变量,也就是分离操作.</strong></p>
+<h1 id="4-推广到对象"><a href="#4-推广到对象" class="headerlink" title="4 推广到对象"></a>4 推广到对象</h1><p>上面普通变量的赋值,应该说清楚了哈.<br>其实对象的赋值和普通变量赋值是同一个道理.下面直接贴代码,不在赘述<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $aa=<span class="string">'我是类属性'</span>;</span><br><span class="line">&#125;</span><br><span class="line">$a=<span class="keyword">new</span> A();</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'刚执行完$a定义&lt;br&gt;'</span>;</span><br><span class="line">xdebug_debug_zval(<span class="string">'a'</span>);</span><br><span class="line">$b=$a;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'刚执行完$b赋值&lt;br&gt;'</span>;</span><br><span class="line">xdebug_debug_zval(<span class="string">'b'</span>);</span><br><span class="line">$c=&amp;$a;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'刚执行完$c赋值&lt;br&gt;'</span>;</span><br><span class="line">xdebug_debug_zval(<span class="string">'c'</span>);</span><br><span class="line">$d=$b;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'刚执行完$d赋值&lt;br&gt;'</span>;</span><br><span class="line">xdebug_debug_zval(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>);</span><br></pre></td></tr></table></figure></p>
+<p>输出结果如下<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">刚执行完<span class="variable">$a</span>定义</span><br><span class="line"><span class="selector-tag">a</span>: </span><br><span class="line">(refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),</span><br><span class="line"><span class="function"><span class="title">object</span><span class="params">(A)</span></span>[<span class="number">1</span>]</span><br><span class="line">  public <span class="string">'aa'</span> =&gt; (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),string <span class="string">'我是类属性'</span> (length=<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line">刚执行完<span class="variable">$b</span>赋值</span><br><span class="line"><span class="selector-tag">b</span>: </span><br><span class="line">(refcount=<span class="number">2</span>, is_ref=<span class="number">0</span>),</span><br><span class="line"><span class="function"><span class="title">object</span><span class="params">(A)</span></span>[<span class="number">1</span>]</span><br><span class="line">  public <span class="string">'aa'</span> =&gt; (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),string <span class="string">'我是类属性'</span> (length=<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line">刚执行完<span class="variable">$c</span>赋值</span><br><span class="line">c: </span><br><span class="line">(refcount=<span class="number">2</span>, is_ref=<span class="number">1</span>),</span><br><span class="line"><span class="function"><span class="title">object</span><span class="params">(A)</span></span>[<span class="number">1</span>]</span><br><span class="line">  public <span class="string">'aa'</span> =&gt; (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),string <span class="string">'我是类属性'</span> (length=<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line">刚执行完<span class="variable">$d</span>赋值</span><br><span class="line"><span class="selector-tag">a</span>: </span><br><span class="line">(refcount=<span class="number">2</span>, is_ref=<span class="number">1</span>),</span><br><span class="line"><span class="function"><span class="title">object</span><span class="params">(A)</span></span>[<span class="number">1</span>]</span><br><span class="line">  public <span class="string">'aa'</span> =&gt; (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),string <span class="string">'我是类属性'</span> (length=<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">b</span>: </span><br><span class="line">(refcount=<span class="number">2</span>, is_ref=<span class="number">0</span>),</span><br><span class="line"><span class="function"><span class="title">object</span><span class="params">(A)</span></span>[<span class="number">1</span>]</span><br><span class="line">  public <span class="string">'aa'</span> =&gt; (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),string <span class="string">'我是类属性'</span> (length=<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line">c: </span><br><span class="line">(refcount=<span class="number">2</span>, is_ref=<span class="number">1</span>),</span><br><span class="line"><span class="function"><span class="title">object</span><span class="params">(A)</span></span>[<span class="number">1</span>]</span><br><span class="line">  public <span class="string">'aa'</span> =&gt; (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),string <span class="string">'我是类属性'</span> (length=<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line">d: </span><br><span class="line">(refcount=<span class="number">2</span>, is_ref=<span class="number">0</span>),</span><br><span class="line"><span class="function"><span class="title">object</span><span class="params">(A)</span></span>[<span class="number">1</span>]</span><br><span class="line">  public <span class="string">'aa'</span> =&gt; (refcount=<span class="number">1</span>, is_ref=<span class="number">0</span>),string <span class="string">'我是类属性'</span> (length=<span class="number">15</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="5-关于debug-zval-dump函数"><a href="#5-关于debug-zval-dump函数" class="headerlink" title="5 关于debug_zval_dump函数"></a>5 关于debug_zval_dump函数</h1><p>php中还有个关于计数的函数叫做<code>debug_zval_dump</code>,它只返回refcount,不过这个函数好奇葩,输出的数据有时候跟想的都不一样.<br>比如:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a=<span class="string">'aaa'</span>;</span><br><span class="line">$b=$a;</span><br><span class="line">debug_zval_dump($a);<span class="comment">//输出3</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>原因是:执行<code>debug_zval_dump</code>相当于执行了一次一般赋值操作,所以,refcount会再加1<br>再比如<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$a=<span class="string">'aaa'</span>;</span><br><span class="line">$c=$a;</span><br><span class="line">$c=<span class="string">'bbb'</span>;</span><br><span class="line">debug_zval_dump($a,$c);<span class="comment">//输出refcount=2,refcount=2</span></span><br><span class="line">xdebug_debug_zval(<span class="string">'a'</span>,<span class="string">'c'</span>);<span class="comment">//两个值完全相同,都是refcount=1, is_ref=0),string 'bbb' (length=3)</span></span><br></pre></td></tr></table></figure></p>
+<p>额,这是不是很奇葩?再来一波<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$a=<span class="string">'aaa'</span>;</span><br><span class="line">$b=&amp;$a;</span><br><span class="line">$c=$a;</span><br><span class="line">debug_zval_dump($a,$b,$c);<span class="comment">//refcount分别是1,1,2</span></span><br><span class="line">xdebug_debug_zval(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>);<span class="comment">//refcount和is_ref分别是(2,1),(2,1),(1,0)</span></span><br></pre></td></tr></table></figure></p>
+<p>这是什么鬼?我表示都看不懂<br>稍微总结了下,<code>debug_zval_dump</code>这个函数,如果只是一般赋值,那么还比较正常,赋值一次就是refcount+1操作,最后调用<code>debug_zval_dump</code>的再+1就好了<br>但是一旦涉及到引用赋值,这货就全变成1了,(引用赋值不+1就算了,说好的调用<code>debug_zval_dump</code>的+1呢?被狗吃了?),完全搞不懂是在搞啥,还是<code>xdebug_debug_zval</code>函数好.<br>打完收工<br>ps:其实我在知乎提了个问题,不过没人回答还<a href="http://www.zhihu.com/question/41044486" target="_blank" rel="noopener">debug_zval_dump的计数问题?</a></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 <a href="http://www.laruence.com/2008/09/19/520.html" target="_blank" rel="noopener">鸟哥的博客–深入理解PHP原理之变量分离/引用</a><br>2 <a href="http://weizhifeng.net/write-php-extension-part2-2.html" target="_blank" rel="noopener">PHP扩展编写第二步：参数，数组，以及ZVAL「续」</a><br>3 <a href="http://php.net/manual/zh/function.debug-zval-dump.php" target="_blank" rel="noopener">php官方文档–debug_zval_dump函数</a><br>4 <a href="https://derickrethans.nl/talks/phparch-php-variables-article.pdf" target="_blank" rel="noopener">英文文档–php变量</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/03/04/php-learn-note-3/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/03/06/migrate-pages-from-gitcafe-to-coding/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>html5在ie中遇到的那些坑 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="前端,css,html5,ie,兼容性," />
+  
+
+  <meta name="description" content="这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).我第一个想到的是bootstrap,可惜这货太大了,我只是几个简单的页面,没必要用这么大体量的东西.搜索一番以后,我找到了我的解决方案,media query,支付宝也是这么解决的.">
+<meta name="keywords" content="前端,css,html5,ie,兼容性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="html5在ie中遇到的那些坑">
+<meta property="og:url" content="https://bblove.me/2015/05/15/holes-in-ie6-about-html5/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).我第一个想到的是bootstrap,可惜这货太大了,我只是几个简单的页面,没必要用这么大体量的东西.搜索一番以后,我找到了我的解决方案,media query,支付宝也是这么解决的.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1es5fm0jafhj20iv0ecq46.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.326Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="html5在ie中遇到的那些坑">
+<meta name="twitter:description" content="这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).我第一个想到的是bootstrap,可惜这货太大了,我只是几个简单的页面,没必要用这么大体量的东西.搜索一番以后,我找到了我的解决方案,media query,支付宝也是这么解决的.">
+<meta name="twitter:image" content="https://ww1.sinaimg.cn/large/692869a3gw1es5fm0jafhj20iv0ecq46.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前提条件"><span class="toc-text">前提条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-自动适配终端屏幕宽度"><span class="toc-text">1  自动适配终端屏幕宽度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-使ie6-8支持html5的元素"><span class="toc-text">2  使ie6-8支持html5的元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-ie10以下的版本不支持placeholder-不完美解决"><span class="toc-text">3  ie10以下的版本不支持placeholder(不完美解决)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-background-size在ie9一下不支持"><span class="toc-text">4  background-size在ie9一下不支持</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-input输入框-光标不居中"><span class="toc-text">5  input输入框 光标不居中</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-opacity的继承问题"><span class="toc-text">6  opacity的继承问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-border-radius在ie9以下不支持"><span class="toc-text">7  border-radius在ie9以下不支持</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-css递进关系"><span class="toc-text">8 css递进关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-holes-in-ie6-about-html5" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">html5在ie中遇到的那些坑</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.05.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/前端/">前端</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).<br>我第一个想到的是bootstrap,可惜这货太大了,我只是几个简单的页面,没必要用这么大体量的东西.<br>搜索一番以后,我找到了我的解决方案,media query,支付宝也是这么解决的.<br><a id="more"></a></p>
+<h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1><p>以下所给出的例子,都是html5的页面,不合适html4.0的页面,也就是说你的头部必须是<br><code>&lt;!DOCTYPE html&gt;</code>才行,如果是<code>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;</code>,是不行的,要仔细看清楚哈.<br>下面就来罗列一下,这次经过的那些坑:</p>
+<h1 id="1-自动适配终端屏幕宽度"><a href="#1-自动适配终端屏幕宽度" class="headerlink" title="1  自动适配终端屏幕宽度"></a>1  自动适配终端屏幕宽度</h1><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta <span class="attr">name="viewport"</span> <span class="attr">content="width=device-width,</span> <span class="attr">initial-scale=1,</span> <span class="attr">maximum-scale=1,</span> <span class="attr">user-scalable=no"&gt;</span></span><br></pre></td></tr></table></figure>
+<p>content属性值 :<br>     width:可视区域的宽度，值可为数字或关键词device-width<br>     height:同width<br>     intial-scale:页面首次被显示是可视区域的缩放级别，取值1.0则页面按实际尺寸显示，无任何缩放<br>     maximum-scale=1.0, minimum-scale=1.0;可视区域的缩放级别，<br>              maximum-scale用户可将页面放大的程序，1.0将禁止用户放大到实际尺寸之上。<br>     user-scalable:是否可对页面进行缩放，no 禁止缩放</p>
+<h1 id="2-使ie6-8支持html5的元素"><a href="#2-使ie6-8支持html5的元素" class="headerlink" title="2  使ie6-8支持html5的元素"></a>2  使ie6-8支持html5的元素</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HTML5 shim, for IE6-8 support of HTML5 elements --&gt;</span></span><br><span class="line"><span class="comment">&lt;!--[if lt IE 9]&gt;</span></span><br><span class="line"><span class="comment">&lt;script src="http://html5shim.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="comment">&lt;![endif]--&gt;</span></span><br></pre></td></tr></table></figure>
+<p>以上代码,顾名思义,当ie的版本是9一下的时候,加载html5.js这个文件(建议最好下载下来在本地调用),他是用来帮助ie6-8支持html元素的.</p>
+<h1 id="3-ie10以下的版本不支持placeholder-不完美解决"><a href="#3-ie10以下的版本不支持placeholder-不完美解决" class="headerlink" title="3  ie10以下的版本不支持placeholder(不完美解决)"></a>3  ie10以下的版本不支持placeholder(不完美解决)</h1><p>placeholder是html5里面才有的东东,ie8不支持就算了,ie9都不支持,伤不起.这个没办法,只能用js去写,网上有很多类似的东西,不过不是很好用,我找到的都不完美.<br><figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name">function</span>($) &#123;</span><br><span class="line">  /**</span><br><span class="line">   * 没有开花的树</span><br><span class="line">   * http://blog.csdn.net/mycwq/</span><br><span class="line">   * <span class="number">2012</span>/<span class="number">11</span>/<span class="number">28</span> <span class="number">15</span>:<span class="number">12</span></span><br><span class="line">   */</span><br><span class="line"></span><br><span class="line">  var placeholderfriend = &#123;</span><br><span class="line">    focus: function(<span class="name">s</span>) &#123;</span><br><span class="line">      s = $(<span class="name">s</span>).hide().prev().show().focus()<span class="comment">;</span></span><br><span class="line">      var idValue = s.attr(<span class="string">"id"</span>)<span class="comment">;</span></span><br><span class="line">      if (<span class="name">idValue</span>) &#123;</span><br><span class="line">        s.attr(<span class="string">"id"</span>, idValue.replace(<span class="string">"placeholderfriend"</span>, <span class="string">""</span>))<span class="comment">;</span></span><br><span class="line">      &#125;</span><br><span class="line">      var clsValue = s.attr(<span class="string">"class"</span>)<span class="comment">;</span></span><br><span class="line">      if (<span class="name">clsValue</span>) &#123;</span><br><span class="line">        s.attr(<span class="string">"class"</span>, clsValue.replace(<span class="string">"placeholderfriend"</span>, <span class="string">""</span>))<span class="comment">;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  //判断是否支持placeholder</span><br><span class="line">  function isPlaceholer() &#123;</span><br><span class="line">    var input = document.createElement(<span class="name">'input'</span>)<span class="comment">;</span></span><br><span class="line">    return <span class="string">"placeholder"</span> in input;</span><br><span class="line">  &#125;</span><br><span class="line">  //不支持的代码</span><br><span class="line">  if (<span class="name">!isPlaceholer</span>()) &#123;</span><br><span class="line">    $(<span class="name">function</span>() &#123;</span><br><span class="line"></span><br><span class="line">      var form = $(<span class="name">this</span>)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">      //遍历所有文本框，添加placeholder模拟事件</span><br><span class="line">      var elements = form.find(<span class="string">"input[type='text'][placeholder]"</span>)<span class="comment">;</span></span><br><span class="line">      elements.each(<span class="name">function</span>() &#123;</span><br><span class="line">        var s = $(<span class="name">this</span>)<span class="comment">;</span></span><br><span class="line">        var pValue = s.attr(<span class="string">"placeholder"</span>)<span class="comment">;</span></span><br><span class="line">        var sValue = s.val()<span class="comment">;</span></span><br><span class="line">        if (<span class="name">pValue</span>) &#123;</span><br><span class="line">          if (<span class="name">sValue</span> == '') &#123;</span><br><span class="line">            s.val(<span class="name">pValue</span>)<span class="comment">;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">      elements.focus(<span class="name">function</span>() &#123;</span><br><span class="line">        var s = $(<span class="name">this</span>)<span class="comment">;</span></span><br><span class="line">        var pValue = s.attr(<span class="string">"placeholder"</span>)<span class="comment">;</span></span><br><span class="line">        var sValue = s.val()<span class="comment">;</span></span><br><span class="line">        if (<span class="name">sValue</span> &amp;&amp; pValue) &#123;</span><br><span class="line">          if (<span class="name">sValue</span> == pValue) &#123;</span><br><span class="line">            s.val(<span class="name">''</span>)<span class="comment">;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">      elements.blur(<span class="name">function</span>() &#123;</span><br><span class="line">        var s = $(<span class="name">this</span>)<span class="comment">;</span></span><br><span class="line">        var pValue = s.attr(<span class="string">"placeholder"</span>)<span class="comment">;</span></span><br><span class="line">        var sValue = s.val()<span class="comment">;</span></span><br><span class="line">        if (<span class="name">!sValue</span>) &#123;</span><br><span class="line">          s.val(<span class="name">pValue</span>)<span class="comment">;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">      //遍历所有密码框，添加placeholder模拟事件</span><br><span class="line">      var elementsPass = form.find(<span class="string">"input[type='password'][placeholder]"</span>)<span class="comment">;</span></span><br><span class="line">      elementsPass.each(<span class="name">function</span>(<span class="name">i</span>) &#123;</span><br><span class="line">        var s = $(<span class="name">this</span>)<span class="comment">;</span></span><br><span class="line">        var pValue = s.attr(<span class="string">"placeholder"</span>)<span class="comment">;</span></span><br><span class="line">        var sValue = s.val()<span class="comment">;</span></span><br><span class="line">        if (<span class="name">pValue</span>) &#123;</span><br><span class="line">          if (<span class="name">sValue</span> == '') &#123;</span><br><span class="line">            //DOM不支持type的修改，需要复制密码框属性，生成新的DOM</span><br><span class="line">            var html = this.outerHTML || <span class="string">""</span><span class="comment">;</span></span><br><span class="line">            html = html.replace(/\s*type=(['<span class="string">"])?password\1/gi, "</span> type=text placeholderfriend<span class="string">")</span></span><br><span class="line"><span class="string">              .replace(/\s*(?:value|on[a-z]+|name)(=(['"</span>])?\S*\<span class="number">1</span>)?/gi, <span class="string">" "</span>)</span><br><span class="line">              .replace(/\s*placeholderfriend/, <span class="string">" placeholderfriend value='"</span> + pValue</span><br><span class="line">              + <span class="string">"' "</span> + <span class="string">"onfocus='placeholderfriendfocus(this);' "</span>)<span class="comment">;</span></span><br><span class="line">            var idValue = s.attr(<span class="string">"id"</span>)<span class="comment">;</span></span><br><span class="line">            if (<span class="name">idValue</span>) &#123;</span><br><span class="line">              s.attr(<span class="string">"id"</span>, idValue + <span class="string">"placeholderfriend"</span>)<span class="comment">;</span></span><br><span class="line">            &#125;</span><br><span class="line">            var clsValue = s.attr(<span class="string">"class"</span>)<span class="comment">;</span></span><br><span class="line">            if (<span class="name">clsValue</span>) &#123;</span><br><span class="line">              s.attr(<span class="string">"class"</span>, clsValue + <span class="string">"placeholderfriend"</span>)<span class="comment">;</span></span><br><span class="line">            &#125;</span><br><span class="line">            s.hide()<span class="comment">;</span></span><br><span class="line">            s.after(<span class="name">html</span>)<span class="comment">;</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">      elementsPass.blur(<span class="name">function</span>() &#123;</span><br><span class="line">        var s = $(<span class="name">this</span>)<span class="comment">;</span></span><br><span class="line">        var sValue = s.val()<span class="comment">;</span></span><br><span class="line">        if (<span class="name">sValue</span> == '') &#123;</span><br><span class="line">          var idValue = s.attr(<span class="string">"id"</span>)<span class="comment">;</span></span><br><span class="line">          if (<span class="name">idValue</span>) &#123;</span><br><span class="line">            s.attr(<span class="string">"id"</span>, idValue + <span class="string">"placeholderfriend"</span>)<span class="comment">;</span></span><br><span class="line">          &#125;</span><br><span class="line">          var clsValue = s.attr(<span class="string">"class"</span>)<span class="comment">;</span></span><br><span class="line">          if (<span class="name">clsValue</span>) &#123;</span><br><span class="line">            s.attr(<span class="string">"class"</span>, clsValue + <span class="string">"placeholderfriend"</span>)<span class="comment">;</span></span><br><span class="line">          &#125;</span><br><span class="line">          s.hide().next().show()<span class="comment">;</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">    &#125;)<span class="comment">;</span></span><br><span class="line">  &#125;</span><br><span class="line">  window.placeholderfriendfocus = placeholderfriend.focus;</span><br><span class="line">&#125;)(<span class="name">jQuery</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>我最终选择这段代码,他能够在ie的各版本中正常运行,支持<code>text</code>和<code>password</code>标签.<br>唯一的不足是,你直接点提交,你的text里面会有内容,内容就是placeholder中设置的提示内容.</p>
+<h1 id="4-background-size在ie9一下不支持"><a href="#4-background-size在ie9一下不支持" class="headerlink" title="4  background-size在ie9一下不支持"></a>4  background-size在ie9一下不支持</h1><p>background-size属性是用来让背景图片平铺的.不过ie9一下并不支持这个属性,我们使用滤镜来实现平铺的效果,示例代码如下.<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">background-size: cover;</span><br><span class="line">    filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(<span class="attribute">src</span>=<span class="string">'./assets/images/01.png'</span>, <span class="attribute">sizingMethod</span>=<span class="string">'scale'</span>)\9;</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是,这里的图片路径是相对于html文件的,不是css的路径,如果设置了没效果,先检查下你的路径.</p>
+<h1 id="5-input输入框-光标不居中"><a href="#5-input输入框-光标不居中" class="headerlink" title="5  input输入框 光标不居中"></a>5  input输入框 光标不居中</h1><p>这个问题来自于魅族手机,还有老大难的ie6-8的测试中.<br>解决方法是设置<code>height</code>和<code>line-height</code>等高,没那么简单,这里有技巧的<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">line-height</span>: <span class="selector-tag">normal</span>;<span class="comment">/*这行代码解决了魅族手机中的不居中问题*/</span></span><br><span class="line"><span class="selector-tag">line-height</span>: 42<span class="selector-tag">px</span>\9;<span class="comment">/*这行css代码的含义是ie9以下设置line-height为42px*/</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="6-opacity的继承问题"><a href="#6-opacity的继承问题" class="headerlink" title="6  opacity的继承问题"></a>6  opacity的继承问题</h1><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id='a' style=""&gt;</span><br><span class="line">    &lt;div id='b'&gt;</span><br><span class="line">    <span class="selector-tag">hello</span> <span class="selector-tag">moto</span></span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>如果我们给父div设置了一个<code>opacity</code>为0.1,即使我们给子div设置<code>opacity</code>为1,也是不管用的,如图<br><img src="https://ww1.sinaimg.cn/large/692869a3gw1es5fm0jafhj20iv0ecq46.jpg" alt="未设置父div的opacity之前"><br>设置父div的<code>opacity</code>之后<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg" alt="设置父div的opacity之后"><br>我们可以清楚看到子div受到了影响.<br>解决办法:解除父子关系,把子div从父div中挪出来</p>
+<h1 id="7-border-radius在ie9以下不支持"><a href="#7-border-radius在ie9以下不支持" class="headerlink" title="7  border-radius在ie9以下不支持"></a>7  border-radius在ie9以下不支持</h1><p>输入框等其他地方用到圆角的话,在老版本ie中果断是没有支持的.<br>我们需要用hack的方式<a href="http://css3pie.com/" target="_blank" rel="noopener">pie</a>,去实现border-radius和box-shadow等功能.加入pie以后的css代码如下:<br><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-moz-<span class="attribute">border-radius</span>: <span class="number">6px</span>;</span><br><span class="line">-webkit-<span class="attribute">border-radius</span>: <span class="number">6px</span>;</span><br><span class="line"><span class="attribute">border-radius</span>: <span class="number">6px</span>;</span><br><span class="line">behavior: url(assets/css/pie.htc);<span class="comment">/*这一行是核心*/</span></span><br></pre></td></tr></table></figure></p>
+<p>缺点:设置的border-radius四角的设置值都是相同的</p>
+<h1 id="8-css递进关系"><a href="#8-css递进关系" class="headerlink" title="8 css递进关系"></a>8 css递进关系</h1><p>挖坑,以后填</p>
+<p>ps:晚安,亲爱的</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 <a href="http://www.cnblogs.com/yuzhongwusan/p/4184923.html" target="_blank" rel="noopener">meta name=”viewport” content=”width=device-width,initial-scale=1.0” 解释</a><br>2 <a href="http://css3pie.com/" target="_blank" rel="noopener">pie用hack方式在ie中实现border-radius</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/05/15/opencv-and-vs2010-in-win8/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/05/23/python-requests-login-csdn-blog/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

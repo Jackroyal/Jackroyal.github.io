@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>解决倒水问题 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="智力题," />
+  
+
+  <meta name="description" content="有两个容器，容积分别为A升和B升，有无限多的水，现在需要C升水。我们还有一个足够大的水缸，足够容纳C升水。起初它是空的，我们只能往水缸里倒入水，而不能倒出。可以进行的操作是：把一个容器灌满；把一个容器清空（容器里剩余的水全部倒掉，或者倒入水缸）；用一个容器的水倒入另外一个容器，直到倒出水的容器空或者倒入水的容器满。    问是否能够通过有限次操作，使得水缸最后恰好有C升水。">
+<meta name="keywords" content="智力题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决倒水问题">
+<meta property="og:url" content="https://bblove.me/2016/03/19/how-to-solve-the-water-problem/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="有两个容器，容积分别为A升和B升，有无限多的水，现在需要C升水。我们还有一个足够大的水缸，足够容纳C升水。起初它是空的，我们只能往水缸里倒入水，而不能倒出。可以进行的操作是：把一个容器灌满；把一个容器清空（容器里剩余的水全部倒掉，或者倒入水缸）；用一个容器的水倒入另外一个容器，直到倒出水的容器空或者倒入水的容器满。    问是否能够通过有限次操作，使得水缸最后恰好有C升水。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.314Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决倒水问题">
+<meta name="twitter:description" content="有两个容器，容积分别为A升和B升，有无限多的水，现在需要C升水。我们还有一个足够大的水缸，足够容纳C升水。起初它是空的，我们只能往水缸里倒入水，而不能倒出。可以进行的操作是：把一个容器灌满；把一个容器清空（容器里剩余的水全部倒掉，或者倒入水缸）；用一个容器的水倒入另外一个容器，直到倒出水的容器空或者倒入水的容器满。    问是否能够通过有限次操作，使得水缸最后恰好有C升水。">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-是否有解"><span class="toc-text">1 是否有解</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-解法"><span class="toc-text">2 解法</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-how-to-solve-the-water-problem" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">解决倒水问题</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.03.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>有两个容器，容积分别为A升和B升，有无限多的水，现在需要C升水。<br>我们还有一个足够大的水缸，足够容纳C升水。起初它是空的，我们只能往水缸里倒入水，而不能倒出。<br>可以进行的操作是：<br>把一个容器灌满；<br>把一个容器清空（容器里剩余的水全部倒掉，或者倒入水缸）；<br>用一个容器的水倒入另外一个容器，直到倒出水的容器空或者倒入水的容器满。<br>    问是否能够通过有限次操作，使得水缸最后恰好有C升水。<br><a id="more"></a><br>这是很经典的智力题,各种倒水,求怎么倒.<br>网上有很多资料,我稍微总结下.</p>
+<h1 id="1-是否有解"><a href="#1-是否有解" class="headerlink" title="1 是否有解"></a>1 是否有解</h1><p>是的,不是任意的ABC值都是有解的,比如用4升和6升的容器,倒出5升水,这个方案就是无解的.<br>总结来说:<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">倒水方案有解的,充要条件是:</span><br><span class="line">C&lt;=<span class="keyword">A</span>+B并且</span><br><span class="line">C能被<span class="keyword">A</span>和B的最大公约数整除</span><br></pre></td></tr></table></figure></p>
+<p>比如上面的例子,4和6的公约数是2,5不能被2整除,所以是无解的.<br>具体证明过程请看文章后面的参考文献</p>
+<h1 id="2-解法"><a href="#2-解法" class="headerlink" title="2 解法"></a>2 解法</h1><p>有一个很简单的思路,在AB两个容器中,假设A&lt;B,那么我们不停地用A往B中加水,溢出的时候,就把B清空,把A中多余部分导入B中.具体流程描述如下<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A%<span class="attribute">B</span>=x</span><br><span class="line">2A%<span class="attribute">B</span>=y</span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line"><span class="built_in">..</span>.</span><br><span class="line">nA%<span class="attribute">B</span>=z</span><br></pre></td></tr></table></figure></p>
+<p>知道最后余数z等于C,就停止<br>用一个具体的例子<br><code>A=5</code>,<code>B=9</code>,<code>C=7</code><br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>%<span class="number">9</span>=<span class="number">5</span></span><br><span class="line"><span class="number">10</span>%<span class="number">9</span>=<span class="number">1</span></span><br><span class="line"><span class="number">15</span>%<span class="number">9</span>=<span class="number">6</span></span><br><span class="line"><span class="number">20</span>%<span class="number">9</span>=<span class="number">2</span></span><br><span class="line"><span class="number">25</span>%<span class="number">9</span>=<span class="number">7</span></span><br></pre></td></tr></table></figure></p>
+<p>也就完成了查找<br>当然这个方法不是步数最少的解法</p>
+<p><a href="http://www.acmerblog.com/pour-water-problem-5615.html" target="_blank" rel="noopener">倒水问题</a><br><a href="http://www.cnblogs.com/frog112111/archive/2012/08/19/2646012.html" target="_blank" rel="noopener">欧几里得和扩展欧几里得算法</a><br><a href="http://www.cnblogs.com/drizzlecrj/archive/2007/09/14/892340.html" target="_blank" rel="noopener">最大公约数的三种解法</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/03/19/php-learn-note-5/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/03/25/http-1-0-vs-1-1/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

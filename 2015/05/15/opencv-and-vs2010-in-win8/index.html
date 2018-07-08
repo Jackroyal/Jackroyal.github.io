@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>win8中使用vs2010配置opencv | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="opencv,软件安装与技巧,vs2010,win8," />
+  
+
+  <meta name="description" content="今天在师兄的帮助下,总算配置好了opencv. 1 系统环境和软件版本操作系统:win8 64位vs版本:vs2010 32位opencv版本:opencv 2.4.10">
+<meta name="keywords" content="opencv,软件安装与技巧,vs2010,win8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="win8中使用vs2010配置opencv">
+<meta property="og:url" content="https://bblove.me/2015/05/15/opencv-and-vs2010-in-win8/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="今天在师兄的帮助下,总算配置好了opencv. 1 系统环境和软件版本操作系统:win8 64位vs版本:vs2010 32位opencv版本:opencv 2.4.10">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1es5atg7oimj20kw081ta4.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1es5az6qsa7j20jc099jtf.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1es5bew5vcjj20e10g4go8.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.327Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="win8中使用vs2010配置opencv">
+<meta name="twitter:description" content="今天在师兄的帮助下,总算配置好了opencv. 1 系统环境和软件版本操作系统:win8 64位vs版本:vs2010 32位opencv版本:opencv 2.4.10">
+<meta name="twitter:image" content="https://ww3.sinaimg.cn/large/692869a3gw1es5atg7oimj20kw081ta4.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-系统环境和软件版本"><span class="toc-text">1 系统环境和软件版本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-配置opencv"><span class="toc-text">2 配置opencv</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#解压opencv到某个目录"><span class="toc-text">解压opencv到某个目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复制include文件夹"><span class="toc-text">复制include文件夹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复制lib文件夹"><span class="toc-text">复制lib文件夹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#复制bin文件夹"><span class="toc-text">复制bin文件夹</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-写代码调试"><span class="toc-text">3 写代码调试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-opencv-and-vs2010-in-win8" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">win8中使用vs2010配置opencv</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.05.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/软件安装与技巧/">软件安装与技巧</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>今天在师兄的帮助下,总算配置好了opencv.</p>
+<h1 id="1-系统环境和软件版本"><a href="#1-系统环境和软件版本" class="headerlink" title="1 系统环境和软件版本"></a>1 系统环境和软件版本</h1><p>操作系统:win8 64位<br>vs版本:vs2010 32位<br>opencv版本:opencv 2.4.10<br><a id="more"></a></p>
+<h1 id="2-配置opencv"><a href="#2-配置opencv" class="headerlink" title="2 配置opencv"></a>2 配置opencv</h1><p>安装vs比较简单,这里不再赘述.<br>现在说下配置opencv.<br>网上有很多相关的配置,都是设置环境变量,然后添加库目录,包含目录,blablabla.<br>这样做的坏处是,每次我新建一个项目,都要重复以上操作,这样岂不是很蛋疼.<br>如果你移植你的程序给别人,别人也还要去配置这些东西才能够运行,是不是很不方便?<br>所以,师兄教给我简单粗暴的办法,直接把相关文件手动复制到vs的目录下,这样就没这么多事了.<br><strong>缺点:每次都需要手动设置你所需要调用的lib文件</strong></p>
+<h2 id="解压opencv到某个目录"><a href="#解压opencv到某个目录" class="headerlink" title="解压opencv到某个目录"></a>解压opencv到某个目录</h2><p>这个很简单,双击那个exe,选择一个目录,就会把opencv的文件解压到你设定的那个目录.<br>我将它解压到<code>D:/opencv</code>下.</p>
+<h2 id="复制include文件夹"><a href="#复制include文件夹" class="headerlink" title="复制include文件夹"></a>复制include文件夹</h2><p>复制<code>D:\opencv\build\include</code>目录下的<code>opencv</code>和<code>opencv2</code><br>到<code>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include</code>.<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1es5atg7oimj20kw081ta4.jpg" alt="opencv解压后的include目录"><br><img src="https://ww2.sinaimg.cn/large/692869a3gw1es5az6qsa7j20jc099jtf.jpg" alt="复制以后的效果截图"></p>
+<h2 id="复制lib文件夹"><a href="#复制lib文件夹" class="headerlink" title="复制lib文件夹"></a>复制lib文件夹</h2><p>同理,复制lib文件夹<br>从<code>D:\opencv\build\x86\vc10\lib</code>复制到<code>C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib</code><br>如果你的程序是win32就选择x86,如果你写的程序是64位的,就复制x64的程序</p>
+<h2 id="复制bin文件夹"><a href="#复制bin文件夹" class="headerlink" title="复制bin文件夹"></a>复制bin文件夹</h2><p>复制bin目录下的东西,我们只需要系统找得到就行,所以我们这里采用环境变量的搞法</p>
+<p>我们修改path变量,在后面添加<code>;d:\opencv\build\x86\vc10\bin</code>,效果如图所示<br><br><img src="https://ww2.sinaimg.cn/large/692869a3gw1es5bew5vcjj20e10g4go8.jpg" alt="修改path变量,添加opencv的bin目录路径"></p>
+<h1 id="3-写代码调试"><a href="#3-写代码调试" class="headerlink" title="3 写代码调试"></a>3 写代码调试</h1><p>代码如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># include &lt;opencv2/opencv.hpp&gt;</span><br><span class="line"># include &lt;iostream&gt;</span><br><span class="line"># include &lt;string&gt;</span><br><span class="line"># ifdef _DEBUG</span><br><span class="line"># pragma comment(lib,&quot;opencv_core2410d.lib&quot;)</span><br><span class="line"># pragma comment(lib,&quot;opencv_highgui2410d.lib&quot;)</span><br><span class="line"># else</span><br><span class="line"># pragma comment(lib,&quot;opencv_core2410.lib&quot;)</span><br><span class="line"># pragma comment(lib,&quot;opencv_highgui2410.lib&quot;)</span><br><span class="line"># endif</span><br><span class="line">using namespace cv;</span><br><span class="line">using namespace std;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Mat img = imread(&quot;ie8-2.png&quot;);</span><br><span class="line">    if(img.empty())</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;&quot;error&quot;;</span><br><span class="line">        return -1;</span><br><span class="line">   &#125;</span><br><span class="line">   imshow(&quot;xx的靓照&quot;,img);</span><br><span class="line">   waitKey();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意一下这段宏设置<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> ifdef _DEBUG</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pragma comment(lib,<span class="string">"opencv_core2410d.lib"</span>)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pragma comment(lib,<span class="string">"opencv_highgui2410d.lib"</span>)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pragma comment(lib,<span class="string">"opencv_core2410.lib"</span>)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> pragma comment(lib,<span class="string">"opencv_highgui2410.lib"</span>)</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> endif</span></span><br></pre></td></tr></table></figure></p>
+<p>debug和release,分别调用对应的lib<br>如果你当前是debug模式<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># <span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">"opencv_core2410d.lib"</span>)</span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">pragma</span> comment(lib,<span class="meta-string">"opencv_highgui2410d.lib"</span>)</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码是必须要的,以后调用相应的lib文件,我们都要手动在头部加入这句话才行<br>否则,你会看到下面这堆东西<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>&gt;  test.cpp</span><br><span class="line"><span class="number">1</span>&gt;ManifestResourceCompile:</span><br><span class="line"><span class="number">1</span>&gt;  所有输出均为最新。</span><br><span class="line"><span class="number">1</span>&gt;test.obj : <span class="keyword">error</span> LNK2019: 无法解析的外部符号 <span class="string">"int __cdecl cv::waitKey(int)"</span> (?waitKey@cv@@YAHH@Z)，该符号在函数 _main 中被引用</span><br><span class="line"><span class="number">1</span>&gt;test.obj : <span class="keyword">error</span> LNK2019: 无法解析的外部符号 <span class="string">"void __cdecl cv::imshow(class std::basic_string&lt;char,struct std::char_traits&lt;char&gt;,class std::allocator&lt;char&gt; &gt; const &amp;,class cv::_InputArray const &amp;)"</span> (?imshow@cv@@YAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV_InputArray@1@@Z)，该符号在函数 _main 中被引用</span><br><span class="line"><span class="number">1</span>&gt;test.obj : <span class="keyword">error</span> LNK2019: 无法解析的外部符号 <span class="string">"public: __thiscall cv::_InputArray::_InputArray(class cv::Mat const &amp;)"</span> (??<span class="number">0</span>_InputArray@cv@@QAE@ABVMat@1@@Z)，该符号在函数 _main 中被引用</span><br><span class="line"><span class="number">1</span>&gt;test.obj : <span class="keyword">error</span> LNK2019: 无法解析的外部符号 <span class="string">"class cv::Mat __cdecl cv::imread(class std::basic_string&lt;char,struct std::char_traits&lt;char&gt;,class std::allocator&lt;char&gt; &gt; const &amp;,int)"</span> (?imread@cv@@YA?AVMat@1@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z)，该符号在函数 _main 中被引用</span><br><span class="line"><span class="number">1</span>&gt;test.obj : <span class="keyword">error</span> LNK2019: 无法解析的外部符号 <span class="string">"void __cdecl cv::fastFree(void *)"</span> (?fastFree@cv@@YAXPAX@Z)，该符号在函数 <span class="string">"public: __thiscall cv::Mat::~Mat(void)"</span> (??<span class="number">1</span>Mat@cv@@QAE@XZ) 中被引用</span><br><span class="line"><span class="number">1</span>&gt;test.obj : <span class="keyword">error</span> LNK2019: 无法解析的外部符号 <span class="string">"public: void __thiscall cv::Mat::deallocate(void)"</span> (?deallocate@Mat@cv@@QAEXXZ)，该符号在函数 <span class="string">"public: void __thiscall cv::Mat::release(void)"</span> (?release@Mat@cv@@QAEXXZ) 中被引用</span><br><span class="line"><span class="number">1</span>&gt;test.obj : <span class="keyword">error</span> LNK2019: 无法解析的外部符号 <span class="string">"int __cdecl cv::_interlockedExchangeAdd(int *,int)"</span> (?_interlockedExchangeAdd@cv@@YAHPAHH@Z)，该符号在函数 <span class="string">"public: void __thiscall cv::Mat::release(void)"</span> (?release@Mat@cv@@QAEXXZ) 中被引用</span><br><span class="line"><span class="number">1</span>&gt;C:\Users\chenhao\documents\visual studio <span class="number">2010</span>\Projects\b\Debug\b.exe : fatal <span class="keyword">error</span> LNK1120: <span class="number">7</span> 个无法解析的外部命令</span><br><span class="line"><span class="number">1</span>&gt;</span><br><span class="line"><span class="number">1</span>&gt;生成失败。</span><br><span class="line"><span class="number">1</span>&gt;</span><br><span class="line"><span class="number">1</span>&gt;已用时间 <span class="number">00</span>:<span class="number">00</span>:<span class="number">03.71</span></span><br><span class="line">========== 生成: 成功 <span class="number">0</span> 个，失败 <span class="number">1</span> 个，最新 <span class="number">0</span> 个，跳过 <span class="number">0</span> 个 ==========</span><br></pre></td></tr></table></figure></p>
+<p>ok,打完收工!</p>
+<p>ps:上述操作完,应该就好了.我还遇到一个奇葩问题<br>编译和生成解决方案没有问题，但是开始执行就出现应用程序无法正常启动 0xc000007b错误窗口<br>最后,原来是权限问题,使用管理员权限打开vs就解决了,win7下找兼容性设置,以管理员权限运行<br>我的win8没有找到兼容性设置,如图所示操作,每次都能以管理员权限打开vs<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg" alt="win8使用管理员权限运行vs2010"></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 <a href="http://www.cnblogs.com/freedomshe/archive/2012/04/25/2470540.html" target="_blank" rel="noopener">VS2010+Opencv-2.4.0的配置攻略</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/05/06/opencv-lbph-source-code-analysis/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/05/15/holes-in-ie6-about-html5/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

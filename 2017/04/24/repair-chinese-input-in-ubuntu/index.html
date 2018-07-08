@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>修复ubuntu终端中文显示和输入的问题 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Linux,ubuntu," />
+  
+
+  <meta name="description" content="我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文. 昨晚没事,就查了一下资料,修复了这个问题. 1 目标本文的目标主要是修复中文文件名乱码和中文输入的问题">
+<meta name="keywords" content="Linux,ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="修复ubuntu终端中文显示和输入的问题">
+<meta property="og:url" content="https://bblove.me/2017/04/24/repair-chinese-input-in-ubuntu/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文. 昨晚没事,就查了一下资料,修复了这个问题. 1 目标本文的目标主要是修复中文文件名乱码和中文输入的问题">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fexql3wkdej2076047744.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fexreyc5kyj20c007wt8w.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.331Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="修复ubuntu终端中文显示和输入的问题">
+<meta name="twitter:description" content="我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文. 昨晚没事,就查了一下资料,修复了这个问题. 1 目标本文的目标主要是修复中文文件名乱码和中文输入的问题">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fexql3wkdej2076047744.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-目标"><span class="toc-text">1 目标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-环境"><span class="toc-text">2 环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-修改配置"><span class="toc-text">3 修改配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-服务器编码配置"><span class="toc-text">3.1 服务器编码配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-本地配置"><span class="toc-text">3.2 本地配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-编码转换"><span class="toc-text">3.3 编码转换</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-repair-chinese-input-in-ubuntu" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">修复ubuntu终端中文显示和输入的问题</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.04.24</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文.</p>
+<p>昨晚没事,就查了一下资料,修复了这个问题.</p>
+<h1 id="1-目标"><a href="#1-目标" class="headerlink" title="1 目标"></a>1 目标</h1><p>本文的目标主要是修复中文文件名乱码和中文输入的问题,本文的目标不是把整个系统的所有语言体系都改成中文,只是单纯的修复中文输入问题和中文文件名显示问题.</p>
+<h1 id="2-环境"><a href="#2-环境" class="headerlink" title="2 环境"></a>2 环境</h1><p><strong>服务器环境</strong>: Ubuntu Server 16.04 lts<br><strong>本地环境</strong>: windows7<br><strong>软件环境</strong>: Xshell 和 Xftp</p>
+<h1 id="3-修改配置"><a href="#3-修改配置" class="headerlink" title="3 修改配置"></a>3 修改配置</h1><p>与中文编码相关的配置主要包括: 本地编码和服务器编码.我们首先设置服务器端编码:</p>
+<h2 id="3-1-服务器编码配置"><a href="#3-1-服务器编码配置" class="headerlink" title="3.1 服务器编码配置"></a>3.1 服务器编码配置</h2><p>首先,我们使用xshell连接登录服务器,然后在终端中输入<code>locale</code>命令,得到结果如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ locale</span><br><span class="line">LANG=</span><br><span class="line">LANGUAGE=C:</span><br><span class="line">LC_CTYPE=<span class="string">"POSIX"</span></span><br><span class="line">LC_NUMERIC=<span class="string">"POSIX"</span></span><br><span class="line">LC_TIME=<span class="string">"POSIX"</span></span><br><span class="line">LC_COLLATE=<span class="string">"POSIX"</span></span><br><span class="line">LC_MONETARY=<span class="string">"POSIX"</span></span><br><span class="line">LC_MESSAGES=<span class="string">"POSIX"</span></span><br><span class="line">LC_PAPER=<span class="string">"POSIX"</span></span><br><span class="line">LC_NAME=<span class="string">"POSIX"</span></span><br><span class="line">LC_ADDRESS=<span class="string">"POSIX"</span></span><br><span class="line">LC_TELEPHONE=<span class="string">"POSIX"</span></span><br><span class="line">LC_MEASUREMENT=<span class="string">"POSIX"</span></span><br><span class="line">LC_IDENTIFICATION=<span class="string">"POSIX"</span></span><br><span class="line">LC_ALL=</span><br></pre></td></tr></table></figure></p>
+<p>各个选项的含义如下:</p>
+<ul>
+<li>语言符号及其分类(LC_CTYPE)</li>
+<li>数字(LC_NUMERIC)</li>
+<li>比较和排序习惯(LC_COLLATE)</li>
+<li>时间显示格式(LC_TIME)</li>
+<li>货币单位(LC_MONETARY)</li>
+<li>信息主要是提示信息,错误信息, 状态信息, 标题, 标签, 按钮和菜单等(LC_MESSAGES)</li>
+<li>姓名书写方式(LC_NAME)</li>
+<li>地址书写方式(LC_ADDRESS)</li>
+<li>电话号码书写方式(LC_TELEPHONE)</li>
+<li>度量衡表达方式(LC_MEASUREMENT)</li>
+<li>默认纸张尺寸大小(LC_PAPER)</li>
+<li>对locale自身包含信息的概述(LC_IDENTIFICATION)。</li>
+</ul>
+<p>关于<code>locale</code>更多的信息,请查看<a href="http://wiki.ubuntu.org.cn/Locale" target="_blank" rel="noopener">Locale-wiki</a><br>我们要修复的是中文文件名的显示和中文输入的问题,所以我们接下来只需要设置<code>LC_CTYPE</code>即可.</p>
+<p>查看系统支持的编码方式:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale -a</span><br></pre></td></tr></table></figure></p>
+<p>看看输出内容中是否包含<code>zh_CN.utf-8</code>,如果不包含的话,我们需要添加这个配置项<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo locale-gen zh_CN.utf-8</span><br></pre></td></tr></table></figure></p>
+<p>修改后,我的输出内容如下,已经包含<code>zh_CN.utf-8</code><br><img src="https://ws1.sinaimg.cn/large/692869a3gy1fexql3wkdej2076047744.jpg" alt="查看系统支持的编码方式"><br>接下来,修改<code>LC_CTYPE</code>的值,使用<code>export LC_CTYPE=&#39;zh_CN.UTF-8&#39;</code>,命令来修改.<br>直接执行<code>export LC_CTYPE=&#39;zh_CN.UTF-8&#39;</code>那么只对当前会话有效,<br><strong>所有用户(永久)</strong>:修改/etc/profile<br><strong>当前用户(永久)</strong>:修改~/.bashrc</p>
+<p>建议直接修改<code>/etc/profile</code>文件,这样所有用户都可以使用.<br>修改完成后,退出登录,重新登录一次,再输入<code>locale</code>命令,可以得到如下输出:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">LANG=</span><br><span class="line">LANGUAGE=C:</span><br><span class="line">LC_CTYPE=zh_CN.UTF-8</span><br><span class="line">LC_NUMERIC=<span class="string">"POSIX"</span></span><br><span class="line">LC_TIME=<span class="string">"POSIX"</span></span><br><span class="line">LC_COLLATE=<span class="string">"POSIX"</span></span><br><span class="line">LC_MONETARY=<span class="string">"POSIX"</span></span><br><span class="line">LC_MESSAGES=<span class="string">"POSIX"</span></span><br><span class="line">LC_PAPER=<span class="string">"POSIX"</span></span><br><span class="line">LC_NAME=<span class="string">"POSIX"</span></span><br><span class="line">LC_ADDRESS=<span class="string">"POSIX"</span></span><br><span class="line">LC_TELEPHONE=<span class="string">"POSIX"</span></span><br><span class="line">LC_MEASUREMENT=<span class="string">"POSIX"</span></span><br><span class="line">LC_IDENTIFICATION=<span class="string">"POSIX"</span></span><br><span class="line">LC_ALL=</span><br></pre></td></tr></table></figure></p>
+<p>应该就可以输入中文了</p>
+<h2 id="3-2-本地配置"><a href="#3-2-本地配置" class="headerlink" title="3.2 本地配置"></a>3.2 本地配置</h2><p>在windows中,中文的默认编码是GBK,所以为了避免出现在ftp中看着正常,在xshell中看着乱码的问题.我们要修改xftp中的编码方式.打开xftp,文件-&gt;属性-&gt;选项,勾选上<code>使用UTF-8编码</code>.<br><img src="https://ws1.sinaimg.cn/large/692869a3gy1fexreyc5kyj20c007wt8w.jpg" alt="修改xftp编码方式"></p>
+<h2 id="3-3-编码转换"><a href="#3-3-编码转换" class="headerlink" title="3.3 编码转换"></a>3.3 编码转换</h2><p>上面的修改完成后,基本可以解决之前提到的目标.新上传的文件肯定是正常的,但是之前上传的文件依旧是乱码,所以我们需要使用工具转换一下.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install convmv</span><br></pre></td></tr></table></figure></p>
+<p>用法很简单:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">convmv -f GBK -t UTF-8 --notest ./*</span><br></pre></td></tr></table></figure></p>
+<p>其中,<code>-f</code>表示源编码;<code>-t</code>表示目标编码;如果没有<code>--notest</code>选项,这条命令只会检测,不会执行;后面跟着需要操作的文件目录;如果需要递归执行,可以加上<code>-r</code>选项.</p>
+<p>打完收工</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ul>
+<li><a href="http://wiki.ubuntu.org.cn/Locale" target="_blank" rel="noopener">Locale-wiki</a></li>
+<li><a href="https://segmentfault.com/q/1010000000150673" target="_blank" rel="noopener">MacOS用iTerm连接到Linux上，不能输入中文</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/04/08/deploy-hexo-in-my-own-vps/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2018/07/08/php-learn-note-3-6/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>kali安装后设置 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="kali,Linux," />
+  
+
+  <meta name="description" content="kali安装好了，还有几件事要做我们用root的身份登进去系统">
+<meta name="keywords" content="kali,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kali安装后设置">
+<meta property="og:url" content="https://bblove.me/2015/03/04/after-kali/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="kali安装好了，还有几件事要做我们用root的身份登进去系统">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.326Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kali安装后设置">
+<meta name="twitter:description" content="kali安装好了，还有几件事要做我们用root的身份登进去系统">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-更新软件源"><span class="toc-text">1 更新软件源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-安装中文输入法和字体"><span class="toc-text">2 安装中文输入法和字体</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-安装vpn"><span class="toc-text">3 安装vpn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-网卡管理显示“device-not-managed”"><span class="toc-text">4 网卡管理显示“device not managed”</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-安装chrome浏览器"><span class="toc-text">5 安装chrome浏览器</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-after-kali" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">kali安装后设置</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.03.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>kali安装好了，还有几件事要做<br>我们用root的身份登进去系统<br><a id="more"></a></p>
+<h1 id="1-更新软件源"><a href="#1-更新软件源" class="headerlink" title="1 更新软件源"></a>1 更新软件源</h1><p>官方自带的软件源速度相对比较慢，资源也少一些，我们添加一些国内的源进去<br>vi /etc/apt/sources.list<br>（可自由选择，不一定要全部）：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># 官方源</span></span><br><span class="line">deb http:<span class="comment">//http.kali.org/kali kali main non-free contrib</span></span><br><span class="line">deb-src http:<span class="comment">//http.kali.org/kali kali main non-free contrib</span></span><br><span class="line">deb http:<span class="comment">//security.kali.org/kali-security kali/updates main contrib non-free</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 激进源，新手不推荐使用这个软件源</span></span><br><span class="line">deb http:<span class="comment">//repo.kali.org/kali kali-bleeding-edge main</span></span><br><span class="line">deb-src http:<span class="comment">//repo.kali.org/kali kali-bleeding-edge main</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 中科大kali源</span></span><br><span class="line">deb http:<span class="comment">//mirrors.ustc.edu.cn/kali kali main non-free contrib</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.ustc.edu.cn/kali kali main non-free contrib</span></span><br><span class="line">deb http:<span class="comment">//mirrors.ustc.edu.cn/kali-security kali/updates main contrib non-free</span></span><br><span class="line"></span><br><span class="line"><span class="meta"># 阿里云kali源</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/kali kali main non-free contrib</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/kali kali main non-free contrib</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/kali-security kali/updates main contrib non-free</span></span><br></pre></td></tr></table></figure></p>
+<p>保存之后运行：<br><code>apt-get update</code>     # 刷新系统<br><code>apt-get dist-upgrade</code>        # 安装更新</p>
+<h1 id="2-安装中文输入法和字体"><a href="#2-安装中文输入法和字体" class="headerlink" title="2 安装中文输入法和字体"></a>2 安装中文输入法和字体</h1><p>安装字体<br><code>apt-get install ttf-wqy-microhei ttf-wqy-zenhei</code><br> 执行以下命令<br> <code>apt-get install fcitx fcitx-googlepinyin</code></p>
+<h1 id="3-安装vpn"><a href="#3-安装vpn" class="headerlink" title="3 安装vpn"></a>3 安装vpn</h1><p>kali默认情况下vpn是无法使用的，需要安装相关组件<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">apt-<span class="builtin-name">get</span> install network-manager-openvpn</span><br><span class="line">apt-<span class="builtin-name">get</span> install network-manager-openvpn-gnome</span><br><span class="line">apt-<span class="builtin-name">get</span> install network-manager-pptp</span><br><span class="line">apt-<span class="builtin-name">get</span> install network-manager-pptp-gnome</span><br><span class="line">apt-<span class="builtin-name">get</span> install network-manager-strongswan</span><br><span class="line">apt-<span class="builtin-name">get</span> install network-manager-vpnc</span><br><span class="line">apt-<span class="builtin-name">get</span> install network-manager-vpnc-gnome</span><br><span class="line">/etc/init.d/network-manager restart</span><br></pre></td></tr></table></figure></p>
+<h1 id="4-网卡管理显示“device-not-managed”"><a href="#4-网卡管理显示“device-not-managed”" class="headerlink" title="4 网卡管理显示“device not managed”"></a>4 网卡管理显示“device not managed”</h1><p><code>vi  /etc/NetworkManager/NetworkManager.conf</code><br>修改<code>managed=false</code>为<code>managed=true</code><br>然后重启网络管理<br><code>service network-manager restart</code></p>
+<h1 id="5-安装chrome浏览器"><a href="#5-安装chrome浏览器" class="headerlink" title="5 安装chrome浏览器"></a>5 安装chrome浏览器</h1><p><code>apt-get install google-chrome-unstable</code></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/03/03/kali-and-ubuntu/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/03/09/use-ss/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

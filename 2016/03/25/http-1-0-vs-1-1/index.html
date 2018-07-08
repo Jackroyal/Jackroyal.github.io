@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>HTTP1.0和HTTP1.1的区别 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Linux,HTTP,apache," />
+  
+
+  <meta name="description" content="今天研究了下HTTP,还是挺有意思的.接下来,就比较一下两者的区别.">
+<meta name="keywords" content="Linux,HTTP,apache">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP1.0和HTTP1.1的区别">
+<meta property="og:url" content="https://bblove.me/2016/03/25/http-1-0-vs-1-1/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="今天研究了下HTTP,还是挺有意思的.接下来,就比较一下两者的区别.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.312Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP1.0和HTTP1.1的区别">
+<meta name="twitter:description" content="今天研究了下HTTP,还是挺有意思的.接下来,就比较一下两者的区别.">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-长连接"><span class="toc-text">1 长连接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-host头域"><span class="toc-text">2 host头域</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-请求方法"><span class="toc-text">3 请求方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-内容长度"><span class="toc-text">4 内容长度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-缓存"><span class="toc-text">5 缓存</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-http-1-0-vs-1-1" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">HTTP1.0和HTTP1.1的区别</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.03.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/服务器/">服务器</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>今天研究了下HTTP,还是挺有意思的.<br>接下来,就比较一下两者的区别.<br><a id="more"></a></p>
+<h1 id="1-长连接"><a href="#1-长连接" class="headerlink" title="1 长连接"></a>1 长连接</h1><p>这个应该是变化最大的一个了.在1.0的版本中,如果客户端请求头没有设置<code>Connection: Keep-Alive</code>的话,那么每次请求完成都会立即断开连接,然后客户端又要重新建立一个HTTP连接.假设一个网页包含了10个图片,那么为了请求图片,客户端必须要发送10次请求,无疑这对带宽和资源是极大的浪费,TCP的优势就没有体现出来.<br>在HTTP1.1中,<code>keep-Alive</code>已经被弃用(但是大多数服务器和浏览器都还保留这个选项).在1.1的版本中,持久连接默认就是启用的,除非你显式在响应头部包含<code>Connection: close</code>,客户端收到响应后才会关闭连接.</p>
+<h1 id="2-host头域"><a href="#2-host头域" class="headerlink" title="2 host头域"></a>2 host头域</h1><p>在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址,因此,请求消息中的URL并没有传递主机名(hostname).但随着虚拟主机技术的发展,在一台物理服务器上可以存在多个虚拟主机(Multi-homed Web Servers),并且它们共享一个IP地址.<br>HTTP1.1的请求消息和响应消息都应支持<code>Host</code>头域,且请求消息中如果没有<code>Host</code>头域会报告一个错误(400 Bad Request).此外,服务器应该接受以绝对路径标记的资源请求.</p>
+<h1 id="3-请求方法"><a href="#3-请求方法" class="headerlink" title="3 请求方法"></a>3 请求方法</h1><p>HTTP1.1增加了<code>OPTIONS</code>, <code>PUT</code>, <code>DELETE</code>, <code>TRACE</code>, <code>CONNECT</code>这些Request方法.<br>       Method         = <strong>“OPTIONS”</strong>               ; Section 9.2<br>                      | “GET”                    ; Section 9.3<br>                      | “HEAD”                   ; Section 9.4<br>                      | “POST”                   ; Section 9.5<br>                      | <strong>“PUT”</strong>                   ; Section 9.6<br>                      | <strong>“DELETE”</strong>                 ; Section 9.7<br>                      | <strong>“TRACE”</strong>               ; Section 9.8<br>                      | <strong>“CONNECT”</strong>                ; Section 9.9<br>                      | extension-method<br>       extension-method = token<br>HTTP1.1 增加的新的status code：<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(HTTP1.0没有定义任何具体的1xx status code, HTTP1.1有2个)</span><br><span class="line">100 Continue</span><br><span class="line">101 Switching Protocols</span><br><span class="line">203 Non-Authoritative Information</span><br><span class="line">205 Reset Content</span><br><span class="line">206 Partial Content</span><br><span class="line">302 Found (在HTTP1.0中有个 302 Moved Temporarily)</span><br><span class="line">303 See Other</span><br><span class="line">305 Use Proxy</span><br><span class="line">307 Temporary Redirect</span><br><span class="line">405 Method <span class="keyword">Not</span> Allowed</span><br><span class="line">406 <span class="keyword">Not</span> Acceptable</span><br><span class="line">407<span class="built_in"> Proxy </span>Authentication Required</span><br><span class="line">408 Request Timeout</span><br><span class="line">409 Conflict</span><br><span class="line">410 Gone</span><br><span class="line">411 Length Required</span><br><span class="line">412 Precondition Failed</span><br><span class="line">413 Request Entity Too Large</span><br><span class="line">414 Request-URI Too Long</span><br><span class="line">415 Unsupported Media Type</span><br><span class="line">416 Requested Range <span class="keyword">Not</span> Satisfiable</span><br><span class="line">417 Expectation Failed</span><br><span class="line">504 Gateway Timeout</span><br><span class="line">505 HTTP Version <span class="keyword">Not</span> Supported</span><br></pre></td></tr></table></figure></p>
+<h1 id="4-内容长度"><a href="#4-内容长度" class="headerlink" title="4 内容长度"></a>4 内容长度</h1><p>通常,HTTP应答消息中发送的数据是整个发送的,<code>Content-Length</code>消息头字段表示数据的长度.数据的长度很重要,因为客户端需要知道哪里是应答消息的结束,以及后续应答消息的开始.但是在一些动态网页中,由于网页是动态生成的,所以没法计算出准确的<code>Content-Length</code>,这样导致的后果是:如果 <code>Content-Length</code> 比实际长度短,会造成内容被截断;如果比实体内容长,会造成 pending,浏览器一直转圈圈.<br>所以在HTTP1.1中引入了<code>Transfer-Encoding</code>,如果一个HTTP消息(请求消息或应答消息)的<code>Transfer-Encoding</code>消息头的值为chunked,那么,消息体由数量未定的块组成,并以最后一个大小为0的块为结束.<br>ps:如果同时设置了<code>Content-Length</code> 和<code>Transfer-Encoding</code>,那么<code>Transfer-Encoding</code>的优先级更高,<code>Content-Length</code>会被忽略.</p>
+<h1 id="5-缓存"><a href="#5-缓存" class="headerlink" title="5 缓存"></a>5 缓存</h1><ul>
+<li>在HTTP/1.0中,使用<code>Expire</code>头域来判断资源的<code>fresh</code>或<code>stale</code>,并使用条件请求(conditional request)来判断资源是否仍有效.例如,cache服务器通过<code>If-Modified-Since</code>头域向服务器验证资源的<code>Last-Modefied</code>头域是否有更新,源服务器可能返回304(Not Modified),则表明该对象仍有效;也可能返回200(OK)替换请求的Cache对象.</li>
+<li>此外,HTTP/1.0中还定义了<code>Pragma:no-cache</code>头域,客户端使用该头域说明请求资源不能从cache中获取,而必须回源获取.</li>
+<li>HTTP/1.1在1.0的基础上加入了一些cache的新特性,当缓存对象的Age超过<code>Expire</code>时变为<code>stale</code>对象,cache不需要直接抛弃<code>stale</code>对象,而是与源服务器进行重新激活(revalidation).</li>
+<li>HTTP/1.0中,<code>If-Modified-Since</code>头域使用的是绝对时间戳,精确到秒,但使用绝对时间会带来不同机器上的时钟同步问题.而HTTP/1.1中引入了一个<code>ETag</code>头域用于重激活机制,它的值<code>entity tag</code>可以用来唯一的描述一个资源.请求消息中可以使用<code>If-None-Match</code>头域来匹配资源的<code>entitytag</code>是否有变化.</li>
+<li>为了使caching机制更加灵活,HTTP/1.1增加了<code>Cache-Control</code>头域(请求消息和响应消息都可使用),它支持一个可扩展的指令子集：例如<code>max-age</code>指令支持相对时间戳;<code>private</code>和<code>no-store</code>指令禁止对象被缓存;<code>no-transform</code>阻止Proxy进行任何改变响应的行为.</li>
+<li>Cache使用关键字索引在磁盘中缓存的对象,在HTTP/1.0中使用资源的URL作为关键字.但可能存在不同的资源基于同一个URL的情况,要区别它们还需要客户端提供更多的信息,如<code>Accept-Language</code>和<code>Accept-Charset</code>头域.为了支持这种内容协商机制(content negotiation mechanism),HTTP/1.1在响应消息中引入了Vary头域,该头域列出了请求消息中需要包含哪些头域用于内容协商.</li>
+</ul>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 <a href="HTTPs://imququ.com/post/transfer-encoding-header-in-HTTP.html" target="_blank" rel="noopener">HTTP 协议中的 Transfer-Encoding</a><br>2 <a href="http://blog.csdn.net/forgotaboutgirl/article/details/6936982" target="_blank" rel="noopener">HTTP/1.1与HTTP/1.0的区别</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/03/19/how-to-solve-the-water-problem/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/11/06/my-life-these-days/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

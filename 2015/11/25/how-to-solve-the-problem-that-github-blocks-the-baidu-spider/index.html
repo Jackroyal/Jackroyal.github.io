@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>解决 Github Pages 禁止百度爬虫的方法 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="github,hexo,baidu," />
+  
+
+  <meta name="description" content="update:因为gitcafe在5月31号就关闭了,所以要将文章中的gitcafe换掉,我重新写了一篇,在这里解决 Github Pages 禁止百度爬虫的方法2–从gitcafe迁移到coding.net 最近,我的github student package里面送的一个namecheap域名终于下来了.That is to say:我终于有自己的域名了,这就是我的域名http://bblov">
+<meta name="keywords" content="github,hexo,baidu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决 Github Pages 禁止百度爬虫的方法">
+<meta property="og:url" content="https://bblove.me/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="update:因为gitcafe在5月31号就关闭了,所以要将文章中的gitcafe换掉,我重新写了一篇,在这里解决 Github Pages 禁止百度爬虫的方法2–从gitcafe迁移到coding.net 最近,我的github student package里面送的一个namecheap域名终于下来了.That is to say:我终于有自己的域名了,这就是我的域名http://bblov">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1eye78gs0hvj20it0ca761.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1eye7h4ha7dj20v105n0ve.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eye7orkymjj210j0i7tde.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1eye9mfkri4j20mt0efad6.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1eyea41g3amj20uz0a4jtg.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1eyeadedmh1j20z508eadm.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.336Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决 Github Pages 禁止百度爬虫的方法">
+<meta name="twitter:description" content="update:因为gitcafe在5月31号就关闭了,所以要将文章中的gitcafe换掉,我重新写了一篇,在这里解决 Github Pages 禁止百度爬虫的方法2–从gitcafe迁移到coding.net 最近,我的github student package里面送的一个namecheap域名终于下来了.That is to say:我终于有自己的域名了,这就是我的域名http://bblov">
+<meta name="twitter:image" content="https://ww1.sinaimg.cn/large/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实现方法"><span class="toc-text">实现方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-准备条件"><span class="toc-text">1 准备条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-初始操作"><span class="toc-text">2 初始操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-搭建博客"><span class="toc-text">3 搭建博客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-搭建github-pages"><span class="toc-text">3.1 搭建github pages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-添加gitcafe的ssh公钥"><span class="toc-text">3.2 添加gitcafe的ssh公钥</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-查看本地公钥"><span class="toc-text">3.2.1 查看本地公钥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-添加公钥到gitcafe"><span class="toc-text">3.2.2 添加公钥到gitcafe</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-同步博客到gitcafe"><span class="toc-text">3.4 同步博客到gitcafe</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-配置域名"><span class="toc-text">4 配置域名</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-修改域名注册的解析服务器"><span class="toc-text">4.1 修改域名注册的解析服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-修改dnspod解析记录"><span class="toc-text">4.2 修改dnspod解析记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-添加github的CNAME文件-添加gitcafe自定义域名"><span class="toc-text">4.3 添加github的CNAME文件,添加gitcafe自定义域名</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-总结"><span class="toc-text">5 总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#友情链接"><span class="toc-text">友情链接</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-how-to-solve-the-problem-that-github-blocks-the-baidu-spider" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">解决 Github Pages 禁止百度爬虫的方法</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.11.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/hexo/">hexo</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><em>update</em>:因为gitcafe在5月31号就关闭了,所以要将文章中的gitcafe换掉,我重新写了一篇,在这里<a href="http://jackroyal.github.io/2016/03/06/migrate-pages-from-gitcafe-to-coding/" target="_blank" rel="noopener">解决 Github Pages 禁止百度爬虫的方法2–从gitcafe迁移到coding.net</a></p>
+<p>最近,我的github student package里面送的一个namecheap域名终于下来了.That is to say:我终于有自己的域名了,这就是我的域名<a href="http://bblove.me">http://bblove.me</a>,欢迎来访.<br><a id="more"></a><br>有域名以后,就在想办法解决百度爬虫的问题.<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Hi Jackroyal,</span><br><span class="line"></span><br><span class="line">We are currently blocking the Baidu<span class="built_in"> user </span>agent <span class="keyword">from</span> crawling GitHub Pages</span><br><span class="line">sites <span class="keyword">in</span> response <span class="keyword">to</span> this<span class="built_in"> user </span>agent being responsible <span class="keyword">for</span> an excessive amount</span><br><span class="line">of requests, which was causing availability issues <span class="keyword">for</span> other GitHub customers.</span><br><span class="line">This is unlikely <span class="keyword">to</span> change any time soon, so <span class="keyword">if</span> you need the Baidu<span class="built_in"> user </span>agent</span><br><span class="line"><span class="keyword">to</span> be able <span class="keyword">to</span> crawl your site you will need <span class="keyword">to</span> host it elsewhere.</span><br><span class="line"></span><br><span class="line">Cheers,</span><br><span class="line">Scott</span><br></pre></td></tr></table></figure></p>
+<p>这是我之前跟github反映百度spider无法抓取我的github pages,他们给我的回复邮件.也就是说他们把百度spider给禁掉了,桑不起.<br>直接说解决方法:<br><code>把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.</code></p>
+<h1 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h1><h1 id="1-准备条件"><a href="#1-准备条件" class="headerlink" title="1 准备条件"></a>1 准备条件</h1><p>一共需要一下这几个东西:</p>
+<ul>
+<li>一个github账户</li>
+<li>一个gitcafe账户</li>
+<li>一个dnspod账号</li>
+<li>一个域名</li>
+<li>github for windows(或者git客户端也行)<br>没了,就这么多就行.</li>
+</ul>
+<h1 id="2-初始操作"><a href="#2-初始操作" class="headerlink" title="2 初始操作"></a>2 初始操作</h1><p>我们在github和gitcafe上面把自己的博客搭建起来,首先要建仓库.<br><strong>github</strong>:<br>    首先登录你的github,然后新建一个公共仓库,仓库名是你的用户名加上<code>yourname.github.io</code>,如下图所示,我的用户名是<code>Jackroyal</code><br>    <img src="https://ww1.sinaimg.cn/large/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg" alt="github新建仓库"></p>
+<p><strong>gitcafe</strong>:<br>    操作方法差不多,不过有点区别是,gitcafe新建的公开项目,是和用户名一致的,比如我的用户名是<code>Jackroyal</code>,那我新建的仓库名就是<code>Jackroyal</code></p>
+<p>仓库新建成功后,你获取到的链接应该是类似下面的<br><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https:<span class="regexp">//gi</span>thub.com<span class="regexp">/Jackroyal/</span>Jackroyal.github.io.git</span><br><span class="line">https:<span class="regexp">//gi</span>tcafe.com<span class="regexp">/Jackroyal/</span>Jackroyal.git</span><br></pre></td></tr></table></figure></p>
+<p>这就是你的两个page对应的仓库.</p>
+<h1 id="3-搭建博客"><a href="#3-搭建博客" class="headerlink" title="3 搭建博客"></a>3 搭建博客</h1><h2 id="3-1-搭建github-pages"><a href="#3-1-搭建github-pages" class="headerlink" title="3.1 搭建github pages"></a>3.1 搭建github pages</h2><p>当你的仓库建好了,我们就开始搭建博客,因为之前的博客有写,具体过程就不赘述<a href="http://jackroyal.github.io/2015/06/16/hexo-3-0-update/" target="_blank" rel="noopener">安装和配置hexo 3.0</a>.</p>
+<p>按照上面的教程一步一步,就能搭建好博客,然后你就可以访问你的gihub pages了,访问链接就是<code>http://yourname.github.io</code>,比如我的即使<code>http://jackroyal.github.io</code>.<br>现在我们开始搭建gitcafe上面的pages了.由于hexo现在已经支持多发布,所以很简单,我们只需要配置deploy的信息,修改<code>_config.yml</code>.添加gitcafe的仓库信息.我的修改结果如下,<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">- <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repo</span>: <span class="string">'https://github.com/Jackroyal/Jackroyal.github.io.git'</span></span><br><span class="line">  <span class="attribute">branch</span>: master</span><br><span class="line">- <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repo</span>: <span class="string">'https://gitcafe.com/Jackroyal/Jackroyal.git'</span></span><br><span class="line">  <span class="attribute">branch</span>: gitcafe-pages</span><br></pre></td></tr></table></figure></p>
+<p>尤其需要注意的是,两个的branch是不同的,<code>github</code>默认分支是<code>master</code>,<code>gitcafe</code>默认分支是<code>gitcafe-pages</code>.</p>
+<h2 id="3-2-添加gitcafe的ssh公钥"><a href="#3-2-添加gitcafe的ssh公钥" class="headerlink" title="3.2 添加gitcafe的ssh公钥"></a>3.2 添加gitcafe的ssh公钥</h2><p>由于我使用的是<code>github for windows</code>的终端界面,也就是github官方提供的客户端,他的好处是,我使用github的时候,不需要配置ssh公钥,密钥之类的东西.如果你用的不是这个,用的是git的客户端,那就需要配置ssh公钥,参考这里<a href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="noopener">github配置公钥</a>.<br>对的,你猜到了,我们现在需要配置gitcafe的ssh公钥,因为<code>github for windows</code>会自动帮我们上传公钥,gitcafe就只能手动了.</p>
+<h3 id="3-2-1-查看本地公钥"><a href="#3-2-1-查看本地公钥" class="headerlink" title="3.2.1 查看本地公钥"></a>3.2.1 查看本地公钥</h3><p>我们打开你使用的git终端,首先切回用户目录,然后进入<code>.ssh</code>目录,里面就有公钥和私钥,如下图所示<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg" alt="使用git客户端查看ssh公钥私钥"><br><img src="https://ww2.sinaimg.cn/large/692869a3gw1eye78gs0hvj20it0ca761.jpg" alt="使用github for windows查看ssh公钥私钥"><br>我们就是要读取后缀是<code>.pub</code>的那个文件,比如我的读取命令就是<code>cat github_rsa.pub</code>,执行结果如下<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg" alt="查看公钥"></p>
+<h3 id="3-2-2-添加公钥到gitcafe"><a href="#3-2-2-添加公钥到gitcafe" class="headerlink" title="3.2.2 添加公钥到gitcafe"></a>3.2.2 添加公钥到gitcafe</h3><p>我们在<a href="https://gitcafe.com/account/public_keys" target="_blank" rel="noopener">这里</a>来设置gitcafe的公钥.<br><em>PS:需要注意的是,公钥后面的chen@chen-pc是不需要的,我的带上以后,gitcafe说是公钥非法,不过不怕,gitcafe会帮你正确格式化</em><br><img src="https://ww1.sinaimg.cn/large/692869a3gw1eye7h4ha7dj20v105n0ve.jpg" alt="正确的ssh格式"><br>反正就是把公钥加上去,就ok了</p>
+<h2 id="3-4-同步博客到gitcafe"><a href="#3-4-同步博客到gitcafe" class="headerlink" title="3.4 同步博客到gitcafe"></a>3.4 同步博客到gitcafe</h2><p>上面的配置好了以后,我们就可以把博客内容同步到gitcafe了,方法很简单,执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d -g</span><br></pre></td></tr></table></figure></p>
+<p>然后就可以啦.</p>
+<h1 id="4-配置域名"><a href="#4-配置域名" class="headerlink" title="4 配置域名"></a>4 配置域名</h1><p>首先你得有个域名,像我一样,哈哈.</p>
+<h2 id="4-1-修改域名注册的解析服务器"><a href="#4-1-修改域名注册的解析服务器" class="headerlink" title="4.1 修改域名注册的解析服务器"></a>4.1 修改域名注册的解析服务器</h2><p>我们在要把域名解析服务,设置到dnspod,因为他是国内的,而且服务很好.我们登录自己的域名管理后台,选择对应的域名进行管理,然后找到<code>nameservers</code>的设置,如图所示<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7orkymjj210j0i7tde.jpg" alt="修改nameservers的设置"><br>修改的值是<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f1g1ns1<span class="selector-class">.dnspod</span><span class="selector-class">.net</span></span><br><span class="line">f1g1ns2<span class="selector-class">.dnspod</span><span class="selector-class">.net</span></span><br></pre></td></tr></table></figure></p>
+<p>常见的域名注册商修改到dnspod,官方提供了教程,看<a href="https://support.dnspod.cn/Kb/guide/" target="_blank" rel="noopener">这里</a>-<br>改完以后可能要等一段时间才能生效,最多72小时<br>ok,改完以后,这边就完了,我们登录dnspod</p>
+<h2 id="4-2-修改dnspod解析记录"><a href="#4-2-修改dnspod解析记录" class="headerlink" title="4.2 修改dnspod解析记录"></a>4.2 修改dnspod解析记录</h2><p>我们登录dnspod,然后添加域名<br>如果4.1中的设置生效了,你的域名就会添加成功了,我们直接进行下一步,修改解析记录,上图<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1eye9mfkri4j20mt0efad6.jpg" alt="dns解析记录"><br>我们一共添加了5条记录,其中一条泛解析和www解析是针对国内的,所以执行gitcafe;2条泛解析和www解析是针对国外的,所以指向github.<br>就是添加<br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@       <span class="keyword">A</span>      默认  <span class="number">192.30.252.153</span></span><br><span class="line">@       <span class="keyword">A</span>      默认  <span class="number">192.30.252.154</span></span><br><span class="line">@       <span class="keyword">CNAME</span>  国内  gitcafe.io.</span><br><span class="line">www     <span class="keyword">CNAME</span>  默认  jackroyal.github.io.</span><br><span class="line">www     <span class="keyword">CNAME</span>  国内  gitcafe.io.</span><br></pre></td></tr></table></figure></p>
+<p>其他设置项目默认就行了,上面的配置完了,如果你走国外ip访问你的域名的话,会出现404,因为我们还差一步.走国内线路访问一样会出错,都是没绑定的结果.</p>
+<h2 id="4-3-添加github的CNAME文件-添加gitcafe自定义域名"><a href="#4-3-添加github的CNAME文件-添加gitcafe自定义域名" class="headerlink" title="4.3 添加github的CNAME文件,添加gitcafe自定义域名"></a>4.3 添加github的CNAME文件,添加gitcafe自定义域名</h2><p>现在只差最后一步了,我们先来配置github的CNAME文件,官网有个教程<a href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/" target="_blank" rel="noopener">配置CNAME文件</a>.说白了,就是在你的网站根目录,添加一个名为<code>CNAME</code>的文件,里面的内容就是你的域名<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bblove.<span class="keyword">me</span></span><br></pre></td></tr></table></figure></p>
+<p>没有任何多余的信息,如下图<br><img src="https://ww1.sinaimg.cn/large/692869a3gw1eyea41g3amj20uz0a4jtg.jpg" alt="配置github的CNAME"><br>上面的配置现在访问没问题,但是你一重新发布博客,就需要重新手动添加<code>CNAME</code>文件,太麻烦.<br>一劳永逸的方法,在你的<code>hexo</code>目录下的<code>source</code>目录中,新建一个<code>CNAME</code>文件夹,然后他每次在你发布博客的时候,都会在你的网站根目录生成一个<code>CNAME</code>文件.<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg" alt="添加CNAME的目录结构"><br>现在github的配置彻底结束.</p>
+<p>接下来配置gitcafe:<br>1 我们在gitcafe的项目主页,点击<code>项目设置</code>,如下图(之所以截图,是因为我找半天才看到…)<br><img src="https://ww1.sinaimg.cn/large/692869a3gw1eyeadedmh1j20z508eadm.jpg" alt="gitcafe点击&#39;项目设置&#39;"><br>2 然后我们点击<code>pages服务</code>标签,然后添加自己的域名,这些域名是我们之前在dnspod中设置了解析的<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg" alt="gitcafe配置自定义域名"></p>
+<p>彻底打完收工了</p>
+<h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5 总结"></a>5 总结</h1><p>总算写完了,写到这里,我一共写了,141行了,写了个把小时.这次主要参考了下面的几篇文章,都写在友情链接里面了.参考了他们的思路,因为他们的方法里面需要自己单独购买vps或者购买CDN,共同的问题是增加了开销,买vps会导致你每次写博客都需要单独发布一次到vps上太麻烦.我后来在网上看到gitcafe也有<code>gitcafe pages</code>服务,如果用这个来处理的话,一来,不会增加多余的开销,他们都是免费的;二来,由于hexo对于多部署的支持,多部署很简单,一次配置,以后就可以不用理会了.<br>ok,收工</p>
+<h1 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h1><p>1 <a href="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/" target="_blank" rel="noopener">解决 Github Pages 禁止百度爬虫的方法与可行性分析</a><br>2 <a href="http://www.dozer.cc/2015/06/github-pages-and-cdn.html" target="_blank" rel="noopener">利用 CDN 解决百度爬虫被 Github Pages 拒绝的问题</a><br>3 <a href="https://help.gitcafe.com/manuals/help/pages-services" target="_blank" rel="noopener">gitcafe官方文档–pages服务</a><br>4 <a href="https://help.gitcafe.com/manuals/help/ssh-key" target="_blank" rel="noopener">gitcafe官方文档–配置ssh公钥</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/11/04/my-git-note2/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/11/26/offline-install/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

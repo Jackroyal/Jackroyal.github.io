@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>php学习笔记(3.6)--PHP中的引用 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="php," />
+  
+
+  <meta name="description" content="最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下. 1 什么是引用引用,第一感觉就是想到C语言中的指针,两个变量指向同一个内存地址.但是php中的引用其实应该是别名, 可以类比的是linux系统中的硬链接,两个文件名实际指向同一个文件. 2 引用传值我们在函数传参的时候可能会用到引用.在不同给的php版本中,写法也不同. 2.1 例如,在php5.2中,我们可能用到以下写法.12345">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php学习笔记(3.6)--PHP中的引用">
+<meta property="og:url" content="https://bblove.me/2018/07/08/php-learn-note-3-6/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下. 1 什么是引用引用,第一感觉就是想到C语言中的指针,两个变量指向同一个内存地址.但是php中的引用其实应该是别名, 可以类比的是linux系统中的硬链接,两个文件名实际指向同一个文件. 2 引用传值我们在函数传参的时候可能会用到引用.在不同给的php版本中,写法也不同. 2.1 例如,在php5.2中,我们可能用到以下写法.12345">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-07-08T11:40:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php学习笔记(3.6)--PHP中的引用">
+<meta name="twitter:description" content="最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下. 1 什么是引用引用,第一感觉就是想到C语言中的指针,两个变量指向同一个内存地址.但是php中的引用其实应该是别名, 可以类比的是linux系统中的硬链接,两个文件名实际指向同一个文件. 2 引用传值我们在函数传参的时候可能会用到引用.在不同给的php版本中,写法也不同. 2.1 例如,在php5.2中,我们可能用到以下写法.12345">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-什么是引用"><span class="toc-text">1 什么是引用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-引用传值"><span class="toc-text">2 引用传值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-例如-在php5-2中-我们可能用到以下写法"><span class="toc-text">2.1 例如,在php5.2中,我们可能用到以下写法.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-推荐的写法是-在定义函数的时候如果是引用-在参数声明处直接标记为引用"><span class="toc-text">2.2 推荐的写法是,在定义函数的时候如果是引用,在参数声明处直接标记为引用.</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-引用返回"><span class="toc-text">3 引用返回</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-对象的赋值和传值"><span class="toc-text">4 对象的赋值和传值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-php-learn-note-3-6" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">php学习笔记(3.6)--PHP中的引用</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.07.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/php学习笔记/">php学习笔记</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下.</p>
+<h1 id="1-什么是引用"><a href="#1-什么是引用" class="headerlink" title="1 什么是引用"></a>1 什么是引用</h1><p>引用,第一感觉就是想到C语言中的指针,两个变量指向同一个内存地址.但是php中的引用其实应该是别名, 可以类比的是linux系统中的硬链接,两个文件名实际指向同一个文件.</p>
+<h1 id="2-引用传值"><a href="#2-引用传值" class="headerlink" title="2 引用传值"></a>2 引用传值</h1><p>我们在函数传参的时候可能会用到引用.在不同给的php版本中,写法也不同.</p>
+<h2 id="2-1-例如-在php5-2中-我们可能用到以下写法"><a href="#2-1-例如-在php5-2中-我们可能用到以下写法" class="headerlink" title="2.1 例如,在php5.2中,我们可能用到以下写法."></a>2.1 例如,在php5.2中,我们可能用到以下写法.</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">($var)</span> </span>&#123;</span><br><span class="line">  $var++;</span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="number">0</span>;</span><br><span class="line">foo(&amp;$a);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'$a:'</span>.$a.<span class="string">"&lt;br&gt;"</span>;<span class="comment">//输出$a:1</span></span><br></pre></td></tr></table></figure>
+<p>但是在php5.3+中就不推荐这种写法了5.3会报warning,在更高版本中,会报fatal错误<code>Call-time pass-by-reference has been removed</code>.</p>
+<h2 id="2-2-推荐的写法是-在定义函数的时候如果是引用-在参数声明处直接标记为引用"><a href="#2-2-推荐的写法是-在定义函数的时候如果是引用-在参数声明处直接标记为引用" class="headerlink" title="2.2 推荐的写法是,在定义函数的时候如果是引用,在参数声明处直接标记为引用."></a>2.2 推荐的写法是,在定义函数的时候如果是引用,在参数声明处直接标记为引用.</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在定义函数时,直接声明参数为引用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">(&amp;$var)</span> </span>&#123;</span><br><span class="line">  $var++;</span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="number">0</span>;</span><br><span class="line">foo($a);</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'$a:'</span>.$a.<span class="string">"&lt;br&gt;"</span>;<span class="comment">//输出$a:1</span></span><br></pre></td></tr></table></figure>
+<h1 id="3-引用返回"><a href="#3-引用返回" class="headerlink" title="3 引用返回"></a>3 引用返回</h1><p>除了引用传值,还有一种常见的情况是引用返回.<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> &amp;<span class="title">foo</span><span class="params">(&amp;$var)</span> </span>&#123;</span><br><span class="line">  $var++;</span><br><span class="line">  <span class="keyword">return</span> $var;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="number">0</span>;</span><br><span class="line">$b=&amp;foo($a);</span><br><span class="line">$b=<span class="number">4</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'$a:'</span>.$a.<span class="string">"&lt;br&gt;"</span>;<span class="comment">//输出$a:4</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'$b:'</span>.$b.<span class="string">"&lt;br&gt;"</span>;<span class="comment">//输出$b:4</span></span><br></pre></td></tr></table></figure></p>
+<p>此处需要注意的是,函数定义处需要显示声明<code>function &amp;foo</code>,在调用函数的时候也需要显示声明<code>$b=&amp;foo($a)</code>.这个跟上面讲到的引用传值不同.<br>那么如果我调用函数的时候如果不加<code>&amp;</code>调用,会怎么样呢?<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> &amp;<span class="title">foo</span><span class="params">(&amp;$var)</span> </span>&#123;</span><br><span class="line">  $var++;</span><br><span class="line">  <span class="keyword">return</span> $var;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="number">0</span>;</span><br><span class="line">$b=foo($a);</span><br><span class="line">$b=<span class="number">4</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'$a:'</span>.$a.<span class="string">"&lt;br&gt;"</span>;<span class="comment">//输出$a:1</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">'$b:'</span>.$b.<span class="string">"&lt;br&gt;"</span>;<span class="comment">//输出$b:4</span></span><br></pre></td></tr></table></figure></p>
+<p>上面例子中的引用传值只是为了突显这种差别. 也可以用对象来表现这个差别.<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">foo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $value = <span class="number">42</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> &amp;<span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$obj = <span class="keyword">new</span> foo;</span><br><span class="line"></span><br><span class="line">$myValue = &amp;$obj-&gt;getValue();</span><br><span class="line">$obj-&gt;value = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">echo</span> $myValue; <span class="comment">//输出2</span></span><br></pre></td></tr></table></figure></p>
+<p>上面<code>public function &amp;getValue() {</code>或<code>$myValue = &amp;$obj-&gt;getValue();</code>中的<code>&amp;</code>,无论少了谁,都不是引用返回,会导致最后输出<code>$myValue=42</code></p>
+<h1 id="4-对象的赋值和传值"><a href="#4-对象的赋值和传值" class="headerlink" title="4 对象的赋值和传值"></a>4 对象的赋值和传值</h1><p>在php5中,对象的赋值和参数传递并不是引用传递,实际传递的是对象标识符的拷贝.<br>上面已经讲到php中的引用其实是别名,对于对象而言,php5中对象变量并不直接指向对象内容,而是保存了一个对象标识符,通过标识符来访问对象的内容,在将对象变量赋值的时候,其实是将两个变量指向同一个标识符,下面看例子.<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $foo = <span class="number">1</span>;</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line">$a = <span class="keyword">new</span> A;</span><br><span class="line">$b = $a;     <span class="comment">// $a ,$b都是同一个标识符的拷贝</span></span><br><span class="line">             <span class="comment">// ($a) = ($b) = &lt;id&gt;</span></span><br><span class="line"></span><br><span class="line">             $c = <span class="keyword">new</span> A;</span><br><span class="line">$d = &amp;$c;    <span class="comment">// $c ,$d是引用</span></span><br><span class="line">             <span class="comment">// ($c,$d) = &lt;id&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的例子比较清晰表明了2者的区别,总结下:<br>对于普通变量而言:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = <span class="number">1</span>;</span><br><span class="line">$b = &amp;$a;</span><br></pre></td></tr></table></figure></p>
+<p>变量$a直接指向内容,当产生引用(即别名),那么<code>$a</code>和<code>$b</code>都指向同一个内容;<br>对于对象而言,中间隔着标识符:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> $foo = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">$a = <span class="keyword">new</span> A;</span><br><span class="line">$b = &amp;$a;    <span class="comment">// $a ,$b是引用</span></span><br><span class="line">$c = $a;     <span class="comment">// $c和$a保存的是同一个标识符,保存在不同的地方</span></span><br></pre></td></tr></table></figure></p>
+<p>通俗的讲,我们可以把标识符理解为门牌号,$a和$c中保存的是同样的门牌号,但是并不是记录在同一个地方,是相同内容的拷贝,他们都可以找到同一个人;而$a和$b只是别名的关系,它俩实际指向同一个,记录在同一个地方.</p>
+<blockquote>
+<p>$a的小本本记录门牌号A1234<br>$b的小本本(实际和$a是同一个小本本,彼此互为别名)记录门牌号A1234<br>$c的小本本记录门牌号A1234</p>
+</blockquote>
+<p>一图胜千言<br><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">$b</span> <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span>&gt;<span class="literal">+</span>      </span><br><span class="line">              <span class="comment">|</span></span><br><span class="line"><span class="comment">$a</span> <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span>&gt;<span class="literal">+</span></span><br><span class="line">              <span class="comment">|</span>  </span><br><span class="line">              <span class="comment">v</span>   </span><br><span class="line">        <span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>      </span><br><span class="line">        <span class="comment">|</span> <span class="comment">object</span> <span class="comment">id</span>   <span class="comment">|</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span> </span><br><span class="line">        <span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>               <span class="comment">|</span></span><br><span class="line"><span class="comment"></span>                                        <span class="comment">v</span></span><br><span class="line"><span class="comment"></span>        <span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>      <span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span></span><br><span class="line"><span class="comment">$c</span> <span class="literal">-</span><span class="literal">-</span>&gt;<span class="comment">|</span> <span class="comment">object</span> <span class="comment">id</span>  <span class="comment">|</span> <span class="literal">-</span><span class="literal">-</span><span class="literal">-</span>&gt; <span class="comment">|</span> <span class="comment">object(Class</span> <span class="comment">A)</span> <span class="comment">|</span></span><br><span class="line"><span class="comment"></span>        <span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span>      <span class="literal">+</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">+</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><ol>
+<li><a href="http://php.net/manual/zh/language.references.pass.php" target="_blank" rel="noopener">php引用传递</a></li>
+<li><a href="http://php.net/manual/zh/language.oop5.references.php" target="_blank" rel="noopener">对象和引用</a></li>
+<li><a href="https://segmentfault.com/a/1190000002928594" target="_blank" rel="noopener">在PHP中对象真的是按引用传递的吗</a></li>
+</ol>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2017/04/24/repair-chinese-input-in-ubuntu/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

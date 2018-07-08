@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="github,hexo,baidu,git," />
+  
+
+  <meta name="description" content="上一篇文章解决 Github Pages 禁止百度爬虫的方法,提到了解决百度爬虫被github禁用掉的方法.把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.然后今天去上gitcafe,偶然看到这个额(⊙o⊙)…,holly shit.不过没办法,人家都被收购了,我们只能改变策略了.话说">
+<meta name="keywords" content="github,hexo,baidu,git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net">
+<meta property="og:url" content="https://bblove.me/2016/03/06/migrate-pages-from-gitcafe-to-coding/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="上一篇文章解决 Github Pages 禁止百度爬虫的方法,提到了解决百度爬虫被github禁用掉的方法.把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.然后今天去上gitcafe,偶然看到这个额(⊙o⊙)…,holly shit.不过没办法,人家都被收购了,我们只能改变策略了.话说">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1f1n965hcj0j210r0g3jvk.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1f1n98oezpej20sv0kxtdb.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1f1n9byao2wj20o00gqn0e.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1f1n9m6me2ej20nv09c0us.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net">
+<meta name="twitter:description" content="上一篇文章解决 Github Pages 禁止百度爬虫的方法,提到了解决百度爬虫被github禁用掉的方法.把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.然后今天去上gitcafe,偶然看到这个额(⊙o⊙)…,holly shit.不过没办法,人家都被收购了,我们只能改变策略了.话说">
+<meta name="twitter:image" content="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-注册coding账号"><span class="toc-text">1 注册coding账号</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-新建和用户名同名的项目"><span class="toc-text">2 新建和用户名同名的项目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-添加ssh公钥"><span class="toc-text">3 添加ssh公钥</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-使用ssh方式发布博客"><span class="toc-text">3.1 使用ssh方式发布博客</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-使用https方式发布"><span class="toc-text">3.2 使用https方式发布</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-新建coding-pages分支"><span class="toc-text">4 新建coding-pages分支</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-开启pages服务"><span class="toc-text">5 开启pages服务</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-修改hexo配置"><span class="toc-text">5 修改hexo配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-修改dns设置"><span class="toc-text">7 修改dns设置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-从gitcafe迁移"><span class="toc-text">8 从gitcafe迁移</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-migrate-pages-from-gitcafe-to-coding" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.03.06</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/hexo/">hexo</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>上一篇文章<a href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener">解决 Github Pages 禁止百度爬虫的方法</a>,提到了解决百度爬虫被github禁用掉的方法.<br><code>把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.</code><br>然后今天去上gitcafe,偶然看到这个<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg" alt="GitCafe 项目迁移至 Coding.net 公告"><br>额(⊙o⊙)…,holly shit.不过没办法,人家都被收购了,我们只能改变策略了.<br>话说,两家都是做代码托管的,这也是顺(bao)应(tuan)潮(qu)流(nuan)咩?<br><a id="more"></a><br>思路跟原来差不多,就是我们把其中的gitcafe内容替换成coding.net就好,以下简称coding.<br><code>把博客同时发布到github pages和coding pages.然后使用dnspod设置域名解析,国内线路解析到coding.net,国外线路解析到github.</code></p>
+<ol>
+<li>注册coding账号</li>
+<li>新建一个项目,名字与你的用户名相同,比如我的名字是<code>Jackroyal</code>,新建一个项目名为<code>Jackroyal</code></li>
+<li>添加ssh公钥</li>
+<li>新建coding-pages分支</li>
+<li>开启pages服务</li>
+<li>修改hexo配置</li>
+<li>修改dns设置<h1 id="1-注册coding账号"><a href="#1-注册coding账号" class="headerlink" title="1 注册coding账号"></a>1 注册coding账号</h1>这个很简单不必说,注册需要填写用户名,邮箱和密码,比如我的用户名就是<code>Jackroyal</code><h1 id="2-新建和用户名同名的项目"><a href="#2-新建和用户名同名的项目" class="headerlink" title="2 新建和用户名同名的项目"></a>2 新建和用户名同名的项目</h1>在注册好账号以后,我们就去新建一个项目,方法和gitcafe不同和gihub类似,就是和用户名同名,一模一样的就行.我的项目名是<code>Jackroyal</code>,项目属性<code>公开</code><br><img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg" alt="新建同名项目"><h1 id="3-添加ssh公钥"><a href="#3-添加ssh公钥" class="headerlink" title="3 添加ssh公钥"></a>3 添加<code>ssh</code>公钥</h1>首先,我们提交代码库有两种方式,一种是https,一种是ssh,两种方式都可以,但是因为我们使用hexo来发布博客的时候是没有地方输入密码的,所以我们才考虑使用<code>ssh</code>方式,不过也不一定,我们还是可以使用https方式来提交hexo的.<h2 id="3-1-使用ssh方式发布博客"><a href="#3-1-使用ssh方式发布博客" class="headerlink" title="3.1 使用ssh方式发布博客"></a>3.1 使用ssh方式发布博客</h2>我们只需要找到本地的ssh公钥,然后上传到coding上去就行,点击<a href="https://coding.net/user/account/setting/keys" target="_blank" rel="noopener">这里</a>设置.查看本地ssh公钥的方法和上篇博客一样.<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg" alt="使用git客户端查看ssh公钥私钥"><br><img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg" alt="查看公钥"><br>复制那一段,然后在coding上添加上去就行<h2 id="3-2-使用https方式发布"><a href="#3-2-使用https方式发布" class="headerlink" title="3.2 使用https方式发布"></a>3.2 使用https方式发布</h2>如果非要使用https方式,也是可以的,核心思路就是在本地做一次<code>push</code>操作就行.</li>
+<li>我们先<code>git clone</code>命令,我的项目就是<code>git clone https://git.coding.net/Jackroyal/Jackroyal.git</code>得到coding上刚才新建的项目.</li>
+<li>克隆完成后,接着我们进到项目目录,我们新建一个文件或者修改一个文件</li>
+<li><code>git add .</code>,把修改提交到暂存区</li>
+<li><code>git commit -m &quot;测试提交&quot;</code>,将修改提交到本地仓库</li>
+<li><code>git push</code>,将修改提交到远程仓库</li>
+<li>接下来,会让你输入用户名和密码,你输入</li>
+<li>然后项目就会提交,因为这个状态会保留下来,你下次在提交就可以不用输入用户名和密码了,这样为我们使用hexo发布代码提供条件<br>ps:这种方式,可能过一段时间又不行了,报错<code>could not read Username for &#39;https://git.coding.net&#39;: Invalid argument</code>,你再做一次上面的操作就行<h1 id="4-新建coding-pages分支"><a href="#4-新建coding-pages分支" class="headerlink" title="4 新建coding-pages分支"></a>4 新建coding-pages分支</h1>当我们可以提交代码的时候,我们先来新建分支,和gitcafe差不多,它需要一个特别的分支名字,而不是像github默认的master分支,名字是<code>coding-pages</code>,如下图所示<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n965hcj0j210r0g3jvk.jpg" alt="新建coding分支"><br>我们把它设为默认分支<h1 id="5-开启pages服务"><a href="#5-开启pages服务" class="headerlink" title="5 开启pages服务"></a>5 开启pages服务</h1>接下来我们需要手动去开启pages服务.在项目主页的<code>pages</code>选项卡,点击开启服务,同时我们,添加域名绑定<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1f1n98oezpej20sv0kxtdb.jpg" alt="开启pages服务"><br>域名绑定我们还要去修改dns解析,我们先用它分配给我们的域名去访问<a href="http://jackroyal.coding.me/" target="_blank" rel="noopener">http://jackroyal.coding.me/</a>,看看能不能正常访问<h1 id="5-修改hexo配置"><a href="#5-修改hexo配置" class="headerlink" title="5 修改hexo配置"></a>5 修改hexo配置</h1>前面的准备工作做得差不多,我们修改博客的配置信息,打开博客根目录的<code>_config.yml</code>文件,格式和之前github的差不多:<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">deploy</span>:</span><br><span class="line">- <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repo</span>: <span class="string">'https://github.com/Jackroyal/Jackroyal.github.io.git'</span></span><br><span class="line">  <span class="attribute">branch</span>: master</span><br><span class="line">- <span class="attribute">type</span>: git</span><br><span class="line">  <span class="attribute">repo</span>: <span class="string">'https://git.coding.net/Jackroyal/Jackroyal.git'</span></span><br><span class="line">  <span class="attribute">branch</span>: coding-pages</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>尤其注意在配置的时候注意留空格,这种键值对,比如<code>type: git</code>,其中的冒号后面到git,有个空格的,不然配置文件就会读取错误.<br>还要注意branch名称,分支必须是<code>coding-pages</code><br><strong>PS:如上面所说,我选择的是https方式发布,所以我的repo是https的,如果你选择ssh方式去认证,那么你的地址应该是类似这样的<a href="mailto:`git@git.coding.net" target="_blank" rel="noopener">`git@git.coding.net</a>:Jackroyal/Jackroyal.git`
+</strong></p>
+<p><img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9byao2wj20o00gqn0e.jpg" alt="添加coding的repo信息"></p>
+<h1 id="7-修改dns设置"><a href="#7-修改dns设置" class="headerlink" title="7 修改dns设置"></a>7 修改dns设置</h1><p>就像第5步页面提示的,我们要绑定自己的域名,需要去修改dns解析记录,只需要添加一条CNAME指向你的<code>jackroyal.coding.me</code>即可.<br>注意后面加个点,也就是正确的填法是<code>jackroyal.coding.me.</code>,如下图所示.修改完成后大概等几分钟才能生效<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9m6me2ej20nv09c0us.jpg" alt="修改dns设置"></p>
+<h1 id="8-从gitcafe迁移"><a href="#8-从gitcafe迁移" class="headerlink" title="8 从gitcafe迁移"></a>8 从gitcafe迁移</h1><p>如果我们选择从gitcafe迁移的话,他会把我们原来的博客迁移过来.为了适应coding,你只需要从上面第二步开始就好,尤其注意的是,<code>新建coding-pages分支</code>,<code>新建coding-pages分支</code>,<code>新建coding-pages分支</code>,重要的事情说三遍,因为你迁移过来的分支名称是<code>gitcafe-pages</code>.<br>也就是核心问题,必须有个和用户名同名的项目,项目必须有个分支是<code>coding-pages</code></p>
+<p>其他没提的事情和上一篇是一样的.<br>最后执行<code>hexo d -g</code>,打完收工</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/03/05/php-learn-note-3-5/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/03/12/php-learn-note-4/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

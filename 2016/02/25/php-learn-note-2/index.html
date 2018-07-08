@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>php学习笔记(2) | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="php," />
+  
+
+  <meta name="description" content="今天看的是最基础的变量.">
+<meta name="keywords" content="php">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php学习笔记(2)">
+<meta property="og:url" content="https://bblove.me/2016/02/25/php-learn-note-2/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="今天看的是最基础的变量.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.320Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php学习笔记(2)">
+<meta name="twitter:description" content="今天看的是最基础的变量.">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-php变量"><span class="toc-text">1 php变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-预定义变量"><span class="toc-text">2 预定义变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-变量范围"><span class="toc-text">3 变量范围</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-静态变量"><span class="toc-text">3.2 静态变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-来自PHP之外的变量"><span class="toc-text">4 来自PHP之外的变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-图片提交表单"><span class="toc-text">4.1 图片提交表单</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-2-PHP自动转换变量名"><span class="toc-text">4.2 PHP自动转换变量名</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-php-learn-note-2" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">php学习笔记(2)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.02.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/php学习笔记/">php学习笔记</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>今天看的是最基础的变量.<br><a id="more"></a></p>
+<h1 id="1-php变量"><a href="#1-php变量" class="headerlink" title="1 php变量"></a>1 php变量</h1><p>和其他语言类似,php中一个有效的变量名由字母或者下划线开头,后面跟上任意数量的字母,数字,或者下划线.按照正常的正则表达式,它将被表述为：’[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*’.<br>赋值的时候,变量默认总是<code>传值赋值</code>.<br>在php中也可以用<code>引用赋值</code>,也就是改动新的变量也会因想到原始变量,反之亦然.<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$foo = <span class="string">'Bob'</span>;              <span class="comment">// 将 'Bob' 赋给 $foo</span></span><br><span class="line">$bar = &amp;$foo;              <span class="comment">// 通过 $bar 引用 $foo</span></span><br><span class="line">$bar = <span class="string">"My name is $bar"</span>;  <span class="comment">// 修改 $bar 变量</span></span><br><span class="line"><span class="keyword">echo</span> $bar;</span><br><span class="line"><span class="keyword">echo</span> $foo;                 <span class="comment">// $foo 的值也被修改</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>ps:只有有名字的变量才可以使用引用赋值,也就是无法对一个表达式使用引用赋值.<br>使用<code>isset()</code>来检测变量是否被初始化.</p>
+<h1 id="2-预定义变量"><a href="#2-预定义变量" class="headerlink" title="2 预定义变量"></a>2 预定义变量</h1><p>php会自动用下划线来替换所有的传入变量中的<code>.</code>号,例子如下所示<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">example.com/page.php?chuck.norris=nevercries</span><br><span class="line"></span><br><span class="line">you can not reference them by the name used in the URI:</span><br><span class="line"><span class="comment">//INCORRECT</span></span><br><span class="line"><span class="keyword">echo</span> $_GET[<span class="string">'chuck.norris'</span>];</span><br><span class="line"></span><br><span class="line">instead you must <span class="keyword">use</span>:</span><br><span class="line">//<span class="title">CORRECT</span></span><br><span class="line"><span class="title">echo</span> $<span class="title">_GET</span>['<span class="title">chuck_norris</span>'];</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="3-变量范围"><a href="#3-变量范围" class="headerlink" title="3 变量范围"></a>3 变量范围</h1><p>变量的范围即它定义的上下文背景（也就是它的生效范围）.大部分的 PHP 变量只有一个单独的范围.这个单独的范围跨度同样包含了 include 和 require 引入的文件.例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">include</span> <span class="string">'b.inc'</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里变量 $a 将会在包含文件 b.inc 中生效.但是,在用户自定义函数中,一个局部函数范围将被引入.任何用于函数内部的变量按缺省情况将被限制在局部函数范围内.例如：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$a = <span class="number">1</span>; <span class="comment">/* global scope */</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> $a; <span class="comment">/* reference to local scope variable */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Test();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这个脚本不会有任何输出,因为 <code>echo</code>语句引用了一个局部版本的变量$a,而且在这个范围内,它并没有被赋值.你可能注意到 PHP 的全局变量和 C 语言有一点点不同,在 C 语言中,全局变量在函数中自动生效,除非被局部变量覆盖.这可能引起一些问题,有些人可能不小心就改变了一个全局变量.PHP 中全局变量在函数中使用时必须声明为 <code>global</code>.<br>PS:此处需要注意的是,php不存在类似C和java的块级作用域.比如你在循环中定义的一个变量,在循环外还是可以访问的<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">for</span>($j=<span class="number">0</span>; $j&lt;<span class="number">3</span>; $j++)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">if</span>($j == <span class="number">1</span>)</span><br><span class="line">        $a = <span class="number">4</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> $a;<span class="comment">//此处将会输出4</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="3-2-静态变量"><a href="#3-2-静态变量" class="headerlink" title="3.2 静态变量"></a>3.2 静态变量</h2><p>php还支持静态变量,静态变量<code>仅在局部函数域中</code>存在,但当程序执行离开此作用域时,其值并不丢失.<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Test</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    $a = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">echo</span> $a;</span><br><span class="line">    $a++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="4-来自PHP之外的变量"><a href="#4-来自PHP之外的变量" class="headerlink" title="4 来自PHP之外的变量"></a>4 来自PHP之外的变量</h1><p>此处主要指的是通过表单提交的变量,从cookie读取的变量</p>
+<h2 id="4-1-图片提交表单"><a href="#4-1-图片提交表单" class="headerlink" title="4.1 图片提交表单"></a>4.1 图片提交表单</h2><p>除了常用的通过表单按钮提交表单,我们还可以使用图片的形式提交表单,代码如下:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"image"</span> src=<span class="string">"image.gif"</span> name=<span class="string">"sub"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这样在后端接收的时候,还会受到一个叫做<code>sub_x</code>和<code>sub_y</code>的变量,它包含了用户点击图片的坐标.此处如果你不定义<code>name</code>为<code>sub</code>,那么后端接收变量就是<code>x</code>和<code>y</code>.</p>
+<h1 id="4-2-PHP自动转换变量名"><a href="#4-2-PHP自动转换变量名" class="headerlink" title="4.2 PHP自动转换变量名"></a>4.2 PHP自动转换变量名</h1><p>当我们通过表单提交变量的时候,如果表单项的名称包含空格,点号,左中括号,php就会自动把他们转换成下划线.<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">"text"</span> name= <span class="string">"userName.a"</span>/&gt;</span><br><span class="line">&lt;input type=<span class="string">"text"</span> name= <span class="string">"passWor[d"</span>/&gt;</span><br><span class="line"><span class="comment">//输出[userName_a] =&gt; [passWor_d] =&gt; </span></span><br><span class="line"><span class="comment">//都被转化成下划线了</span></span><br></pre></td></tr></table></figure></p>
+<p>chr(32) ( ) (space)<br>chr(46) (.) (dot)<br>chr(91) ([) (open square bracket)</p>
+<p>ps:ascll码值在128-159的字符是合法字符,所以并不会被转义成下划线</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/01/28/digitalocean-switch-kernel/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2016/03/04/php-learn-note-3/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

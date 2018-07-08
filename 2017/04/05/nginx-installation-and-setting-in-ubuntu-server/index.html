@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>在ubuntu上安装和配置Nginx | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Linux,Nginx,ubuntu,多站点," />
+  
+
+  <meta name="description" content="废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了 1 系统环境服务器:ubuntu server 16.04.2 LTS主要工具:xshell 我这个服务器是腾讯云的主机,装的最新的ubuntu server lts发行版,32位系统. 2 系统安装我这里是完全参考的屈大的教程,因为屈大教程会不断更新,所以我这里就不赘述,直接贴地址">
+<meta name="keywords" content="Linux,Nginx,ubuntu,多站点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在ubuntu上安装和配置Nginx">
+<meta property="og:url" content="https://bblove.me/2017/04/05/nginx-installation-and-setting-in-ubuntu-server/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了 1 系统环境服务器:ubuntu server 16.04.2 LTS主要工具:xshell 我这个服务器是腾讯云的主机,装的最新的ubuntu server lts发行版,32位系统. 2 系统安装我这里是完全参考的屈大的教程,因为屈大教程会不断更新,所以我这里就不赘述,直接贴地址">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1febmtogaq5j20v904gglw.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1fecyn6c5hyj20fg0hn0tc.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/692869a3gy1febolh4yq0j21170fiq4b.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.325Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在ubuntu上安装和配置Nginx">
+<meta name="twitter:description" content="废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了 1 系统环境服务器:ubuntu server 16.04.2 LTS主要工具:xshell 我这个服务器是腾讯云的主机,装的最新的ubuntu server lts发行版,32位系统. 2 系统安装我这里是完全参考的屈大的教程,因为屈大教程会不断更新,所以我这里就不赘述,直接贴地址">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/692869a3gy1febmtogaq5j20v904gglw.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-系统环境"><span class="toc-text">1 系统环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-系统安装"><span class="toc-text">2 系统安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-修改DNS配置"><span class="toc-text">3 修改DNS配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-本站目录设置"><span class="toc-text">4 本站目录设置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-结尾"><span class="toc-text">5 结尾</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-nginx-installation-and-setting-in-ubuntu-server" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">在ubuntu上安装和配置Nginx</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.04.05</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了</p>
+<h1 id="1-系统环境"><a href="#1-系统环境" class="headerlink" title="1 系统环境"></a>1 系统环境</h1><p>服务器:ubuntu server 16.04.2 LTS<br>主要工具:xshell</p>
+<p>我这个服务器是腾讯云的主机,装的最新的ubuntu server lts发行版,32位系统.</p>
+<h1 id="2-系统安装"><a href="#2-系统安装" class="headerlink" title="2 系统安装"></a>2 系统安装</h1><p>我这里是完全参考的屈大的教程,因为屈大教程会不断更新,所以我这里就不赘述,直接贴地址<br><a href="https://imququ.com/post/my-nginx-conf.html" title="本博客Nginx配置之完整篇" target="_blank" rel="noopener">https://imququ.com/post/my-nginx-conf.html</a></p>
+<p>ps:由于屈大的Nginx配置是https一步到位,我的建议是,刚开始玩的话,先把所以https相关的配置注释掉,等一切顺利跑起来了,后期再加上https的内容</p>
+<p><code>Nginx全局配置</code>,直接抄屈大的就行,只需要把最后一行,改成你自己的服务器的路径<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include</span>            <span class="regexp">/home/</span>jerry<span class="regexp">/www/</span>nginx_conf<span class="comment">/*.conf;</span></span><br></pre></td></tr></table></figure></p>
+<p><code>web站点配置</code>注释掉https相关内容后,如下(我修改了屈大部分目录的路径,原理一样的):</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 80;</span><br><span class="line"></span><br><span class="line">        server_name bblove.me www.bblove.me;</span><br><span class="line">        server_tokens   off;</span><br><span class="line">        access_log /home/chen/www/nginx_log/bblove_me.log;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_certificate /home/chen/www/nginx_ssl/bblove_me/bblove_me.cer;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_certificate_key     /home/chen/www/nginx_ssl/bblove_me/bblove_me.key;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_dhparam    /home/chen/www/nginx_ssl/dhparams.pem;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_prefer_server_ciphers  on;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_ciphers                EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">       ssl_protocols              TLSv1 TLSv1.1 TLSv1.2;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">       ssl_session_cache          shared:SSL:50m;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_session_timeout        1d;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">       ssl_session_tickets        on;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_stapling    on;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_stapling_verify     on;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        ssl_trusted_certificate /home/chen/www/nginx_ssl/bblove_me/bblove_me.cer;</span></span><br><span class="line">        resolver        114.114.114.114 valid=300s;</span><br><span class="line">        resolver_timeout        10s;</span><br><span class="line">        if ($request_method !~ ^(GET|HEAD|POST|OPTIONS)$ ) &#123;</span><br><span class="line">                return           444;</span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">        <span class="keyword">if</span> (<span class="variable">$host</span> != <span class="string">'bblove.me'</span>)&#123;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">                rewrite ^/(.*)$ https://bblove.me/<span class="variable">$1</span> permanent;</span></span><br><span class="line"><span class="meta">#</span><span class="bash">        &#125;</span></span><br><span class="line">        location / &#123;</span><br><span class="line">                root /home/chen/www/bblove_me;</span><br><span class="line">                index index.html index.htm;</span><br><span class="line">                add_header               Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";</span><br><span class="line">                add_header               X-Frame-Options deny;</span><br><span class="line">                add_header               X-Content-Type-Options nosniff;</span><br><span class="line">                add_header               Cache-Control no-cache;</span><br><span class="line">                add_header               x-xss-protection " 1; mode=block";</span><br><span class="line">                add_header               x-content-type-options nosniff;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的配置完成后,使用<code>sudo service nginx reload</code>,重新加载配置文件,如果没有生效,就重启一下服务器.如果服务出错,可以使用<code>sudo service nginx status</code>查看是哪一行的配置出错,修改以后再reload.<br>到此步,服务器应该就配置好了,可以使用ip访问你的服务器了<code>http://x.x.x.x</code>,此处如果无法访问,请查看<br><a href="#4-结尾">安全组配置</a>,检查是否开放了80端口</p>
+<h1 id="3-修改DNS配置"><a href="#3-修改DNS配置" class="headerlink" title="3 修改DNS配置"></a>3 修改DNS配置</h1><p>我使用的DNSPOD的服务,直接去管理后台,添加两条解析记录,将<code>www</code>和<code>@</code>添加A记录,指向自己的服务器ip.<br>如果你不添加<code>www</code>的话,那访问你的博客只能使用<code>bblove.me</code>访问.添加两条记录的话,<code>www.bblove.me</code>和<code>bblove.me</code>都可访问你的博客.<br>而且,后面配置<code>https</code>的时候,如果要上HSTS的功能,就必须要配置<code>www</code>.<br><img src="https://ws1.sinaimg.cn/large/692869a3gy1febmtogaq5j20v904gglw.jpg" alt="DNSPOD配置"><br>配置好之后,可能要等一会儿才会生效<br>到这一步,你的服务器应该就可以使用域名访问了,http://域名</p>
+<h1 id="4-本站目录设置"><a href="#4-本站目录设置" class="headerlink" title="4 本站目录设置"></a>4 本站目录设置</h1><p>本站因为后期会布置多站点,所以设置目录结构如下,<code>www</code>目录下包含两个域名对应的网站根目录,同时还设置了配置文件的目录,日志文件的目录,https证书相关目录等,如图所示.</p>
+<p><img src="https://ws1.sinaimg.cn/large/692869a3gy1fecyn6c5hyj20fg0hn0tc.jpg" alt="本站目录设置"></p>
+<h1 id="5-结尾"><a href="#5-结尾" class="headerlink" title="5 结尾"></a>5 结尾</h1><p>我把多站点配置和https配置放到下一篇博客,这篇就简单讲这么多吧.</p>
+<p>小建议:</p>
+<ul>
+<li>配置Nginx的时候善用<code>sudo service nginx status</code>,这个用来定位错误很方便</li>
+<li>如果使用云服务器,比如腾讯云的话,需要修改安全组策略,把80端口和443端口放开<img src="https://ws1.sinaimg.cn/large/692869a3gy1febolh4yq0j21170fiq4b.jpg" alt="安全组配置"></li>
+<li>如果想查看端口是否打开,可以使用<a href="http://tool.chinaz.com/port/" target="_blank" rel="noopener">站长工具-在线端口扫描</a></li>
+</ul>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2016/11/06/my-life-these-days/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2017/04/05/nginx-https-setting-on-multiple-sites/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>给hexo配置上评论和访问量 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="hexo," />
+  
+
+  <meta name="description" content="哈哈,我们家笨笨,绝对是我学习技术的很大很大很大大的动力.更开始用github pages的时候,就觉得没法看访问量和评论数量这事,很蛋疼,不过也没折腾.今天上午,我们家笨笨说没有评论和访问量不好,都不知道多少人看了.妹子都发话了,果断要搞定.">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="给hexo配置上评论和访问量">
+<meta property="og:url" content="https://bblove.me/2015/05/30/hexo-setting-with-comments-and-visitors/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="哈哈,我们家笨笨,绝对是我学习技术的很大很大很大大的动力.更开始用github pages的时候,就觉得没法看访问量和评论数量这事,很蛋疼,不过也没折腾.今天上午,我们家笨笨说没有评论和访问量不好,都不知道多少人看了.妹子都发话了,果断要搞定.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1esm9snxfcuj20su0ad74x.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1esm9tcczdij20r00doq4t.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1esmayan2utj20w50mx0ya.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1esmajbsx38j20k30gwadu.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.319Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="给hexo配置上评论和访问量">
+<meta name="twitter:description" content="哈哈,我们家笨笨,绝对是我学习技术的很大很大很大大的动力.更开始用github pages的时候,就觉得没法看访问量和评论数量这事,很蛋疼,不过也没折腾.今天上午,我们家笨笨说没有评论和访问量不好,都不知道多少人看了.妹子都发话了,果断要搞定.">
+<meta name="twitter:image" content="https://ww1.sinaimg.cn/large/692869a3gw1esm9snxfcuj20su0ad74x.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-关于评论数量的显示-我们可以直接使用多说官网提供的方法-很简单"><span class="toc-text">1 关于评论数量的显示,我们可以直接使用多说官网提供的方法,很简单</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-关于访问量统计这事儿-不太好搞-我找到了这个不蒜子-这位非著名码农自己做的访问统计-哈哈-点个赞"><span class="toc-text">2 关于访问量统计这事儿,不太好搞,我找到了这个不蒜子,这位非著名码农自己做的访问统计,哈哈,点个赞</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-今天还看到了font-awesome-可以显示一些小图标-为了显示效果更好-一并加上去"><span class="toc-text">3 今天还看到了font-awesome,可以显示一些小图标,为了显示效果更好,一并加上去</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-配置评论数量的显示"><span class="toc-text">1 配置评论数量的显示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-配置文章访问量的显示"><span class="toc-text">2 配置文章访问量的显示</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-经过美化后最终的代码"><span class="toc-text">3  经过美化后最终的代码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#致谢"><span class="toc-text">致谢</span></a>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-hexo-setting-with-comments-and-visitors" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">给hexo配置上评论和访问量</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.05.30</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/hexo/">hexo</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>哈哈,我们家笨笨,绝对是我学习技术的很大很大很大大的动力.更开始用github pages的时候,就觉得没法看访问量和评论数量这事,很蛋疼,不过也没折腾.<br>今天上午,我们家笨笨说没有评论和访问量不好,都不知道多少人看了.妹子都发话了,果断要搞定.<br><a id="more"></a><br>google一番找到解决方法:</p>
+<h4 id="1-关于评论数量的显示-我们可以直接使用多说官网提供的方法-很简单"><a href="#1-关于评论数量的显示-我们可以直接使用多说官网提供的方法-很简单" class="headerlink" title="1 关于评论数量的显示,我们可以直接使用多说官网提供的方法,很简单"></a>1 关于评论数量的显示,我们可以直接使用多说官网提供的方法,很简单</h4><h4 id="2-关于访问量统计这事儿-不太好搞-我找到了这个不蒜子-这位非著名码农自己做的访问统计-哈哈-点个赞"><a href="#2-关于访问量统计这事儿-不太好搞-我找到了这个不蒜子-这位非著名码农自己做的访问统计-哈哈-点个赞" class="headerlink" title="2 关于访问量统计这事儿,不太好搞,我找到了这个不蒜子,这位非著名码农自己做的访问统计,哈哈,点个赞"></a>2 关于访问量统计这事儿,不太好搞,我找到了这个<a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener">不蒜子</a>,这位非著名码农自己做的访问统计,哈哈,点个赞</h4><h4 id="3-今天还看到了font-awesome-可以显示一些小图标-为了显示效果更好-一并加上去"><a href="#3-今天还看到了font-awesome-可以显示一些小图标-为了显示效果更好-一并加上去" class="headerlink" title="3 今天还看到了font-awesome,可以显示一些小图标,为了显示效果更好,一并加上去"></a>3 今天还看到了font-awesome,可以显示一些小图标,为了显示效果更好,一并加上去</h4><p>先展示一下最终的效果:<br><br><img src="https://ww1.sinaimg.cn/large/692869a3gw1esm9snxfcuj20su0ad74x.jpg" alt="页底关于整站访问量的显示"><br><img src="https://ww4.sinaimg.cn/large/692869a3gw1esm9tcczdij20r00doq4t.jpg" alt="文章页面关于访问量和评论数量的显示"></p>
+<p>下面,开始动手</p>
+<h1 id="1-配置评论数量的显示"><a href="#1-配置评论数量的显示" class="headerlink" title="1 配置评论数量的显示"></a>1 配置评论数量的显示</h1><p>首先,确认你的评论系统用的是多说,如果不是,那就不用继续往下看了(参考<a href="http://localhost:4000/2014/11/28/custom-hexo/" target="_blank" rel="noopener">这里</a>配置多说).<br>我使用的主题是<code>light</code>,其他主题原理类似.我们打开<code>themes/light/layout/_partial/article.ejs</code>,我们在<code>header</code>标签的尾部添加上下面的代码:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">item.excerpt</span> &amp;&amp; <span class="attr">index</span>)&#123; %&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123; %&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"busuanzi_container_page_pv"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"head-plus"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-user"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_page_pv"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-spinner fa-spin"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>次访问</span><br><span class="line">   <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"head-plus"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-comments"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"ds-thread-count"</span> <span class="attr">data-thread-key</span>=<span class="string">"&lt;%= page.layout %&gt;-&lt;%= page.slug %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-spinner fa-spin"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>条评论</span><br><span class="line">   <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>最终效果如图<br><br><img src="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg" alt="修改后的article.ejs"><br>以上代码,是最终成型的代码,我加入了一些美化的东西,最核心的就是<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"ds-thread-count"</span> <span class="attr">data-thread-key</span>=<span class="string">"&lt;%= page.layout %&gt;-&lt;%= page.slug %&gt;"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>尤其注意<code>data-thread-key</code>的设置,他和你之前配置多说的时候是一致的,每篇文章有一个独一无二的key,你可以去你的<code>themes/light/layout/_partial/comment.ejs</code>里找到关于data-thread-key的内容,直接复制过来即可.</p>
+<p>Ps:这里我们可能还需要配置下数据显示的格式,在你的多说后台管理里面,进入设置界面如图<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1esmayan2utj20w50mx0ya.jpg" alt="多说后台设置"><br>我们找到<code>暂无评论</code>,<code>1条评论</code>,<code>{num}条评论</code>,这几个设置,修改成自己要的格式,也可以参照我的修改,<code>0</code>,<code>1</code>,<code>{num}</code></p>
+<h1 id="2-配置文章访问量的显示"><a href="#2-配置文章访问量的显示" class="headerlink" title="2 配置文章访问量的显示"></a>2 配置文章访问量的显示</h1><p>这个更简单了,按照作者的说法,只需要引入一个js,再添加一个span就完成了.由于js一般放置在页面的最底部,所以我们找到<code>themes/light/layout/_partial/after_footer.ejs</code>,我们在最后添加上下面的代码:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面就完成了js文件的引入,我们再在要显示访问量的地方添加一个span就行了.比如我想显示在标题的下面,那就打开<code>themes/light/layout/_partial/article.ejs</code>,添加的代码,就是<code>第一步</code>里面添加的那个.如果你想简洁一点,也可以只添加下面核心代码就行:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">本站总访问量<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>次</span><br><span class="line">本站访客数<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_uv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>人次</span><br><span class="line">本文总阅读量<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_page_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>次</span><br></pre></td></tr></table></figure></p>
+<h1 id="3-经过美化后最终的代码"><a href="#3-经过美化后最终的代码" class="headerlink" title="3  经过美化后最终的代码"></a>3  经过美化后最终的代码</h1><p>如果只用官方提供的代码,没有优化,很丑,我优化了下,分享一下.</p>
+<p>1.修改<code>themes/light/layout/_partial/article.ejs</code>,在header标签的末尾添加以下代码<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">item.excerpt</span> &amp;&amp; <span class="attr">index</span>)&#123; %&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123; %&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"busuanzi_container_page_pv"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"head-plus"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-user"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_page_pv"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-spinner fa-spin"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>次访问</span><br><span class="line">   <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"head-plus"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-comments"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"ds-thread-count"</span> <span class="attr">data-thread-key</span>=<span class="string">"&lt;%= page.layout %&gt;-&lt;%= page.slug %&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-spinner fa-spin"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>条评论</span><br><span class="line">   <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg" alt="修改后的article.ejs"><br>2.修改<code>themes/light/layout/_partial/footer.ejs</code>,下面是footer.ejs的<strong>全部代码</strong>:<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"alignleft"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> <span class="attr">if</span> (<span class="attr">config.author</span>)&#123; %&gt;</span></span><br><span class="line">  &amp;copy; <span class="tag">&lt;<span class="name">%=</span> <span class="attr">new</span> <span class="attr">Date</span>()<span class="attr">.getFullYear</span>() %&gt;</span> <span class="tag">&lt;<span class="name">%=</span> <span class="attr">config.author</span> %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125; <span class="attr">else</span> &#123; %&gt;</span></span><br><span class="line">  &amp;copy; <span class="tag">&lt;<span class="name">%=</span> <span class="attr">new</span> <span class="attr">Date</span>()<span class="attr">.getFullYear</span>() %&gt;</span> <span class="tag">&lt;<span class="name">%=</span> <span class="attr">config.title</span> %&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">%</span> &#125; %&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_container_site_pv"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-flag"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span>    你是第<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_site_pv"</span>&gt;</span><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-spinner fa-spin"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span>个到访的小伙伴</span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"clearfix"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><br>3.修改<code>themes/light/layout/_partial/after_footer.ejs</code>,我们在<strong>最后</strong>添加上下面的代码:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;script <span class="keyword">async</span> src=<span class="string">"https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<p>4.修改<code>themes\light\source\css\_partial\article.styl</code>,我们在第124行,在<code>.entry</code>之前添加上以下代码,尤其注意与左右的间距,因为它是一个树形结构,它与左侧的距离,影响着它的层级.我们这里应该和entry平级,下面代码应该与<code>.entry</code>对齐<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">.busuanzi_container_page_pv</span></span><br><span class="line"><span class="attr">    margin:</span><span class="number">20</span><span class="string">px</span> <span class="number">0</span></span><br><span class="line"><span class="attr">    color:</span> <span class="comment"># 817C7C</span></span><br><span class="line"><span class="attr">    font-size:</span> <span class="number">12</span><span class="string">px</span></span><br><span class="line"><span class="comment"># busuanzi_value_page_pv</span></span><br><span class="line"><span class="attr">    padding-left:</span><span class="number">4</span><span class="string">px</span></span><br><span class="line"><span class="string">.head-plus</span></span><br><span class="line"><span class="attr">    padding-left:</span><span class="number">4</span><span class="string">px</span></span><br><span class="line"><span class="string">.ds-thread-count</span></span><br><span class="line"><span class="attr">    padding-left:</span><span class="number">4</span><span class="string">px</span></span><br></pre></td></tr></table></figure></p>
+<p>最终效果如图:<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1esmajbsx38j20k30gwadu.jpg" alt="添加css,注意左对齐"><br>5.修改<code>themes\light\source\css\_partial\footer.styl</code>,在最后添加上以下代码<br><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># busuanzi_value_site_pv</span></span><br><span class="line"><span class="attr">  color:</span><span class="string">black</span></span><br><span class="line"><span class="attr">  padding:</span><span class="number">4</span><span class="string">px</span></span><br><span class="line"><span class="comment"># busuanzi_container_site_pv</span></span><br><span class="line"><span class="attr">  padding-left:</span><span class="number">2</span><span class="string">em</span></span><br></pre></td></tr></table></figure></p>
+<p>6.修改<code>themes\light\source\css\_partial\variable.styl</code>,在最后添加以下代码<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> url(<span class="string">"http://libs.useso.com/js/font-awesome/4.2.0/css/font-awesome.min.css"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>ok  打完收工</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 博客访问技术工具–不蒜子 <a href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener">http://ibruce.info/2015/04/04/busuanzi/</a><br>2 <a href="http://dev.duoshuo.com/docs/5016427f77cf5fa30500000e" target="_blank" rel="noopener">多说-代码显示【文章评论数】方法</a></p>
+<h1 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h1><p>这里，要感谢我最亲爱的笨笨<a href="http://huirong.github.io" target="_blank" rel="noopener">http://huirong.github.io</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/05/23/python-requests-login-csdn-blog/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/06/16/hexo-3-0-update/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

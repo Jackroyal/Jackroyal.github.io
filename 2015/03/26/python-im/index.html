@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>python学习笔记--一个简单聊天室的实现 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="python,socket," />
+  
+
+  <meta name="description" content="最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.这是来自书上的一个python聊天程序,我照着敲了一遍,然后给扩展了一下,加了多个房间和创建选择房间的功能,写了好久好久,感觉都拖了一个星期了.下一步是做一个gui,恩,那将是我的第一个gui程序.">
+<meta name="keywords" content="python,socket">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python学习笔记--一个简单聊天室的实现">
+<meta property="og:url" content="https://bblove.me/2015/03/26/python-im/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.这是来自书上的一个python聊天程序,我照着敲了一遍,然后给扩展了一下,加了多个房间和创建选择房间的功能,写了好久好久,感觉都拖了一个星期了.下一步是做一个gui,恩,那将是我的第一个gui程序.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.319Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python学习笔记--一个简单聊天室的实现">
+<meta name="twitter:description" content="最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.这是来自书上的一个python聊天程序,我照着敲了一遍,然后给扩展了一下,加了多个房间和创建选择房间的功能,写了好久好久,感觉都拖了一个星期了.下一步是做一个gui,恩,那将是我的第一个gui程序.">
+<meta name="twitter:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#先贴一下代码-server5-py"><span class="toc-text">先贴一下代码 server5.py</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-python-im" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">python学习笔记--一个简单聊天室的实现</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.03.26</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/python学习笔记/">python学习笔记</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.<br>这是来自书上的一个python聊天程序,我照着敲了一遍,然后给扩展了一下,加了多个房间和创建选择房间的功能,写了好久好久,感觉都拖了一个星期了.<br>下一步是做一个gui,恩,那将是我的第一个gui程序.<br><a id="more"></a></p>
+<h1 id="先贴一下代码-server5-py"><a href="#先贴一下代码-server5-py" class="headerlink" title="先贴一下代码 server5.py"></a>先贴一下代码 server5.py</h1><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8-*-</span></span><br><span class="line">__author_<span class="number">_</span> = <span class="string">'chen'</span></span><br><span class="line"></span><br><span class="line">from asyncore import  dispatcher</span><br><span class="line">from  asynchat import async_chat</span><br><span class="line">import socket,asyncore</span><br><span class="line"></span><br><span class="line">PORT = <span class="number">5005</span>  <span class="comment"># 设定程序的端口号</span></span><br><span class="line">NAME = <span class="string">'testchat'</span>  <span class="comment"># 给服务器一个名称</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EndSession</span>(<span class="title">Exception</span>):<span class="title">pass</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommandHandler</span>:</span></span><br><span class="line">    <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">    类似标准库中cmd.Cmd的简单命令处理程序</span></span><br><span class="line"><span class="string">    "</span><span class="string">""</span></span><br><span class="line">    <span class="comment"># 如果输入的命令,那么就返回unknown命令</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">unknown</span><span class="params">(<span class="keyword">self</span>, session, cmd)</span></span><span class="symbol">:</span></span><br><span class="line">        session.push(<span class="string">'Unknown command: %s \r\n'</span> % cmd)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> line.strip()<span class="symbol">:</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        parts = line.split(<span class="string">' '</span>, <span class="number">1</span>)</span><br><span class="line">        cmd = parts[<span class="number">0</span>]</span><br><span class="line">        <span class="symbol">try:</span></span><br><span class="line">            line = parts[<span class="number">1</span>].strip()</span><br><span class="line">        except <span class="symbol">IndexError:</span>line = <span class="string">''</span></span><br><span class="line">        meth = getattr(<span class="keyword">self</span>, <span class="string">'do_'</span> + cmd, None)</span><br><span class="line">        <span class="symbol">try:</span></span><br><span class="line">            meth(session, line)</span><br><span class="line">        except <span class="symbol">TypeError:</span></span><br><span class="line">            <span class="keyword">self</span>.unknown(session, cmd)</span><br><span class="line"><span class="comment"># 这个类是聊天房间的类,继承上面的类是为了继承执行命令的功能</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChatRoom</span>(<span class="title">CommandHandler</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>, name, server)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.server = server</span><br><span class="line">        <span class="keyword">self</span>.name = name</span><br><span class="line">        <span class="keyword">self</span>.sessions = []</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(<span class="keyword">self</span>, session)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.broadcast(session.name + <span class="string">' has entered the room %s\r\n'</span> % <span class="keyword">self</span>.name)</span><br><span class="line">        session.push(<span class="string">'you can type "h" for help\r\n'</span>)</span><br><span class="line">        <span class="comment">## 因为后面要将用户挪动房间,所以必须保存每个用户的session,这样才能挪动和删除</span></span><br><span class="line">        <span class="keyword">self</span>.server.users[session.name] = session</span><br><span class="line">        <span class="keyword">self</span>.sessions.append(session)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">remove</span><span class="params">(<span class="keyword">self</span>, session)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="symbol">try:</span></span><br><span class="line">            <span class="keyword">self</span>.sessions.remove(session)</span><br><span class="line">        <span class="symbol">except:</span> pass <span class="comment"># 如果此处的sessions为空或者已经不存在,会出错,此处不上报</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">broadcast</span><span class="params">(<span class="keyword">self</span>, line)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="comment"># 广播,只广播到当前房间</span></span><br><span class="line">        <span class="keyword">for</span> session <span class="keyword">in</span> <span class="keyword">self</span>.<span class="symbol">sessions:</span></span><br><span class="line">            session.push(line)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_say</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="comment"># 说话</span></span><br><span class="line">        <span class="keyword">self</span>.broadcast(session.name + <span class="string">":"</span> + line + <span class="string">'\r\n'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_login</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="comment"># login,其实是实现改名字的功能,懒得去改函数名了</span></span><br><span class="line">        name = line.strip()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="symbol">name:</span></span><br><span class="line">            session.push(<span class="string">'please enter a name\r\n'</span>)</span><br><span class="line">        elif name <span class="keyword">in</span> <span class="keyword">self</span>.server.users.keys()<span class="symbol">:</span></span><br><span class="line">            session.push(<span class="string">'The name %s is taken\r\n'</span> % name)</span><br><span class="line">            session.push(<span class="string">'please try again\r\n'</span>)</span><br><span class="line">        <span class="symbol">else:</span></span><br><span class="line">            session.server.users[name] = session.server.users.pop(session.name)</span><br><span class="line">            session.name = name</span><br><span class="line">            session.enter(<span class="keyword">self</span>)</span><br><span class="line">            <span class="keyword">self</span>.do_list(session, <span class="string">''</span>)</span><br><span class="line">            session.push(<span class="string">'type "select name" to choose one room\r\n'</span>)</span><br><span class="line">    <span class="comment"># 查看当前房间有哪些人</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_look</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        session.push(<span class="string">'the following are in this room:\r\n'</span>)</span><br><span class="line">        <span class="keyword">for</span> other <span class="keyword">in</span> <span class="keyword">self</span>.<span class="symbol">sessions:</span></span><br><span class="line">            session.push(other.name + <span class="string">"\r\n"</span>)</span><br><span class="line">    <span class="comment"># 查看当前在线的用户,所有房间的用户</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_who</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        session.push(<span class="string">'the following are logged in:\r\n'</span>)</span><br><span class="line">        <span class="keyword">for</span> name <span class="keyword">in</span> <span class="keyword">self</span>.server.<span class="symbol">users:</span></span><br><span class="line">            session.push(name + <span class="string">'\r\n'</span>)</span><br><span class="line">    <span class="comment"># 查看当前所有的房间</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_list</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        session.push(<span class="string">'the room list is below\r\n'</span>)</span><br><span class="line">        session.push(<span class="string">'   '</span>.join(<span class="keyword">self</span>.server.rooms) + <span class="string">'\r\n'</span>)</span><br><span class="line">    <span class="comment"># 选择房间</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_select</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        name = line.strip()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="symbol">name:</span></span><br><span class="line">            session.push(<span class="string">'please enter a room name\r\n'</span>)</span><br><span class="line">        elif name <span class="keyword">in</span> <span class="keyword">self</span>.server.rooms.keys()<span class="symbol">:</span></span><br><span class="line">            session.enter(<span class="keyword">self</span>.server.rooms[name])</span><br><span class="line">            <span class="keyword">self</span>.broadcast(<span class="string">' %s ,welcome to join %s\r\n'</span>% (session.name, name))</span><br><span class="line">    <span class="comment"># 输出帮助</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_h</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        session.push(<span class="string">'you can use this commands:\r\n1,who to see who is on this server(online and offline)\r\n2,'</span></span><br><span class="line">        <span class="string">'list to see how many room are avaliable\r\n3,look to see who are in this room\r\n4,login to login online and '</span></span><br><span class="line">        <span class="string">'change a name\r\n5,create to create a new room'</span>)</span><br><span class="line">    <span class="comment"># 创建新房间</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_create</span><span class="params">(<span class="keyword">self</span>, session, line)</span></span><span class="symbol">:</span></span><br><span class="line">        name = line.strip()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="symbol">name:</span></span><br><span class="line">            session.push(<span class="string">'please enter a name\r\n'</span>)</span><br><span class="line">        elif name <span class="keyword">in</span> <span class="keyword">self</span>.server.rooms.keys()<span class="symbol">:</span></span><br><span class="line">            session.push(<span class="string">'The room name %s is taken\r\n'</span> % name)</span><br><span class="line">            session.push(<span class="string">'please try again\r\n'</span>)</span><br><span class="line">        <span class="symbol">else:</span></span><br><span class="line">            ChatRoom(name, <span class="keyword">self</span>.server)</span><br><span class="line">            session.server.rooms[name] = ChatRoom(name, <span class="keyword">self</span>.server)</span><br><span class="line">            session.push(<span class="string">"the room %s create successful\r\n"</span> % name)</span><br><span class="line">            session.enter(session.server.rooms[name])</span><br><span class="line"><span class="comment"># 每个用户回话,这个是重点类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChatSession</span>(<span class="title">async_chat</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>, server, sock)</span></span><span class="symbol">:</span></span><br><span class="line">        async_chat.__init_<span class="number">_</span>(<span class="keyword">self</span>, sock)</span><br><span class="line">        <span class="keyword">self</span>.server = server</span><br><span class="line">        <span class="keyword">self</span>.set_terminator(<span class="string">'\r\n'</span>)</span><br><span class="line">        <span class="keyword">self</span>.data = []</span><br><span class="line">        <span class="keyword">self</span>.name = <span class="string">'visitor'</span> + str(len(server.users))<span class="comment"># 初始化用户名,用visitor1之类来表示</span></span><br><span class="line">        <span class="keyword">self</span>.room = <span class="keyword">self</span>.server.main_room</span><br><span class="line">        <span class="keyword">self</span>.enter(<span class="keyword">self</span>.server.main_room)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">enter</span><span class="params">(<span class="keyword">self</span>, room)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="symbol">try:</span></span><br><span class="line">            cur = <span class="keyword">self</span>.room</span><br><span class="line">        except <span class="symbol">AttributeError:</span> pass</span><br><span class="line">        <span class="symbol">else:</span> cur.remove(<span class="keyword">self</span>)</span><br><span class="line">        <span class="keyword">self</span>.room = room</span><br><span class="line">        room.add(<span class="keyword">self</span>)</span><br><span class="line">    <span class="comment"># 当用户有输入的时候</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">collect_incoming_data</span><span class="params">(<span class="keyword">self</span>, data)</span></span><span class="symbol">:</span></span><br><span class="line">        <span class="keyword">self</span>.data.append(data)</span><br><span class="line">    <span class="comment"># 当用户输入终止符的时候</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">found_terminator</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        line = <span class="string">''</span>.join(<span class="keyword">self</span>.data)</span><br><span class="line">        <span class="keyword">self</span>.data = []</span><br><span class="line">        <span class="symbol">try:</span></span><br><span class="line">            <span class="keyword">self</span>.room.handle(<span class="keyword">self</span>, line)</span><br><span class="line">        except <span class="symbol">EndSession:</span></span><br><span class="line">            <span class="keyword">self</span>.handle_close()</span><br><span class="line">    <span class="comment"># 关闭用户回话</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle_close</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        async_chat.handle_close(<span class="keyword">self</span>)</span><br><span class="line">        <span class="comment"># self.enter()</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 服务器类,这个也是重点类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChatServer</span>(<span class="title">dispatcher</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>, port, name)</span></span><span class="symbol">:</span></span><br><span class="line">        dispatcher.__init_<span class="number">_</span>(<span class="keyword">self</span>)</span><br><span class="line">        <span class="keyword">self</span>.create_socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">        <span class="comment"># 端口复用</span></span><br><span class="line">        <span class="keyword">self</span>.set_reuse_addr()</span><br><span class="line">        <span class="keyword">self</span>.bind((<span class="string">''</span>, port))</span><br><span class="line">        <span class="keyword">self</span>.listen(<span class="number">5</span>)</span><br><span class="line">        <span class="keyword">self</span>.sessions = &#123;&#125;</span><br><span class="line">        <span class="keyword">self</span>.name = name</span><br><span class="line">        <span class="keyword">self</span>.users = &#123;&#125;</span><br><span class="line">        <span class="keyword">self</span>.rooms = &#123;&#125;</span><br><span class="line">        <span class="comment"># 新建一个房间hall,因为每个初始登陆的用户没有房间,但是操作是依赖与ChatRoom类的,所以给一个初始默认的房间</span></span><br><span class="line">        <span class="keyword">self</span>.main_room = ChatRoom(<span class="string">'hall'</span>, <span class="keyword">self</span>)</span><br><span class="line">        <span class="keyword">self</span>.rooms[<span class="keyword">self</span>.main_room.name] = <span class="keyword">self</span>.main_room</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle_accept</span><span class="params">(<span class="keyword">self</span>)</span></span><span class="symbol">:</span></span><br><span class="line">        conn,addr = <span class="keyword">self</span>.accept()</span><br><span class="line">        ChatSession(<span class="keyword">self</span>, conn)</span><br><span class="line">        print <span class="string">'connection attempt from '</span>, addr[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name_<span class="number">_</span> == <span class="string">"__main__"</span><span class="symbol">:</span></span><br><span class="line">    print <span class="string">'server start'</span></span><br><span class="line">    s = ChatServer(PORT, NAME)</span><br><span class="line">    <span class="symbol">try:</span></span><br><span class="line">        asyncore.loop()</span><br><span class="line">    except <span class="symbol">KeyboardInterrupt:</span> print</span><br></pre></td></tr></table></figure>
+<p>效果如图所示<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg" alt="运行效果"></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/03/18/python-socket-port-reuse/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/03/29/python-blog-spider/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>ubuntu 14.04 安装denyhosts | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Linux,ubuntu," />
+  
+
+  <meta name="description" content="起因因为之前服务器两次被黑，妈蛋。今天在上google+的时候，无意中看到一个维护vps的帖子，就顺手把我的服务器维护下。之前被黑经历也很简单，因为方便管理的缘故，我给root用户设置了密码，没错，是弱口令，一扫不要一分钟就可以出来的那种。我在那篇帖子中看到denyhosts这货。东西很简单，分析你的日志，如果有人连续登陆几次密码都错误，那么把他的ip添加到denyhost当中，禁止它继续扫描。这">
+<meta name="keywords" content="Linux,ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ubuntu 14.04 安装denyhosts">
+<meta property="og:url" content="https://bblove.me/2015/04/28/ubuntu-denyhosts/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="起因因为之前服务器两次被黑，妈蛋。今天在上google+的时候，无意中看到一个维护vps的帖子，就顺手把我的服务器维护下。之前被黑经历也很简单，因为方便管理的缘故，我给root用户设置了密码，没错，是弱口令，一扫不要一分钟就可以出来的那种。我在那篇帖子中看到denyhosts这货。东西很简单，分析你的日志，如果有人连续登陆几次密码都错误，那么把他的ip添加到denyhost当中，禁止它继续扫描。这">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1erll3zp3xpj20id0b5q63.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1erlmrt5ht5j20j80m40zg.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.338Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ubuntu 14.04 安装denyhosts">
+<meta name="twitter:description" content="起因因为之前服务器两次被黑，妈蛋。今天在上google+的时候，无意中看到一个维护vps的帖子，就顺手把我的服务器维护下。之前被黑经历也很简单，因为方便管理的缘故，我给root用户设置了密码，没错，是弱口令，一扫不要一分钟就可以出来的那种。我在那篇帖子中看到denyhosts这货。东西很简单，分析你的日志，如果有人连续登陆几次密码都错误，那么把他的ip添加到denyhost当中，禁止它继续扫描。这">
+<meta name="twitter:image" content="https://ww3.sinaimg.cn/large/692869a3gw1erll3zp3xpj20id0b5q63.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#起因"><span class="toc-text">起因</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、下载源码包-解压源码包"><span class="toc-text">1、下载源码包,解压源码包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、安装部署"><span class="toc-text">2、安装部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、编辑配置文件denyhosts-cfg"><span class="toc-text">3、编辑配置文件denyhosts.cfg</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一个，我们注释掉第12行，启用第15行，修改以后结果如下-原因是ubuntu中的log不在-var-log-secure中，而是在-var-log-auth-log中"><span class="toc-text">第一个，我们注释掉第12行，启用第15行，修改以后结果如下(原因是ubuntu中的log不在/var/log/secure中，而是在/var/log/auth.log中)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置"><span class="toc-text">第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、编辑配置文件daemon-control"><span class="toc-text">4、编辑配置文件daemon-control</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、运行"><span class="toc-text">5、运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、添加到开机启动"><span class="toc-text">6、添加到开机启动</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ubuntu-denyhosts" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">ubuntu 14.04 安装denyhosts</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.04.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>因为之前服务器两次被黑，妈蛋。今天在上google+的时候，无意中看到一个维护vps的帖子，就顺手把我的服务器维护下。<br>之前被黑经历也很简单，因为方便管理的缘故，我给root用户设置了密码，没错，是弱口令，一扫不要一分钟就可以出来的那种。<br>我在那篇帖子中看到denyhosts这货。东西很简单，分析你的日志，如果有人连续登陆几次密码都错误，那么把他的ip添加到denyhost当中，禁止它继续扫描。这货还很多功能，可以设置禁止时间以后，自动解禁；可以配置自动解禁的次数;还可以配置用户密码尝试的次数，给管理员发邮件等。<br><a id="more"></a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="1、下载源码包-解压源码包"><a href="#1、下载源码包-解压源码包" class="headerlink" title="1、下载源码包,解压源码包"></a>1、下载源码包,解压源码包</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://sourceforge.net/projects/denyhosts/files/denyhosts/<span class="number">2.6</span>/DenyHosts<span class="number">-2.6</span>.tar.gz</span><br><span class="line">tar zxvf DenyHosts<span class="number">-2.6</span>.tar.gz</span><br><span class="line">cd DenyHosts<span class="number">-2.6</span></span><br></pre></td></tr></table></figure>
+<h2 id="2、安装部署"><a href="#2、安装部署" class="headerlink" title="2、安装部署"></a>2、安装部署</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">python setup.py install</span><br><span class="line">cd /usr/share/denyhosts/</span><br><span class="line">cp denyhosts.cfg-dist denyhosts.cfg</span><br><span class="line">cp daemon-control-dist daemon-control</span><br></pre></td></tr></table></figure>
+<h2 id="3、编辑配置文件denyhosts-cfg"><a href="#3、编辑配置文件denyhosts-cfg" class="headerlink" title="3、编辑配置文件denyhosts.cfg"></a>3、编辑配置文件denyhosts.cfg</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi denyhosts.cfg</span><br></pre></td></tr></table></figure>
+<p>几个常见的参数如下所示：<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PURGE_DENY：当一个IP被阻止以后，过多长时间被自动解禁。可选如<span class="number">3</span>m（三分钟）、<span class="number">5</span>h（<span class="number">5</span>小时）、<span class="number">2</span>d（两天）、<span class="number">8</span>w（<span class="number">8</span>周）、<span class="number">1</span>y（一年）；</span><br><span class="line">PURGE_THRESHOLD：定义了某一IP最多被解封多少次。即某一IP由于暴力破解SSH密码被阻止/解封达到了PURGE_THRESHOLD次，则会被永久禁止；</span><br><span class="line">BLOCK_SERVICE：需要阻止的服务名；</span><br><span class="line">DENY_THRESHOLD_INVALID：某一无效用户名（不存在的用户）尝试多少次登录后被阻止；</span><br><span class="line">DENY_THRESHOLD_VALID：某一有效用户名尝试多少次登陆后被阻止（比如账号正确但密码错误），root除外；</span><br><span class="line">DENY_THRESHOLD_ROOT：root用户尝试登录多少次后被阻止；</span><br><span class="line">HOSTNAME_LOOKUP：是否尝试解析源IP的域名；</span><br></pre></td></tr></table></figure></p>
+<p>一般我们就用默认就好，我们只需要改两个地方：</p>
+<h3 id="第一个，我们注释掉第12行，启用第15行，修改以后结果如下-原因是ubuntu中的log不在-var-log-secure中，而是在-var-log-auth-log中"><a href="#第一个，我们注释掉第12行，启用第15行，修改以后结果如下-原因是ubuntu中的log不在-var-log-secure中，而是在-var-log-auth-log中" class="headerlink" title="第一个，我们注释掉第12行，启用第15行，修改以后结果如下(原因是ubuntu中的log不在/var/log/secure中，而是在/var/log/auth.log中)"></a>第一个，我们注释掉第12行，启用第15行，修改以后结果如下(原因是ubuntu中的log不在/var/log/secure中，而是在/var/log/auth.log中)</h3><p><img src="https://ww3.sinaimg.cn/large/692869a3gw1erll3zp3xpj20id0b5q63.jpg" alt="修改后的denyhosts.cfg"></p>
+<h3 id="第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置"><a href="#第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置" class="headerlink" title="第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置"></a>第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置</h3><p>去掉前面的<code>#</code>,就行了，修改后结果如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">63 <span class="comment"># purge entries older than 5 days</span></span><br><span class="line">64 PURGE_DENY = 5d</span><br><span class="line">65 <span class="comment">###################################################################### #</span></span><br><span class="line">66</span><br></pre></td></tr></table></figure></p>
+<h2 id="4、编辑配置文件daemon-control"><a href="#4、编辑配置文件daemon-control" class="headerlink" title="4、编辑配置文件daemon-control"></a>4、编辑配置文件daemon-control</h2><p>因为在ubuntu系统中，有些文件不在预设的位置，所以我们需要编辑这个文件<br>我们只需要改第14行就好了，修改<code>/usr/bin/denyhosts.py</code>为<code>/usr/local/bin/denyhosts.py</code>，修改后结果如下<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">13 </span><br><span class="line">14 DENYHOSTS_BIN   = <span class="string">"/usr/local/bin/denyhosts.py"</span></span><br><span class="line">15 DENYHOSTS_LOCK  = <span class="string">"/var/lock/subsys/denyhosts"</span></span><br><span class="line">16 DENYHOSTS_CFG   = <span class="string">"/usr/share/denyhosts/denyhosts.cfg"</span></span><br><span class="line">17 </span><br><span class="line">18 PYTHON_BIN      = <span class="string">"/usr/bin/env python"</span></span><br><span class="line">19</span><br></pre></td></tr></table></figure></p>
+<h2 id="5、运行"><a href="#5、运行" class="headerlink" title="5、运行"></a>5、运行</h2><p>运行，额，错误一堆啊，我们执行<code>sudo ./daemon-control start</code>,然后得到如下错误<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">starting DenyHosts:    /usr/bin/env python /usr/<span class="built_in">local</span>/bin/denyhosts.py --daemon --config=/usr/share/denyhosts/denyhosts.cfg</span><br><span class="line">DenyHosts could not obtain lock (pid: )</span><br><span class="line">[Errno 2] No such file or directory: <span class="string">'/var/lock/subsys/denyhosts'</span></span><br></pre></td></tr></table></figure></p>
+<p>我们可以去<code>/var/lock</code>下面的确看不到subsys这个文件夹，那我们就手动创建他<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/lock/subsys</span><br></pre></td></tr></table></figure></p>
+<p>继续执行<code>sudo ./daemon-control start</code>，应该就会成功<br>ps：如果还不成功，他缺什么文件我们就用<code>touch</code>新建这个文件，如果说<code>file exists</code>,我们就删除那个文件</p>
+<h2 id="6、添加到开机启动"><a href="#6、添加到开机启动" class="headerlink" title="6、添加到开机启动"></a>6、添加到开机启动</h2><p>第一种是将DenyHosts作为类似apache、mysql一样的服务，这种方法可以通过 /etc/init.d/denyhosts 命令来控制其状态。方法如下：<br><figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">cd /etc/init.d</span><br><span class="line">ln -s /usr/share/denyhosts/daemon-control denyhosts</span><br><span class="line"><span class="meta"># 上面的操作就把他变成了一个服务 我们可以使用service denyhosts start来启动服务</span></span><br><span class="line"><span class="meta"># 下面把他添加到开机自启动，我们这里需要安装一个软件来实现</span></span><br><span class="line"><span class="meta"># ubuntu中没有chkconfig命令，网上的教程是用的chkconfig，具体操作查看后面的参考文献1，ubuntu中对应的是update-rc.d，但是不好用，所以我用sysv-rc-conf </span></span><br><span class="line">sudo apt-<span class="keyword">get</span> install sysv-rc-conf</span><br><span class="line">sudo sysv-rc-conf</span><br></pre></td></tr></table></figure></p>
+<p>我们设置运行级别2345，编辑以后如下所示<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1erlmrt5ht5j20j80m40zg.jpg" alt="设置denyhosts开机自启动"><br>按<code>q</code>，退出并保存</p>
+<p>第二种是将Denyhosts直接加入rc.local中自动启动（类似于Windows中的“启动文件夹”）：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'/usr/share/denyhosts/daemon-control start'</span> &gt;&gt; /etc/rc.local</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 <a href="http://www.bootf.com/571.html" target="_blank" rel="noopener">通过DenyHosts阻止SSH暴力攻击教程</a></p>
+<p>2 <a href="http://askubuntu.com/questions/534324/var-log-secure-not-present-in-14-04-is-there-any-alternative" target="_blank" rel="noopener">/var/log/secure not present in 14.04 ,is there any alternative?</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/04/26/ubuntu-scrapy-stackoverflow/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/05/06/opencv-lbph-source-code-analysis/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

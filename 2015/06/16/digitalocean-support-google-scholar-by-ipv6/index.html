@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>digitalocean配置ipv6 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="ubuntu,ipv6,digitalocean,shadowsocks," />
+  
+
+  <meta name="description" content="之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.">
+<meta name="keywords" content="ubuntu,ipv6,digitalocean,shadowsocks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="digitalocean配置ipv6">
+<meta property="og:url" content="https://bblove.me/2015/06/16/digitalocean-support-google-scholar-by-ipv6/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg">
+<meta property="og:image" content="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg">
+<meta property="og:image" content="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg">
+<meta property="og:image" content="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="digitalocean配置ipv6">
+<meta name="twitter:description" content="之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.">
+<meta name="twitter:image" content="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前提条件"><span class="toc-text">前提条件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-新建droplet"><span class="toc-text">1 新建droplet</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-修改droplet"><span class="toc-text">2 修改droplet</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-设置ipv6"><span class="toc-text">3 设置ipv6</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一步-我们把ipv6的地址添加到网卡中"><span class="toc-text">第一步  我们把ipv6的地址添加到网卡中</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第二步-测试ipv6-是否配置成功"><span class="toc-text">第二步 测试ipv6 是否配置成功</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-修改hosts"><span class="toc-text">4 修改hosts</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-digitalocean-support-google-scholar-by-ipv6" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">digitalocean配置ipv6</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.06.16</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.<br><a id="more"></a></p>
+<h1 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h1><p>首先你得有一台digitalocean的vps,建议选择洛杉矶的服务器,<br>选个5美元的就够了.</p>
+<h1 id="1-新建droplet"><a href="#1-新建droplet" class="headerlink" title="1 新建droplet"></a>1 新建droplet</h1><p>如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg" alt="新建droplet,尤其注意勾选ipv6"><br>注意勾选ipv6,后面的步骤,请参考第3步</p>
+<h1 id="2-修改droplet"><a href="#2-修改droplet" class="headerlink" title="2 修改droplet"></a>2 修改droplet</h1><p>我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.<br>你打开droplet的<code>setting</code>,在<code>network</code>中应该可以看到<code>enable ipv6</code><br><img src="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg" alt="带有启用ipv6选项的页面"><br>启用后,稍后片刻,页面如下.<br><img src="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg" alt="在droplet的setting中启用ipv6后的页面"></p>
+<h1 id="3-设置ipv6"><a href="#3-设置ipv6" class="headerlink" title="3 设置ipv6"></a>3 设置ipv6</h1><p>当我们启用ipv6支持以后,还需要对服务器进行设置.</p>
+<h2 id="第一步-我们把ipv6的地址添加到网卡中"><a href="#第一步-我们把ipv6的地址添加到网卡中" class="headerlink" title="第一步  我们把ipv6的地址添加到网卡中"></a>第一步  我们把ipv6的地址添加到网卡中</h2><p>我们编辑<code>/etc/network/interfaces</code>这个文件,使用命令<code>sudo vi /etc/network/interfaces</code><br>修改后内容如下<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This file describes the network interfaces available on your</span></span><br><span class="line"><span class="comment"># system and how to activate them. For more information, see</span></span><br><span class="line"><span class="comment"># interfaces(5).</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The loopback network interface</span></span><br><span class="line">auto lo</span><br><span class="line">iface lo inet loopback</span><br><span class="line"></span><br><span class="line"><span class="comment"># The primary network interface</span></span><br><span class="line">auto eth0</span><br><span class="line">iface eth0 inet static</span><br><span class="line">       <span class="built_in"> address </span>你的ipv4</span><br><span class="line">        netmask 255.255.192.0</span><br><span class="line">        gateway 你的ipv4网关</span><br><span class="line">        dns-nameservers 8.8.8.8 8.8.4.4</span><br><span class="line"><span class="comment"># 以上内容不需要修改,只需要添加下面的部分</span></span><br><span class="line">iface eth0 inet6 static</span><br><span class="line">   <span class="built_in"> address </span>上图中的ipv6地址</span><br><span class="line">    netmask 64</span><br><span class="line">    gateway 网关地址</span><br><span class="line">    autoconf 0</span><br><span class="line">    dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3</span><br></pre></td></tr></table></figure></p>
+<p>修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),<br>如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下<br><img src="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg" alt="ipv6成功启用后"></p>
+<h2 id="第二步-测试ipv6-是否配置成功"><a href="#第二步-测试ipv6-是否配置成功" class="headerlink" title="第二步 测试ipv6 是否配置成功"></a>第二步 测试ipv6 是否配置成功</h2><p>我们使用ping命令来测试,ping是测试ipv4的,测试ipv6是用ping6,命令如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ping6 ipv6.google.com</span><br><span class="line"></span><br><span class="line">PING ipv6.google.com(nuq04s29-in-x0e.1e100.net) 56 data bytes</span><br><span class="line">64 bytes from nuq04s29-in-x0e.1e100.net: icmp_seq=1 ttl=57 time=2.23 ms</span><br><span class="line">64 bytes from nuq04s29-in-x0e.1e100.net: icmp_seq=2 ttl=57 time=1.97 ms</span><br><span class="line">64 bytes from nuq04s29-in-x0e.1e100.net: icmp_seq=3 ttl=57 time=1.95 ms</span><br><span class="line">64 bytes from nuq04s29-in-x0e.1e100.net: icmp_seq=4 ttl=57 time=2.14 ms</span><br><span class="line">64 bytes from nuq04s29-in-x0e.1e100.net: icmp_seq=5 ttl=57 time=1.93 ms</span><br></pre></td></tr></table></figure></p>
+<p>如果发包成功,那就可以进行下一步了</p>
+<h1 id="4-修改hosts"><a href="#4-修改hosts" class="headerlink" title="4 修改hosts"></a>4 修改hosts</h1><p>因为ipv4无法访问google scholar,所以我们配置下hosts,让所有对访问google学术的,都使用ipv6去访问.执行命令如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/hosts</span><br></pre></td></tr></table></figure></p>
+<p>我们在hosts文件的后面,添加如下内容:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2607<span class="selector-pseudo">:f8b0</span><span class="selector-pseudo">:4007</span><span class="selector-pseudo">:805</span><span class="selector-pseudo">::100f</span> <span class="selector-tag">scholar</span><span class="selector-class">.google</span><span class="selector-class">.cn</span></span><br><span class="line">2607<span class="selector-pseudo">:f8b0</span><span class="selector-pseudo">:4007</span><span class="selector-pseudo">:805</span><span class="selector-pseudo">::100f</span> <span class="selector-tag">scholar</span><span class="selector-class">.google</span><span class="selector-class">.com</span></span><br><span class="line">2607<span class="selector-pseudo">:f8b0</span><span class="selector-pseudo">:4007</span><span class="selector-pseudo">:805</span><span class="selector-pseudo">::100f</span> <span class="selector-tag">scholar</span><span class="selector-class">.google</span><span class="selector-class">.com</span><span class="selector-class">.hk</span></span><br><span class="line">2607<span class="selector-pseudo">:f8b0</span><span class="selector-pseudo">:4007</span><span class="selector-pseudo">:805</span><span class="selector-pseudo">::100f</span> <span class="selector-tag">scholar</span><span class="selector-class">.l</span><span class="selector-class">.google</span><span class="selector-class">.com</span></span><br></pre></td></tr></table></figure></p>
+<p>ok,打完收工,睡觉</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 <a href="https://www.v2ex.com/t/163133" target="_blank" rel="noopener">一个解决 Google Scholar block DigitalOcean SFO IP 的方法</a><br>2 <a href="https://www.digitalocean.com/community/tutorials/how-to-enable-ipv6-for-digitalocean-droplets" target="_blank" rel="noopener">How To Enable IPv6 for DigitalOcean Droplets</a></p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/06/16/hexo-3-0-update/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/06/29/ubuntu-14-04-setting-about-thinkphp-url-rewrite/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

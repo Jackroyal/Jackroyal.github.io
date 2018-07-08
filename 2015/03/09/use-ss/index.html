@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>shadowsocks的安装和配置--在ubuntu和ubuntu中 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Linux,ubuntu,shadowsocks," />
+  
+
+  <meta name="description" content="最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。">
+<meta name="keywords" content="Linux,ubuntu,shadowsocks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shadowsocks的安装和配置--在ubuntu和ubuntu中">
+<meta property="og:url" content="https://bblove.me/2015/03/09/use-ss/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.331Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shadowsocks的安装和配置--在ubuntu和ubuntu中">
+<meta name="twitter:description" content="最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。">
+<meta name="twitter:image" content="https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-系统环境"><span class="toc-text">1 系统环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-服务器端安装和配置"><span class="toc-text">2 服务器端安装和配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#运行"><span class="toc-text">运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开机自启"><span class="toc-text">开机自启</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-客户端的安装和配置"><span class="toc-text">3 客户端的安装和配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-安装相关软件"><span class="toc-text">1) 安装相关软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-客户端运行"><span class="toc-text">2) 客户端运行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-浏览器代理设置"><span class="toc-text">3) 浏览器代理设置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后记"><span class="toc-text">后记</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#致谢"><span class="toc-text">致谢</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-use-ss" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">shadowsocks的安装和配置--在ubuntu和ubuntu中</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2015.03.09</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。<br>搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。<br><a id="more"></a></p>
+<h1 id="1-系统环境"><a href="#1-系统环境" class="headerlink" title="1 系统环境"></a>1 系统环境</h1><p><strong>服务器</strong>:DigitalOcean上的Ubuntu 14.04 LTS<br><strong>客户端</strong>:Ubuntu 14.04 LTS</p>
+<h1 id="2-服务器端安装和配置"><a href="#2-服务器端安装和配置" class="headerlink" title="2 服务器端安装和配置"></a>2 服务器端安装和配置</h1><p>这里主要是参考github的<a href="https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener">官方说明</a><br>通过ssh登陆的服务器上去,这里不在赘述如何登陆.<br>以下主要针对linux服务器,windows服务器查看<a href="https://github.com/shadowsocks/shadowsocks/wiki/Install-Shadowsocks-Server-on-Windows" target="_blank" rel="noopener">这里</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>Linux不同的发行版本执行的命令如下<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Debian / Ubuntu:</span><br><span class="line"></span><br><span class="line">apt-get <span class="keyword">install</span> python-pip</span><br><span class="line">pip <span class="keyword">install</span> shadowsocks</span><br><span class="line"></span><br><span class="line">CentOS:</span><br><span class="line"></span><br><span class="line">yum <span class="keyword">install</span> python-setuptools &amp;&amp; easy_install pip</span><br><span class="line">pip <span class="keyword">install</span> shadowsocks</span><br></pre></td></tr></table></figure></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi <span class="regexp">/etc/</span>shadowsocks.json</span><br></pre></td></tr></table></figure>
+<p>配置文件的内容大致如下:<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"server"</span>:<span class="string">"你的服务器的ip"</span>,</span><br><span class="line">    <span class="attr">"server_port"</span>:<span class="number">8388</span>,</span><br><span class="line">    <span class="attr">"local_address"</span>: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">    <span class="attr">"local_port"</span>:<span class="number">1080</span>,</span><br><span class="line">    <span class="attr">"password"</span>:<span class="string">"你设置的密码"</span>,</span><br><span class="line">    <span class="attr">"timeout"</span>:<span class="number">300</span>,</span><br><span class="line">    <span class="attr">"method"</span>:<span class="string">"aes-256-cfb"</span>,</span><br><span class="line">    <span class="attr">"fast_open"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>参数名称       解释</strong><br>server         安装shadowsocks服务器ip<br>server_port    服务器端口号<br>local_address  本地服务器默认是127.0.0.1<br>local_port     本地监听的端口号<br>password       密码<br>timeout        超时时间,单位是秒<br>method         加密方法默认是: “aes-256-cfb”可以用其他加密方法<br>fast_open      是否使用TCP_FASTOPEN,默认为不使用<br>workers        number of workers, available on Unix/Linux</p>
+<h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>前台运行的命令<br><code>ssserver -c /etc/shadowsocks.json</code><br>后台运行<br><code>ssserver -c /etc/shadowsocks.json -d start</code><br><code>ssserver -c /etc/shadowsocks.json -d stop</code><br>ps:我上述两条命令都会出错,这两条命令来自官方的github,我用的是下面的<br><code>nohup ssserver -c /etc/shadowsocks.json &gt; aa.log</code></p>
+<h2 id="开机自启"><a href="#开机自启" class="headerlink" title="开机自启"></a>开机自启</h2><p>我们把它写入/etc/rc.local中就可以完成开机自启动了.<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/rc.local  # 打开rc.local文件</span><br><span class="line"><span class="meta">#</span><span class="bash"> 然后在<span class="built_in">exit</span>前面加入下面这一行</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> nohup /usr/<span class="built_in">local</span>/bin/ssserver -c /etc/shadowsocks.json &gt; aa.log</span></span><br></pre></td></tr></table></figure></p>
+<p>ps:这里我之前犯了一个错误,没有写<code>ssserver</code>的绝对路径,导致开机无法自启动,但是手动执行的话,又是可以执行的</p>
+<h1 id="3-客户端的安装和配置"><a href="#3-客户端的安装和配置" class="headerlink" title="3 客户端的安装和配置"></a>3 客户端的安装和配置</h1><p>客户端按理说和服务器端类似,安装shadowsocks,但是我的就是这个出了问题.</p>
+<h2 id="1-安装相关软件"><a href="#1-安装相关软件" class="headerlink" title="1) 安装相关软件"></a>1) 安装相关软件</h2><p>shadowsocks有各种客户端版本,各个系统都有.在ubuntu下带图形化界面的有shadowsocks-qt5,还可以直接用命令行.</p>
+<p><strong>图形化:</strong><br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo<span class="built_in"> add-apt-repository </span>ppa:hzwhuang/ss-qt5</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install shadowsocks-qt5</span><br></pre></td></tr></table></figure></p>
+<p><em>PS:</em>我的电脑安装这个以后,会自动卸载我的chrome<br><em>PPS:</em>我刚才又试了一次,我在安装了命令行模式的shadowsocks以后,现在不会卸载我的chrome,总算正常了<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">The following extra packages will <span class="keyword">be</span> installed:</span><br><span class="line">  libbotan-<span class="number">1.10</span>-<span class="number">0</span> libqrencode3 libqtshadowsocks libzbar0</span><br><span class="line">The following packages will <span class="keyword">be</span> REMOVED:</span><br><span class="line">  libbotan-<span class="number">1.10</span>-<span class="number">0</span>:i386 libqtshadowsock<span class="variable">s:i386</span> libzbar0:i386</span><br><span class="line">The following NEW packages will <span class="keyword">be</span> installed:</span><br><span class="line">  libbotan-<span class="number">1.10</span>-<span class="number">0</span> libqrencode3 libqtshadowsocks libzbar0 shadowsocks-qt5</span><br><span class="line"><span class="number">0</span> upgraded, <span class="number">5</span> newly installed, <span class="number">3</span> <span class="keyword">to</span> <span class="built_in">remove</span> <span class="built_in">and</span> <span class="number">19</span> not upgraded.</span><br><span class="line">Need <span class="keyword">to</span> <span class="built_in">get</span> <span class="number">1</span>,<span class="number">280</span> kB of archives.</span><br><span class="line">After this operation, <span class="number">662</span> kB of additional disk space will <span class="keyword">be</span> used.</span><br><span class="line">Do you want <span class="keyword">to</span> <span class="keyword">continue</span>? [Y/n]</span><br></pre></td></tr></table></figure></p>
+<p><strong>命令行模式:</strong><br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get <span class="keyword">install</span> python-pip python-dev <span class="keyword">build</span>-essential </span><br><span class="line">sudo pip <span class="keyword">install</span>  pip</span><br><span class="line">sudo apt-<span class="keyword">get</span> <span class="keyword">install</span> python-m2crypto</span><br><span class="line">sudo pip <span class="keyword">install</span> shadowsocks</span><br></pre></td></tr></table></figure></p>
+<p>我因为之前在环境中就安装过pip,所以我只需要执行倒数第三个和第四个命令.<br>但是我的倒数第四个命令<code>pip install shadowsocks</code>一直报错:<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Exception: Traceback (most recent <span class="keyword">call</span> <span class="keyword">last</span>):</span><br><span class="line"><span class="keyword">File</span> <span class="string">"/usr/lib/python2.7/dist-packages/pip/basecommand.py"</span>, line <span class="number">122</span>, <span class="keyword">in</span> <span class="keyword">main</span></span><br><span class="line">  <span class="keyword">status</span> = self.run(options, args)</span><br><span class="line"><span class="keyword">File</span> <span class="string">"/usr/lib/python2.7/dist-packages/pip/commands/install.py"</span>, line <span class="number">278</span>, <span class="keyword">in</span> run</span><br><span class="line">  requirement_set.prepare_files(finder, force_root_egg_info=self.bundle, bundle=self.bundle) </span><br><span class="line"><span class="keyword">File</span> <span class="string">"/usr/lib/python2.7/dist-packages/pip/req.py"</span>, line <span class="number">1177</span>, <span class="keyword">in</span> prepare_files </span><br><span class="line">  <span class="keyword">url</span> = finder.find_requirement(req_to_install, <span class="keyword">upgrade</span>=self.upgrade) </span><br><span class="line"><span class="keyword">File</span> <span class="string">"/usr/lib/python2.7/dist-packages/pip/index.py"</span>, line <span class="number">256</span>, <span class="keyword">in</span> find_requirement</span><br><span class="line">  page_versions.extend(self._package_versions(page.links, req.name.lower())) </span><br><span class="line"><span class="keyword">File</span> <span class="string">"/usr/lib/python2.7/dist-packages/pip/index.py"</span>, line <span class="number">432</span>, <span class="keyword">in</span> _package_versions </span><br><span class="line">  <span class="keyword">for</span> <span class="keyword">link</span> <span class="keyword">in</span> self._sort_links(links): </span><br><span class="line"><span class="keyword">File</span> <span class="string">"/usr/lib/python2.7/dist-packages/pip/index.py"</span>, line <span class="number">422</span>, <span class="keyword">in</span> _sort_links </span><br><span class="line">  <span class="keyword">for</span> <span class="keyword">link</span> <span class="keyword">in</span> links: </span><br><span class="line"><span class="keyword">File</span> <span class="string">"/usr/lib/python2.7/dist-packages/pip/index.py"</span>, line <span class="number">769</span>, <span class="keyword">in</span> links </span><br><span class="line">  <span class="keyword">for</span> anchor <span class="keyword">in</span> self.parsed.findall(<span class="string">".//a"</span>):</span><br><span class="line">AttributeError: <span class="string">'Document'</span> <span class="keyword">object</span> has <span class="keyword">no</span> <span class="keyword">attribute</span> <span class="string">'findall'</span></span><br><span class="line"></span><br><span class="line">Storing debug <span class="keyword">log</span> <span class="keyword">for</span> <span class="keyword">failure</span> <span class="keyword">in</span> /root/.pip/pip.log</span><br></pre></td></tr></table></figure></p>
+<p>网上搜索一番,在<a href="https://github.com/pypa/pip/issues/1742" target="_blank" rel="noopener">这里</a>找到答案.<br>解决方法很简单,执行<code>easy_install pip</code>,就ok(貌似是把pip重新安装了一次).</p>
+<h2 id="2-客户端运行"><a href="#2-客户端运行" class="headerlink" title="2) 客户端运行"></a>2) 客户端运行</h2><p>shadowsocks图形化的比较简单,这里不表.<br>命令行模式,启动如下:<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sslocal -s 服务器ip -<span class="selector-tag">p</span> <span class="number">8388</span> -k 密码</span><br></pre></td></tr></table></figure></p>
+<p>启动成功后会有如下输出:<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2015<span class="selector-tag">-03-10</span> 11<span class="selector-pseudo">:12</span><span class="selector-pseudo">:59</span> <span class="selector-tag">INFO</span>     <span class="selector-tag">loading</span> <span class="selector-tag">libcrypto</span> <span class="selector-tag">from</span> <span class="selector-tag">libcrypto</span><span class="selector-class">.so</span><span class="selector-class">.1</span><span class="selector-class">.0</span><span class="selector-class">.0</span></span><br><span class="line">2015<span class="selector-tag">-03-10</span> 11<span class="selector-pseudo">:12</span><span class="selector-pseudo">:59</span> <span class="selector-tag">INFO</span>     <span class="selector-tag">starting</span> <span class="selector-tag">local</span> <span class="selector-tag">at</span> 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:1080</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="3-浏览器代理设置"><a href="#3-浏览器代理设置" class="headerlink" title="3) 浏览器代理设置"></a>3) 浏览器代理设置</h2><p>一般来说我们不希望shadowsocks做全局的翻墙,那样,访问国内的速度也会变慢,我们在chome浏览器中安装switchysharp,来管理代理.具体设置如下所示:<br><img src="https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg" alt="swichysharp设置"></p>
+<p>enjoy it!</p>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>安卓客户端安装,<a href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target="_blank" rel="noopener">点我点我</a></p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>1 这是一篇好博客 <a href="http://mushapi.com/shadowsocks-install-config-using.html" target="_blank" rel="noopener">http://mushapi.com/shadowsocks-install-config-using.html</a><br>2 <a href="https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener">shadowsocks使用说明</a><br>3 <a href="https://github.com/pypa/pip/issues/1742" target="_blank" rel="noopener">修复我pip问题的一个issue</a></p>
+<h1 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h1><p>这个网站可以下载google play的apk,对于我等天朝良民来说,可真是个好东西<br><a href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target="_blank" rel="noopener">https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks</a></p>
+<p>我们家<a href="http://huirong.github.io" target="_blank" rel="noopener">笨笨的博客</a>弄好了,欢迎访问</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2015/03/04/after-kali/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2015/03/18/python-socket-port-reuse/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

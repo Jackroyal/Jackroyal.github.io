@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+
+
+  <html class="dark page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>sql中left_join和right_join混用 | 搁浅St的blog</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="sql,select," />
+  
+
+  <meta name="description" content="left join(左联接) 返回包括左表中的所有记录和右表中联结字段相等的记录  right join(右联接) 返回包括右表中的所有记录和左表中联结字段相等的记录 inner join(等值连接) 只返回两个表中联结字段相等的行 如上所言,我们只做一下left join的实验,right join和left join 类似 测试一共三张表,a  b   c 表结构和数据分别如下 a表">
+<meta name="keywords" content="sql,select">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql中left_join和right_join混用">
+<meta property="og:url" content="https://bblove.me/2014/08/08/the-use-of-left_join-and-right_join-in-sql/index.html">
+<meta property="og:site_name" content="搁浅St的blog">
+<meta property="og:description" content="left join(左联接) 返回包括左表中的所有记录和右表中联结字段相等的记录  right join(右联接) 返回包括右表中的所有记录和左表中联结字段相等的记录 inner join(等值连接) 只返回两个表中联结字段相等的行 如上所言,我们只做一下left join的实验,right join和left join 类似 测试一共三张表,a  b   c 表结构和数据分别如下 a表">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-05-30T01:57:59.318Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sql中left_join和right_join混用">
+<meta name="twitter:description" content="left join(左联接) 返回包括左表中的所有记录和右表中联结字段相等的记录  right join(右联接) 返回包括右表中的所有记录和左表中联结字段相等的记录 inner join(等值连接) 只返回两个表中联结字段相等的行 如上所言,我们只做一下left join的实验,right join和left join 类似 测试一共三张表,a  b   c 表结构和数据分别如下 a表">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cben" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/geqianst.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?13ec0256b3333d6ccd6fe91326368508";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  
+  <script type="text/javascript">
+	(function(){
+	    var bp = document.createElement('script');
+	    var curProtocol = window.location.protocol.split(':')[0];
+	    if (curProtocol === 'https') {
+	        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+	    }
+	    else {
+	        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+	    }
+	    var s = document.getElementsByTagName("script")[0];
+	    s.parentNode.insertBefore(bp, s);
+	})();
+  </script>
+
+
+
+  
+
+  
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">点我</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">点我</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            rel="noopener noreferrer"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-the-use-of-left_join-and-right_join-in-sql" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">sql中left_join和right_join混用</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2014.08.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>jackroyal</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/数据库/">数据库</a>
+  </span>
+
+
+
+      
+
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>left join(左联接) 返回包括左表中的所有记录和右表中联结字段相等的记录 </p>
+<p>right join(右联接) 返回包括右表中的所有记录和左表中联结字段相等的记录</p>
+<p>inner join(等值连接) 只返回两个表中联结字段相等的行</p>
+<p>如上所言,我们只做一下left join的实验,right join和left join 类似</p>
+<p>测试一共三张表,a  b   c<br><img src="" alt=""></p>
+<p>表结构和数据分别如下</p>
+<p>a表                                                                  b表                                                              c表<br><img src="" alt="">         <img src="" alt="">          <img src="" alt=""></p>
+<p>然后我们来试一下左连接</p>
+<p>1,  我们来查询a b两张表,连接他们aid=bid的选项<br>sql&gt;&gt;SELECT *  FROM a   LEFT JOIN b on aid=bid</p>
+<p><img src="" alt=""></p>
+<p>看图很好理解,因为是a左连接b,所以b中为空的元素 ,在查询结果中以NULL的形式补全</p>
+<p>同理可得</p>
+<p>sql&gt;&gt;SELECT * FROM a LEFT JOIN c on aid=cid<br><img src="" alt=""></p>
+<p>sql&gt;&gt;SELECT * FROM c LEFT JOIN b on bid=cid<br>sql&gt;&gt;SELECT * FROM c LEFT JOIN b on cid=bid</p>
+<p><img src="" alt=""></p>
+<p>也就是on后面的顺序无所谓,无论是bid=cid还是cid=bid,重点是前面的left join还是right join</p>
+<p>2,我们来试一下如果三张表左连接呢,会有什么情况?</p>
+<p>sql&gt;&gt;SELECT * FROM a</p>
+<pre><code>LEFT JOIN b on bid=aid 
+
+LEFT JOIN c on aid=cid
+</code></pre><p><img src="" alt=""></p>
+<p>sql&gt;&gt;SELECT * FROM a LEFT JOIN b on bid=aid LEFT JOIN c on bid=cid<br><img src="" alt=""></p>
+<p>3,如果我用了一个right join呢?</p>
+<p>sql&gt;&gt;SELECT * FROM a LEFT JOIN b on bid=aid RIGHT JOIN c on bid=cid<br><img src="" alt=""></p>
+<p>这里该怎么理解呢?<br>感谢<a href="http://blog.csdn.net/sqlserverdiscovery/article/details/6893288" target="_blank" rel="noopener">http://blog.csdn.net/sqlserverdiscovery/article/details/6893288</a></p>
+<p>我们理解的时候可以把它拆成两部分去理解</p>
+<p>比如第一部分<br>sql&gt;&gt;SELECT * FROM a LEFT JOIN b on bid=aid</p>
+<p><img src="" alt=""></p>
+<p>然后再思考第二部分,假如上图是一张表  我们叫它a_b</p>
+<p>你可以新建一个视图,就可以真成为一张虚表了</p>
+<p>sql&gt;&gt;create  VIEW a_b  as (SELECT * FROM a LEFT JOIN b on bid=aid)<br><img src="" alt=""></p>
+<p>然后我们继续做下面一部分</p>
+<p>sql&gt;&gt;select * from a_b right join c on bid=cid<br><img src="" alt=""></p>
+<p>可见,与上面的结果是一样的,当然这是我们理解的过程,实际数据库服务器执行的时候可能不是这样的,它会做一些优化,提高效率</p>
+
+    
+  </div>
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，试试看</div>
+        <ul>
+        
+          <li class="item">
+            
+              <span>微信扫一扫</span>
+            
+            <img src="https://ww1.sinaimg.cn/large/692869a3gw1exhxpgwag0j20dg0deabz.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            
+              <span>支付宝扫一扫</span>
+            
+            <img src="https://ww4.sinaimg.cn/large/692869a3gw1esp065y3aaj207i07i74o.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2014/06/28/aliyun-windows-server-2008-mail-server/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="show pull-right" href="/2014/11/14/wamp-sql_server-80-error/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+
+   
+      <div class="git"></div>
+   
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              rel="noopener noreferrer"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+    
+    
+
+    
+
+    
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
