@@ -1,0 +1,106 @@
+<!doctype html><html lang=zh-CN dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content='最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。 搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。\n1 系统环境 服务器:DigitalOcean上的Ubuntu 14.04 LTS 客户端:Ubuntu 14.04 LTS\n2 服务器端安装和配置 这里主要是参考github的官方说明 通过ssh登陆的服务器上去,这里不在赘述如何登陆. 以下主要针对linux服务器,windows服务器查看这里\n安装 Linux不同的发行版本执行的命令如下\nDebian / Ubuntu:\rapt-get install python-pip\rpip install shadowsocks\rCentOS:\ryum install python-setuptools && easy_install pip\rpip install shadowsocks 配置 sudo vi /etc/shadowsocks.json 配置文件的内容大致如下:\n{\r"server":"你的服务器的ip",\r"server_port":8388,\r"local_address": "127.0.0.1",\r"local_port":1080,\r"password":"你设置的密码",\r"timeout":300,\r"method":"aes-256-cfb",\r"fast_open": false\r} 参数名称 解释 server 安装shadowsocks服务器ip server_port 服务器端口号 local_address 本地服务器默认是127.0.0.1 local_port 本地监听的端口号 password 密码 timeout 超时时间,单位是秒 method 加密方法默认是: &ldquo;aes-256-cfb"可以用其他加密方法 fast_open 是否使用TCP_FASTOPEN,默认为不使用 workers number of workers, available on Unix/Linux\n'><title>shadowsocks的安装和配置--在ubuntu和ubuntu中</title><link rel=canonical href=https://jackroyal.github.io/post/use-ss/><link rel=stylesheet href=/scss/style.min.b0e76e98cdd4f7082d1fc36f7af7e0843a81201db2197c03ca426751dc923735.css><meta property='og:title' content="shadowsocks的安装和配置--在ubuntu和ubuntu中"><meta property='og:description' content='最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。 搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。\n1 系统环境 服务器:DigitalOcean上的Ubuntu 14.04 LTS 客户端:Ubuntu 14.04 LTS\n2 服务器端安装和配置 这里主要是参考github的官方说明 通过ssh登陆的服务器上去,这里不在赘述如何登陆. 以下主要针对linux服务器,windows服务器查看这里\n安装 Linux不同的发行版本执行的命令如下\nDebian / Ubuntu:\rapt-get install python-pip\rpip install shadowsocks\rCentOS:\ryum install python-setuptools && easy_install pip\rpip install shadowsocks 配置 sudo vi /etc/shadowsocks.json 配置文件的内容大致如下:\n{\r"server":"你的服务器的ip",\r"server_port":8388,\r"local_address": "127.0.0.1",\r"local_port":1080,\r"password":"你设置的密码",\r"timeout":300,\r"method":"aes-256-cfb",\r"fast_open": false\r} 参数名称 解释 server 安装shadowsocks服务器ip server_port 服务器端口号 local_address 本地服务器默认是127.0.0.1 local_port 本地监听的端口号 password 密码 timeout 超时时间,单位是秒 method 加密方法默认是: &ldquo;aes-256-cfb"可以用其他加密方法 fast_open 是否使用TCP_FASTOPEN,默认为不使用 workers number of workers, available on Unix/Linux\n'><meta property='og:url' content='https://jackroyal.github.io/post/use-ss/'><meta property='og:site_name' content='搁浅St的blog'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='Linux'><meta property='article:tag' content='ubuntu'><meta property='article:tag' content='shadowsocks'><meta property='article:published_time' content='2015-03-09T22:26:21+00:00'><meta property='article:modified_time' content='2025-12-02T17:24:54+00:00'><meta name=twitter:title content="shadowsocks的安装和配置--在ubuntu和ubuntu中"><meta name=twitter:description content='最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。 搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。\n1 系统环境 服务器:DigitalOcean上的Ubuntu 14.04 LTS 客户端:Ubuntu 14.04 LTS\n2 服务器端安装和配置 这里主要是参考github的官方说明 通过ssh登陆的服务器上去,这里不在赘述如何登陆. 以下主要针对linux服务器,windows服务器查看这里\n安装 Linux不同的发行版本执行的命令如下\nDebian / Ubuntu:\rapt-get install python-pip\rpip install shadowsocks\rCentOS:\ryum install python-setuptools && easy_install pip\rpip install shadowsocks 配置 sudo vi /etc/shadowsocks.json 配置文件的内容大致如下:\n{\r"server":"你的服务器的ip",\r"server_port":8388,\r"local_address": "127.0.0.1",\r"local_port":1080,\r"password":"你设置的密码",\r"timeout":300,\r"method":"aes-256-cfb",\r"fast_open": false\r} 参数名称 解释 server 安装shadowsocks服务器ip server_port 服务器端口号 local_address 本地服务器默认是127.0.0.1 local_port 本地监听的端口号 password 密码 timeout 超时时间,单位是秒 method 加密方法默认是: &ldquo;aes-256-cfb"可以用其他加密方法 fast_open 是否使用TCP_FASTOPEN,默认为不使用 workers number of workers, available on Unix/Linux\n'></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src="https://avatars.githubusercontent.com/u/1870593?v=4" width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>搁浅St的blog</a></h1><h2 class=site-description></h2></div></header><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>首页</span></a></li><li><a href=/page/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>分类</span></a></li><li><a href=/page/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>搜索</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ul><li><a href=#安装>安装</a></li><li><a href=#配置>配置</a></li><li><a href=#运行>运行</a></li><li><a href=#开机自启>开机自启</a></li></ul><ul><li><a href=#1-安装相关软件>1) 安装相关软件</a></li><li><a href=#2-客户端运行>2) 客户端运行</a></li><li><a href=#3-浏览器代理设置>3) 浏览器代理设置</a></li></ul></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/linux/>Linux</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/use-ss/>shadowsocks的安装和配置--在ubuntu和ubuntu中</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2015-03-09T22:26:21Z>Mar 09, 2015</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 2 分钟</time></div></footer></div></header><section class=article-content><p>最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。
+搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。</p><h1 id=1-系统环境>1 系统环境</h1><p><strong>服务器</strong>:DigitalOcean上的Ubuntu 14.04 LTS
+<strong>客户端</strong>:Ubuntu 14.04 LTS</p><h1 id=2-服务器端安装和配置>2 服务器端安装和配置</h1><p>这里主要是参考github的<a class=link href=https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E target=_blank rel=noopener>官方说明</a>
+通过ssh登陆的服务器上去,这里不在赘述如何登陆.
+以下主要针对linux服务器,windows服务器查看<a class=link href=https://github.com/shadowsocks/shadowsocks/wiki/Install-Shadowsocks-Server-on-Windows target=_blank rel=noopener>这里</a></p><h2 id=安装>安装</h2><p>Linux不同的发行版本执行的命令如下</p><pre tabindex=0><code>Debian / Ubuntu:
+
+apt-get install python-pip
+pip install shadowsocks
+
+CentOS:
+
+yum install python-setuptools &amp;&amp; easy_install pip
+pip install shadowsocks
+</code></pre><h2 id=配置>配置</h2><pre tabindex=0><code>sudo vi /etc/shadowsocks.json
+</code></pre><p>配置文件的内容大致如下:</p><pre tabindex=0><code>{
+    &#34;server&#34;:&#34;你的服务器的ip&#34;,
+    &#34;server_port&#34;:8388,
+    &#34;local_address&#34;: &#34;127.0.0.1&#34;,
+    &#34;local_port&#34;:1080,
+    &#34;password&#34;:&#34;你设置的密码&#34;,
+    &#34;timeout&#34;:300,
+    &#34;method&#34;:&#34;aes-256-cfb&#34;,
+    &#34;fast_open&#34;: false
+}
+</code></pre><p><strong>参数名称 解释</strong>
+server 安装shadowsocks服务器ip
+server_port 服务器端口号
+local_address 本地服务器默认是127.0.0.1
+local_port 本地监听的端口号
+password 密码
+timeout 超时时间,单位是秒
+method 加密方法默认是: &ldquo;aes-256-cfb"可以用其他加密方法
+fast_open 是否使用TCP_FASTOPEN,默认为不使用
+workers number of workers, available on Unix/Linux</p><h2 id=运行>运行</h2><p>前台运行的命令
+<code>ssserver -c /etc/shadowsocks.json</code>
+后台运行
+<code>ssserver -c /etc/shadowsocks.json -d start</code>
+<code>ssserver -c /etc/shadowsocks.json -d stop</code>
+ps:我上述两条命令都会出错,这两条命令来自官方的github,我用的是下面的
+<code>nohup ssserver -c /etc/shadowsocks.json > aa.log</code></p><h2 id=开机自启>开机自启</h2><p>我们把它写入/etc/rc.local中就可以完成开机自启动了.</p><pre tabindex=0><code>sudo vi /etc/rc.local  # 打开rc.local文件
+# 然后在exit前面加入下面这一行
+# nohup /usr/local/bin/ssserver -c /etc/shadowsocks.json &gt; aa.log
+</code></pre><p>ps:这里我之前犯了一个错误,没有写<code>ssserver</code>的绝对路径,导致开机无法自启动,但是手动执行的话,又是可以执行的</p><h1 id=3-客户端的安装和配置>3 客户端的安装和配置</h1><p>客户端按理说和服务器端类似,安装shadowsocks,但是我的就是这个出了问题.</p><h2 id=1-安装相关软件>1) 安装相关软件</h2><p>shadowsocks有各种客户端版本,各个系统都有.在ubuntu下带图形化界面的有shadowsocks-qt5,还可以直接用命令行.</p><p><strong>图形化:</strong></p><pre tabindex=0><code>sudo add-apt-repository ppa:hzwhuang/ss-qt5
+sudo apt-get update
+sudo apt-get install shadowsocks-qt5
+</code></pre><p>*PS:*我的电脑安装这个以后,会自动卸载我的chrome
+*PPS:*我刚才又试了一次,我在安装了命令行模式的shadowsocks以后,现在不会卸载我的chrome,总算正常了</p><pre tabindex=0><code>The following extra packages will be installed:
+  libbotan-1.10-0 libqrencode3 libqtshadowsocks libzbar0
+The following packages will be REMOVED:
+  libbotan-1.10-0:i386 libqtshadowsocks:i386 libzbar0:i386
+The following NEW packages will be installed:
+  libbotan-1.10-0 libqrencode3 libqtshadowsocks libzbar0 shadowsocks-qt5
+0 upgraded, 5 newly installed, 3 to remove and 19 not upgraded.
+Need to get 1,280 kB of archives.
+After this operation, 662 kB of additional disk space will be used.
+Do you want to continue? [Y/n] 
+</code></pre><p><strong>命令行模式:</strong></p><pre tabindex=0><code>sudo apt-get install python-pip python-dev build-essential 
+sudo pip install  pip
+sudo apt-get install python-m2crypto
+sudo pip install shadowsocks
+</code></pre><p>我因为之前在环境中就安装过pip,所以我只需要执行倒数第三个和第四个命令.
+但是我的倒数第四个命令<code>pip install shadowsocks</code>一直报错:</p><pre tabindex=0><code>Exception: Traceback (most recent call last):
+File &#34;/usr/lib/python2.7/dist-packages/pip/basecommand.py&#34;, line 122, in main
+  status = self.run(options, args)
+File &#34;/usr/lib/python2.7/dist-packages/pip/commands/install.py&#34;, line 278, in run
+  requirement_set.prepare_files(finder, force_root_egg_info=self.bundle, bundle=self.bundle) 
+File &#34;/usr/lib/python2.7/dist-packages/pip/req.py&#34;, line 1177, in prepare_files 
+  url = finder.find_requirement(req_to_install, upgrade=self.upgrade) 
+File &#34;/usr/lib/python2.7/dist-packages/pip/index.py&#34;, line 256, in find_requirement
+  page_versions.extend(self._package_versions(page.links, req.name.lower())) 
+File &#34;/usr/lib/python2.7/dist-packages/pip/index.py&#34;, line 432, in _package_versions 
+  for link in self._sort_links(links): 
+File &#34;/usr/lib/python2.7/dist-packages/pip/index.py&#34;, line 422, in _sort_links 
+  for link in links: 
+File &#34;/usr/lib/python2.7/dist-packages/pip/index.py&#34;, line 769, in links 
+  for anchor in self.parsed.findall(&#34;.//a&#34;):
+AttributeError: &#39;Document&#39; object has no attribute &#39;findall&#39;
+
+Storing debug log for failure in /root/.pip/pip.log
+</code></pre><p>网上搜索一番,在<a class=link href=https://github.com/pypa/pip/issues/1742 target=_blank rel=noopener>这里</a>找到答案.
+解决方法很简单,执行<code>easy_install pip</code>,就ok(貌似是把pip重新安装了一次).</p><h2 id=2-客户端运行>2) 客户端运行</h2><p>shadowsocks图形化的比较简单,这里不表.
+命令行模式,启动如下:</p><pre tabindex=0><code>sslocal -s 服务器ip -p 8388 -k 密码
+</code></pre><p>启动成功后会有如下输出:</p><pre tabindex=0><code>2015-03-10 11:12:59 INFO     loading libcrypto from libcrypto.so.1.0.0
+2015-03-10 11:12:59 INFO     starting local at 127.0.0.1:1080
+</code></pre><h2 id=3-浏览器代理设置>3) 浏览器代理设置</h2><p>一般来说我们不希望shadowsocks做全局的翻墙,那样,访问国内的速度也会变慢,我们在chome浏览器中安装switchysharp,来管理代理.具体设置如下所示:
+<img src=https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg loading=lazy alt=swichysharp设置></p><p>enjoy it!</p><h1 id=后记>后记</h1><p>安卓客户端安装,<a class=link href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target=_blank rel=noopener>点我点我</a></p><h1 id=参考文献>参考文献</h1><p>1 这是一篇好博客 <a class=link href=http://mushapi.com/shadowsocks-install-config-using.html target=_blank rel=noopener>http://mushapi.com/shadowsocks-install-config-using.html</a>
+2 <a class=link href=https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E target=_blank rel=noopener>shadowsocks使用说明</a>
+3 <a class=link href=https://github.com/pypa/pip/issues/1742 target=_blank rel=noopener>修复我pip问题的一个issue</a></p><h1 id=致谢>致谢</h1><p>这个网站可以下载google play的apk,对于我等天朝良民来说,可真是个好东西
+<a class=link href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target=_blank rel=noopener>https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks</a></p><p>我们家<a class=link href=http://huirong.github.io target=_blank rel=noopener>笨笨的博客</a>弄好了,欢迎访问</p></section><footer class=article-footer><section class=article-tags><a href=/tags/linux/>Linux</a>
+<a href=/tags/ubuntu/>Ubuntu</a>
+<a href=/tags/shadowsocks/>Shadowsocks</a></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>最后更新于 Dec 02, 2025 17:24 UTC</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/after-kali/><div class=article-details><h2 class=article-title>kali安装后设置</h2></div></a></article><article><a href=/post/kali-and-ubuntu/><div class=article-details><h2 class=article-title>kali和ubuntu双系统安装</h2></div></a></article><article><a href=/post/linux-how-to-use-github/><div class=article-details><h2 class=article-title>Linux下使用github</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=Jackroyal/Jackroyal.github.io data-repo-id="MDEwOlJlcG9zaXRvcnkyNzE2MjkzNg==" data-category=Announcements data-category-id=DIC_kwDOAZ55OM4CyHEc data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=zh-CN data-loading crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark_dimmed")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2025 搁浅St的blog</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.32.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

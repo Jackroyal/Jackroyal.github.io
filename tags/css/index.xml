@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Css on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/css/</link><description>Recent content in Css on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/css/index.xml" rel="self" type="application/rss+xml"/><item><title>html5在ie中遇到的那些坑</title><link>https://jackroyal.github.io/post/holes-in-ie6-about-html5/</link><pubDate>Fri, 15 May 2015 23:19:43 +0000</pubDate><guid>https://jackroyal.github.io/post/holes-in-ie6-about-html5/</guid><description>&lt;p&gt;这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).
+我第一个想到的是bootstrap,可惜这货太大了,我只是几个简单的页面,没必要用这么大体量的东西.
+搜索一番以后,我找到了我的解决方案,media query,支付宝也是这么解决的.&lt;/p&gt;
+&lt;h1 id="前提条件"&gt;前提条件
+&lt;/h1&gt;&lt;p&gt;以下所给出的例子,都是html5的页面,不合适html4.0的页面,也就是说你的头部必须是
+&lt;code&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/code&gt;才行,如果是&lt;code&gt;&amp;lt;!DOCTYPE HTML PUBLIC &amp;quot;-//W3C//DTD HTML 4.01//EN&amp;quot; &amp;quot;http://www.w3.org/TR/html4/strict.dtd&amp;quot;&amp;gt;&lt;/code&gt;,是不行的,要仔细看清楚哈.
+下面就来罗列一下,这次经过的那些坑:&lt;/p&gt;
+&lt;h1 id="1--自动适配终端屏幕宽度"&gt;1 自动适配终端屏幕宽度
+&lt;/h1&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;lt;meta name=&amp;#34;viewport&amp;#34; content=&amp;#34;width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no&amp;#34;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;content属性值 :
+width:可视区域的宽度，值可为数字或关键词device-width
+height:同width
+intial-scale:页面首次被显示是可视区域的缩放级别，取值1.0则页面按实际尺寸显示，无任何缩放
+maximum-scale=1.0, minimum-scale=1.0;可视区域的缩放级别，
+maximum-scale用户可将页面放大的程序，1.0将禁止用户放大到实际尺寸之上。
+user-scalable:是否可对页面进行缩放，no 禁止缩放&lt;/p&gt;
+&lt;h1 id="2--使ie6-8支持html5的元素"&gt;2 使ie6-8支持html5的元素
+&lt;/h1&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;lt;!-- HTML5 shim, for IE6-8 support of HTML5 elements --&amp;gt;
+&amp;lt;!--[if lt IE 9]&amp;gt;
+&amp;lt;script src=&amp;#34;http://html5shim.googlecode.com/svn/trunk/html5.js&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;![endif]--&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;以上代码,顾名思义,当ie的版本是9一下的时候,加载html5.js这个文件(建议最好下载下来在本地调用),他是用来帮助ie6-8支持html元素的.&lt;/p&gt;
+&lt;h1 id="3--ie10以下的版本不支持placeholder不完美解决"&gt;3 ie10以下的版本不支持placeholder(不完美解决)
+&lt;/h1&gt;&lt;p&gt;placeholder是html5里面才有的东东,ie8不支持就算了,ie9都不支持,伤不起.这个没办法,只能用js去写,网上有很多类似的东西,不过不是很好用,我找到的都不完美.&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;(function($) {
+/**
+* 没有开花的树
+* http://blog.csdn.net/mycwq/
+* 2012/11/28 15:12
+*/
+var placeholderfriend = {
+focus: function(s) {
+s = $(s).hide().prev().show().focus();
+var idValue = s.attr(&amp;#34;id&amp;#34;);
+if (idValue) {
+s.attr(&amp;#34;id&amp;#34;, idValue.replace(&amp;#34;placeholderfriend&amp;#34;, &amp;#34;&amp;#34;));
+}
+var clsValue = s.attr(&amp;#34;class&amp;#34;);
+if (clsValue) {
+s.attr(&amp;#34;class&amp;#34;, clsValue.replace(&amp;#34;placeholderfriend&amp;#34;, &amp;#34;&amp;#34;));
+}
+}
+}
+//判断是否支持placeholder
+function isPlaceholer() {
+var input = document.createElement(&amp;#39;input&amp;#39;);
+return &amp;#34;placeholder&amp;#34; in input;
+}
+//不支持的代码
+if (!isPlaceholer()) {
+$(function() {
+var form = $(this);
+//遍历所有文本框，添加placeholder模拟事件
+var elements = form.find(&amp;#34;input[type=&amp;#39;text&amp;#39;][placeholder]&amp;#34;);
+elements.each(function() {
+var s = $(this);
+var pValue = s.attr(&amp;#34;placeholder&amp;#34;);
+var sValue = s.val();
+if (pValue) {
+if (sValue == &amp;#39;&amp;#39;) {
+s.val(pValue);
+}
+}
+});
+elements.focus(function() {
+var s = $(this);
+var pValue = s.attr(&amp;#34;placeholder&amp;#34;);
+var sValue = s.val();
+if (sValue &amp;amp;&amp;amp; pValue) {
+if (sValue == pValue) {
+s.val(&amp;#39;&amp;#39;);
+}
+}
+});
+elements.blur(function() {
+var s = $(this);
+var pValue = s.attr(&amp;#34;placeholder&amp;#34;);
+var sValue = s.val();
+if (!sValue) {
+s.val(pValue);
+}
+});
+//遍历所有密码框，添加placeholder模拟事件
+var elementsPass = form.find(&amp;#34;input[type=&amp;#39;password&amp;#39;][placeholder]&amp;#34;);
+elementsPass.each(function(i) {
+var s = $(this);
+var pValue = s.attr(&amp;#34;placeholder&amp;#34;);
+var sValue = s.val();
+if (pValue) {
+if (sValue == &amp;#39;&amp;#39;) {
+//DOM不支持type的修改，需要复制密码框属性，生成新的DOM
+var html = this.outerHTML || &amp;#34;&amp;#34;;
+html = html.replace(/\s*type=([&amp;#39;&amp;#34;])?password\1/gi, &amp;#34; type=text placeholderfriend&amp;#34;)
+.replace(/\s*(?:value|on[a-z]+|name)(=([&amp;#39;&amp;#34;])?\S*\1)?/gi, &amp;#34; &amp;#34;)
+.replace(/\s*placeholderfriend/, &amp;#34; placeholderfriend value=&amp;#39;&amp;#34; + pValue
++ &amp;#34;&amp;#39; &amp;#34; + &amp;#34;onfocus=&amp;#39;placeholderfriendfocus(this);&amp;#39; &amp;#34;);
+var idValue = s.attr(&amp;#34;id&amp;#34;);
+if (idValue) {
+s.attr(&amp;#34;id&amp;#34;, idValue + &amp;#34;placeholderfriend&amp;#34;);
+}
+var clsValue = s.attr(&amp;#34;class&amp;#34;);
+if (clsValue) {
+s.attr(&amp;#34;class&amp;#34;, clsValue + &amp;#34;placeholderfriend&amp;#34;);
+}
+s.hide();
+s.after(html);
+}
+}
+});
+elementsPass.blur(function() {
+var s = $(this);
+var sValue = s.val();
+if (sValue == &amp;#39;&amp;#39;) {
+var idValue = s.attr(&amp;#34;id&amp;#34;);
+if (idValue) {
+s.attr(&amp;#34;id&amp;#34;, idValue + &amp;#34;placeholderfriend&amp;#34;);
+}
+var clsValue = s.attr(&amp;#34;class&amp;#34;);
+if (clsValue) {
+s.attr(&amp;#34;class&amp;#34;, clsValue + &amp;#34;placeholderfriend&amp;#34;);
+}
+s.hide().next().show();
+}
+});
+});
+}
+window.placeholderfriendfocus = placeholderfriend.focus;
+})(jQuery);
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我最终选择这段代码,他能够在ie的各版本中正常运行,支持&lt;code&gt;text&lt;/code&gt;和&lt;code&gt;password&lt;/code&gt;标签.
+唯一的不足是,你直接点提交,你的text里面会有内容,内容就是placeholder中设置的提示内容.&lt;/p&gt;
+&lt;h1 id="4--background-size在ie9一下不支持"&gt;4 background-size在ie9一下不支持
+&lt;/h1&gt;&lt;p&gt;background-size属性是用来让背景图片平铺的.不过ie9一下并不支持这个属性,我们使用滤镜来实现平铺的效果,示例代码如下.&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;background-size: cover;
+filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&amp;#39;./assets/images/01.png&amp;#39;, sizingMethod=&amp;#39;scale&amp;#39;)\9;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;需要注意的是,这里的图片路径是相对于html文件的,不是css的路径,如果设置了没效果,先检查下你的路径.&lt;/p&gt;
+&lt;h1 id="5--input输入框-光标不居中"&gt;5 input输入框 光标不居中
+&lt;/h1&gt;&lt;p&gt;这个问题来自于魅族手机,还有老大难的ie6-8的测试中.
+解决方法是设置&lt;code&gt;height&lt;/code&gt;和&lt;code&gt;line-height&lt;/code&gt;等高,没那么简单,这里有技巧的&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-css" data-lang="css"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;line-height&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#f92672"&gt;normal&lt;/span&gt;&lt;span style="color:#f92672"&gt;;&lt;/span&gt;&lt;span style="color:#75715e"&gt;/*这行代码解决了魅族手机中的不居中问题*/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;line-height&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#f92672"&gt;42px&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;\&lt;/span&gt;&lt;span style="color:#f92672"&gt;9&lt;/span&gt;&lt;span style="color:#f92672"&gt;;&lt;/span&gt;&lt;span style="color:#75715e"&gt;/*这行css代码的含义是ie9以下设置line-height为42px*/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="6--opacity的继承问题"&gt;6 opacity的继承问题
+&lt;/h1&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-css" data-lang="css"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt; &lt;span style="color:#f92672"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt; &lt;span style="color:#f92672"&gt;style&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt; &lt;span style="color:#f92672"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;hello&lt;/span&gt; &lt;span style="color:#f92672"&gt;moto&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;/&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;/&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果我们给父div设置了一个&lt;code&gt;opacity&lt;/code&gt;为0.1,即使我们给子div设置&lt;code&gt;opacity&lt;/code&gt;为1,也是不管用的,如图
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1es5fm0jafhj20iv0ecq46.jpg"
+loading="lazy"
+alt="未设置父div的opacity之前"
+&gt;
+设置父div的&lt;code&gt;opacity&lt;/code&gt;之后
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg"
+loading="lazy"
+alt="设置父div的opacity之后"
+&gt;
+我们可以清楚看到子div受到了影响.
+解决办法:解除父子关系,把子div从父div中挪出来&lt;/p&gt;
+&lt;h1 id="7--border-radius在ie9以下不支持"&gt;7 border-radius在ie9以下不支持
+&lt;/h1&gt;&lt;p&gt;输入框等其他地方用到圆角的话,在老版本ie中果断是没有支持的.
+我们需要用hack的方式&lt;a class="link" href="http://css3pie.com/" target="_blank" rel="noopener"
+&gt;pie&lt;/a&gt;,去实现border-radius和box-shadow等功能.加入pie以后的css代码如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; -moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+border-radius: 6px;
+behavior: url(assets/css/pie.htc);/*这一行是核心*/
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;缺点:设置的border-radius四角的设置值都是相同的&lt;/p&gt;
+&lt;h1 id="8-css递进关系"&gt;8 css递进关系
+&lt;/h1&gt;&lt;p&gt;挖坑,以后填&lt;/p&gt;
+&lt;p&gt;ps:晚安,亲爱的&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.cnblogs.com/yuzhongwusan/p/4184923.html" target="_blank" rel="noopener"
+&gt;meta name=&amp;ldquo;viewport&amp;rdquo; content=&amp;ldquo;width=device-width,initial-scale=1.0&amp;rdquo; 解释&lt;/a&gt;
+2 &lt;a class="link" href="http://css3pie.com/" target="_blank" rel="noopener"
+&gt;pie用hack方式在ie中实现border-radius&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

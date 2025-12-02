@@ -1,0 +1,1278 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hexo on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/hexo/</link><description>Recent content in Hexo on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/hexo/index.xml" rel="self" type="application/rss+xml"/><item><title>将hexo部署到自己的个人服务器上</title><link>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</link><pubDate>Sat, 08 Apr 2017 19:22:22 +0000</pubDate><guid>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;本文假设你已经配置好了hexo了,这是前提&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;前面两篇文章主要是用来配置自己的服务器.服务器部署完成后,后面就可以开始写博客了.但是每次&lt;code&gt;hexo d&lt;/code&gt;推送到gihub的服务器上了,还需要手动将文件复制到自己的服务器对应网站的根目录,对的,要手动,当然不能忍.&lt;/p&gt;
+&lt;h1 id="1-ugly的解决办法"&gt;1 ugly的解决办法
+&lt;/h1&gt;&lt;p&gt;于是我写了一个脚本,在服务器上定时去访问我的github,如果检测到文件有变动,就把github的内容clone到服务器上,然后再布置到网站根目录.
+代码很简单,就这几行.主要是检测&lt;code&gt;/archives/index.html&lt;/code&gt;这个文件的大小是否变化了,选择它,是由于这个文件较小,而且每次发布新文章大小都会发生变化.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#!/bin/sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;cd ~/blogsync
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;length&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;`&lt;/span&gt;ls -l github.json| awk &lt;span style="color:#e6db74"&gt;&amp;#39;{print $5}&amp;#39;&lt;/span&gt;&lt;span style="color:#e6db74"&gt;`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;curl -o github.json https://raw.githubusercontent.com/huirong/huirong.github.io/master/archives/index.html
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;newlength&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;`&lt;/span&gt;ls -l github.json| awk &lt;span style="color:#e6db74"&gt;&amp;#39;{print $5}&amp;#39;&lt;/span&gt;&lt;span style="color:#e6db74"&gt;`&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;test $length -eq $newlength &lt;span style="color:#f92672"&gt;&amp;amp;&amp;amp;&lt;/span&gt; exit &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#75715e"&gt;#if same so quit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/huirong/huirong.github.io.git huirongis_me
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;rm -fr ~/www/huirongis_me
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;mv huirongis_me ~/www/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样搞法,是不需要手动了,但是做不到实时,而且,如果你没有新增或删减文章,其他的改动,可能不会反应在&lt;code&gt;/archives/index.html&lt;/code&gt;,那他就不会自动去更新了.&lt;/p&gt;
+&lt;h1 id="2-完美的搞法"&gt;2 完美的搞法
+&lt;/h1&gt;&lt;p&gt;既然有ugly的解决方法,自然有完美的解决方法.本文主要是参考 &lt;a class="link" href="http://www.swiftyper.com/2016/04/17/deploy-hexo-with-git-hook/" target="_blank" rel="noopener"
+&gt;使用 Git Hook 自动部署 Hexo 到个人 VPS&lt;/a&gt;.
+这个方法的原理,用一句话总结就是:&lt;strong&gt;在自己的服务器上搭建一个git服务器,然后依靠&lt;code&gt;git hook&lt;/code&gt;程序,将git仓库代码更新到自己的网站根目录&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="21-在vps上安装git"&gt;2.1 在vps上安装git
+&lt;/h2&gt;&lt;p&gt;我的服务器是ubuntu 16.04 lts,安装git服务非常简单&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo apt-get install git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="22-创建git用户"&gt;2.2 创建git用户
+&lt;/h2&gt;&lt;p&gt;这一步的原因是,我们需要一个小权限的账号来操作git.比如我们后面会限制这个git账号,不让他登录shell等等.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo adduser git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们在&lt;strong&gt;服务器&lt;/strong&gt;的ubuntu执行这条命令就好了,非常简单,而且还帮你在&lt;code&gt;home&lt;/code&gt;下建立了对应的目录.
+接下来要配置&lt;code&gt;git&lt;/code&gt;用户的认证,有两种办法:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;给&lt;code&gt;git&lt;/code&gt;用户设置一个密码,以后每次执行&lt;code&gt;hexo d&lt;/code&gt;的时候,会要求你输入密码,才能继续操作&lt;/li&gt;
+&lt;li&gt;给&lt;code&gt;git&lt;/code&gt;用户配置ssh证书,当把公钥传到服务器后,每次&lt;code&gt;hexo d&lt;/code&gt;免密,直接操作完成&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="23-设置密码登录"&gt;2.3 设置密码登录
+&lt;/h2&gt;&lt;p&gt;设置密码使用Linux命令&lt;code&gt;passwd&lt;/code&gt;即可&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo passwd git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上述命令执行完成后,按照提示输入两次密码,即配置完成&lt;/p&gt;
+&lt;h2 id="24-配置ssh证书"&gt;2.4 配置ssh证书
+&lt;/h2&gt;&lt;p&gt;配置ssh证书,设置的时候比较麻烦,但是后面每次使用比较简单.后面再说原因.&lt;/p&gt;
+&lt;h3 id="241-生成ssh证书"&gt;2.4.1 生成ssh证书
+&lt;/h3&gt;&lt;p&gt;首先,我们需要生成证书,这一步我们在自己本地电脑进行.&lt;strong&gt;注意&lt;/strong&gt;:生成证书不在服务器上操作,在自己&lt;strong&gt;本地电脑&lt;/strong&gt;上进行.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Mac或者Linux&lt;/strong&gt;
+对于Mac或者LInux用户,直接使用系统自带的终端就好
+&lt;strong&gt;windows&lt;/strong&gt;:
+对于windows用户,hexo配置完成后,你应该有一个执行shell命令的软件,比如我的是github desktop自带的shell程序,或者你自己安装的git shell,也是可以的,大概长这样
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fefka44bdmj20gj094glp.jpg"
+loading="lazy"
+alt="git shell程序界面"
+&gt;&lt;/p&gt;
+&lt;p&gt;首先,我们打开shell程序,输入以下命令&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-keygen -t rsa -b &lt;span style="color:#ae81ff"&gt;4096&lt;/span&gt; -C &lt;span style="color:#e6db74"&gt;&amp;#34;你的email地址&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着提示让我们输入文件保存的路径,如果你不输入就按照默认的保存,输入完成,回车
+下一步,提示我们输入密码,这个密码只是证书的密码,即,当使用这个证书登录的时候要输入的密码,它不是服务器用户的密码,而是单纯给ssh证书设置的密码.
+我这里选择不设置,直接回车,提示确认起码,再回车
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fefkzl7f04j20eq07wq34.jpg"
+loading="lazy"
+alt="生成证书"
+&gt;
+证书生成完毕.
+我们进入刚才证书保存的目录,可以看到&lt;code&gt;id_rsa&lt;/code&gt;和&lt;code&gt;id_rsa.pub&lt;/code&gt;两个文件(也有可能是其他名字,反正一个有pub一个没pub),分别就是私钥和公钥.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;PS&lt;/strong&gt;:其实生成证书这一步,在服务器上,或者任何一个机器上都可以,只要你最后把这个公钥传到服务器,用这个私钥链接你的服务器就行,这里为求简单,在本地的git shell中生成&lt;/p&gt;
+&lt;h3 id="242-上传公钥"&gt;2.4.2 上传公钥
+&lt;/h3&gt;&lt;p&gt;接下来,我们还是在&lt;strong&gt;本地终端&lt;/strong&gt;操作.将上一步生成的&lt;code&gt;id_rsa.pub&lt;/code&gt;文件内容追加到服务器的&lt;code&gt;authorized_keys&lt;/code&gt;中.
+OpenSSH提供了一个命令&lt;code&gt;ssh-copy-id&lt;/code&gt;,直接将文件添加到服务器,简直不能更方便
+用法如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ssh-copy-id git@yourserver
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;比如我输入&lt;code&gt;ssh-copy-id -i ~/.ssh/id_rsa.pub git@bblove.me&lt;/code&gt;,这里的yourserver可以输入域名或者ip,&lt;code&gt;-i&lt;/code&gt;用来指定具体的公钥文件,适用于存在多个公钥或者找不到公钥的情况,最好手动指定它.输入该命令后,会要求你输入服务器上&lt;code&gt;git&lt;/code&gt;用户的密码.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1feflmcy70yj20g5070ab1.jpg"
+loading="lazy"
+alt="authorized_keys文件内容"
+&gt;&lt;/p&gt;
+&lt;p&gt;如果此法不通,你可以直接在服务器上编辑&lt;code&gt;authorized_keys&lt;/code&gt;文件,把&lt;code&gt;id_rsa.pub&lt;/code&gt;内容追加到文件后面即可
+请务必确认&lt;code&gt;authorized_keys&lt;/code&gt;文件的权限是&lt;code&gt;rw-------&lt;/code&gt;,如果不是,使用&lt;code&gt;chmod 600 authorized_keys&lt;/code&gt;来修改.&lt;/p&gt;
+&lt;h3 id="243-测试ssh连接"&gt;2.4.3 测试ssh连接
+&lt;/h3&gt;&lt;p&gt;接下来,我们还是在&lt;strong&gt;本地终端&lt;/strong&gt;操作.我们测试一下,看是否能成功连接到服务器.主要使用&lt;code&gt;ssh -T git@yourserver&lt;/code&gt;命令来测试,此处&lt;code&gt;git&lt;/code&gt;是指用户名,&lt;code&gt;yourserver&lt;/code&gt;填你的服务器域名或者ip即可.测试结果如下:
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fek9m0bm0wj20fs0573yk.jpg"
+loading="lazy"
+alt="个人vps的ssh测试结果"
+&gt;&lt;/p&gt;
+&lt;p&gt;如果测试不成功,他会返回给你错误提示.如果像我上图这样,那就是测试成功了,需要手动&lt;code&gt;ctr+c&lt;/code&gt;,让git终端回复到正常输入命令的状态.下面附上github的测试结果,与我的vps略有不同,反正都是成功的.
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fek9nadydfj20g102adfr.jpg"
+loading="lazy"
+alt="github的测试结果"
+&gt;&lt;/p&gt;
+&lt;h3 id="244-ssh测试失败"&gt;2.4.4 ssh测试失败
+&lt;/h3&gt;&lt;p&gt;如果你测试失败,可能有多方面的原因,客户端或者服务器都有可能.&lt;/p&gt;
+&lt;h4 id="2441-客户端ssh配置"&gt;2.4.4.1 客户端ssh配置
+&lt;/h4&gt;&lt;p&gt;接下来,还是在&lt;strong&gt;本地终端&lt;/strong&gt;操作.我们首先检查一下客户端ssh的配置,文件的位置在&lt;code&gt;/etc/ssh/ssh_config&lt;/code&gt;,我们使用&lt;code&gt;vi /etc/ssh/ssh_config&lt;/code&gt;命令打开和编辑该文件.本文服务器域名是&lt;code&gt;bblove.me&lt;/code&gt;,请检查你的&lt;code&gt;ssh_config&lt;/code&gt;文件,是否存在一条&lt;code&gt;Host *&lt;/code&gt;记录,并且该记录的&lt;code&gt;IdentityFile&lt;/code&gt;值,是否是你刚才生成的那个私钥的地址.
+这个配置文件的意思是,针对某个&lt;code&gt;Host&lt;/code&gt;,程序使用&lt;code&gt;IdentityFile&lt;/code&gt;指定的私钥文件去进行ssh连接.
+如果我们上一步测试ssh连接失败,有可能就是针对我们自己的域名,我们未指定正确的私钥文件.附上我的&lt;code&gt;ssh_config&lt;/code&gt;文件的内容,
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fefmq9g0tsj20gj094aad.jpg"
+loading="lazy"
+alt="修改ssh_config文件"
+&gt;&lt;/p&gt;
+&lt;p&gt;这也就意味着,我们可以针对多个网站各自配置不同的ssh证书,比如我github一套,自己服务器一套.当然偷懒的话,也可以所有网站使用一套ssh证书.只需要添加配置&lt;code&gt;Host *&lt;/code&gt;的配置即可.你的配置文件内容可能和我的不同,关注下&lt;code&gt;host&lt;/code&gt;和&lt;code&gt;IdentityFile&lt;/code&gt;的内容就好.
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fefmtf7x24j20ie0kxjsn.jpg"
+loading="lazy"
+alt="ubuntu中ssh_config文件"
+&gt;
+&lt;strong&gt;PS&lt;/strong&gt;:如果host配置了&lt;code&gt;*&lt;/code&gt;,请务必保证它在其他域名配置的后面,因为系统是从前到后匹配,所以&lt;code&gt;*&lt;/code&gt;必须在具体域名的后面.&lt;/p&gt;
+&lt;h4 id="2442-服务器ssh配置"&gt;2.4.4.2 服务器ssh配置
+&lt;/h4&gt;&lt;p&gt;接下来,我们在&lt;strong&gt;服务器&lt;/strong&gt;上操作.我们检查一下服务器端ssh配置是否有误.文件的位置在&lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;,我们使用&lt;code&gt;sudo vi /etc/ssh/sshd_config&lt;/code&gt;打开和编辑该文件.例如我的ubuntu虚拟机的内容经过修改后,就是这样的:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Package generated configuration file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# See the sshd_config(5) manpage for details&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# What ports, IPs and protocols we listen for&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#这个是用来指定ssh端口的,不用改&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Port &lt;span style="color:#ae81ff"&gt;22&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Use these options to restrict which interfaces/protocols sshd will bind to&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#ListenAddress 10.105.224.192&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#ListenAddress 10.105.224.192&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Protocol &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# HostKeys for protocol version 2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;HostKey /etc/ssh/ssh_host_rsa_key
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;HostKey /etc/ssh/ssh_host_dsa_key
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;HostKey /etc/ssh/ssh_host_ecdsa_key
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;HostKey /etc/ssh/ssh_host_ed25519_key
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#Privilege Separation is turned on for security&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;UsePrivilegeSeparation yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Lifetime and size of ephemeral version 1 server key&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;KeyRegenerationInterval &lt;span style="color:#ae81ff"&gt;3600&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ServerKeyBits &lt;span style="color:#ae81ff"&gt;1024&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Logging&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;SyslogFacility AUTH
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LogLevel INFO
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Authentication:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LoginGraceTime &lt;span style="color:#ae81ff"&gt;120&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PermitRootLogin no
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;StrictModes yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;RSAAuthentication yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PubkeyAuthentication yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;AuthorizedKeysFile %h/.ssh/authorized_keys
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Don&amp;#39;t read the user&amp;#39;s ~/.rhosts and ~/.shosts files&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;IgnoreRhosts yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# For this to work you will also need host keys in /etc/ssh_known_hosts&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;RhostsRSAAuthentication no
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# similar for protocol version 2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;HostbasedAuthentication no
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Uncomment if you don&amp;#39;t trust ~/.ssh/known_hosts for RhostsRSAAuthentication&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#IgnoreUserKnownHosts yes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# To enable empty passwords, change to yes (NOT RECOMMENDED)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PermitEmptyPasswords no
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Change to yes to enable challenge-response passwords (beware issues with&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# some PAM modules and threads)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ChallengeResponseAuthentication no
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Change to no to disable tunnelled clear text passwords&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PasswordAuthentication yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Kerberos options&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#KerberosAuthentication no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#KerberosGetAFSToken no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#KerberosOrLocalPasswd yes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#KerberosTicketCleanup yes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# GSSAPI options&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#GSSAPIAuthentication no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#GSSAPICleanupCredentials yes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;X11Forwarding yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;X11DisplayOffset &lt;span style="color:#ae81ff"&gt;10&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PrintMotd no
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PrintLastLog yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;TCPKeepAlive yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#UseLogin no&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#MaxStartups 10:30:60&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#Banner /etc/issue.net&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Allow client to pass locale environment variables&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;AcceptEnv LANG LC_*
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;AllowUsers chen git zhou
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Subsystem sftp /usr/lib/openssh/sftp-server
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Set this to &amp;#39;yes&amp;#39; to enable PAM authentication, account processing,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# and session processing. If this is enabled, PAM authentication will&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# be allowed through the ChallengeResponseAuthentication and&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# PasswordAuthentication. Depending on your PAM configuration,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# PAM authentication via ChallengeResponseAuthentication may bypass&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# the setting of &amp;#34;PermitRootLogin without-password&amp;#34;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# If you just want the PAM account and session checks to run without&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# PAM authentication, then enable this but set PasswordAuthentication&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# and ChallengeResponseAuthentication to &amp;#39;no&amp;#39;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;UsePAM yes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Ciphers aes128-cbc,aes192-cbc,aes256-cbc,aes128-ctr,aes192-ctr,aes256-ctr,3des-cbc,arcfour128,arcfour256,arcfour,blowfish-cbc,cast128-cbc
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;MACs hmac-md5,hmac-sha1,umac-64@openssh.com,hmac-ripemd160,hmac-sha1-96,hmac-md5-96
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;KexAlgorithms diffie-hellman-group1-sha1,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1,diffie-hellman-group-exchange-sha256,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group1-sha1,curve25519-sha256@libssh.org
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;UseDNS no
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们只需要重点关注下这几个值,&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;PermitRootLogin no&lt;/code&gt;,也就是不允许使用root登录,这是为了安全起见&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AuthorizedKeysFile %h/.ssh/authorized_keys&lt;/code&gt;,指定公钥存放的文件,这个要重点关注下,注意去掉前面的注释&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;其他的配置,基本不用修改.以上配置修改完成后,我们重启一下服务器端的ssh服务,使用命令&lt;code&gt;sudo service ssh restart&lt;/code&gt;即可.最后,我们再回到&lt;strong&gt;客户端&lt;/strong&gt;,测试一下ssh连接是否成功.&lt;code&gt;ssh -T git@yourserver&lt;/code&gt;.还不行的话,你就去google查一查错误&lt;/p&gt;
+&lt;h2 id="25-配置服务器git仓库"&gt;2.5 配置服务器git仓库
+&lt;/h2&gt;&lt;p&gt;上一步,我们配置好了客户端ssh连服务器,这一步我们回到&lt;strong&gt;服务器&lt;/strong&gt;上去操作.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#在服务器新建一个文件夹,用来存放git仓库&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo mkdir /home/chen/bblove
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd /home/chen/bblove
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#进入文件夹,对git仓库进行初始化&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo git init --bare blog.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#初始化完成后,进入hooks文件夹&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd /home/chen/bblove/blog.git/hooks
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#新建一个钩子程序,这个文件名可以自定义,我取名为post-receive&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;vi post-receive
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们在post-receive中,写入如下代码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#!/bin/sh
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;git --work-tree&lt;span style="color:#f92672"&gt;=&lt;/span&gt;/home/chen/www/bblove_me --git-dir&lt;span style="color:#f92672"&gt;=&lt;/span&gt;/home/chen/bblove/blog.git checkout -f
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此处,&lt;code&gt;--work-tree&lt;/code&gt;指的是你的网站根目录,&lt;code&gt;--git-dir&lt;/code&gt;指的是你的git仓库的目录.
+编辑完城后,&lt;code&gt;wq&lt;/code&gt;退出并保存&lt;code&gt;post-receive&lt;/code&gt;文件.下面给钩子程序加上可执行权限&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#给钩子程序加上可执行权限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo chmod +x /home/chen/bblove/blog.git/hooks/post-receive
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最后,修改git仓库权限,否则客户端无法提交代码到这个仓库&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#接下来修改git仓库的权限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo chown -R git:git blog.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此处还要注意一点,我们还要修改网站根目录的权限,否则钩子程序执行的时候,无法修改网站根目录的内容.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo chown -R git:git /home/chen/www/bblove_me
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;至此,服务器端配置完成&lt;/p&gt;
+&lt;h2 id="26-修改hexo的配置文件"&gt;2.6 修改hexo的配置文件
+&lt;/h2&gt;&lt;p&gt;终于,走到了这一步.
+我们打开我们自己hexo博客根目录的&lt;code&gt;_config.yml&lt;/code&gt;文件.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;deploy:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;- type: git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; repo: &lt;span style="color:#e6db74"&gt;&amp;#39;https://github.com/Jackroyal/Jackroyal.github.io.git&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; branch: master
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;- type: git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; repo: git@bblove.me:/home/git/bblove/blog.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; branch: master
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;因为,hexo本身是支持多点发布的,所以我们每次deploy的时候,让他同时推到github和自己的服务器上去.
+你只需要改&lt;code&gt; repo: git@bblove.me:/home/git/bblove/blog.git&lt;/code&gt;这一行,&lt;code&gt;git@yourserver:/your-git-dir&lt;/code&gt;.
+ok,大功告成啦,赶快&lt;code&gt;hexo d -g&lt;/code&gt;看看效果吧&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="http://www.swiftyper.com/2016/04/17/deploy-hexo-with-git-hook/" target="_blank" rel="noopener"
+&gt;使用 Git Hook 自动部署 Hexo 到个人 VPS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="http://blog.csdn.net/linghe301/article/details/8211305#" target="_blank" rel="noopener"
+&gt;Linux启动或禁止SSH用户及IP的登录&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</title><link>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</link><pubDate>Sun, 06 Mar 2016 15:50:46 +0000</pubDate><guid>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</guid><description>&lt;p&gt;上一篇文章&lt;a class="link" href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener"
+&gt;解决 Github Pages 禁止百度爬虫的方法&lt;/a&gt;,提到了解决百度爬虫被github禁用掉的方法.
+&lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;
+然后今天去上gitcafe,偶然看到这个
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
+loading="lazy"
+alt="GitCafe 项目迁移至 Coding.net 公告"
+&gt;
+额(⊙o⊙)…,holly shit.不过没办法,人家都被收购了,我们只能改变策略了.
+话说,两家都是做代码托管的,这也是顺(bao)应(tuan)潮(qu)流(nuan)咩?&lt;/p&gt;
+&lt;p&gt;思路跟原来差不多,就是我们把其中的gitcafe内容替换成coding.net就好,以下简称coding.
+&lt;code&gt;把博客同时发布到github pages和coding pages.然后使用dnspod设置域名解析,国内线路解析到coding.net,国外线路解析到github.&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;注册coding账号&lt;/li&gt;
+&lt;li&gt;新建一个项目,名字与你的用户名相同,比如我的名字是&lt;code&gt;Jackroyal&lt;/code&gt;,新建一个项目名为&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;添加ssh公钥&lt;/li&gt;
+&lt;li&gt;新建coding-pages分支&lt;/li&gt;
+&lt;li&gt;开启pages服务&lt;/li&gt;
+&lt;li&gt;修改hexo配置&lt;/li&gt;
+&lt;li&gt;修改dns设置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="1-注册coding账号"&gt;1 注册coding账号
+&lt;/h1&gt;&lt;p&gt;这个很简单不必说,注册需要填写用户名,邮箱和密码,比如我的用户名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="2-新建和用户名同名的项目"&gt;2 新建和用户名同名的项目
+&lt;/h1&gt;&lt;p&gt;在注册好账号以后,我们就去新建一个项目,方法和gitcafe不同和gihub类似,就是和用户名同名,一模一样的就行.我的项目名是&lt;code&gt;Jackroyal&lt;/code&gt;,项目属性&lt;code&gt;公开&lt;/code&gt;
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
+loading="lazy"
+alt="新建同名项目"
+&gt;&lt;/p&gt;
+&lt;h1 id="3-添加ssh公钥"&gt;3 添加&lt;code&gt;ssh&lt;/code&gt;公钥
+&lt;/h1&gt;&lt;p&gt;首先,我们提交代码库有两种方式,一种是https,一种是ssh,两种方式都可以,但是因为我们使用hexo来发布博客的时候是没有地方输入密码的,所以我们才考虑使用&lt;code&gt;ssh&lt;/code&gt;方式,不过也不一定,我们还是可以使用https方式来提交hexo的.&lt;/p&gt;
+&lt;h2 id="31-使用ssh方式发布博客"&gt;3.1 使用ssh方式发布博客
+&lt;/h2&gt;&lt;p&gt;我们只需要找到本地的ssh公钥,然后上传到coding上去就行,点击&lt;a class="link" href="https://coding.net/user/account/setting/keys" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;设置.查看本地ssh公钥的方法和上篇博客一样.
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+loading="lazy"
+alt="使用git客户端查看ssh公钥私钥"
+&gt;
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+loading="lazy"
+alt="查看公钥"
+&gt;
+复制那一段,然后在coding上添加上去就行&lt;/p&gt;
+&lt;h2 id="32-使用https方式发布"&gt;3.2 使用https方式发布
+&lt;/h2&gt;&lt;p&gt;如果非要使用https方式,也是可以的,核心思路就是在本地做一次&lt;code&gt;push&lt;/code&gt;操作就行.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我们先&lt;code&gt;git clone&lt;/code&gt;命令,我的项目就是&lt;code&gt;git clone https://git.coding.net/Jackroyal/Jackroyal.git&lt;/code&gt;得到coding上刚才新建的项目.&lt;/li&gt;
+&lt;li&gt;克隆完成后,接着我们进到项目目录,我们新建一个文件或者修改一个文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git add .&lt;/code&gt;,把修改提交到暂存区&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git commit -m &amp;quot;测试提交&amp;quot;&lt;/code&gt;,将修改提交到本地仓库&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git push&lt;/code&gt;,将修改提交到远程仓库&lt;/li&gt;
+&lt;li&gt;接下来,会让你输入用户名和密码,你输入&lt;/li&gt;
+&lt;li&gt;然后项目就会提交,因为这个状态会保留下来,你下次在提交就可以不用输入用户名和密码了,这样为我们使用hexo发布代码提供条件
+ps:这种方式,可能过一段时间又不行了,报错&lt;code&gt;could not read Username for 'https://git.coding.net': Invalid argument&lt;/code&gt;,你再做一次上面的操作就行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="4-新建coding-pages分支"&gt;4 新建coding-pages分支
+&lt;/h1&gt;&lt;p&gt;当我们可以提交代码的时候,我们先来新建分支,和gitcafe差不多,它需要一个特别的分支名字,而不是像github默认的master分支,名字是&lt;code&gt;coding-pages&lt;/code&gt;,如下图所示
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
+loading="lazy"
+alt="新建coding分支"
+&gt;
+我们把它设为默认分支&lt;/p&gt;
+&lt;h1 id="5-开启pages服务"&gt;5 开启pages服务
+&lt;/h1&gt;&lt;p&gt;接下来我们需要手动去开启pages服务.在项目主页的&lt;code&gt;pages&lt;/code&gt;选项卡,点击开启服务,同时我们,添加域名绑定
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
+loading="lazy"
+alt="开启pages服务"
+&gt;
+域名绑定我们还要去修改dns解析,我们先用它分配给我们的域名去访问&lt;a class="link" href="http://jackroyal.coding.me/" target="_blank" rel="noopener"
+&gt;http://jackroyal.coding.me/&lt;/a&gt;,看看能不能正常访问&lt;/p&gt;
+&lt;h1 id="5-修改hexo配置"&gt;5 修改hexo配置
+&lt;/h1&gt;&lt;p&gt;前面的准备工作做得差不多,我们修改博客的配置信息,打开博客根目录的&lt;code&gt;_config.yml&lt;/code&gt;文件,格式和之前github的差不多:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+- type: git
+repo: &amp;#39;https://github.com/Jackroyal/Jackroyal.github.io.git&amp;#39;
+branch: master
+- type: git
+repo: &amp;#39;https://git.coding.net/Jackroyal/Jackroyal.git&amp;#39;
+branch: coding-pages
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;尤其注意在配置的时候注意留空格,这种键值对,比如&lt;code&gt;type: git&lt;/code&gt;,其中的冒号后面到git,有个空格的,不然配置文件就会读取错误.
+还要注意branch名称,分支必须是&lt;code&gt;coding-pages&lt;/code&gt;
+**PS:如上面所说,我选择的是https方式发布,所以我的repo是https的,如果你选择ssh方式去认证,那么你的地址应该是类似这样的&lt;code&gt;git@git.coding.net:Jackroyal/Jackroyal.git&lt;/code&gt;
+**&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
+loading="lazy"
+alt="添加coding的repo信息"
+&gt;&lt;/p&gt;
+&lt;h1 id="7-修改dns设置"&gt;7 修改dns设置
+&lt;/h1&gt;&lt;p&gt;就像第5步页面提示的,我们要绑定自己的域名,需要去修改dns解析记录,只需要添加一条CNAME指向你的&lt;code&gt;jackroyal.coding.me&lt;/code&gt;即可.
+注意后面加个点,也就是正确的填法是&lt;code&gt;jackroyal.coding.me.&lt;/code&gt;,如下图所示.修改完成后大概等几分钟才能生效
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
+loading="lazy"
+alt="修改dns设置"
+&gt;&lt;/p&gt;
+&lt;h1 id="8-从gitcafe迁移"&gt;8 从gitcafe迁移
+&lt;/h1&gt;&lt;p&gt;如果我们选择从gitcafe迁移的话,他会把我们原来的博客迁移过来.为了适应coding,你只需要从上面第二步开始就好,尤其注意的是,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,重要的事情说三遍,因为你迁移过来的分支名称是&lt;code&gt;gitcafe-pages&lt;/code&gt;.
+也就是核心问题,必须有个和用户名同名的项目,项目必须有个分支是&lt;code&gt;coding-pages&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其他没提的事情和上一篇是一样的.
+最后执行&lt;code&gt;hexo d -g&lt;/code&gt;,打完收工&lt;/p&gt;</description></item><item><title>解决 Github Pages 禁止百度爬虫的方法</title><link>https://jackroyal.github.io/post/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/</link><pubDate>Wed, 25 Nov 2015 11:06:50 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/</guid><description>&lt;p&gt;&lt;em&gt;update&lt;/em&gt;:因为gitcafe在5月31号就关闭了,所以要将文章中的gitcafe换掉,我重新写了一篇,在这里&lt;a class="link" href="http://jackroyal.github.io/2016/03/06/migrate-pages-from-gitcafe-to-coding/" target="_blank" rel="noopener"
+&gt;解决 Github Pages 禁止百度爬虫的方法2&amp;ndash;从gitcafe迁移到coding.net&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;最近,我的github student package里面送的一个namecheap域名终于下来了.That is to say:我终于有自己的域名了,这就是我的域名&lt;a class="link" href="http://bblove.me" target="_blank" rel="noopener"
+&gt;http://bblove.me&lt;/a&gt;,欢迎来访.&lt;/p&gt;
+&lt;p&gt;有域名以后,就在想办法解决百度爬虫的问题.&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Hi Jackroyal,
+We are currently blocking the Baidu user agent from crawling GitHub Pages
+sites in response to this user agent being responsible for an excessive amount
+of requests, which was causing availability issues for other GitHub customers.
+This is unlikely to change any time soon, so if you need the Baidu user agent
+to be able to crawl your site you will need to host it elsewhere.
+Cheers,
+Scott
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这是我之前跟github反映百度spider无法抓取我的github pages,他们给我的回复邮件.也就是说他们把百度spider给禁掉了,桑不起.
+直接说解决方法:
+&lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="实现方法"&gt;实现方法
+&lt;/h1&gt;&lt;h1 id="1-准备条件"&gt;1 准备条件
+&lt;/h1&gt;&lt;p&gt;一共需要一下这几个东西:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个github账户&lt;/li&gt;
+&lt;li&gt;一个gitcafe账户&lt;/li&gt;
+&lt;li&gt;一个dnspod账号&lt;/li&gt;
+&lt;li&gt;一个域名&lt;/li&gt;
+&lt;li&gt;github for windows(或者git客户端也行)
+没了,就这么多就行.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="2-初始操作"&gt;2 初始操作
+&lt;/h1&gt;&lt;p&gt;我们在github和gitcafe上面把自己的博客搭建起来,首先要建仓库.
+&lt;strong&gt;github&lt;/strong&gt;:
+首先登录你的github,然后新建一个公共仓库,仓库名是你的用户名加上&lt;code&gt;yourname.github.io&lt;/code&gt;,如下图所示,我的用户名是&lt;code&gt;Jackroyal&lt;/code&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
+loading="lazy"
+alt="github新建仓库"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;gitcafe&lt;/strong&gt;:
+操作方法差不多,不过有点区别是,gitcafe新建的公开项目,是和用户名一致的,比如我的用户名是&lt;code&gt;Jackroyal&lt;/code&gt;,那我新建的仓库名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;仓库新建成功后,你获取到的链接应该是类似下面的&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;https://github.com/Jackroyal/Jackroyal.github.io.git
+https://gitcafe.com/Jackroyal/Jackroyal.git
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这就是你的两个page对应的仓库.&lt;/p&gt;
+&lt;h1 id="3-搭建博客"&gt;3 搭建博客
+&lt;/h1&gt;&lt;h2 id="31-搭建github-pages"&gt;3.1 搭建github pages
+&lt;/h2&gt;&lt;p&gt;当你的仓库建好了,我们就开始搭建博客,因为之前的博客有写,具体过程就不赘述&lt;a class="link" href="http://jackroyal.github.io/2015/06/16/hexo-3-0-update/" target="_blank" rel="noopener"
+&gt;安装和配置hexo 3.0&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;按照上面的教程一步一步,就能搭建好博客,然后你就可以访问你的gihub pages了,访问链接就是&lt;code&gt;http://yourname.github.io&lt;/code&gt;,比如我的即使&lt;code&gt;http://jackroyal.github.io&lt;/code&gt;.
+现在我们开始搭建gitcafe上面的pages了.由于hexo现在已经支持多发布,所以很简单,我们只需要配置deploy的信息,修改&lt;code&gt;_config.yml&lt;/code&gt;.添加gitcafe的仓库信息.我的修改结果如下,&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+- type: git
+repo: &amp;#39;https://github.com/Jackroyal/Jackroyal.github.io.git&amp;#39;
+branch: master
+- type: git
+repo: &amp;#39;https://gitcafe.com/Jackroyal/Jackroyal.git&amp;#39;
+branch: gitcafe-pages
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;尤其需要注意的是,两个的branch是不同的,&lt;code&gt;github&lt;/code&gt;默认分支是&lt;code&gt;master&lt;/code&gt;,&lt;code&gt;gitcafe&lt;/code&gt;默认分支是&lt;code&gt;gitcafe-pages&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="32-添加gitcafe的ssh公钥"&gt;3.2 添加gitcafe的ssh公钥
+&lt;/h2&gt;&lt;p&gt;由于我使用的是&lt;code&gt;github for windows&lt;/code&gt;的终端界面,也就是github官方提供的客户端,他的好处是,我使用github的时候,不需要配置ssh公钥,密钥之类的东西.如果你用的不是这个,用的是git的客户端,那就需要配置ssh公钥,参考这里&lt;a class="link" href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="noopener"
+&gt;github配置公钥&lt;/a&gt;.
+对的,你猜到了,我们现在需要配置gitcafe的ssh公钥,因为&lt;code&gt;github for windows&lt;/code&gt;会自动帮我们上传公钥,gitcafe就只能手动了.&lt;/p&gt;
+&lt;h3 id="321-查看本地公钥"&gt;3.2.1 查看本地公钥
+&lt;/h3&gt;&lt;p&gt;我们打开你使用的git终端,首先切回用户目录,然后进入&lt;code&gt;.ssh&lt;/code&gt;目录,里面就有公钥和私钥,如下图所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+loading="lazy"
+alt="使用git客户端查看ssh公钥私钥"
+&gt;
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye78gs0hvj20it0ca761.jpg"
+loading="lazy"
+alt="使用github for windows查看ssh公钥私钥"
+&gt;
+我们就是要读取后缀是&lt;code&gt;.pub&lt;/code&gt;的那个文件,比如我的读取命令就是&lt;code&gt;cat github_rsa.pub&lt;/code&gt;,执行结果如下
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+loading="lazy"
+alt="查看公钥"
+&gt;&lt;/p&gt;
+&lt;h3 id="322-添加公钥到gitcafe"&gt;3.2.2 添加公钥到gitcafe
+&lt;/h3&gt;&lt;p&gt;我们在&lt;a class="link" href="https://gitcafe.com/account/public_keys" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;来设置gitcafe的公钥.
+&lt;em&gt;PS:需要注意的是,公钥后面的chen@chen-pc是不需要的,我的带上以后,gitcafe说是公钥非法,不过不怕,gitcafe会帮你正确格式化&lt;/em&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
+loading="lazy"
+alt="正确的ssh格式"
+&gt;
+反正就是把公钥加上去,就ok了&lt;/p&gt;
+&lt;h2 id="34-同步博客到gitcafe"&gt;3.4 同步博客到gitcafe
+&lt;/h2&gt;&lt;p&gt;上面的配置好了以后,我们就可以把博客内容同步到gitcafe了,方法很简单,执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hexo d -g
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后就可以啦.&lt;/p&gt;
+&lt;h1 id="4-配置域名"&gt;4 配置域名
+&lt;/h1&gt;&lt;p&gt;首先你得有个域名,像我一样,哈哈.&lt;/p&gt;
+&lt;h2 id="41-修改域名注册的解析服务器"&gt;4.1 修改域名注册的解析服务器
+&lt;/h2&gt;&lt;p&gt;我们在要把域名解析服务,设置到dnspod,因为他是国内的,而且服务很好.我们登录自己的域名管理后台,选择对应的域名进行管理,然后找到&lt;code&gt;nameservers&lt;/code&gt;的设置,如图所示
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7orkymjj210j0i7tde.jpg"
+loading="lazy"
+alt="修改nameservers的设置"
+&gt;
+修改的值是&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; f1g1ns1.dnspod.net
+f1g1ns2.dnspod.net
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;常见的域名注册商修改到dnspod,官方提供了教程,看&lt;a class="link" href="https://support.dnspod.cn/Kb/guide/" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;-
+改完以后可能要等一段时间才能生效,最多72小时
+ok,改完以后,这边就完了,我们登录dnspod&lt;/p&gt;
+&lt;h2 id="42-修改dnspod解析记录"&gt;4.2 修改dnspod解析记录
+&lt;/h2&gt;&lt;p&gt;我们登录dnspod,然后添加域名
+如果4.1中的设置生效了,你的域名就会添加成功了,我们直接进行下一步,修改解析记录,上图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
+loading="lazy"
+alt="dns解析记录"
+&gt;
+我们一共添加了5条记录,其中一条泛解析和www解析是针对国内的,所以执行gitcafe;2条泛解析和www解析是针对国外的,所以指向github.
+就是添加&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;@ A 默认 192.30.252.153
+@ A 默认 192.30.252.154
+@ CNAME 国内 gitcafe.io.
+www CNAME 默认 jackroyal.github.io.
+www CNAME 国内 gitcafe.io.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其他设置项目默认就行了,上面的配置完了,如果你走国外ip访问你的域名的话,会出现404,因为我们还差一步.走国内线路访问一样会出错,都是没绑定的结果.&lt;/p&gt;
+&lt;h2 id="43-添加github的cname文件添加gitcafe自定义域名"&gt;4.3 添加github的CNAME文件,添加gitcafe自定义域名
+&lt;/h2&gt;&lt;p&gt;现在只差最后一步了,我们先来配置github的CNAME文件,官网有个教程&lt;a class="link" href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/" target="_blank" rel="noopener"
+&gt;配置CNAME文件&lt;/a&gt;.说白了,就是在你的网站根目录,添加一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件,里面的内容就是你的域名&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;bblove.me
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有任何多余的信息,如下图
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
+loading="lazy"
+alt="配置github的CNAME"
+&gt;
+上面的配置现在访问没问题,但是你一重新发布博客,就需要重新手动添加&lt;code&gt;CNAME&lt;/code&gt;文件,太麻烦.
+一劳永逸的方法,在你的&lt;code&gt;hexo&lt;/code&gt;目录下的&lt;code&gt;source&lt;/code&gt;目录中,新建一个&lt;code&gt;CNAME&lt;/code&gt;文件夹,然后他每次在你发布博客的时候,都会在你的网站根目录生成一个&lt;code&gt;CNAME&lt;/code&gt;文件.
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
+loading="lazy"
+alt="添加CNAME的目录结构"
+&gt;
+现在github的配置彻底结束.&lt;/p&gt;
+&lt;p&gt;接下来配置gitcafe:
+1 我们在gitcafe的项目主页,点击&lt;code&gt;项目设置&lt;/code&gt;,如下图(之所以截图,是因为我找半天才看到&amp;hellip;)
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyeadedmh1j20z508eadm.jpg"
+loading="lazy"
+alt="gitcafe点击’项目设置’"
+&gt;
+2 然后我们点击&lt;code&gt;pages服务&lt;/code&gt;标签,然后添加自己的域名,这些域名是我们之前在dnspod中设置了解析的
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
+loading="lazy"
+alt="gitcafe配置自定义域名"
+&gt;&lt;/p&gt;
+&lt;p&gt;彻底打完收工了&lt;/p&gt;
+&lt;h1 id="5-总结"&gt;5 总结
+&lt;/h1&gt;&lt;p&gt;总算写完了,写到这里,我一共写了,141行了,写了个把小时.这次主要参考了下面的几篇文章,都写在友情链接里面了.参考了他们的思路,因为他们的方法里面需要自己单独购买vps或者购买CDN,共同的问题是增加了开销,买vps会导致你每次写博客都需要单独发布一次到vps上太麻烦.我后来在网上看到gitcafe也有&lt;code&gt;gitcafe pages&lt;/code&gt;服务,如果用这个来处理的话,一来,不会增加多余的开销,他们都是免费的;二来,由于hexo对于多部署的支持,多部署很简单,一次配置,以后就可以不用理会了.
+ok,收工&lt;/p&gt;
+&lt;h1 id="友情链接"&gt;友情链接
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/" target="_blank" rel="noopener"
+&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;
+2 &lt;a class="link" href="http://www.dozer.cc/2015/06/github-pages-and-cdn.html" target="_blank" rel="noopener"
+&gt;利用 CDN 解决百度爬虫被 Github Pages 拒绝的问题&lt;/a&gt;
+3 &lt;a class="link" href="https://help.gitcafe.com/manuals/help/pages-services" target="_blank" rel="noopener"
+&gt;gitcafe官方文档&amp;ndash;pages服务&lt;/a&gt;
+4 &lt;a class="link" href="https://help.gitcafe.com/manuals/help/ssh-key" target="_blank" rel="noopener"
+&gt;gitcafe官方文档&amp;ndash;配置ssh公钥&lt;/a&gt;&lt;/p&gt;</description></item><item><title>安装和配置hexo 3.0</title><link>https://jackroyal.github.io/post/hexo-3-0-update/</link><pubDate>Tue, 16 Jun 2015 22:22:43 +0000</pubDate><guid>https://jackroyal.github.io/post/hexo-3-0-update/</guid><description>&lt;p&gt;update：2015-06-24 16:56
+额，谁会相信，其实这篇文章是拖了一周之后才写的。&lt;/p&gt;
+&lt;p&gt;因为最近换回了win7，所以之前搭建的hexo环境都没了，需要重新搭建。在网上看到hexo 3.0 还可以，而且，我妹子也换3.0了，so 我也换成hexo 3.0的。&lt;/p&gt;
+&lt;h1 id="安装环境"&gt;安装环境
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;操作系统&lt;/strong&gt;：win7
+&lt;strong&gt;相关版本&lt;/strong&gt;：&lt;br&gt;
+hexo-cli: 0.1.7
+os: Windows_NT 6.1.7601 win32 x64
+node: 0.12.4&lt;/p&gt;
+&lt;h1 id="安装过程"&gt;安装过程
+&lt;/h1&gt;&lt;h1 id="-1-安装github-for-windows"&gt;# 1. 安装Github for windows
+&lt;/h1&gt;&lt;p&gt;因为我之前就在用Github,所以早就安装了这个.已经装过的同学请忽略这一段.
+下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
+target="_blank" rel="noopener"
+&gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3jw1emplp1lz31j204w033mx0.jpg"
+loading="lazy"
+alt="Github for windows"
+&gt;
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1empluh6hvej210b0j741r.jpg"
+loading="lazy"
+alt="GUI and Bash"
+&gt;&lt;/p&gt;
+&lt;h1 id="-2-安装nodejs"&gt;# 2. 安装Node.js
+&lt;/h1&gt;&lt;p&gt;在 Windows 环境下安装 &lt;a class="link" href="http://nodejs.org/" title="Node.js 官网"
+target="_blank" rel="noopener"
+&gt;Node.js&lt;/a&gt; 非常简单，仅须下载安装文件并执行即可完成安装。（win下建议下载msi格式的，因为这样可以不用配置环境变量之类的）&lt;/p&gt;
+&lt;h1 id="-3-测试nodejs是否安装"&gt;# 3. 测试node.js是否安装
+&lt;/h1&gt;&lt;p&gt;在任何控制台输入(可以按windows键+R,输入cmd,然后输入npm,一般来说不会有问题)&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;返回值如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Usage: npm &amp;lt;command&amp;gt;
+where &amp;lt;command&amp;gt; is one of:
+add-user, adduser, apihelp, author, bin, bugs, c, cache,
+completion, config, ddp, dedupe, deprecate, docs, edit,
+explore, faq, find, find-dupes, get, help, help-search,
+home, i, info, init, install, isntall, issues, la, link,
+list, ll, ln, login, ls, outdated, owner, pack, prefix,
+prune, publish, r, rb, rebuild, remove, repo, restart, rm,
+root, run-script, s, se, search, set, show, shrinkwrap,
+star, stars, start, stop, submodule, t, tag, test, tst, un,
+uninstall, unlink, unpublish, unstar, up, update, v,
+version, view, whoami
+npm &amp;lt;cmd&amp;gt; -h quick help on &amp;lt;cmd&amp;gt;
+npm -l display full usage info
+npm faq commonly asked questions
+npm help &amp;lt;term&amp;gt; search for help on &amp;lt;term&amp;gt;
+npm help npm involved overview
+Specify configs in the ini-formatted file:
+C:\Users\chenhao\.npmrc
+or on the command line via: npm &amp;lt;command&amp;gt; --key value
+Config info can be viewed via: npm help config
+npm@1.4.28 D:\Program Files (x86)\nodejs\node_modules\npm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看到这个结果,就表示你的node.js已经安装上去了
+*感谢我们家笨笨的反馈：*此处如果npm无效，首先确定win下你采用的是msi格式的安装文件，然后&lt;strong&gt;重启&lt;/strong&gt;下电脑，应该就正常了。&lt;/p&gt;
+&lt;h1 id="-4-安装hexo"&gt;# 4. 安装hexo
+&lt;/h1&gt;&lt;p&gt;接下来的操作我都是用&lt;strong&gt;Github for windows&lt;/strong&gt;自带的Bash来完成的,因为后面会涉及到SSH,用&lt;strong&gt;Github for windows&lt;/strong&gt;,就可以避免这个问题.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在Bash中输入以下命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install hexo-cli -g
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;创建hexo文件夹
+创建你hexo放置的文件夹,先用Bash进入到目标文件夹,比如我的是F:/blog/,接下来初始化hexo,自动生成相关的文件,在F:/blog/环境下,输入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;cd /f/blog # 这个命令表示当前进入目录为f：/blog/
+hexo init
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;安装依赖包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;本地预览,做完以上操作,可以本地预览一下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo g
+hexo s
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;以上两条命令的意思是:
+生成相关文件(就是生成目标html,静态博客嘛,就是很多html组成)
+打开本地服务器预览(node.js就是干这事的,点击访问&lt;a class="link" href="http://localhost:4000" target="_blank" rel="noopener"
+&gt;http://localhost:4000&lt;/a&gt;,就可以看到了)
+**update-2015-09-29:**在3.0版本中将&lt;code&gt;hexo server&lt;/code&gt;(简写命令就是&lt;code&gt;hexo s&lt;/code&gt;),独立成模块,需要手动安装,不然你执行&lt;code&gt;hexo s&lt;/code&gt;,就会出现无法识别这个命令
+安装方法和后面配置模块一样&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;npm install hexo-server --save
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="ok到这里博客搭建基本完成现在要做的就是把它发布到你的github上去"&gt;&lt;strong&gt;ok&lt;/strong&gt;,到这里,博客搭建基本完成,现在要做的就是把它发布到你的Github上去
+&lt;/h2&gt;&lt;p&gt;接下来,教你怎么发布到Github上去&lt;/p&gt;
+&lt;h1 id="注册github"&gt;注册Github
+&lt;/h1&gt;&lt;p&gt;这一步没什么说的,如果你连简单的注册都不会,我也不会教你╮(╯▽╰)╭&lt;/p&gt;
+&lt;h1 id="创建公共库"&gt;创建公共库
+&lt;/h1&gt;&lt;p&gt;在自己Github主页右下角，创建一个新的repository(&lt;a class="link" href="https://github.com/new" title="点我新建"
+target="_blank" rel="noopener"
+&gt;点这里&lt;/a&gt;)。比如我的Github账号是Jackroyal，那么我应该创建的repository名字应该是Jackroyal.github.io(注意你的repository名字就是Jackroyal.github.io,我之前用的是Jackroyal怎么尝试都不行)。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PS:有个大小写的问题其实我注册的是Jackroyal,大写的J,但是我访问的时候特别是带https的链接,他会自动转为小写访问.怎么说呢?简单点,你就按照你的用户名来,该大写大写,该小写小写&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="部署"&gt;部署
+&lt;/h1&gt;&lt;p&gt;现在万事俱备,只差部署了.
+hexo3.0,跟2.0不同,deploy插件我们需要手动去安装,执行如下命令:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install hexo-deployer-git --save
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接下来,我们来配置deploy的信息,修改&lt;code&gt;_config.yml&lt;/code&gt;.
+这个文件在路径是F:/blog/_config.yml.
+用编辑器把它打开,修改最后一段&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+type: git
+repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;照着我的这个格式修改就好了,把我里面的用户名替换成你的.
+至此基本完成所有搭建步骤.&lt;/p&gt;
+&lt;h1 id="上传"&gt;上传
+&lt;/h1&gt;&lt;p&gt;我们开始上传项目的代码,再重复一次,我一直以来用的工具都是_Github for windows_自带的Bash,所以我没有配置SSH,如果你用的windows自带的终端或者其他比如msysgit,可能需要配置SSH,不然无法使用Github(点击&lt;a class="link" href="https://help.github.com/articles/generating-ssh-keys/" title="https://help.github.com/articles/generating-ssh-keys/"
+target="_blank" rel="noopener"
+&gt;&lt;code&gt;这里&lt;/code&gt;&lt;/a&gt;查看官方教程).
+我们输入以下命令&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo g
+hexo d
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;或者偷个懒&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo d -g
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ok,现在就可以去看看你的个人主页了,逼格满满有木有.
+如果发布不成功,继续往下面看.&lt;/p&gt;
+&lt;h1 id="配置hexo"&gt;配置hexo
+&lt;/h1&gt;&lt;p&gt;上面的内容和之前一样,接下来写,配置hexo 3.0的步骤.&lt;/p&gt;
+&lt;h2 id="1-安装rss支持"&gt;1 安装rss支持
+&lt;/h2&gt;&lt;p&gt;执行如下命令:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install hexo-generator-feed --save
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们接下来修改配置文件,编辑&lt;code&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;feed:
+type: atom
+path: atom.xml
+limit: 20
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="2-安装sitemap支持"&gt;2 安装sitemap支持
+&lt;/h2&gt;&lt;p&gt;执行如下命令:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install hexo-generator-sitemap --save
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们接下来修改配置文件,编辑&lt;code&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sitemap:
+path: sitemap.xml
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;PS:类似的,还可以安装其他的插件,尤其注意&lt;code&gt;hexo-deployer-git&lt;/code&gt;这个插件,如果你发布不成功,可能是这个插件没有装&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install hexo-generator-index --save
+npm install hexo-generator-archive --save
+npm install hexo-generator-category --save
+npm install hexo-generator-tag --save
+npm install hexo-deployer-git --save
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-最终修改后的配置文件"&gt;3 最终修改后的配置文件
+&lt;/h2&gt;&lt;p&gt;我把我的配置文件分享出来给大家参考下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# Hexo Configuration
+# # Docs: http://hexo.io/docs/configuration.html
+# # Source: https://github.com/hexojs/hexo/
+# Site
+title: 搁浅St的blog
+subtitle: 我最喜欢笨笨
+description: jackroyal 博客 搁浅St 笨笨
+author: 搁浅St
+author: John Doe
+language: zh-CN
+timezone:
+# URL
+# # If your site is put in a subdirectory, set url as &amp;#39;http://yoursite.com/child&amp;#39; and root as &amp;#39;/child/&amp;#39;
+url: http://jackroyal.github.io
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+enable: true
+line_number: true
+auto_detect: true
+tab_replace:
+# Category &amp;amp; Tag
+default_category: uncategorized
+category_map:
+tag_map:
+# Date / Time format
+# # Hexo uses Moment.js to parse and display date
+# # You can customize the date format as defined in
+# # http://momentjs.com/docs/# /displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+# Pagination
+# # Set per_page to 0 to disable pagination
+per_page: 10
+pagination_dir: page
+# Extensions
+# # Plugins: http://hexo.io/plugins/
+index_generator:
+per_page: 10 ## 首页默认10篇文章标题 如果值为0不分页
+archive_generator:
+per_page: 10 ## 归档页面默认10篇文章标题
+yearly: true ## 生成年视图
+monthly: true ## 生成月视图
+tag_generator:
+per_page: 10 ## 标签分类页面默认10篇文章
+category_generator:
+per_page: 10 ### 分类页面默认10篇文章
+sitemap:
+path: sitemap.xml
+feed:
+type: atom
+path: atom.xml
+limit: 20
+duoshuo_shortname: jackroyal ## 这里填写你的多说的短网址
+# # Themes: http://hexo.io/themes/
+theme: light ## 主题的名称,我用的是light,默认的是landscape
+# Deployment
+# # Docs: http://hexo.io/docs/deployment.html
+deploy:
+type: git
+repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;hexo 3.0有一些新的特性,插件的封装更好了,插件安装和管理很方便.
+hexo还支持多发布,可以同时发布到github和gitcafe.&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://hexo.io/zh-cn/docs/server.html" target="_blank" rel="noopener"
+&gt;hexo 服务器&lt;/a&gt;&lt;/p&gt;</description></item><item><title>给hexo配置上评论和访问量</title><link>https://jackroyal.github.io/post/hexo-setting-with-comments-and-visitors/</link><pubDate>Sat, 30 May 2015 14:08:49 +0000</pubDate><guid>https://jackroyal.github.io/post/hexo-setting-with-comments-and-visitors/</guid><description>&lt;p&gt;哈哈,我们家笨笨,绝对是我学习技术的很大很大很大大的动力.更开始用github pages的时候,就觉得没法看访问量和评论数量这事,很蛋疼,不过也没折腾.
+今天上午,我们家笨笨说没有评论和访问量不好,都不知道多少人看了.妹子都发话了,果断要搞定.&lt;/p&gt;
+&lt;p&gt;google一番找到解决方法:&lt;/p&gt;
+&lt;h4 id="1-关于评论数量的显示我们可以直接使用多说官网提供的方法很简单"&gt;1 关于评论数量的显示,我们可以直接使用多说官网提供的方法,很简单
+&lt;/h4&gt;&lt;h4 id="2-关于访问量统计这事儿不太好搞我找到了这个不蒜子这位非著名码农自己做的访问统计哈哈点个赞"&gt;2 关于访问量统计这事儿,不太好搞,我找到了这个&lt;a class="link" href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener"
+&gt;不蒜子&lt;/a&gt;,这位非著名码农自己做的访问统计,哈哈,点个赞
+&lt;/h4&gt;&lt;h4 id="3-今天还看到了font-awesome可以显示一些小图标为了显示效果更好一并加上去"&gt;3 今天还看到了font-awesome,可以显示一些小图标,为了显示效果更好,一并加上去
+&lt;/h4&gt;&lt;p&gt;先展示一下最终的效果:&lt;!-- raw HTML omitted --&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esm9snxfcuj20su0ad74x.jpg"
+loading="lazy"
+alt="页底关于整站访问量的显示"
+&gt;
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1esm9tcczdij20r00doq4t.jpg"
+loading="lazy"
+alt="文章页面关于访问量和评论数量的显示"
+&gt;&lt;/p&gt;
+&lt;p&gt;下面,开始动手&lt;/p&gt;
+&lt;h1 id="1-配置评论数量的显示"&gt;1 配置评论数量的显示
+&lt;/h1&gt;&lt;p&gt;首先,确认你的评论系统用的是多说,如果不是,那就不用继续往下看了(参考&lt;a class="link" href="http://localhost:4000/2014/11/28/custom-hexo/" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;配置多说).
+我使用的主题是&lt;code&gt;light&lt;/code&gt;,其他主题原理类似.我们打开&lt;code&gt;themes/light/layout/_partial/article.ejs&lt;/code&gt;,我们在&lt;code&gt;header&lt;/code&gt;标签的尾部添加上下面的代码:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% if (item.excerpt &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;amp;&amp;amp;&lt;/span&gt; index){ %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } else { %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_container_page_pv&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;head-plus&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-user&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_value_page_pv&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-spinner fa-spin&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;次访问
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;head-plus&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-comments&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;ds-thread-count&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;data-thread-key&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;%= page.layout %&amp;gt;-&amp;lt;%= page.slug %&amp;gt;&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-spinner fa-spin&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;条评论
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最终效果如图&lt;!-- raw HTML omitted --&gt;
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg"
+loading="lazy"
+alt="修改后的article.ejs"
+&gt;
+以上代码,是最终成型的代码,我加入了一些美化的东西,最核心的就是&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;ds-thread-count&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;data-thread-key&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;%= page.layout %&amp;gt;-&amp;lt;%= page.slug %&amp;gt;&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;尤其注意&lt;code&gt;data-thread-key&lt;/code&gt;的设置,他和你之前配置多说的时候是一致的,每篇文章有一个独一无二的key,你可以去你的&lt;code&gt;themes/light/layout/_partial/comment.ejs&lt;/code&gt;里找到关于data-thread-key的内容,直接复制过来即可.&lt;/p&gt;
+&lt;p&gt;Ps:这里我们可能还需要配置下数据显示的格式,在你的多说后台管理里面,进入设置界面如图
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1esmayan2utj20w50mx0ya.jpg"
+loading="lazy"
+alt="多说后台设置"
+&gt;
+我们找到&lt;code&gt;暂无评论&lt;/code&gt;,&lt;code&gt;1条评论&lt;/code&gt;,&lt;code&gt;{num}条评论&lt;/code&gt;,这几个设置,修改成自己要的格式,也可以参照我的修改,&lt;code&gt;0&lt;/code&gt;,&lt;code&gt;1&lt;/code&gt;,&lt;code&gt;{num}&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="2-配置文章访问量的显示"&gt;2 配置文章访问量的显示
+&lt;/h1&gt;&lt;p&gt;这个更简单了,按照作者的说法,只需要引入一个js,再添加一个span就完成了.由于js一般放置在页面的最底部,所以我们找到&lt;code&gt;themes/light/layout/_partial/after_footer.ejs&lt;/code&gt;,我们在最后添加上下面的代码:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;script&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;async&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;src&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;/script&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面就完成了js文件的引入,我们再在要显示访问量的地方添加一个span就行了.比如我想显示在标题的下面,那就打开&lt;code&gt;themes/light/layout/_partial/article.ejs&lt;/code&gt;,添加的代码,就是&lt;code&gt;第一步&lt;/code&gt;里面添加的那个.如果你想简洁一点,也可以只添加下面核心代码就行:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;本站总访问量&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_value_site_pv&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;次
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;本站访客数&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_value_site_uv&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;人次
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;本文总阅读量&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_value_page_pv&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;次
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="3--经过美化后最终的代码"&gt;3 经过美化后最终的代码
+&lt;/h1&gt;&lt;p&gt;如果只用官方提供的代码,没有优化,很丑,我优化了下,分享一下.&lt;/p&gt;
+&lt;p&gt;1.修改&lt;code&gt;themes/light/layout/_partial/article.ejs&lt;/code&gt;,在header标签的末尾添加以下代码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% if (item.excerpt &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;amp;&amp;amp;&lt;/span&gt; index){ %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } else { %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_container_page_pv&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;head-plus&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-user&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_value_page_pv&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-spinner fa-spin&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;次访问
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;head-plus&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-comments&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;ds-thread-count&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;data-thread-key&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;%= page.layout %&amp;gt;-&amp;lt;%= page.slug %&amp;gt;&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-spinner fa-spin&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;条评论
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg"
+loading="lazy"
+alt="修改后的article.ejs"
+&gt;&lt;!-- raw HTML omitted --&gt;2.修改&lt;code&gt;themes/light/layout/_partial/footer.ejs&lt;/code&gt;,下面是footer.ejs的&lt;strong&gt;全部代码&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;alignleft&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% if (config.author){ %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;amp;copy; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;%= new Date().getFullYear() %&amp;gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;%= config.author %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } else { %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;amp;copy; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;%= new Date().getFullYear() %&amp;gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;%= config.title %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_container_site_pv&amp;#34;&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-flag&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt; 你是第&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;id&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;busuanzi_value_site_pv&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;&lt;span style="color:#f92672"&gt;i&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;fa fa-spinner fa-spin&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;i&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;个到访的小伙伴
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;clearfix&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;!-- raw HTML omitted --&gt;3.修改&lt;code&gt;themes/light/layout/_partial/after_footer.ejs&lt;/code&gt;,我们在&lt;strong&gt;最后&lt;/strong&gt;添加上下面的代码:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;script&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;async&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;src&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;/script&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;4.修改&lt;code&gt;themes\light\source\css\_partial\article.styl&lt;/code&gt;,我们在第124行,在&lt;code&gt;.entry&lt;/code&gt;之前添加上以下代码,尤其注意与左右的间距,因为它是一个树形结构,它与左侧的距离,影响着它的层级.我们这里应该和entry平级,下面代码应该与&lt;code&gt;.entry&lt;/code&gt;对齐&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; .busuanzi_container_page_pv
+margin:20px 0
+color: # 817C7C
+font-size: 12px
+# busuanzi_value_page_pv
+padding-left:4px
+.head-plus
+padding-left:4px
+.ds-thread-count
+padding-left:4px
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最终效果如图:
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1esmajbsx38j20k30gwadu.jpg"
+loading="lazy"
+alt="添加css,注意左对齐"
+&gt;&lt;!-- raw HTML omitted --&gt;5.修改&lt;code&gt;themes\light\source\css\_partial\footer.styl&lt;/code&gt;,在最后添加上以下代码&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# busuanzi_value_site_pv
+color:black
+padding:4px
+# busuanzi_container_site_pv
+padding-left:2em
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;6.修改&lt;code&gt;themes\light\source\css\_partial\variable.styl&lt;/code&gt;,在最后添加以下代码&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;@import url(&amp;#34;http://libs.useso.com/js/font-awesome/4.2.0/css/font-awesome.min.css&amp;#34;)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ok 打完收工&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 博客访问技术工具&amp;ndash;不蒜子 &lt;a class="link" href="http://ibruce.info/2015/04/04/busuanzi/" target="_blank" rel="noopener"
+&gt;http://ibruce.info/2015/04/04/busuanzi/&lt;/a&gt;
+2 &lt;a class="link" href="http://dev.duoshuo.com/docs/5016427f77cf5fa30500000e" target="_blank" rel="noopener"
+&gt;多说-代码显示【文章评论数】方法&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="致谢"&gt;致谢
+&lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
+&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>blog2markdown程序打包,csdn爬虫</title><link>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</link><pubDate>Sun, 29 Mar 2015 22:08:22 +0000</pubDate><guid>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;项目地址&lt;a class="link" href="https://github.com/Jackroyal/blog2markdown.git" target="_blank" rel="noopener"
+&gt;https://github.com/Jackroyal/blog2markdown.git&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;用来实现普通blog到markdown的搬家，自动将blog的html转换成HEXO可用的Markdown格式
+暂时只做了CSDN&lt;/p&gt;
+&lt;h3 id="update"&gt;UPDATE:
+&lt;/h3&gt;&lt;p&gt;2015-03-29 添加了打包成exe的程序,修复cmd下乱码,win和ubuntu完美运行
+2015-03-29 连夜修复了在win下乱码的问题,删除了冗余代码
+2015-03-28 将某些参数改为从配置文件中读取,加入更多异常判断
+2014-12-15 优化标签解析功能,添加了标题,tag和category
+2014-12-13 实现解析功能,基本完成解析功能
+2014-12-10 实现CSDN的抓取，正在实现parse解析过程&lt;/p&gt;
+&lt;h3 id="bug"&gt;BUG
+&lt;/h3&gt;&lt;p&gt;如果代码中有# 和*会被转义成&lt;code&gt;\#&lt;/code&gt;和&lt;code&gt;\*&lt;/code&gt;
+对table的支持不好&lt;/p&gt;
+&lt;h3 id="依赖库"&gt;依赖库
+&lt;/h3&gt;&lt;p&gt;爬虫使用了&lt;code&gt;beautifulsoup 4.3.2&lt;/code&gt;
+&lt;a class="link" href="http://www.crummy.com/software/BeautifulSoup/" target="_blank" rel="noopener"
+&gt;点我点我&lt;/a&gt;
+你必须安装这个才可以正常使用
+PS:我打包了exe&lt;a class="link" href="http://pan.baidu.com/s/1dDERlOP" target="_blank" rel="noopener"
+&gt;点此下载&lt;/a&gt;,可以什么不装,改完配置文件,直接运行&lt;/p&gt;
+&lt;h1 id="使用"&gt;使用:
+&lt;/h1&gt;&lt;h1 id="-首先编辑配置文件spiderconf"&gt;# 首先,编辑配置文件&lt;code&gt;spider.conf&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;格式如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;[blog]
+# 此处url不需要单引号或者双引号,不然类型识别错误,网址最后不要/
+url=http://blog.csdn.net/jackroyal
+[setting]
+wait_time=5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的&lt;code&gt;url&lt;/code&gt;地址注意不要加引号,下面的&lt;code&gt;wait_time&lt;/code&gt;是指两次抓取的间隔时间,这是为了安全起见,如果高频访问,可能会被封,我设置的&lt;code&gt;5&lt;/code&gt;秒,你可以根据自己需要去设置&lt;/p&gt;
+&lt;h2 id="打包"&gt;打包
+&lt;/h2&gt;&lt;p&gt;我打包了一个&lt;a class="link" href="http://pan.baidu.com/s/1dDERlOP" target="_blank" rel="noopener"
+&gt;exe程序&lt;/a&gt;,放在github项目的dist目录下,在windows系统中,&lt;code&gt;直接下载&lt;/code&gt;,&lt;code&gt;运行&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;PS:由于pyInstaller的问题,导致无法在中文路径下正常运行&lt;/p&gt;
+&lt;p&gt;比如你放在C:/users/张三/spider.exe
+这样是无法正常运行的
+所以应该放在全英文的目录下
+C:/software/spider.exe
+运行结果如图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
+loading="lazy"
+alt="spider运行截图"
+&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
+loading="lazy"
+alt="运行结果截图"
+&gt;&lt;/p&gt;
+&lt;h1 id="源码执行"&gt;源码执行
+&lt;/h1&gt;&lt;p&gt;如果你对我的exe不放心,可以自己执行python源码&lt;/p&gt;
+&lt;h2 id="--执行"&gt;# 执行
+&lt;/h2&gt;&lt;p&gt;在linux下,首先要给予执行权限&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;chmod a+x spider.py ParseBlog.py
+python spider.py
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就可以了,输出文件在output文件夹&lt;/p&gt;
+&lt;p&gt;在win下,经过修复也可以正常运行了,在idle(在win中你安装了python2.7的话就会有这个编辑器)中是可以完全正常的显示中文~~~~,在系统自带的cmd里中文显示会有问题,因为cmd中的编码默认是GBK,我程序基本都是utf-8,如果要在cmd显示正常,显示的代码都要加个str.encode(&amp;lsquo;utf-8&amp;rsquo;)才行.
+不过抓取是没有问题的,此处就不纠结了哈,能用就好~~~~&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 在win下,没有权限的问题,直接执行就好了
+python spider.py
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>hexo发布失败</title><link>https://jackroyal.github.io/post/hexo-deploy-error/</link><pubDate>Sun, 29 Mar 2015 18:09:28 +0000</pubDate><guid>https://jackroyal.github.io/post/hexo-deploy-error/</guid><description>&lt;p&gt;可能受到上次ddos的问题,这两天国内访问github,总是感觉不顺畅.&lt;/p&gt;
+&lt;p&gt;今天下午写了一篇博客,可是却发布不成功,一直卡在这一步:
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqmrrf20j1j20g006676y.jpg"
+loading="lazy"
+alt="hexo发布的时候卡住"
+&gt;&lt;/p&gt;
+&lt;p&gt;然后我继续等,得到如下错误:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo Failed to receive SOCKS4 connect request ack.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我执行了&lt;code&gt;hexo clean&lt;/code&gt;命令,手动删掉了&lt;code&gt;.deploy&lt;/code&gt;文件夹,可是还是不行
+最后报错
+无法连接&lt;code&gt;https://github.com/Jackroyal/Jackroyal.github.io.git&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;(ps:此处已经无法重现了,抽风啊)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;最后我换了下这条链接
+我修改了博客目录下的&lt;code&gt;_config.yml&lt;/code&gt;,改了deploy参数
+原参数设置&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+type: github
+repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改以后:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+type: github
+repo: git@github.com:Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就deploy成功了.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;PPPS:千万注意,上面的参数设置repo:后面有一个空格,没有空格会报错&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id="update"&gt;update:
+&lt;/h1&gt;&lt;p&gt;repo的两种方式分别为ssh和https
+昨天没搞清楚,专门去查了一下,ssh和https两种提交的区别
+官方推荐用https,因为这回要求你输入用户名和密码,这样更安全
+用ssh的话,只要你的ssh-key(可以设置一道类似密码的东西,和你的key一起加密,这样使用的时候会要求输入这段密码)对,那么就都可以提交,没有了更多的验证过程(可以设置一个para加密,提交会要求输入这段para)&lt;/p&gt;
+&lt;p&gt;2015-05-06
+最近又发现，使用ssh提交的话，github不会计算到你的conribute里面去，也就是你今天提交了，但是github的contribute不会变化，所以还是改成https吧，不然怎么装B呢？&lt;/p&gt;
+&lt;h3 id="友情链接"&gt;友情链接
+&lt;/h3&gt;&lt;p&gt;&lt;a class="link" href="http://rolight.cn/blog/?p=34" target="_blank" rel="noopener"
+&gt;ubuntu shadowsocks 全局 代理&lt;/a&gt;&lt;/p&gt;</description></item><item><title>配置hexo</title><link>https://jackroyal.github.io/post/custom-hexo/</link><pubDate>Fri, 28 Nov 2014 21:07:27 +0000</pubDate><guid>https://jackroyal.github.io/post/custom-hexo/</guid><description>&lt;p&gt;经过&lt;a class="link" href="http://jackroyal.github.io/2014/11/27/how-to-build-a-blog-with-hexo/" target="_blank" rel="noopener"
+&gt;上篇博客&lt;/a&gt;,我们搭建起了自己的博客,接下来我们对它做些个性化的定制.
+在hexo中,配置文件一共两个(我的hexo安装在F:/blog/),分别是&lt;code&gt;F:/blog/_config.yml&lt;/code&gt;和&lt;code&gt;F:/blog/themes/light/_config.yml&lt;/code&gt;.第一个是全局的配置文件,第二个是主题的配置文件,在继续说之前,我们先来说一下主题安装.&lt;/p&gt;
+&lt;h1 id="主题安装"&gt;主题安装
+&lt;/h1&gt;&lt;p&gt;这个很简单,在hexo的Github的主页上有个主题栏目,&lt;a class="link" href="https://github.com/hexojs/hexo/wiki/Themes" target="_blank" rel="noopener"
+&gt;https://github.com/hexojs/hexo/wiki/Themes&lt;/a&gt;,里面列出了很多主题.
+安装方法很简单&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;$ git clone &amp;lt;repository&amp;gt; themes/&amp;lt;theme-name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;举个简单例子,我安装的主题名为&lt;code&gt;light&lt;/code&gt;,请在&lt;code&gt;F:/blog/&lt;/code&gt;目录下执行以下代码&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;$ git clone https://github.com/hexojs/hexo-theme-light themes/light
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果你不是在&lt;code&gt;F:/blog/&lt;/code&gt;中执行,请修改后面的路径themes/light为你的路径.基本原理就是把主题下下来,放在themes目录下就OK了,主题安装完毕.&lt;/p&gt;
+&lt;h1 id="修改全局配置文件-fblog_configyml"&gt;修改全局配置文件 &lt;code&gt;F:/blog/_config.yml&lt;/code&gt;
+&lt;/h1&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# Hexo Configuration
+# # Docs: http://hexo.io/docs/configuration.html
+# # Source: https://github.com/hexojs/hexo/
+# Site
+title: 搁浅St的blog # 站点的名称
+subtitle: 我最喜欢笨笨 # 站点的副标题
+description: # 站点的描述,有利于搜索引擎的抓取
+author: 搁浅St # 作者
+email: geqianst@qq.com # 你的邮箱
+language: zh-CN # 语言,一般应该都是这个吧
+# URL
+# # If your site is put in a subdirectory, set url as &amp;#39;http://yoursite.com/child&amp;#39; and root as &amp;#39;/child/&amp;#39;
+url: http://jackroyal.github.io # 网站的url,在页面上,可以调用配置中的url参数,就是这个,比如google自定义搜索,需要制定搜索范围,就是通过这个设置的
+root: /
+permalink: :year/:month/:day/:title/
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+permalink_defaults:
+# Directory
+source_dir: source
+public_dir: public
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+highlight:
+enable: true
+line_number: true
+tab_replace:
+# Category &amp;amp; Tag
+default_category: uncategorized
+category_map:
+tag_map:
+# Archives 默认值为2，这里都修改为1，相应页面就只会列出标题，而非全文
+# # 2: Enable pagination
+# # 1: Disable pagination
+# # 0: Fully Disable
+archive: 1
+category: 1
+tag: 1
+# Server
+# # Hexo uses Connect as a server
+# # You can customize the logger format as defined in
+# # http://www.senchalabs.org/connect/logger.html
+port: 4000
+server_ip: localhost
+logger: false
+logger_format: dev
+# Date / Time format
+# # Hexo uses Moment.js to parse and display date
+# # You can customize the date format as defined in
+# # http://momentjs.com/docs/# /displaying/format/
+date_format: MMM D YYYY
+time_format: H:mm:ss
+# Pagination
+# # Set per_page to 0 to disable pagination
+per_page: 5
+pagination_dir: page
+# Disqus
+disqus_shortname:
+# 这一行是我添加的duoshuo_shortname,因为天朝disqus不好用,用多说
+duoshuo_shortname: jackroyal
+# Extensions
+# # Plugins: https://github.com/hexojs/hexo/wiki/Plugins
+# # Themes: https://github.com/hexojs/hexo/wiki/Themes
+theme: light
+exclude_generator:
+# Deployment 发布相关设置
+# # Docs: http://hexo.io/docs/deployment.html
+deploy:
+type: github
+repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至此,全局配置文件修改完毕,你可以&lt;code&gt;hexo g&lt;/code&gt;和&lt;code&gt;hexo s&lt;/code&gt;进行查看.&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;menu:# 导航栏的设置默认只有这两个,还可以添加更多的导航
+Home: /
+Archives: /archives
+# 它就是你页面右边的侧边项目,比如搜索之类,你可以根据自己的需求进行修改,你能用几个widgets可以在F:\blog\themes\light\layout\_widget中进行查看
+widgets:# 我这里使用了所有的widgets
+- search
+- category
+- tag
+- recent_posts
+- tagcloud
+excerpt_link: Read More # 可以换成中文的 阅读全文
+twitter:
+username:
+show_replies: false
+tweet_count: 5
+//默认的一个分享组件,因为主要针对国外,不适合国内我们不使用它
+addthis:
+enable: false # 把true改为false
+pubid:
+facebook: true
+twitter: true
+google: true
+pinterest: true
+fancybox: true
+google_analytics:
+rss:
+duoshuo_shortname: jackroyal # 多说的用户名
+comment_provider:
+# Facebook comment
+facebook:
+appid: 123456789012345
+comment_count: 5
+comment_width: 840
+comment_colorscheme: light
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至此,配置文件修改完毕,上面提到了我们不适用disqus的评论组件,使用多说,下面教大家来配置多说&lt;/p&gt;
+&lt;h1 id="创建多说"&gt;创建多说
+&lt;/h1&gt;&lt;p&gt;首先我们去多说注册一个账号,&lt;a class="link" href="http://duoshuo.com/" title="多说官网"
+target="_blank" rel="noopener"
+&gt;点击这里&lt;/a&gt;
+我们点击&lt;a class="link" href="http://duoshuo.com/create-site/" title="我要安装"
+target="_blank" rel="noopener"
+&gt;我要安装&lt;/a&gt;,界面如下
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1emtdlnpsqaj20wo0lp783.jpg"
+loading="lazy"
+alt="duoshuo 创建界面"
+&gt;
+shortname就是jackroyal,创建完成后,跳转到如下界面
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1emtdp96x54j20us0jxn18.jpg"
+loading="lazy"
+alt="获取多说代码"
+&gt;
+我们选择&lt;code&gt;通用代码&lt;/code&gt;,点击复制,就行了&lt;/p&gt;
+&lt;h1 id="配置多说"&gt;配置多说
+&lt;/h1&gt;&lt;p&gt;这里说一个前提,我使用的是light主题,如果你用的是其他主题,接下来的设置可能给我有点区别,但是原理差不多,参考看看&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我们打开&lt;code&gt;F:\blog\themes\light\layout\_partial\comment.ejs&lt;/code&gt;这个文件,然后修改后代码如下(如果你不是light主题,可能跟这个不一样,你去找下包含comment的section在哪里,改法还是这样.例如系统默认的landscape主题,下面这段代码就是在article.ejs,它没有comment.ejs)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;lt;% if (page.comments){ %&amp;gt;
+&amp;lt;!-- 这里添加了一个导航,页面的下面会有一个上一篇,下一篇 --&amp;gt;
+&amp;lt;nav id=&amp;#34;pagination&amp;#34; &amp;gt;
+&amp;lt;% if (page.prev) { %&amp;gt;
+&amp;lt;a href=&amp;#34;&amp;lt;%- config.root %&amp;gt;&amp;lt;%- page.prev.path %&amp;gt;&amp;#34; class=&amp;#34;alignleft prev&amp;#34; &amp;gt; &amp;lt;%=page.prev.title %&amp;gt; &amp;lt;/a&amp;gt;
+&amp;lt;% } %&amp;gt;
+&amp;lt;% if (page.next) { %&amp;gt;
+&amp;lt;a href=&amp;#34;&amp;lt;%- config.root %&amp;gt;&amp;lt;%- page.next.path %&amp;gt;&amp;#34; class=&amp;#34;alignright next&amp;#34; &amp;gt; &amp;lt;%=page.next.title %&amp;gt; &amp;lt;/a&amp;gt;
+&amp;lt;% } %&amp;gt;
+&amp;lt;div class=&amp;#34;clearfix&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;/nav&amp;gt;
+&amp;lt;!-- 导航结束 --&amp;gt;
+&amp;lt;section id=&amp;#34;comments&amp;#34;&amp;gt;
+&amp;lt;!-- 这里是多说的代码,直接把你的代码粘贴到这里就行 --&amp;gt;
+&amp;lt;!-- 多说评论框 start --&amp;gt;
+&amp;lt;div class=&amp;#34;ds-thread&amp;#34; data-thread-key=&amp;#34;&amp;lt;%= page.layout %&amp;gt;-&amp;lt;%= page.slug %&amp;gt;&amp;#34; data-title=&amp;#34;&amp;lt;%= page.title %&amp;gt;&amp;#34; data-url=&amp;#34;&amp;lt;%= page.permalink %&amp;gt;&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;!-- 多说评论框 end --&amp;gt;
+&amp;lt;!-- 多说公共JS代码 start (一个网页只需插入一次) --&amp;gt;
+&amp;lt;script type=&amp;#34;text/javascript&amp;#34;&amp;gt;
+var duoshuoQuery = {short_name:&amp;#39;&amp;lt;%= config.duoshuo_shortname %&amp;gt;&amp;#39;};
+(function() {
+var ds = document.createElement(&amp;#39;script&amp;#39;);
+ds.type = &amp;#39;text/javascript&amp;#39;;ds.async = true;
+ds.src = (document.location.protocol == &amp;#39;https:&amp;#39; ? &amp;#39;https:&amp;#39; : &amp;#39;http:&amp;#39;) + &amp;#39;//static.duoshuo.com/embed.js&amp;#39;;
+ds.charset = &amp;#39;UTF-8&amp;#39;;
+(document.getElementsByTagName(&amp;#39;head&amp;#39;)[0]
+|| document.getElementsByTagName(&amp;#39;body&amp;#39;)[0]).appendChild(ds);
+})();
+&amp;lt;/script&amp;gt;
+&amp;lt;!-- 多说公共JS代码 end --&amp;gt;
+&amp;lt;!-- 多说结束 --&amp;gt;
+&amp;lt;/section&amp;gt;
+&amp;lt;% } %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;眼尖的同学可能已经看到我的上面第16行代码与你们的不同,这行代码包括了页面的标题和url,它会根据hexo的配置,由hexo动态生成,所以你把你的代码替换成我的这行代码.&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;&amp;lt;div class=&amp;#34;ds-thread&amp;#34; data-thread-key=&amp;#34;&amp;lt;%= page.layout %&amp;gt;-&amp;lt;%= page.slug %&amp;gt;&amp;#34; data-title=&amp;#34;&amp;lt;%= page.title %&amp;gt;&amp;#34; data-url=&amp;#34;&amp;lt;%= page.permalink %&amp;gt;&amp;#34;&amp;gt;&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至此,多说添加完毕&lt;/p&gt;
+&lt;h1 id="修复bug"&gt;修复bug
+&lt;/h1&gt;&lt;p&gt;我发现light的主题貌似有个小bug,在&lt;code&gt;F:\blog\themes\light\layout\_partial\article.ejs&lt;/code&gt;中间第27行有这样一行代码&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; &amp;lt;% if (item.comment &amp;amp;&amp;amp; config.disqus_shortname){ %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;首先我们,替换config.disqus_shortname为config.duoshuo_shortname.
+然后修改&lt;code&gt;item.comment&lt;/code&gt;为&lt;code&gt;item.comments&lt;/code&gt;,因为系统中没有comment这个变量,只有comments这个变量,如果不修改comments,那么&lt;code&gt;item.comment&lt;/code&gt;一直为假,所以一直不成立,就不会显示comments字段了.修改后代码如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; &amp;lt;% if (item.comments &amp;amp;&amp;amp; config.duoshuo_shortname){ %&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;产生的效果如图&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1emteitia5uj20tl0fn412.jpg"
+loading="lazy"
+alt="开启和关闭comment的区别"
+&gt;.
+至此,配置hexo,打完收工
+enjoy it&lt;/p&gt;
+&lt;hr&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://zipperary.com/2013/05/29/hexo-guide-3/" target="_blank" rel="noopener"
+&gt;http://zipperary.com/2013/05/29/hexo-guide-3/&lt;/a&gt;
+2 &lt;a class="link" href="http://dev.duoshuo.com/threads/541d3b2b40b5abcd2e4df0e9" target="_blank" rel="noopener"
+&gt;duoshuo官方Hexo使用教程&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用hexo建立自己的Github pages</title><link>https://jackroyal.github.io/post/how-to-build-a-blog-with-hexo/</link><pubDate>Thu, 27 Nov 2014 14:48:29 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-build-a-blog-with-hexo/</guid><description>&lt;p&gt;昨天经过一天的&lt;a class="link" href="http://jackroyal.github.io/2014/11/26/new-start/" title="生命在于折腾"
+target="_blank" rel="noopener"
+&gt;折腾&lt;/a&gt;,总算把博客搭建起来了,今天就来写个博客总结一下.
+网上的资料很多,我主要参考的是这篇博客,一路很顺利.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a class="link" href="http://zipperary.com/2013/05/28/hexo-guide-2/" target="_blank" rel="noopener"
+&gt;http://zipperary.com/2013/05/28/hexo-guide-2/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;一个很重要的原因就是他是针对windows的,刚好我也在用windows.&lt;/p&gt;
+&lt;h1 id="安装过程"&gt;安装过程
+&lt;/h1&gt;&lt;h1 id="-1-安装github-for-windows"&gt;# 1. 安装Github for windows
+&lt;/h1&gt;&lt;p&gt;因为我之前就在用Github,所以早就安装了这个.已经装过的同学请忽略这一段.
+下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
+target="_blank" rel="noopener"
+&gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3jw1emplp1lz31j204w033mx0.jpg"
+loading="lazy"
+alt="Github for windows"
+&gt;
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1empluh6hvej210b0j741r.jpg"
+loading="lazy"
+alt="GUI and Bash"
+&gt;
+如果你不喜欢用这个,也可以用上面的博客推荐的&lt;a class="link" href="http://code.google.com/p/msysgit/" target="_blank" rel="noopener"
+&gt;msysgit&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id="-2-安装nodejs"&gt;# 2. 安装Node.js
+&lt;/h1&gt;&lt;p&gt;在 Windows 环境下安装 &lt;a class="link" href="http://nodejs.org/" title="Node.js 官网"
+target="_blank" rel="noopener"
+&gt;Node.js&lt;/a&gt; 非常简单，仅须下载安装文件并执行即可完成安装。（win下建议下载msi格式的，因为这样可以不用配置环境变量之类的）&lt;/p&gt;
+&lt;h1 id="-3-测试nodejs是否安装"&gt;# 3. 测试node.js是否安装
+&lt;/h1&gt;&lt;p&gt;在任何控制台输入(可以按windows键+R,输入cmd,然后输入npm,一般来说不会有问题)&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;返回值如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Usage: npm &amp;lt;command&amp;gt;
+where &amp;lt;command&amp;gt; is one of:
+add-user, adduser, apihelp, author, bin, bugs, c, cache,
+completion, config, ddp, dedupe, deprecate, docs, edit,
+explore, faq, find, find-dupes, get, help, help-search,
+home, i, info, init, install, isntall, issues, la, link,
+list, ll, ln, login, ls, outdated, owner, pack, prefix,
+prune, publish, r, rb, rebuild, remove, repo, restart, rm,
+root, run-script, s, se, search, set, show, shrinkwrap,
+star, stars, start, stop, submodule, t, tag, test, tst, un,
+uninstall, unlink, unpublish, unstar, up, update, v,
+version, view, whoami
+npm &amp;lt;cmd&amp;gt; -h quick help on &amp;lt;cmd&amp;gt;
+npm -l display full usage info
+npm faq commonly asked questions
+npm help &amp;lt;term&amp;gt; search for help on &amp;lt;term&amp;gt;
+npm help npm involved overview
+Specify configs in the ini-formatted file:
+C:\Users\chenhao\.npmrc
+or on the command line via: npm &amp;lt;command&amp;gt; --key value
+Config info can be viewed via: npm help config
+npm@1.4.28 D:\Program Files (x86)\nodejs\node_modules\npm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看到这个结果,就表示你的node.js已经安装上去了
+*感谢我们家笨笨的反馈：*此处如果npm无效，首先确定win下你采用的是msi格式的安装文件，然后重启下电脑，应该就正常了。&lt;/p&gt;
+&lt;h1 id="-4-安装hexo"&gt;# 4. 安装hexo
+&lt;/h1&gt;&lt;p&gt;接下来的操作我都是用&lt;strong&gt;Github for windows&lt;/strong&gt;自带的Bash来完成的,因为后面会涉及到SSH,用&lt;strong&gt;Github for windows&lt;/strong&gt;,就可以避免这个问题.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在Bash中输入以下命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install -g hexo
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;创建hexo文件夹
+创建你hexo放置的文件夹,先用Bash进入到目标文件夹,比如我的是F:/blog/,接下来初始化hexo,自动生成相关的文件,在F:/blog/环境下,输入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;cd /f/blog # 这个命令表示当前进入目录为f：/blog/
+hexo init
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;安装依赖包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;本地预览,做完以上操作,可以本地预览一下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo g
+hexo s
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="ok到这里博客搭建基本完成现在要做的就是把它发布到你的github上去"&gt;以上两条命令的意思是:
+生成相关文件(就是生成目标html,静态博客嘛,就是很多html组成)
+打开本地服务器预览(node.js就是干这事的,点击访问&lt;a class="link" href="http://localhost:4000" target="_blank" rel="noopener"
+&gt;http://localhost:4000&lt;/a&gt;,就可以看到了)
+&lt;strong&gt;ok&lt;/strong&gt;,到这里,博客搭建基本完成,现在要做的就是把它发布到你的Github上去
+&lt;/h2&gt;&lt;p&gt;接下来,教你怎么发布到Github上去&lt;/p&gt;
+&lt;h1 id="注册github"&gt;注册Github
+&lt;/h1&gt;&lt;p&gt;这一步没什么说的,如果你连简单的注册都不会,我也不会教你╮(╯▽╰)╭&lt;/p&gt;
+&lt;h1 id="创建公共库"&gt;创建公共库
+&lt;/h1&gt;&lt;p&gt;在自己Github主页右下角，创建一个新的repository(&lt;a class="link" href="https://github.com/new" title="点我新建"
+target="_blank" rel="noopener"
+&gt;点这里&lt;/a&gt;)。比如我的Github账号是Jackroyal，那么我应该创建的repository名字应该是Jackroyal.github.io(注意你的repository名字就是Jackroyal.github.io,我之前用的是Jackroyal怎么尝试都不行)。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PS:有个大小写的问题其实我注册的是Jackroyal,大写的J,但是我访问的时候特别是带https的链接,他会自动转为小写访问.怎么说呢?简单点,你就按照你的用户名来,该大写大写,该小写小写&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="部署"&gt;部署
+&lt;/h1&gt;&lt;p&gt;现在万事俱备,只差部署了,我们来配置下&lt;code&gt;_config.yml&lt;/code&gt;.
+这个文件在路径是F:/blog/_config.yml.
+用编辑器把它打开,修改最后一段
+ps:以下为hexo 2.8x的配置方法,不适用于3.0&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+type: github
+repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;em&gt;update 2015-06-16:&lt;/em&gt;
+现在hexo由2.8升级到3.0了,按照上面的方式安装,你的hexo版本是hexo 3.0,3.0的这段代码的设置内容如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+type: git
+repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;照着我的这个格式修改就好了,把我里面的用户名替换成你的.
+至此基本完成所有搭建步骤.&lt;/p&gt;
+&lt;h1 id="上传"&gt;上传
+&lt;/h1&gt;&lt;p&gt;我们开始上传项目的代码,再重复一次,我一直以来用的工具都是_Github for windows_自带的Bash,所以我没有配置SSH,如果你用的windows自带的终端或者其他比如msysgit,可能需要配置SSH,不然无法使用Github(点击&lt;a class="link" href="https://help.github.com/articles/generating-ssh-keys/" title="https://help.github.com/articles/generating-ssh-keys/"
+target="_blank" rel="noopener"
+&gt;&lt;code&gt;这里&lt;/code&gt;&lt;/a&gt;查看官方教程).
+我们输入以下命令&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo g
+hexo d
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;或者偷个懒&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo d -g
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ok,现在就可以去看看你的个人主页了,逼格满满有木有.&lt;/p&gt;
+&lt;h1 id="问题"&gt;问题
+&lt;/h1&gt;&lt;p&gt;我的中间出过一些问题:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我的&lt;code&gt;hexo d&lt;/code&gt;的时候出错,可以尝试手动删除&lt;code&gt;.deploy&lt;/code&gt;文件夹,然后执行&lt;code&gt;hexo clean&lt;/code&gt;还有可能出现的情况是,&lt;code&gt;deploy&lt;/code&gt;没错但是一直没有提示&lt;code&gt;deploy done&lt;/code&gt;,那就是骚年,你访问Github网速太慢&lt;/li&gt;
+&lt;li&gt;我&lt;code&gt;deploy d&lt;/code&gt;成功以后,在Github里面已经看到生成的页面了,访问&lt;a class="link" href="http://jackroyal.github.io" target="_blank" rel="noopener"
+&gt;http://jackroyal.github.io&lt;/a&gt;或者&lt;a class="link" href="https://jackroyal.github.io" target="_blank" rel="noopener"
+&gt;https://jackroyal.github.io&lt;/a&gt;一直报404的错误,这种时候等一等就好了,一般等几分钟.如果一直不好那就给官方发个邮件,他们很快会回复你的,有什么问题说清楚就行.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="致谢"&gt;致谢
+&lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨，是她给我测试和反馈的&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
+&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>新的开始</title><link>https://jackroyal.github.io/post/new-start/</link><pubDate>Wed, 26 Nov 2014 21:29:15 +0000</pubDate><guid>https://jackroyal.github.io/post/new-start/</guid><description>&lt;p&gt;今天&lt;strong&gt;折腾&lt;/strong&gt;了一天,终于弄好了,&lt;a class="link" href="http://jackroyal.github.io" title="搁浅St的博客"
+target="_blank" rel="noopener"
+&gt;我的博客&lt;/a&gt;,正式落户Github.
+&lt;img src="https://github.global.ssl.fastly.net/images/modules/logos_page/GitHub-Mark.png"
+loading="lazy"
+alt="GitHub Mark"
+&gt;&lt;/p&gt;</description></item></channel></rss>

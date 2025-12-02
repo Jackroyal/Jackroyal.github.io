@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ipv6 on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/ipv6/</link><description>Recent content in Ipv6 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/ipv6/index.xml" rel="self" type="application/rss+xml"/><item><title>digitalocean配置ipv6</title><link>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</link><pubDate>Tue, 16 Jun 2015 22:24:18 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</guid><description>&lt;p&gt;之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.&lt;/p&gt;
+&lt;h1 id="前提条件"&gt;前提条件
+&lt;/h1&gt;&lt;p&gt;首先你得有一台digitalocean的vps,建议选择洛杉矶的服务器,
+选个5美元的就够了.&lt;/p&gt;
+&lt;h1 id="1-新建droplet"&gt;1 新建droplet
+&lt;/h1&gt;&lt;p&gt;如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg"
+loading="lazy"
+alt="新建droplet,尤其注意勾选ipv6"
+&gt;
+注意勾选ipv6,后面的步骤,请参考第3步&lt;/p&gt;
+&lt;h1 id="2-修改droplet"&gt;2 修改droplet
+&lt;/h1&gt;&lt;p&gt;我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.
+你打开droplet的&lt;code&gt;setting&lt;/code&gt;,在&lt;code&gt;network&lt;/code&gt;中应该可以看到&lt;code&gt;enable ipv6&lt;/code&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg"
+loading="lazy"
+alt="带有启用ipv6选项的页面"
+&gt;
+启用后,稍后片刻,页面如下.
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
+loading="lazy"
+alt="在droplet的setting中启用ipv6后的页面"
+&gt;&lt;/p&gt;
+&lt;h1 id="3-设置ipv6"&gt;3 设置ipv6
+&lt;/h1&gt;&lt;p&gt;当我们启用ipv6支持以后,还需要对服务器进行设置.&lt;/p&gt;
+&lt;h2 id="第一步--我们把ipv6的地址添加到网卡中"&gt;第一步 我们把ipv6的地址添加到网卡中
+&lt;/h2&gt;&lt;p&gt;我们编辑&lt;code&gt;/etc/network/interfaces&lt;/code&gt;这个文件,使用命令&lt;code&gt;sudo vi /etc/network/interfaces&lt;/code&gt;
+修改后内容如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# This file describes the network interfaces available on your
+# system and how to activate them. For more information, see
+# interfaces(5).
+# The loopback network interface
+auto lo
+iface lo inet loopback
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 你的ipv4
+netmask 255.255.192.0
+gateway 你的ipv4网关
+dns-nameservers 8.8.8.8 8.8.4.4
+# 以上内容不需要修改,只需要添加下面的部分
+iface eth0 inet6 static
+address 上图中的ipv6地址
+netmask 64
+gateway 网关地址
+autoconf 0
+dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),&lt;!-- raw HTML omitted --&gt;如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
+loading="lazy"
+alt="ipv6成功启用后"
+&gt;&lt;/p&gt;
+&lt;h2 id="第二步-测试ipv6-是否配置成功"&gt;第二步 测试ipv6 是否配置成功
+&lt;/h2&gt;&lt;p&gt;我们使用ping命令来测试,ping是测试ipv4的,测试ipv6是用ping6,命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ping6 ipv6.google.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PING ipv6.google.com&lt;span style="color:#f92672"&gt;(&lt;/span&gt;nuq04s29-in-x0e.1e100.net&lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;56&lt;/span&gt; data bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;2.23 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.97 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;3&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.95 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;4&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;2.14 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;5&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.93 ms
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果发包成功,那就可以进行下一步了&lt;/p&gt;
+&lt;h1 id="4-修改hosts"&gt;4 修改hosts
+&lt;/h1&gt;&lt;p&gt;因为ipv4无法访问google scholar,所以我们配置下hosts,让所有对访问google学术的,都使用ipv6去访问.执行命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo vi /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们在hosts文件的后面,添加如下内容:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;2607:f8b0:4007:805::100f scholar.google.cn
+2607:f8b0:4007:805::100f scholar.google.com
+2607:f8b0:4007:805::100f scholar.google.com.hk
+2607:f8b0:4007:805::100f scholar.l.google.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ok,打完收工,睡觉&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.v2ex.com/t/163133" target="_blank" rel="noopener"
+&gt;一个解决 Google Scholar block DigitalOcean SFO IP 的方法&lt;/a&gt;
+2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-enable-ipv6-for-digitalocean-droplets" target="_blank" rel="noopener"
+&gt;How To Enable IPv6 for DigitalOcean Droplets&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

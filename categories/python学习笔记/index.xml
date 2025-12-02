@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python学习笔记 on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link><description>Recent content in Python学习笔记 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
+&lt;h1 id="安装requests库"&gt;安装requests库
+&lt;/h1&gt;&lt;p&gt;在ubuntu下面安装很简单&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install requests
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;就搞定了&lt;/p&gt;
+&lt;h1 id="快速上手的小例子"&gt;快速上手的小例子
+&lt;/h1&gt;&lt;p&gt;下面给个快速入门，最简单的例子&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; requests
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; requests&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;http://www.baidu.com&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这段代码，很简单。
+第一行，引入requests库，这是必然的。
+第二行，通过get方式获取baidu首页的内容。
+第三行，把返回的response内容，输出出来&lt;/p&gt;
+&lt;p&gt;果然很简单，这样就可以发送一个get请求，同理，你还可以使用
+&lt;code&gt;requests.post&lt;/code&gt;,&lt;code&gt;requests.put&lt;/code&gt;,&lt;code&gt;requests.options&lt;/code&gt;,&lt;code&gt;requests.head&lt;/code&gt;，发送请求，没错就是这么简单，果然比urllib2好用。&lt;/p&gt;
+&lt;h1 id="模拟登录csdn"&gt;模拟登录csdn
+&lt;/h1&gt;&lt;p&gt;我们需要其他的辅助工具&lt;/p&gt;
+&lt;h3 id="浏览器firefox"&gt;浏览器：Firefox
+&lt;/h3&gt;&lt;h3 id="浏览器插件tamper-datafirebug"&gt;浏览器插件：tamper data，firebug
+&lt;/h3&gt;&lt;p&gt;我们需要tamper data来拦截请求，因为chrome没有这个功能的插件，所以这个只能使用firefox来做（除了拦截请求chrome没有，其他的工作都可以用chrome，看个人喜好吧）。&lt;/p&gt;
+&lt;h1 id="分析登录过程"&gt;分析登录过程
+&lt;/h1&gt;&lt;h2 id="1-打开登录页面"&gt;1 打开登录页面
+&lt;/h2&gt;&lt;p&gt;我们首先打开csdn的登录页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;
+这个链接，前面部分是登录的网址，问号后面的参数，顾名思义，referer，就是你从哪里跳过来的，也许是一个页面跳转到登录的，toolbar就是我自己点击顶部导航栏，然后跳转到登录页面的。&lt;/p&gt;
+&lt;h2 id="2-清除相关的cookie"&gt;2 清除相关的cookie
+&lt;/h2&gt;&lt;p&gt;为了排除不必要的干扰，我们先清除掉所有的相关的cookie，这样方便我们分析哪些参数是必须的。
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegc1itw2j20qu075779.jpg"
+loading="lazy"
+alt="firefox中，清除cookie"
+&gt;&lt;/p&gt;
+&lt;h2 id="3-登录过程分析"&gt;3 登录过程分析
+&lt;/h2&gt;&lt;p&gt;清除了cookie后，我们刷新一下页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;，重新获取对应的cookie。
+然后我们就开始用tamper data来拦截请求。
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
+loading="lazy"
+alt="使用tamper data"
+&gt;
+我们点击&lt;code&gt;start tamper&lt;/code&gt;，在网页中填写用户名和密码。点击&lt;code&gt;登录&lt;/code&gt;，会发出一个请求，然后tamper data会拦截下这个请求，询问我们是否拦截，点击tamper，我们可以在这个请求提交之前，查看请求的内容，还可以做删改。
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegkslypyj20y20gntdt.jpg"
+loading="lazy"
+alt="发出第一个登录请求前拦截下来，查看表单内容"
+&gt;
+csdn的登录过程比较简单，发送一个登录表单过去，就登录成功了，不过记得修改headers，这是后话。&lt;/p&gt;
+&lt;h2 id="4-开始模拟登录"&gt;4 开始模拟登录
+&lt;/h2&gt;&lt;p&gt;知道登录过程了，我们就开始写登录的代码。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; requests
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 使用beautifulsoup来处理获取的html内容，这个库需要安装，还是使用pip install beautifulsoup4来安装&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; bs4 &lt;span style="color:#f92672"&gt;import&lt;/span&gt; BeautifulSoup &lt;span style="color:#66d9ef"&gt;as&lt;/span&gt; bs
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 这个函数使用来提取流水号的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;toJson&lt;/span&gt;(str):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 提取lt流水号，将数据化为一个字典
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; soup &lt;span style="color:#f92672"&gt;=&lt;/span&gt; bs(str)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tt &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# 提取form表单中所有的input标签，以字典的形式来保存name：value&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; inp &lt;span style="color:#f92672"&gt;in&lt;/span&gt; soup&lt;span style="color:#f92672"&gt;.&lt;/span&gt;form&lt;span style="color:#f92672"&gt;.&lt;/span&gt;find_all(&lt;span style="color:#e6db74"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;) &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tt[inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;)] &lt;span style="color:#f92672"&gt;=&lt;/span&gt;inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;value&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; tt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 这行代码，是用来维持cookie的，你后续的操作都不用担心cookie，他会自动带上相应的cookie&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;s &lt;span style="color:#f92672"&gt;=&lt;/span&gt; requests&lt;span style="color:#f92672"&gt;.&lt;/span&gt;Session()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 我们需要带表单的参数,这里面有个参数lt,登录操作的流水号，我们需要从html页面中进行提取&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;payload &lt;span style="color:#f92672"&gt;=&lt;/span&gt;{&lt;span style="color:#e6db74"&gt;&amp;#39;username&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;jackroyal&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;password&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;lt&amp;#39;&lt;/span&gt;:soup[&lt;span style="color:#e6db74"&gt;&amp;#34;lt&amp;#34;&lt;/span&gt;],&lt;span style="color:#e6db74"&gt;&amp;#39;execution&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;e1s1&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;_eventId&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;submit&amp;#39;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;post(&lt;span style="color:#e6db74"&gt;&amp;#34;http://passport.csdn.net/account/login&amp;#34;&lt;/span&gt;,data&lt;span style="color:#f92672"&gt;=&lt;/span&gt;payload,headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;header)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ok，至此，登录就成功了&lt;/p&gt;
+&lt;h2 id="5-优化"&gt;5 优化
+&lt;/h2&gt;&lt;p&gt;当你登录成功后，你会问，我怎么知道登录成功了呢？当你试图去抓取&lt;code&gt;http://write.blog.csdn.net/postlist&lt;/code&gt;的内容的时候，你会发现一个403的错误，这是为啥呢？
+很简单，&lt;code&gt;user agent&lt;/code&gt;没有修改，我们用的是默认的&lt;code&gt;user agent&lt;/code&gt;，这可不是一个正常的用户，所以被网站拒绝了。我们加上他就好了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;header &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {&lt;span style="color:#e6db74"&gt;&amp;#39;User-Agent&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0&amp;#39;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;post(&lt;span style="color:#e6db74"&gt;&amp;#34;http://passport.csdn.net/account/login&amp;#34;&lt;/span&gt;,data&lt;span style="color:#f92672"&gt;=&lt;/span&gt;payload,headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;header)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="后话"&gt;后话
+&lt;/h1&gt;&lt;p&gt;上面的代码还是太简单，我们都知道cookie是有有效期的，我在做调试的时候，没修改一次，就要模拟登录一次，这样不好，我们要保存cookie，这样下次就不需要重新发送登录请求了
+分享出完整的代码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# !/usr/bin/env python&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; requests
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; time
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; os
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; bs4 &lt;span style="color:#f92672"&gt;import&lt;/span&gt; BeautifulSoup &lt;span style="color:#66d9ef"&gt;as&lt;/span&gt; bs
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; cookielib &lt;span style="color:#f92672"&gt;import&lt;/span&gt; LWPCookieJar
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;toJson&lt;/span&gt;(str):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 提取lt流水号，将数据化为一个字典
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; soup &lt;span style="color:#f92672"&gt;=&lt;/span&gt; bs(str)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tt &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; inp &lt;span style="color:#f92672"&gt;in&lt;/span&gt; soup&lt;span style="color:#f92672"&gt;.&lt;/span&gt;form&lt;span style="color:#f92672"&gt;.&lt;/span&gt;find_all(&lt;span style="color:#e6db74"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;) &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tt[inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;)] &lt;span style="color:#f92672"&gt;=&lt;/span&gt;inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;value&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; tt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# cookie setting&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;s &lt;span style="color:#f92672"&gt;=&lt;/span&gt; requests&lt;span style="color:#f92672"&gt;.&lt;/span&gt;Session()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cookies &lt;span style="color:#f92672"&gt;=&lt;/span&gt; LWPCookieJar(&lt;span style="color:#e6db74"&gt;&amp;#39;cookiejar&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;header &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {&lt;span style="color:#e6db74"&gt;&amp;#39;User-Agent&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0&amp;#39;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;not&lt;/span&gt; os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;path&lt;span style="color:#f92672"&gt;.&lt;/span&gt;exists(&lt;span style="color:#e6db74"&gt;&amp;#39;cookiejar&amp;#39;&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;there is no cookie,setting&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#34;http://passport.csdn.net/account/login&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; soup &lt;span style="color:#f92672"&gt;=&lt;/span&gt; toJson(r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; payload &lt;span style="color:#f92672"&gt;=&lt;/span&gt;{&lt;span style="color:#e6db74"&gt;&amp;#39;username&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;jackroyal&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;password&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;lt&amp;#39;&lt;/span&gt;:soup[&lt;span style="color:#e6db74"&gt;&amp;#34;lt&amp;#34;&lt;/span&gt;],&lt;span style="color:#e6db74"&gt;&amp;#39;execution&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;e1s1&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;_eventId&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;submit&amp;#39;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print payload
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;post(&lt;span style="color:#e6db74"&gt;&amp;#34;http://passport.csdn.net/account/login&amp;#34;&lt;/span&gt;,data&lt;span style="color:#f92672"&gt;=&lt;/span&gt;payload,headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;header)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cookies&lt;span style="color:#f92672"&gt;.&lt;/span&gt;save(ignore_discard&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;cookie exists,restore&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cookies&lt;span style="color:#f92672"&gt;.&lt;/span&gt;load(ignore_discard&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# r = s.get(&amp;#34;https://passport.csdn.net/content/loginbox/loginapi.js&amp;#34;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#34;http://write.blog.csdn.net/postlist&amp;#34;&lt;/span&gt;,headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;header)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://requests-docs-cn.readthedocs.org/zh_CN/latest/user/quickstart.html" target="_blank" rel="noopener"
+&gt;requests官方文档快速上手——中文版&lt;/a&gt;
+2 &lt;a class="link" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html" target="_blank" rel="noopener"
+&gt;beautifuisoup官方文档&lt;/a&gt;
+3 &lt;a class="link" href="http://stackoverflow.com/questions/13030095/how-to-save-requests-python-cookies-to-a-file" target="_blank" rel="noopener"
+&gt;python的requests如何保存cookie到文件&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下使用scrapy抓取cnblogs</title><link>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</link><pubDate>Sun, 26 Apr 2015 16:52:28 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</guid><description>&lt;p&gt;今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。&lt;/p&gt;
+&lt;h1 id="软件安装"&gt;软件安装
+&lt;/h1&gt;&lt;p&gt;我的环境是：ubuntu 14.04 lts
+需要安装相关软件&lt;/p&gt;
+&lt;h2 id="scrapy"&gt;scrapy
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;pip install Scrapy
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="pymongo"&gt;PyMongo
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;pip install pymongo
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="mongodb"&gt;Mongodb
+&lt;/h2&gt;&lt;p&gt;上面安装的是python使用Mongodb的接口，很显然，我们要安装Mongodb才能使用&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo apt-get install mongodb-server
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至此，要使用的软件都已经安装完毕&lt;/p&gt;
+&lt;h1 id="使用scrapy新建工程"&gt;使用scrapy新建工程
+&lt;/h1&gt;&lt;p&gt;使用scrapy新建工程很简单，如下所示，我们新建一个stack的项目，他会在你的当前目录新建一个stack文件夹&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;scrapy startproject stack
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;并且会建成如下所示的目录树结构&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;chen@chen-P31:~$ tree stack
+stack
+├── stack
+│   ├── __init__.py
+│   ├── items.py
+│   ├── pipelines.py
+│   ├── settings.py
+│   └── spiders
+│   └── __init__.py
+└── scrapy.cfg
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;接下来，我们修改items.py的内容，这个文件用于定义存储“容器”，用来存储将要抓取的数据。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; scrapy.item &lt;span style="color:#f92672"&gt;import&lt;/span&gt; Item,Field
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;StackItem&lt;/span&gt;(Item):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# define the fields for your item here like:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# name = scrapy.Field()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; title &lt;span style="color:#f92672"&gt;=&lt;/span&gt; Field()&lt;span style="color:#75715e"&gt;# 我们添加两个字段，我们等会儿会抓取一个标题和url两个字段&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; url &lt;span style="color:#f92672"&gt;=&lt;/span&gt; Field()
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着，还有一个很重要的东西，对，就是我们的蜘蛛，我们在spider目录下，新建一个stack_spider.py文件。顾名思义，这就是我们的蜘蛛。我们需要定义我们爬虫的起点，爬虫的规则等等&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; scrapy &lt;span style="color:#f92672"&gt;import&lt;/span&gt; Spider
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; stack.items &lt;span style="color:#f92672"&gt;import&lt;/span&gt; StackItem &lt;span style="color:#75715e"&gt;# 导入我们上面定义的容器类&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;StackSpider&lt;/span&gt;(Spider):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; name &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;stack&amp;#39;&lt;/span&gt; &lt;span style="color:#75715e"&gt;# 定义我们爬虫的名字&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; allowed_domains &lt;span style="color:#f92672"&gt;=&lt;/span&gt; [&lt;span style="color:#e6db74"&gt;&amp;#34;cnblogs.com&amp;#34;&lt;/span&gt;] &lt;span style="color:#75715e"&gt;# 规定爬虫爬取的域名&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; start_urls &lt;span style="color:#f92672"&gt;=&lt;/span&gt; [&lt;span style="color:#e6db74"&gt;&amp;#39;http://www.cnblogs.com/geqianst/p/&amp;#39;&lt;/span&gt;,] &lt;span style="color:#75715e"&gt;# 爬虫工作的起点&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;parse&lt;/span&gt;(self, response):&lt;span style="color:#75715e"&gt;# 爬虫用来做数据解析的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; questions &lt;span style="color:#f92672"&gt;=&lt;/span&gt; response&lt;span style="color:#f92672"&gt;.&lt;/span&gt;xpath(&lt;span style="color:#e6db74"&gt;&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# xpath选择器，这里的含义是取所有id为myposts的div，在它下面找所有带id的超链接a&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# 实际结果是这样的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# [&amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_0&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_1&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_2&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_3&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_4&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_5&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_6&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_7&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_8&amp;#34; hr&amp;#39;&amp;gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# &amp;lt;Selector xpath=&amp;#39;//div[@id=&amp;#34;myposts&amp;#34;]//a[@id]&amp;#39; data=u&amp;#39;&amp;lt;a id=&amp;#34;PostsList1_rpPosts_TitleUrl_9&amp;#34; hr&amp;#39;&amp;gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; question &lt;span style="color:#f92672"&gt;in&lt;/span&gt; questions:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; item &lt;span style="color:#f92672"&gt;=&lt;/span&gt; StackItem()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; item[&lt;span style="color:#e6db74"&gt;&amp;#39;title&amp;#39;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;=&lt;/span&gt; question&lt;span style="color:#f92672"&gt;.&lt;/span&gt;xpath(
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;text()&amp;#39;&lt;/span&gt;)&lt;span style="color:#f92672"&gt;.&lt;/span&gt;extract()[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; item[&lt;span style="color:#e6db74"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;] &lt;span style="color:#f92672"&gt;=&lt;/span&gt; question&lt;span style="color:#f92672"&gt;.&lt;/span&gt;xpath(
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;@href&amp;#39;&lt;/span&gt;)&lt;span style="color:#f92672"&gt;.&lt;/span&gt;extract()[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print item
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;yield&lt;/span&gt; item
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="测试"&gt;测试
+&lt;/h1&gt;&lt;p&gt;ok，上述工作基本完成，我们来测试一下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还可以这样测试一下，使用shell命令
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
+loading="lazy"
+alt="用shell测试xpath"
+&gt;
+妈蛋，我的竟然出错了，输出如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;chen@chen-P31:~/stack$ scrapy crawl stack
+2015-04-26 16:49:11+0800 [scrapy] INFO: Scrapy 0.24.6 started (bot: stack)
+2015-04-26 16:49:11+0800 [scrapy] INFO: Optional features available: ssl, http11
+2015-04-26 16:49:11+0800 [scrapy] INFO: Overridden settings: {&amp;#39;NEWSPIDER_MODULE&amp;#39;: &amp;#39;stack.spiders&amp;#39;, &amp;#39;SPIDER_MODULES&amp;#39;: [&amp;#39;stack.spiders&amp;#39;], &amp;#39;BOT_NAME&amp;#39;: &amp;#39;stack&amp;#39;}
+Traceback (most recent call last):
+File &amp;#34;/usr/local/bin/scrapy&amp;#34;, line 11, in &amp;lt;module&amp;gt;
+sys.exit(execute())
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py&amp;#34;, line 143, in execute
+_run_print_help(parser, _run_command, cmd, args, opts)
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py&amp;#34;, line 89, in _run_print_help
+func(*a, **kw)
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py&amp;#34;, line 150, in _run_command
+cmd.run(args, opts)
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/commands/crawl.py&amp;#34;, line 60, in run
+self.crawler_process.start()
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py&amp;#34;, line 92, in start
+if self.start_crawling():
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py&amp;#34;, line 124, in start_crawling
+return self._start_crawler() is not None
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py&amp;#34;, line 139, in _start_crawler
+crawler.configure()
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py&amp;#34;, line 46, in configure
+self.extensions = ExtensionManager.from_crawler(self)
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/middleware.py&amp;#34;, line 50, in from_crawler
+return cls.from_settings(crawler.settings, crawler)
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/middleware.py&amp;#34;, line 29, in from_settings
+mwcls = load_object(clspath)
+File &amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/utils/misc.py&amp;#34;, line 42, in load_object
+raise ImportError(&amp;#34;Error loading object &amp;#39;%s&amp;#39;: %s&amp;#34; % (path, e))
+ImportError: Error loading object &amp;#39;scrapy.telnet.TelnetConsole&amp;#39;: No module named conch
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这是什么gui？
+还好我有stackoverflow，google一番，找到解决办法（其实这不是最后的解决办法，请往后看）
+网上说是twisted的问题，重新安装一下就好了，ok，走起&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;chen@chen-P31:~/stack$ sudo apt-get install twisted
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package twisted
+chen@chen-P31:~/stack$ sudo apt-get install twisted.conch
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Note, selecting &amp;#39;python-twisted-conch&amp;#39; for regex &amp;#39;twisted.conch&amp;#39;
+Note, selecting &amp;#39;python2.7-twisted-conch&amp;#39; for regex &amp;#39;twisted.conch&amp;#39;
+Note, selecting &amp;#39;python-twisted-conch&amp;#39; instead of &amp;#39;python2.7-twisted-conch&amp;#39;
+The following packages were automatically installed and are no longer required:
+cli-common dockmanager freepats gstreamer1.0-plugins-bad-faad
+gstreamer1.0-plugins-bad-videoparsers libbotan-1.10-0:i386 libcdaudio1
+libdbus-glib2.0-cil libdbus2.0-cil libdbusmenu-glib4:i386
+libdbusmenu-gtk4:i386 libegl1-mesa:i386 libegl1-mesa-drivers:i386 libflite1
+libfluidsynth1 libgbm1:i386 libgconf2.0-cil libgdiplus libgif4
+libgles2-mesa:i386 libglib2.0-cil libgme0 libgmp10:i386
+libgnome-desktop-2-17 libgnome-keyring1.0-cil libgnomedesktop2.20-cil
+libgstreamer-plugins-bad0.10-0 libgstreamer-plugins-bad1.0-0 libgtk2.0-cil
+libicu52:i386 libmimic0 libmms0 libmono-addins0.2-cil libmono-cairo4.0-cil
+libmono-corlib4.0-cil libmono-corlib4.5-cil libmono-data-tds4.0-cil
+libmono-i18n-west4.0-cil libmono-i18n4.0-cil libmono-posix4.0-cil
+libmono-security4.0-cil libmono-sharpzip4.84-cil libmono-sqlite4.0-cil
+libmono-system-configuration4.0-cil libmono-system-core4.0-cil
+libmono-system-data4.0-cil libmono-system-drawing4.0-cil
+libmono-system-enterpriseservices4.0-cil
+libmono-system-runtime-serialization-formatters-soap4.0-cil
+libmono-system-security4.0-cil libmono-system-transactions4.0-cil
+libmono-system-web-applicationservices4.0-cil
+libmono-system-web-services4.0-cil libmono-system-web4.0-cil
+libmono-system-xml-linq4.0-cil libmono-system-xml4.0-cil
+libmono-system4.0-cil libmono-web4.0-cil libmpg123-0 libnotify0.4-cil
+libofa0 libopenal-data libopenal1 libopenvg1-mesa:i386 libqrencode3:i386
+libqt5core5a:i386 libqt5dbus5:i386 libqt5gui5:i386 libqt5network5:i386
+libqt5widgets5:i386 libqtshadowsocks:i386 librsvg2-2.18-cil libslv2-9
+libsoundtouch0 libspandsp2 libsrtp0 libssl1.0.0:i386 libv4l-0:i386
+libv4lconvert0:i386 libvo-aacenc0 libvo-amrwbenc0 libwayland-client0:i386
+libwayland-egl1-mesa:i386 libwayland-server0:i386 libwildmidi-config
+libwildmidi1 libwnck2.20-cil libxcb-icccm4:i386 libxcb-image0:i386
+libxcb-keysyms1:i386 libxcb-randr0:i386 libxcb-render-util0:i386
+libxcb-shape0:i386 libxcb-util0:i386 libxcb-xfixes0:i386 libxcb-xkb1:i386
+libxkbcommon-x11-0:i386 libxkbcommon0:i386 libzbar0:i386 mono-4.0-gac
+mono-gac mono-runtime mono-runtime-common mono-runtime-sgen python-mpd
+python-mutagen python-twisted-names
+Use &amp;#39;apt-get autoremove&amp;#39; to remove them.
+The following extra packages will be installed:
+python-pyasn1
+The following NEW packages will be installed:
+python-pyasn1 python-twisted-conch
+0 upgraded, 2 newly installed, 0 to remove and 6 not upgraded.
+Need to get 286 kB of archives.
+After this operation, 1,793 kB of additional disk space will be used.
+Do you want to continue? [Y/n]
+Get:1 http://mirrors.ustc.edu.cn/ubuntu/ trusty/main python-pyasn1 all 0.1.7-1ubuntu2 [44.2 kB]
+Get:2 http://mirrors.ustc.edu.cn/ubuntu/ trusty/main python-twisted-conch all 1:13.2.0-1ubuntu1 [242 kB]
+Fetched 286 kB in 0s (1,595 kB/s)
+Selecting previously unselected package python-pyasn1.
+(Reading database ... 359746 files and directories currently installed.)
+Preparing to unpack .../python-pyasn1_0.1.7-1ubuntu2_all.deb ...
+Unpacking python-pyasn1 (0.1.7-1ubuntu2) ...
+Selecting previously unselected package python-twisted-conch.
+Preparing to unpack .../python-twisted-conch_1%3a13.2.0-1ubuntu1_all.deb ...
+Unpacking python-twisted-conch (1:13.2.0-1ubuntu1) ...
+Processing triggers for doc-base (0.10.5) ...
+Processing 1 added doc-base file...
+Processing triggers for man-db (2.6.7.1-1ubuntu1) ...
+Setting up python-pyasn1 (0.1.7-1ubuntu2) ...
+Setting up python-twisted-conch (1:13.2.0-1ubuntu1) ...
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装总算完成，再试一次，妈蛋，又来一个新错误，这是什么gui？？？&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;chen@chen-P31:~/stack$ scrapy crawl stack
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2015-04-26 16:50:44+0800 &lt;span style="color:#f92672"&gt;[&lt;/span&gt;scrapy&lt;span style="color:#f92672"&gt;]&lt;/span&gt; INFO: Scrapy 0.24.6 started &lt;span style="color:#f92672"&gt;(&lt;/span&gt;bot: stack&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2015-04-26 16:50:44+0800 &lt;span style="color:#f92672"&gt;[&lt;/span&gt;scrapy&lt;span style="color:#f92672"&gt;]&lt;/span&gt; INFO: Optional features available: ssl, http11
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2015-04-26 16:50:44+0800 &lt;span style="color:#f92672"&gt;[&lt;/span&gt;scrapy&lt;span style="color:#f92672"&gt;]&lt;/span&gt; INFO: Overridden settings: &lt;span style="color:#f92672"&gt;{&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;NEWSPIDER_MODULE&amp;#39;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#39;stack.spiders&amp;#39;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#39;SPIDER_MODULES&amp;#39;&lt;/span&gt;: &lt;span style="color:#f92672"&gt;[&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;stack.spiders&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;]&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#39;BOT_NAME&amp;#39;&lt;/span&gt;: &lt;span style="color:#e6db74"&gt;&amp;#39;stack&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Traceback &lt;span style="color:#f92672"&gt;(&lt;/span&gt;most recent call last&lt;span style="color:#f92672"&gt;)&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/bin/scrapy&amp;#34;&lt;/span&gt;, line 11, in &amp;lt;module&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; sys.exit&lt;span style="color:#f92672"&gt;(&lt;/span&gt;execute&lt;span style="color:#f92672"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py&amp;#34;&lt;/span&gt;, line 143, in execute
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; _run_print_help&lt;span style="color:#f92672"&gt;(&lt;/span&gt;parser, _run_command, cmd, args, opts&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py&amp;#34;&lt;/span&gt;, line 89, in _run_print_help
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; func&lt;span style="color:#f92672"&gt;(&lt;/span&gt;*a, **kw&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py&amp;#34;&lt;/span&gt;, line 150, in _run_command
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cmd.run&lt;span style="color:#f92672"&gt;(&lt;/span&gt;args, opts&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/commands/crawl.py&amp;#34;&lt;/span&gt;, line 60, in run
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; self.crawler_process.start&lt;span style="color:#f92672"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py&amp;#34;&lt;/span&gt;, line 92, in start
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; self.start_crawling&lt;span style="color:#f92672"&gt;()&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py&amp;#34;&lt;/span&gt;, line 124, in start_crawling
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; self._start_crawler&lt;span style="color:#f92672"&gt;()&lt;/span&gt; is not None
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py&amp;#34;&lt;/span&gt;, line 139, in _start_crawler
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; crawler.configure&lt;span style="color:#f92672"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/crawler.py&amp;#34;&lt;/span&gt;, line 46, in configure
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; self.extensions &lt;span style="color:#f92672"&gt;=&lt;/span&gt; ExtensionManager.from_crawler&lt;span style="color:#f92672"&gt;(&lt;/span&gt;self&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/middleware.py&amp;#34;&lt;/span&gt;, line 50, in from_crawler
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; cls.from_settings&lt;span style="color:#f92672"&gt;(&lt;/span&gt;crawler.settings, crawler&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/middleware.py&amp;#34;&lt;/span&gt;, line 29, in from_settings
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; mwcls &lt;span style="color:#f92672"&gt;=&lt;/span&gt; load_object&lt;span style="color:#f92672"&gt;(&lt;/span&gt;clspath&lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; File &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/lib/python2.7/dist-packages/scrapy/utils/misc.py&amp;#34;&lt;/span&gt;, line 42, in load_object
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; raise ImportError&lt;span style="color:#f92672"&gt;(&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;Error loading object &amp;#39;%s&amp;#39;: %s&amp;#34;&lt;/span&gt; % &lt;span style="color:#f92672"&gt;(&lt;/span&gt;path, e&lt;span style="color:#f92672"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ImportError: Error loading object &lt;span style="color:#e6db74"&gt;&amp;#39;scrapy.contrib.memusage.MemoryUsage&amp;#39;&lt;/span&gt;: No module named mail.smtp
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最后的最后，我在我们万能的github上找到&lt;a class="link" href="https://github.com/scrapy/scrapy/issues/958" target="_blank" rel="noopener"
+&gt;答案&lt;/a&gt;，原来是我们没有安装python-twisted，安装一下，世界都美好了&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo apt-get install python-twisted
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="输出到文件"&gt;输出到文件
+&lt;/h2&gt;&lt;p&gt;为了更直观的看到结果，我们将结果输出到一个json文件&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;scrapy crawl stack -o items.json -t json
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;噢耶，第一个爬虫成功&lt;/p&gt;
+&lt;h1 id="存储到mongodb"&gt;存储到mongodb
+&lt;/h1&gt;&lt;p&gt;接下来，我们做最后一件事，我们将结果存储到mongodb的数据库中
+在这里，我遇到一个大坑，无论是伯乐在线翻译的博客
+还是网上搜索到的一般教程，都是使用pymongo.Connection来连接数据库，可是妈蛋，你使用&lt;code&gt;pip install pymongo&lt;/code&gt;安装的版本都是最新版本3.0.1，那个Connection的写法已经不支持，被丢弃了，擦。
+我们来看一下版本，我学到一个新命令&lt;code&gt;pip show pymongo&lt;/code&gt;，用来查看某一个包的版本的。
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1erjct36jnrj20df038dgf.jpg"
+loading="lazy"
+alt="查看pymongo版本"
+&gt;
+在pymongo 3.0的版本中，已经不再支持pymongo.Connection，而是使用pymongo.MongoClient来替代。&lt;/p&gt;
+&lt;h2 id="第一步"&gt;第一步
+&lt;/h2&gt;&lt;p&gt;创建一个用来保存我们抓取数据的数据库。打开&lt;code&gt;settings.py&lt;/code&gt;,指定管道，然后加入数据库的相关设置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;BOT_NAME &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;stack&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;SPIDER_MODULES &lt;span style="color:#f92672"&gt;=&lt;/span&gt; [&lt;span style="color:#e6db74"&gt;&amp;#39;stack.spiders&amp;#39;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;NEWSPIDER_MODULE &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;stack.spiders&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# Crawl responsibly by identifying yourself (and your website) on the user-agent&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# USER_AGENT = &amp;#39;stack (+http://www.yourdomain.com)&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ITEM_PIPELINES &lt;span style="color:#f92672"&gt;=&lt;/span&gt; [&lt;span style="color:#e6db74"&gt;&amp;#39;stack.pipelines.MongoDBPipeline&amp;#39;&lt;/span&gt;, ]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 关于mongodb的相关设置，包括服务器的ip，端口号，数据库名，表名，&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 我也是第一次使用mongodb竟然不需要用户验证信息，而且这表名确实奇怪，叫做MONGODB_COLLECTION&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;MONGODB_SERVER &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;localhost&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;MONGODB_PORT &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;27017&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;MONGODB_DB &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;stackoverflow&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;MONGODB_COLLECTION &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;questions&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;DOWNLOAD_DELAY &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;5&lt;/span&gt; &lt;span style="color:#75715e"&gt;# 抓取的延迟&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="第二步"&gt;第二步
+&lt;/h2&gt;&lt;p&gt;我们已经能够爬取和解析html数据了，而且已经配置了数据库，接下来，我们通过&lt;code&gt;pipelines.py&lt;/code&gt;中建立一个管道去连接这两个部分。
+我们首先来完成数据库的连接部分&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; pymongo
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; scrapy.conf &lt;span style="color:#f92672"&gt;import&lt;/span&gt; settings
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; scrapy.exceptions &lt;span style="color:#f92672"&gt;import&lt;/span&gt; DropItem
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; scrapy &lt;span style="color:#f92672"&gt;import&lt;/span&gt; log
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;MongoDBPipeline&lt;/span&gt;(object):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;__init__&lt;/span&gt;(self):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; connection &lt;span style="color:#f92672"&gt;=&lt;/span&gt; pymongo&lt;span style="color:#f92672"&gt;.&lt;/span&gt;MongoClient(
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; settings[&lt;span style="color:#e6db74"&gt;&amp;#39;MONGODB_SERVER&amp;#39;&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; settings[&lt;span style="color:#e6db74"&gt;&amp;#39;MONGODB_PORT&amp;#39;&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; )
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; db &lt;span style="color:#f92672"&gt;=&lt;/span&gt; connection[settings[&lt;span style="color:#e6db74"&gt;&amp;#39;MONGODB_DB&amp;#39;&lt;/span&gt;]]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; self&lt;span style="color:#f92672"&gt;.&lt;/span&gt;collection &lt;span style="color:#f92672"&gt;=&lt;/span&gt; db[settings[&lt;span style="color:#e6db74"&gt;&amp;#39;MONGODB_COLLECTION&amp;#39;&lt;/span&gt;]]
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接下来定义一个处理函数&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;process_item&lt;/span&gt;(self, item, spider):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; data &lt;span style="color:#f92672"&gt;in&lt;/span&gt; item:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;not&lt;/span&gt; data:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;raise&lt;/span&gt; DropItem(&lt;span style="color:#e6db74"&gt;&amp;#34;Missing data!&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; self&lt;span style="color:#f92672"&gt;.&lt;/span&gt;collection&lt;span style="color:#f92672"&gt;.&lt;/span&gt;update({&lt;span style="color:#e6db74"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;: item[&lt;span style="color:#e6db74"&gt;&amp;#39;url&amp;#39;&lt;/span&gt;]}, dict(item), upsert&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; log&lt;span style="color:#f92672"&gt;.&lt;/span&gt;msg(&lt;span style="color:#e6db74"&gt;&amp;#34;Question added to MongoDB database!&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; level&lt;span style="color:#f92672"&gt;=&lt;/span&gt;log&lt;span style="color:#f92672"&gt;.&lt;/span&gt;DEBUG, spider&lt;span style="color:#f92672"&gt;=&lt;/span&gt;spider)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; item
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ok,搞定，我们再测试一把&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="执行效果如下"&gt;执行效果如下
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
+loading="lazy"
+alt="mongodb数据库管理"
+&gt;&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://github.com/scrapy/scrapy/issues/958" target="_blank" rel="noopener"
+&gt;ImportError: Error loading object &amp;lsquo;scrapy.contrib.memusage.MemoryUsage&amp;rsquo;: No module named mail.smtp&lt;/a&gt;
+2 &lt;a class="link" href="http://stackoverflow.com/questions/8671071/error-to-execute-python-scrappy-module" target="_blank" rel="noopener"
+&gt;http://stackoverflow.com/questions/8671071/error-to-execute-python-scrappy-module&lt;/a&gt;
+3 &lt;a class="link" href="http://python.jobbole.com/81320/" target="_blank" rel="noopener"
+&gt;Python下用Scrapy和MongoDB构建爬虫系统（1）&lt;/a&gt;&lt;/p&gt;</description></item><item><title>blog2markdown程序打包,csdn爬虫</title><link>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</link><pubDate>Sun, 29 Mar 2015 22:08:22 +0000</pubDate><guid>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;项目地址&lt;a class="link" href="https://github.com/Jackroyal/blog2markdown.git" target="_blank" rel="noopener"
+&gt;https://github.com/Jackroyal/blog2markdown.git&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;用来实现普通blog到markdown的搬家，自动将blog的html转换成HEXO可用的Markdown格式
+暂时只做了CSDN&lt;/p&gt;
+&lt;h3 id="update"&gt;UPDATE:
+&lt;/h3&gt;&lt;p&gt;2015-03-29 添加了打包成exe的程序,修复cmd下乱码,win和ubuntu完美运行
+2015-03-29 连夜修复了在win下乱码的问题,删除了冗余代码
+2015-03-28 将某些参数改为从配置文件中读取,加入更多异常判断
+2014-12-15 优化标签解析功能,添加了标题,tag和category
+2014-12-13 实现解析功能,基本完成解析功能
+2014-12-10 实现CSDN的抓取，正在实现parse解析过程&lt;/p&gt;
+&lt;h3 id="bug"&gt;BUG
+&lt;/h3&gt;&lt;p&gt;如果代码中有# 和*会被转义成&lt;code&gt;\#&lt;/code&gt;和&lt;code&gt;\*&lt;/code&gt;
+对table的支持不好&lt;/p&gt;
+&lt;h3 id="依赖库"&gt;依赖库
+&lt;/h3&gt;&lt;p&gt;爬虫使用了&lt;code&gt;beautifulsoup 4.3.2&lt;/code&gt;
+&lt;a class="link" href="http://www.crummy.com/software/BeautifulSoup/" target="_blank" rel="noopener"
+&gt;点我点我&lt;/a&gt;
+你必须安装这个才可以正常使用
+PS:我打包了exe&lt;a class="link" href="http://pan.baidu.com/s/1dDERlOP" target="_blank" rel="noopener"
+&gt;点此下载&lt;/a&gt;,可以什么不装,改完配置文件,直接运行&lt;/p&gt;
+&lt;h1 id="使用"&gt;使用:
+&lt;/h1&gt;&lt;h1 id="-首先编辑配置文件spiderconf"&gt;# 首先,编辑配置文件&lt;code&gt;spider.conf&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;格式如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;[blog]
+# 此处url不需要单引号或者双引号,不然类型识别错误,网址最后不要/
+url=http://blog.csdn.net/jackroyal
+[setting]
+wait_time=5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的&lt;code&gt;url&lt;/code&gt;地址注意不要加引号,下面的&lt;code&gt;wait_time&lt;/code&gt;是指两次抓取的间隔时间,这是为了安全起见,如果高频访问,可能会被封,我设置的&lt;code&gt;5&lt;/code&gt;秒,你可以根据自己需要去设置&lt;/p&gt;
+&lt;h2 id="打包"&gt;打包
+&lt;/h2&gt;&lt;p&gt;我打包了一个&lt;a class="link" href="http://pan.baidu.com/s/1dDERlOP" target="_blank" rel="noopener"
+&gt;exe程序&lt;/a&gt;,放在github项目的dist目录下,在windows系统中,&lt;code&gt;直接下载&lt;/code&gt;,&lt;code&gt;运行&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;PS:由于pyInstaller的问题,导致无法在中文路径下正常运行&lt;/p&gt;
+&lt;p&gt;比如你放在C:/users/张三/spider.exe
+这样是无法正常运行的
+所以应该放在全英文的目录下
+C:/software/spider.exe
+运行结果如图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
+loading="lazy"
+alt="spider运行截图"
+&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
+loading="lazy"
+alt="运行结果截图"
+&gt;&lt;/p&gt;
+&lt;h1 id="源码执行"&gt;源码执行
+&lt;/h1&gt;&lt;p&gt;如果你对我的exe不放心,可以自己执行python源码&lt;/p&gt;
+&lt;h2 id="--执行"&gt;# 执行
+&lt;/h2&gt;&lt;p&gt;在linux下,首先要给予执行权限&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;chmod a+x spider.py ParseBlog.py
+python spider.py
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就可以了,输出文件在output文件夹&lt;/p&gt;
+&lt;p&gt;在win下,经过修复也可以正常运行了,在idle(在win中你安装了python2.7的话就会有这个编辑器)中是可以完全正常的显示中文~~~~,在系统自带的cmd里中文显示会有问题,因为cmd中的编码默认是GBK,我程序基本都是utf-8,如果要在cmd显示正常,显示的代码都要加个str.encode(&amp;lsquo;utf-8&amp;rsquo;)才行.
+不过抓取是没有问题的,此处就不纠结了哈,能用就好~~~~&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 在win下,没有权限的问题,直接执行就好了
+python spider.py
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>python学习笔记--python和beautifulsoup遇到的编码问题</title><link>https://jackroyal.github.io/post/python-blog-spider/</link><pubDate>Sun, 29 Mar 2015 14:43:45 +0000</pubDate><guid>https://jackroyal.github.io/post/python-blog-spider/</guid><description>&lt;p&gt;在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;项目主页: &lt;a class="link" href="https://github.com/Jackroyal/blog2markdown" target="_blank" rel="noopener"
+&gt;https://github.com/Jackroyal/blog2markdown&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最近刚好在学习python,刚好就把它给优化了一下,顺便做了个跨平台(哈哈,win和ubuntu都可以跑哈),昨天遇到很蛋疼的问题,一它给了我很多思路帮助我定位问题,.直搞到凌晨两点才弄好.
+非常非常感谢&lt;a class="link" href="http://www.crifan.com/summary_python_2_x_common_string_encode_decode_error_reason_and_solution/" target="_blank" rel="noopener"
+&gt;【总结】Python 2.x中常见字符编码和解码方面的错误及其解决办法&lt;/a&gt;
+作者做了一个很好的总结,帮助我们定位问题.&lt;/p&gt;
+&lt;h1 id="1-编码类型"&gt;1 编码类型
+&lt;/h1&gt;&lt;p&gt;首先确定好你的编码类型,比如一般推荐用utf-8.当确定编码类型后,就要保持统一,不要又弄些GBK的编码在里面.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;1.1 编辑器编码
+&lt;ul&gt;
+&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmn535qb7j208u028t8k.jpg"
+loading="lazy"
+alt="sublime显示当前文件编码"
+&gt;&lt;/li&gt;
+&lt;li&gt;文件编码声明,我们要在py文件的头部添加一行&lt;code&gt;# -*- coding: utf-8 -*-&lt;/code&gt;,表明我接下来要使用utf-8编码&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;1.2 python解释器
+&lt;ul&gt;
+&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
+loading="lazy"
+alt="win中python解释器编码"
+&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
+loading="lazy"
+alt="ubuntu终端解释器的编码"
+&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;1.3 执行python代码
+&lt;ul&gt;
+&lt;li&gt;其中，很常见的几种动作是：
+&lt;ul&gt;
+&lt;li&gt;打印print对应的所获得的字符
+&lt;ul&gt;
+&lt;li&gt;对于字符串打印,Python的逻辑:
+&lt;ul&gt;
+&lt;li&gt;如果是Unicode字符串,则可以,自动地,编码为对应的终端所用编码,然后正确的显示出来&lt;/li&gt;
+&lt;li&gt;比如unicode的字符串,输出到windows的默认编码为GBK的cmd中,则Python可以自动将Unicode编码为GBK,然后输出到cmd中&lt;/li&gt;
+&lt;li&gt;个别特殊情况,也会出错:
+&lt;ul&gt;
+&lt;li&gt;当此unicode字符串中包含某特殊字符,而目标终端的编码集合中,没有此字符,则很明显也是无法实现将Unicode编码为对应的特定编码的字符串,无法正确显示的&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;如果是某种编码类型的str,则需要该str的编码类型,和目标终端编码匹配
+&lt;ul&gt;
+&lt;li&gt;比如GBK的字符串,输出到windows的默认编码为GBK的cmd,则是可以正常输出的&lt;/li&gt;
+&lt;li&gt;此处后来经过代码测试，就发现一个有趣或者说诡异的问题，虽然我们python文件声明的UTF-8编码，但是实际上实际上是用GBK编码，而此时，文件中的字符串，很明显是用GBK存储的，所以，将此GBK字符，输出到GBK的cmd中，是可以正常输出的。即，此处字符串的类型，很明显只和文件所用的实际编码有关，而和文件所声明的代码无关。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;如果是UTF-8的字符串,输出到windows的默认编码为GBK的cmd,就会出错
+&lt;ul&gt;
+&lt;li&gt;对相应的字符，进行编码（为某种特定类型的字符str），或解码（为对应的unicode类型的字符）&lt;/li&gt;
+&lt;li&gt;比如将当前的某种编码的字符串，解码为Unicode字符串
+&lt;ul&gt;
+&lt;li&gt;很明显，也是要保证，你字符串本身的编码和所指定的编码，两者之间要一致的&lt;/li&gt;
+&lt;li&gt;比如：decodedUnicode = someUtf8Str.decode(&amp;ldquo;UTF-8&amp;rdquo;)&lt;/li&gt;
+&lt;li&gt;而如果用这样的：decodedUnicode = someGbkStr.decode(&amp;ldquo;UTF-8&amp;rdquo;)，那就会出现错误&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="2-常用方法"&gt;2 常用方法
+&lt;/h1&gt;&lt;h3 id="21-encode和decode"&gt;2.1 encode和decode
+&lt;/h3&gt;&lt;p&gt;encode() unicode编码-&amp;gt;其他编码&lt;/p&gt;
+&lt;p&gt;decode() 其他编码-&amp;gt;unicode编码&lt;/p&gt;
+&lt;p&gt;使用这两个方法的前提是,你要知道当前是什么编码.然后用对应的编码去进行解码
+比如对于s字符串可以用&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;s.encode(&amp;#39;utf-8&amp;#39;) # 将s由unicode转码成utf-8
+s.decode(&amp;#39;GBK&amp;#39;) # s是GBK编码,将s转换成unicode
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="22-isinstance"&gt;2.2 isinstance()
+&lt;/h3&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;isinstance(s , unicode) # 检测s是否是unicode编码
+isinstance(s , str) # 检测s是否是str格式
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="3-beautifulsoup编码问题"&gt;3 beautifulsoup编码问题
+&lt;/h1&gt;&lt;h3 id="beautiful-soup-会按顺序尝试不同的编码将你的文档转换为unicode"&gt;Beautiful Soup 会按顺序尝试不同的编码将你的文档转换为Unicode：
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;可以通过from_encoding参数传递编码类型给soup的构造器&lt;/li&gt;
+&lt;li&gt;通过文档本身找到编码类型：例如XML的声明或者HTML文档http-equiv的META标签。&lt;/li&gt;
+&lt;li&gt;如果Beautiful Soup在文档中发现编码类型，它试着使用找到的类型转换文档。 +&lt;/li&gt;
+&lt;li&gt;但是，如果你明显的指定一个编码类型，&lt;/li&gt;
+&lt;li&gt;并且成功使用了编码：这时它会忽略任何它在文档中发现的编码类型。&lt;/li&gt;
+&lt;li&gt;通过嗅探文件开头的一下数据，判断编码。如果编码类型可以被检测到，&lt;/li&gt;
+&lt;li&gt;它将是这些中的一个：UTF-*编码，EBCDIC或者ASCII。&lt;/li&gt;
+&lt;li&gt;通过chardet库,嗅探编码，如果你安装了这个库。&lt;/li&gt;
+&lt;li&gt;UTF-8&lt;/li&gt;
+&lt;li&gt;Windows-1252&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一般来说,bs的自动识别,是不会有问题的,但是在我这里除了问题,具体原因不太清楚
+我的网页上已经声明了是&lt;code&gt;utf-8&lt;/code&gt;编码
+原来代码如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 这是原来的编码,在win下面乱码
+self.soup = bs((response.read()))
+print self.soup.originalEncoding # 此处结果竟然返回Windows-1252
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改后代码如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# win下乱码的关键在这里,beautifulsoup解析的编码不对,我们这里直接指定编码
+self.soup = bs((response.read()), from_encoding=&amp;#39;utf-8&amp;#39;)
+print self.soup.originalEncoding # 修正后代码正确返回&amp;#39;utf-8&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看来beautifulsoup的自动识别编码不能全部依赖.
+好不容易才定位到这里的问题,折腾了一天啊
+这里用了一个方法来检测编码.就是soup.iriginalEncoding属性&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;print self.soup.originalEncoding # 修正后代码正确返回&amp;#39;utf-8&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这篇博客好水,毕竟不是很懂,所以说不出来&lt;/p&gt;
+&lt;p&gt;update:2015-03-30&lt;/p&gt;
+&lt;h1 id="4-新技能get"&gt;4 新技能get
+&lt;/h1&gt;&lt;p&gt;之前都没好好理解原作者的博客,觉得没办法一个程序在win和ubuntu中不更改正常运行,现在发现,如果把编码改为unicode格式输出,那么系统会自动转换,这样就不存在utf-8编码在windows下cmd乱码了.&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.crifan.com/summary_python_2_x_common_string_encode_decode_error_reason_and_solution/" target="_blank" rel="noopener"
+&gt;【总结】Python 2.x中常见字符编码和解码方面的错误及其解决办法&lt;/a&gt;
+2 &lt;a class="link" href="http://www.crifan.com/resolved_python_garbled_chinese_characters_gb2312_gbk_gb18030-related_issues/" target="_blank" rel="noopener"
+&gt;【已解决】python中文字符乱码（GB2312，GBK，GB18030相关的问题）&lt;/a&gt;
+参考资料太多,贴不过来啊,主要都是cifan的博客,里面资料很多,一步一步都有过程,非常好用,谢谢cifan作者&lt;/p&gt;</description></item><item><title>python学习笔记--一个简单聊天室的实现</title><link>https://jackroyal.github.io/post/python-im/</link><pubDate>Thu, 26 Mar 2015 21:33:35 +0000</pubDate><guid>https://jackroyal.github.io/post/python-im/</guid><description>&lt;p&gt;最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.
+这是来自书上的一个python聊天程序,我照着敲了一遍,然后给扩展了一下,加了多个房间和创建选择房间的功能,写了好久好久,感觉都拖了一个星期了.
+下一步是做一个gui,恩,那将是我的第一个gui程序.&lt;/p&gt;
+&lt;h1 id="先贴一下代码-server5py"&gt;先贴一下代码 server5.py
+&lt;/h1&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# !/usr/bin/env python
+# -*- coding:utf-8-*-
+__author__ = &amp;#39;chen&amp;#39;
+from asyncore import dispatcher
+from asynchat import async_chat
+import socket,asyncore
+PORT = 5005 # 设定程序的端口号
+NAME = &amp;#39;testchat&amp;#39; # 给服务器一个名称
+class EndSession(Exception):pass
+class CommandHandler:
+&amp;#34;&amp;#34;&amp;#34;
+类似标准库中cmd.Cmd的简单命令处理程序
+&amp;#34;&amp;#34;&amp;#34;
+# 如果输入的命令,那么就返回unknown命令
+def unknown(self, session, cmd):
+session.push(&amp;#39;Unknown command: %s \r\n&amp;#39; % cmd)
+def handle(self, session, line):
+if not line.strip():
+return
+parts = line.split(&amp;#39; &amp;#39;, 1)
+cmd = parts[0]
+try:
+line = parts[1].strip()
+except IndexError:line = &amp;#39;&amp;#39;
+meth = getattr(self, &amp;#39;do_&amp;#39; + cmd, None)
+try:
+meth(session, line)
+except TypeError:
+self.unknown(session, cmd)
+# 这个类是聊天房间的类,继承上面的类是为了继承执行命令的功能
+class ChatRoom(CommandHandler):
+def __init__(self, name, server):
+self.server = server
+self.name = name
+self.sessions = []
+def add(self, session):
+self.broadcast(session.name + &amp;#39; has entered the room %s\r\n&amp;#39; % self.name)
+session.push(&amp;#39;you can type &amp;#34;h&amp;#34; for help\r\n&amp;#39;)
+## 因为后面要将用户挪动房间,所以必须保存每个用户的session,这样才能挪动和删除
+self.server.users[session.name] = session
+self.sessions.append(session)
+def remove(self, session):
+try:
+self.sessions.remove(session)
+except: pass # 如果此处的sessions为空或者已经不存在,会出错,此处不上报
+def broadcast(self, line):
+# 广播,只广播到当前房间
+for session in self.sessions:
+session.push(line)
+def do_say(self, session, line):
+# 说话
+self.broadcast(session.name + &amp;#34;:&amp;#34; + line + &amp;#39;\r\n&amp;#39;)
+def do_login(self, session, line):
+# login,其实是实现改名字的功能,懒得去改函数名了
+name = line.strip()
+if not name:
+session.push(&amp;#39;please enter a name\r\n&amp;#39;)
+elif name in self.server.users.keys():
+session.push(&amp;#39;The name %s is taken\r\n&amp;#39; % name)
+session.push(&amp;#39;please try again\r\n&amp;#39;)
+else:
+session.server.users[name] = session.server.users.pop(session.name)
+session.name = name
+session.enter(self)
+self.do_list(session, &amp;#39;&amp;#39;)
+session.push(&amp;#39;type &amp;#34;select name&amp;#34; to choose one room\r\n&amp;#39;)
+# 查看当前房间有哪些人
+def do_look(self, session, line):
+session.push(&amp;#39;the following are in this room:\r\n&amp;#39;)
+for other in self.sessions:
+session.push(other.name + &amp;#34;\r\n&amp;#34;)
+# 查看当前在线的用户,所有房间的用户
+def do_who(self, session, line):
+session.push(&amp;#39;the following are logged in:\r\n&amp;#39;)
+for name in self.server.users:
+session.push(name + &amp;#39;\r\n&amp;#39;)
+# 查看当前所有的房间
+def do_list(self, session, line):
+session.push(&amp;#39;the room list is below\r\n&amp;#39;)
+session.push(&amp;#39; &amp;#39;.join(self.server.rooms) + &amp;#39;\r\n&amp;#39;)
+# 选择房间
+def do_select(self, session, line):
+name = line.strip()
+if not name:
+session.push(&amp;#39;please enter a room name\r\n&amp;#39;)
+elif name in self.server.rooms.keys():
+session.enter(self.server.rooms[name])
+self.broadcast(&amp;#39; %s ,welcome to join %s\r\n&amp;#39;% (session.name, name))
+# 输出帮助
+def do_h(self, session, line):
+session.push(&amp;#39;you can use this commands:\r\n1,who to see who is on this server(online and offline)\r\n2,&amp;#39;
+&amp;#39;list to see how many room are avaliable\r\n3,look to see who are in this room\r\n4,login to login online and &amp;#39;
+&amp;#39;change a name\r\n5,create to create a new room&amp;#39;)
+# 创建新房间
+def do_create(self, session, line):
+name = line.strip()
+if not name:
+session.push(&amp;#39;please enter a name\r\n&amp;#39;)
+elif name in self.server.rooms.keys():
+session.push(&amp;#39;The room name %s is taken\r\n&amp;#39; % name)
+session.push(&amp;#39;please try again\r\n&amp;#39;)
+else:
+ChatRoom(name, self.server)
+session.server.rooms[name] = ChatRoom(name, self.server)
+session.push(&amp;#34;the room %s create successful\r\n&amp;#34; % name)
+session.enter(session.server.rooms[name])
+# 每个用户回话,这个是重点类
+class ChatSession(async_chat):
+def __init__(self, server, sock):
+async_chat.__init__(self, sock)
+self.server = server
+self.set_terminator(&amp;#39;\r\n&amp;#39;)
+self.data = []
+self.name = &amp;#39;visitor&amp;#39; + str(len(server.users))# 初始化用户名,用visitor1之类来表示
+self.room = self.server.main_room
+self.enter(self.server.main_room)
+def enter(self, room):
+try:
+cur = self.room
+except AttributeError: pass
+else: cur.remove(self)
+self.room = room
+room.add(self)
+# 当用户有输入的时候
+def collect_incoming_data(self, data):
+self.data.append(data)
+# 当用户输入终止符的时候
+def found_terminator(self):
+line = &amp;#39;&amp;#39;.join(self.data)
+self.data = []
+try:
+self.room.handle(self, line)
+except EndSession:
+self.handle_close()
+# 关闭用户回话
+def handle_close(self):
+async_chat.handle_close(self)
+# self.enter()
+# 服务器类,这个也是重点类
+class ChatServer(dispatcher):
+def __init__(self, port, name):
+dispatcher.__init__(self)
+self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
+# 端口复用
+self.set_reuse_addr()
+self.bind((&amp;#39;&amp;#39;, port))
+self.listen(5)
+self.sessions = {}
+self.name = name
+self.users = {}
+self.rooms = {}
+# 新建一个房间hall,因为每个初始登陆的用户没有房间,但是操作是依赖与ChatRoom类的,所以给一个初始默认的房间
+self.main_room = ChatRoom(&amp;#39;hall&amp;#39;, self)
+self.rooms[self.main_room.name] = self.main_room
+def handle_accept(self):
+conn,addr = self.accept()
+ChatSession(self, conn)
+print &amp;#39;connection attempt from &amp;#39;, addr[0]
+if __name__ == &amp;#34;__main__&amp;#34;:
+print &amp;#39;server start&amp;#39;
+s = ChatServer(PORT, NAME)
+try:
+asyncore.loop()
+except KeyboardInterrupt: print
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果如图所示
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
+loading="lazy"
+alt="运行效果"
+&gt;&lt;/p&gt;</description></item><item><title>python学习笔记--socket编程端口复用</title><link>https://jackroyal.github.io/post/python-socket-port-reuse/</link><pubDate>Wed, 18 Mar 2015 08:47:02 +0000</pubDate><guid>https://jackroyal.github.io/post/python-socket-port-reuse/</guid><description>&lt;p&gt;最近在学习socket编程,遇到一个问题:
+我先bind一个端口后,如果通过ctr+c关闭进程.接下来执行程序的时候,就会提示&lt;code&gt;socket.error: Address already in use&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;照例google一番,找到&lt;a class="link" href="http://blog.csdn.net/xl_xunzhao/article/details/3130037" target="_blank" rel="noopener"
+&gt;这个&lt;/a&gt;.博主说的情况和我的一样.
+我还在stackoverflow上找到&lt;a class="link" href="http://stackoverflow.com/questions/4465959/python-errno-98-address-already-in-use" target="_blank" rel="noopener"
+&gt;这个&lt;/a&gt;.
+修改后代码如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# 下面这行是关健
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server_socket.bind((&amp;#39;&amp;#39;, PORT))
+server_socket.listen(5)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就搞定了.&lt;/p&gt;
+&lt;p&gt;下面的代码是socket编程敲得两个小例子,基于socket的聊天小程序都是别人的东西,只是练习一下,源地址在本文最后.&lt;/p&gt;
+&lt;h2 id="多线程版本服务器端程序server2py"&gt;多线程版本服务器端程序server2.py
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# !/usr/bin/env python
+# -*- coding:utf-8-*-
+__author__ = &amp;#39;chen&amp;#39;
+import socket,sys
+from thread import *
+HOST = &amp;#39;&amp;#39;
+PORT = 8888
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print &amp;#39;socket created&amp;#39;
+try:
+s.bind((HOST, PORT))
+except socket.error, msg:
+print &amp;#39;bind failed.Error code: |||%S Message: %s&amp;#39; %(str(msg[0]), msg[1])
+sys.exit()
+print &amp;#39;socket bind complete&amp;#39;
+s.listen(10)
+print &amp;#39;socket now listening&amp;#39;
+def clientthread(conn):
+conn.send(&amp;#39;welcome to the server.Type something and hit enter\n&amp;#39;)
+while True:
+data = conn.recv(1024)
+reply = &amp;#39;ok...&amp;#39; + data
+if not data:
+break
+conn.sendall(reply)
+conn.close()
+while 1:
+conn, addr = s.accept()
+print &amp;#39;connected with %s : %s&amp;#39; %(addr[0],str(addr[1]))
+start_new_thread(clientthread, (conn,))
+s.close()
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直接telnet连接socket,就可以调试&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;telnet localhost 8888
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="改良版带广播的聊天室程序server3py"&gt;改良版,带广播的聊天室程序server3.py
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# !/usr/bin/env python
+# -*- coding:utf-8-*-
+__author__ = &amp;#39;chen&amp;#39;
+import socket, select
+def broadcast_data(sock, message):
+for socket in CONNECTION_LIST:
+if socket != server_socket != sock:
+try:
+socket.send(message)
+except msg:
+socket.close()
+CONNECTION_LIST.remove(socket)
+if __name__ == &amp;#34;__main__&amp;#34;:
+CONNECTION_LIST = []
+RECV_BUFFER = 4096
+PORT = 5000
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server_socket.bind((&amp;#39;&amp;#39;, PORT))
+server_socket.listen(5)
+CONNECTION_LIST.append(server_socket)
+print &amp;#34;chat server started on port %s&amp;#34; % str(PORT)
+while 1:
+read_sockets, write_sockets,error_sockets = select.select(CONNECTION_LIST, [], [])
+for sock in read_sockets:
+if sock == server_socket:
+sockfd,addr = server_socket.accept()
+CONNECTION_LIST.append(sockfd)
+print &amp;#34;client (%s, %s) connected&amp;#34; % addr
+broadcast_data(sockfd, &amp;#34;[%s:%s] entered room\n&amp;#34; % addr)
+else:
+try:
+data = sock.recv(RECV_BUFFER)
+if data:
+print &amp;#34;[%s:%s]&amp;#34; % (str(sock.getpeername()), data)
+broadcast_data(sock, &amp;#34;[%s:%s]&amp;#34; % (str(sock.getpeername()), data))
+except msg:
+print msg
+broadcast_data(sock, &amp;#34;client (%s, %s) is offline &amp;#34;% addr)
+print &amp;#34;client (%s,%s) is offline &amp;#34; % addr
+sock.close()
+CONNECTION_LIST.remove(sock)
+continue
+server_socket.close()
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="客户端程序client3py"&gt;客户端程序client3.py
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# !/usr/bin/env python
+# -*- coding:utf-8-*-
+__author__ = &amp;#39;chen&amp;#39;
+import socket,select,string,sys
+def prompt():
+sys.stdout.write(&amp;#39;[you]&amp;#39;)
+sys.stdout.flush()
+if __name__ == &amp;#34;__main__&amp;#34;:
+if(len(sys.argv)&amp;lt;3):
+print &amp;#39;usage: python client3.py hostname port&amp;#39;
+sys.exit()
+host = sys.argv[1]
+port = int(sys.argv[2])
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.settimeout(2)
+try:
+s.connect((host, port))
+except:
+print &amp;#39;unable to connect&amp;#39;
+sys.exit()
+print &amp;#39;connected to remote host. start sending messages&amp;#39;
+prompt()
+while 1:
+rlist = [sys.stdin, s]
+read_list, write_list, error_list = select.select(rlist, [], [])
+for sock in read_list:
+if sock == s:
+data = sock.recv(4096)
+if not data:
+print &amp;#39;\nDisconnected from chat server&amp;#39;
+sys.exit()
+else:
+sys.stdout.write(data)
+prompt()
+else:
+msg = sys.stdin.readline()
+s.send(msg)
+prompt()
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.cnblogs.com/hazir/p/python_socket_programming.html" target="_blank" rel="noopener"
+&gt;Python Socket 网络编程&lt;/a&gt;
+2 &lt;a class="link" href="http://www.cnblogs.com/hazir/p/python_chat_room.html" target="_blank" rel="noopener"
+&gt;Python Socket 编程——聊天室示例程序&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

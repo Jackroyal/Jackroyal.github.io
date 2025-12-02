@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Socket on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/socket/</link><description>Recent content in Socket on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/socket/index.xml" rel="self" type="application/rss+xml"/><item><title>python学习笔记--一个简单聊天室的实现</title><link>https://jackroyal.github.io/post/python-im/</link><pubDate>Thu, 26 Mar 2015 21:33:35 +0000</pubDate><guid>https://jackroyal.github.io/post/python-im/</guid><description>&lt;p&gt;最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.
+这是来自书上的一个python聊天程序,我照着敲了一遍,然后给扩展了一下,加了多个房间和创建选择房间的功能,写了好久好久,感觉都拖了一个星期了.
+下一步是做一个gui,恩,那将是我的第一个gui程序.&lt;/p&gt;
+&lt;h1 id="先贴一下代码-server5py"&gt;先贴一下代码 server5.py
+&lt;/h1&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# !/usr/bin/env python
+# -*- coding:utf-8-*-
+__author__ = &amp;#39;chen&amp;#39;
+from asyncore import dispatcher
+from asynchat import async_chat
+import socket,asyncore
+PORT = 5005 # 设定程序的端口号
+NAME = &amp;#39;testchat&amp;#39; # 给服务器一个名称
+class EndSession(Exception):pass
+class CommandHandler:
+&amp;#34;&amp;#34;&amp;#34;
+类似标准库中cmd.Cmd的简单命令处理程序
+&amp;#34;&amp;#34;&amp;#34;
+# 如果输入的命令,那么就返回unknown命令
+def unknown(self, session, cmd):
+session.push(&amp;#39;Unknown command: %s \r\n&amp;#39; % cmd)
+def handle(self, session, line):
+if not line.strip():
+return
+parts = line.split(&amp;#39; &amp;#39;, 1)
+cmd = parts[0]
+try:
+line = parts[1].strip()
+except IndexError:line = &amp;#39;&amp;#39;
+meth = getattr(self, &amp;#39;do_&amp;#39; + cmd, None)
+try:
+meth(session, line)
+except TypeError:
+self.unknown(session, cmd)
+# 这个类是聊天房间的类,继承上面的类是为了继承执行命令的功能
+class ChatRoom(CommandHandler):
+def __init__(self, name, server):
+self.server = server
+self.name = name
+self.sessions = []
+def add(self, session):
+self.broadcast(session.name + &amp;#39; has entered the room %s\r\n&amp;#39; % self.name)
+session.push(&amp;#39;you can type &amp;#34;h&amp;#34; for help\r\n&amp;#39;)
+## 因为后面要将用户挪动房间,所以必须保存每个用户的session,这样才能挪动和删除
+self.server.users[session.name] = session
+self.sessions.append(session)
+def remove(self, session):
+try:
+self.sessions.remove(session)
+except: pass # 如果此处的sessions为空或者已经不存在,会出错,此处不上报
+def broadcast(self, line):
+# 广播,只广播到当前房间
+for session in self.sessions:
+session.push(line)
+def do_say(self, session, line):
+# 说话
+self.broadcast(session.name + &amp;#34;:&amp;#34; + line + &amp;#39;\r\n&amp;#39;)
+def do_login(self, session, line):
+# login,其实是实现改名字的功能,懒得去改函数名了
+name = line.strip()
+if not name:
+session.push(&amp;#39;please enter a name\r\n&amp;#39;)
+elif name in self.server.users.keys():
+session.push(&amp;#39;The name %s is taken\r\n&amp;#39; % name)
+session.push(&amp;#39;please try again\r\n&amp;#39;)
+else:
+session.server.users[name] = session.server.users.pop(session.name)
+session.name = name
+session.enter(self)
+self.do_list(session, &amp;#39;&amp;#39;)
+session.push(&amp;#39;type &amp;#34;select name&amp;#34; to choose one room\r\n&amp;#39;)
+# 查看当前房间有哪些人
+def do_look(self, session, line):
+session.push(&amp;#39;the following are in this room:\r\n&amp;#39;)
+for other in self.sessions:
+session.push(other.name + &amp;#34;\r\n&amp;#34;)
+# 查看当前在线的用户,所有房间的用户
+def do_who(self, session, line):
+session.push(&amp;#39;the following are logged in:\r\n&amp;#39;)
+for name in self.server.users:
+session.push(name + &amp;#39;\r\n&amp;#39;)
+# 查看当前所有的房间
+def do_list(self, session, line):
+session.push(&amp;#39;the room list is below\r\n&amp;#39;)
+session.push(&amp;#39; &amp;#39;.join(self.server.rooms) + &amp;#39;\r\n&amp;#39;)
+# 选择房间
+def do_select(self, session, line):
+name = line.strip()
+if not name:
+session.push(&amp;#39;please enter a room name\r\n&amp;#39;)
+elif name in self.server.rooms.keys():
+session.enter(self.server.rooms[name])
+self.broadcast(&amp;#39; %s ,welcome to join %s\r\n&amp;#39;% (session.name, name))
+# 输出帮助
+def do_h(self, session, line):
+session.push(&amp;#39;you can use this commands:\r\n1,who to see who is on this server(online and offline)\r\n2,&amp;#39;
+&amp;#39;list to see how many room are avaliable\r\n3,look to see who are in this room\r\n4,login to login online and &amp;#39;
+&amp;#39;change a name\r\n5,create to create a new room&amp;#39;)
+# 创建新房间
+def do_create(self, session, line):
+name = line.strip()
+if not name:
+session.push(&amp;#39;please enter a name\r\n&amp;#39;)
+elif name in self.server.rooms.keys():
+session.push(&amp;#39;The room name %s is taken\r\n&amp;#39; % name)
+session.push(&amp;#39;please try again\r\n&amp;#39;)
+else:
+ChatRoom(name, self.server)
+session.server.rooms[name] = ChatRoom(name, self.server)
+session.push(&amp;#34;the room %s create successful\r\n&amp;#34; % name)
+session.enter(session.server.rooms[name])
+# 每个用户回话,这个是重点类
+class ChatSession(async_chat):
+def __init__(self, server, sock):
+async_chat.__init__(self, sock)
+self.server = server
+self.set_terminator(&amp;#39;\r\n&amp;#39;)
+self.data = []
+self.name = &amp;#39;visitor&amp;#39; + str(len(server.users))# 初始化用户名,用visitor1之类来表示
+self.room = self.server.main_room
+self.enter(self.server.main_room)
+def enter(self, room):
+try:
+cur = self.room
+except AttributeError: pass
+else: cur.remove(self)
+self.room = room
+room.add(self)
+# 当用户有输入的时候
+def collect_incoming_data(self, data):
+self.data.append(data)
+# 当用户输入终止符的时候
+def found_terminator(self):
+line = &amp;#39;&amp;#39;.join(self.data)
+self.data = []
+try:
+self.room.handle(self, line)
+except EndSession:
+self.handle_close()
+# 关闭用户回话
+def handle_close(self):
+async_chat.handle_close(self)
+# self.enter()
+# 服务器类,这个也是重点类
+class ChatServer(dispatcher):
+def __init__(self, port, name):
+dispatcher.__init__(self)
+self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
+# 端口复用
+self.set_reuse_addr()
+self.bind((&amp;#39;&amp;#39;, port))
+self.listen(5)
+self.sessions = {}
+self.name = name
+self.users = {}
+self.rooms = {}
+# 新建一个房间hall,因为每个初始登陆的用户没有房间,但是操作是依赖与ChatRoom类的,所以给一个初始默认的房间
+self.main_room = ChatRoom(&amp;#39;hall&amp;#39;, self)
+self.rooms[self.main_room.name] = self.main_room
+def handle_accept(self):
+conn,addr = self.accept()
+ChatSession(self, conn)
+print &amp;#39;connection attempt from &amp;#39;, addr[0]
+if __name__ == &amp;#34;__main__&amp;#34;:
+print &amp;#39;server start&amp;#39;
+s = ChatServer(PORT, NAME)
+try:
+asyncore.loop()
+except KeyboardInterrupt: print
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果如图所示
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
+loading="lazy"
+alt="运行效果"
+&gt;&lt;/p&gt;</description></item><item><title>python学习笔记--socket编程端口复用</title><link>https://jackroyal.github.io/post/python-socket-port-reuse/</link><pubDate>Wed, 18 Mar 2015 08:47:02 +0000</pubDate><guid>https://jackroyal.github.io/post/python-socket-port-reuse/</guid><description>&lt;p&gt;最近在学习socket编程,遇到一个问题:
+我先bind一个端口后,如果通过ctr+c关闭进程.接下来执行程序的时候,就会提示&lt;code&gt;socket.error: Address already in use&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;照例google一番,找到&lt;a class="link" href="http://blog.csdn.net/xl_xunzhao/article/details/3130037" target="_blank" rel="noopener"
+&gt;这个&lt;/a&gt;.博主说的情况和我的一样.
+我还在stackoverflow上找到&lt;a class="link" href="http://stackoverflow.com/questions/4465959/python-errno-98-address-already-in-use" target="_blank" rel="noopener"
+&gt;这个&lt;/a&gt;.
+修改后代码如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# 下面这行是关健
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server_socket.bind((&amp;#39;&amp;#39;, PORT))
+server_socket.listen(5)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就搞定了.&lt;/p&gt;
+&lt;p&gt;下面的代码是socket编程敲得两个小例子,基于socket的聊天小程序都是别人的东西,只是练习一下,源地址在本文最后.&lt;/p&gt;
+&lt;h2 id="多线程版本服务器端程序server2py"&gt;多线程版本服务器端程序server2.py
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# !/usr/bin/env python
+# -*- coding:utf-8-*-
+__author__ = &amp;#39;chen&amp;#39;
+import socket,sys
+from thread import *
+HOST = &amp;#39;&amp;#39;
+PORT = 8888
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+print &amp;#39;socket created&amp;#39;
+try:
+s.bind((HOST, PORT))
+except socket.error, msg:
+print &amp;#39;bind failed.Error code: |||%S Message: %s&amp;#39; %(str(msg[0]), msg[1])
+sys.exit()
+print &amp;#39;socket bind complete&amp;#39;
+s.listen(10)
+print &amp;#39;socket now listening&amp;#39;
+def clientthread(conn):
+conn.send(&amp;#39;welcome to the server.Type something and hit enter\n&amp;#39;)
+while True:
+data = conn.recv(1024)
+reply = &amp;#39;ok...&amp;#39; + data
+if not data:
+break
+conn.sendall(reply)
+conn.close()
+while 1:
+conn, addr = s.accept()
+print &amp;#39;connected with %s : %s&amp;#39; %(addr[0],str(addr[1]))
+start_new_thread(clientthread, (conn,))
+s.close()
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;直接telnet连接socket,就可以调试&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;telnet localhost 8888
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="改良版带广播的聊天室程序server3py"&gt;改良版,带广播的聊天室程序server3.py
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# !/usr/bin/env python
+# -*- coding:utf-8-*-
+__author__ = &amp;#39;chen&amp;#39;
+import socket, select
+def broadcast_data(sock, message):
+for socket in CONNECTION_LIST:
+if socket != server_socket != sock:
+try:
+socket.send(message)
+except msg:
+socket.close()
+CONNECTION_LIST.remove(socket)
+if __name__ == &amp;#34;__main__&amp;#34;:
+CONNECTION_LIST = []
+RECV_BUFFER = 4096
+PORT = 5000
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server_socket.bind((&amp;#39;&amp;#39;, PORT))
+server_socket.listen(5)
+CONNECTION_LIST.append(server_socket)
+print &amp;#34;chat server started on port %s&amp;#34; % str(PORT)
+while 1:
+read_sockets, write_sockets,error_sockets = select.select(CONNECTION_LIST, [], [])
+for sock in read_sockets:
+if sock == server_socket:
+sockfd,addr = server_socket.accept()
+CONNECTION_LIST.append(sockfd)
+print &amp;#34;client (%s, %s) connected&amp;#34; % addr
+broadcast_data(sockfd, &amp;#34;[%s:%s] entered room\n&amp;#34; % addr)
+else:
+try:
+data = sock.recv(RECV_BUFFER)
+if data:
+print &amp;#34;[%s:%s]&amp;#34; % (str(sock.getpeername()), data)
+broadcast_data(sock, &amp;#34;[%s:%s]&amp;#34; % (str(sock.getpeername()), data))
+except msg:
+print msg
+broadcast_data(sock, &amp;#34;client (%s, %s) is offline &amp;#34;% addr)
+print &amp;#34;client (%s,%s) is offline &amp;#34; % addr
+sock.close()
+CONNECTION_LIST.remove(sock)
+continue
+server_socket.close()
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="客户端程序client3py"&gt;客户端程序client3.py
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;# !/usr/bin/env python
+# -*- coding:utf-8-*-
+__author__ = &amp;#39;chen&amp;#39;
+import socket,select,string,sys
+def prompt():
+sys.stdout.write(&amp;#39;[you]&amp;#39;)
+sys.stdout.flush()
+if __name__ == &amp;#34;__main__&amp;#34;:
+if(len(sys.argv)&amp;lt;3):
+print &amp;#39;usage: python client3.py hostname port&amp;#39;
+sys.exit()
+host = sys.argv[1]
+port = int(sys.argv[2])
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.settimeout(2)
+try:
+s.connect((host, port))
+except:
+print &amp;#39;unable to connect&amp;#39;
+sys.exit()
+print &amp;#39;connected to remote host. start sending messages&amp;#39;
+prompt()
+while 1:
+rlist = [sys.stdin, s]
+read_list, write_list, error_list = select.select(rlist, [], [])
+for sock in read_list:
+if sock == s:
+data = sock.recv(4096)
+if not data:
+print &amp;#39;\nDisconnected from chat server&amp;#39;
+sys.exit()
+else:
+sys.stdout.write(data)
+prompt()
+else:
+msg = sys.stdin.readline()
+s.send(msg)
+prompt()
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.cnblogs.com/hazir/p/python_socket_programming.html" target="_blank" rel="noopener"
+&gt;Python Socket 网络编程&lt;/a&gt;
+2 &lt;a class="link" href="http://www.cnblogs.com/hazir/p/python_chat_room.html" target="_blank" rel="noopener"
+&gt;Python Socket 编程——聊天室示例程序&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

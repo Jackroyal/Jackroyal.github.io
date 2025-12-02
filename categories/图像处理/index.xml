@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>图像处理 on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/</link><description>Recent content in 图像处理 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/index.xml" rel="self" type="application/rss+xml"/><item><title>opencv中LBPH的人脸识别代码分析</title><link>https://jackroyal.github.io/post/opencv-lbph-source-code-analysis/</link><pubDate>Wed, 06 May 2015 22:32:42 +0000</pubDate><guid>https://jackroyal.github.io/post/opencv-lbph-source-code-analysis/</guid><description>&lt;p&gt;我开始用opencv的时候，用的是opencv最新的3.0版本。不过我死活找不到LBPH的代码，网上的教程也都是opencv 2.4的，so 我也去下一份2.4的源码来读读。&lt;/p&gt;
+&lt;p&gt;opencv目前支持一下三种方法来实现人脸识别：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Eigenfaces特征脸createEigenFaceRecognizer()&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Fisherfaces createFisherFaceRecognizer()&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Local Binary Patterns Histograms局部二值直方图 createLBPHFaceRecognizer()&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;我今天读了一下LBPH的代码。
+自动人脸识别就是如何从一幅图像中提取有意义的特征，把它们放入一种有用的表示方式，然后对他们进行一些分类。&lt;!-- raw HTML omitted --&gt;特征脸方法描述了一个全面的方法来识别人脸：面部图像是一个点，这个点是从高维图像空间找到它在低维空间的表示，这样分类变得很简单。低维子空间低维是使用主元分析(Principal Component Analysis,PCA)找到的，它可以找拥有最大方差的那个轴。虽然这样的转换是从最佳重建角度考虑的，但是他没有把标签问题考虑进去。想象一个情况，如果变化是基于外部来源，比如光照。轴的最大方差不一定包含任何有鉴别性的信息，因此此时的分类是不可能的。因此，一个使用线性鉴别(Linear Discriminant Analysis,LDA)的特定类投影方法被提出来解决人脸识别问题。其中一个基本的想法就是，使类内方差最小的同时，使类外方差最大。&lt;!-- raw HTML omitted --&gt;近年来，各种局部特征提取方法出现。为了避免输入的图像的高维数据，仅仅使用的局部特征描述图像的方法被提出，提取的特征(很有希望的)对于局部遮挡、光照变化、小样本等情况更强健。有关局部特征提取的方法有盖伯小波(Gabor Waelets)，离散傅立叶变换(Discrete Cosinus Transform,DCT)，局部二值模式(Local Binary Patterns,LBP)。使用什么方法来提取时域空间的局部特征依旧是一个开放性的研究问题，因为空间信息是潜在有用的信息。&lt;/p&gt;</description></item><item><title>使用opencv实现人脸检测</title><link>https://jackroyal.github.io/post/face-detection/</link><pubDate>Sun, 26 Apr 2015 12:54:24 +0000</pubDate><guid>https://jackroyal.github.io/post/face-detection/</guid><description>&lt;p&gt;这两个星期，都在搞这个，就把代码都分享一下，太烂，就不分享到github了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# !/usr/bin/env python&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# -*- coding:utf-8-*-&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;__author__ &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;chen&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; cv2
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; Image
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; ImageDraw
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; sys&lt;span style="color:#f92672"&gt;,&lt;/span&gt;os
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;detectFaces&lt;/span&gt;(image_name):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; img &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;imread(image_name)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; face_cascade &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;CascadeClassifier(&lt;span style="color:#e6db74"&gt;&amp;#39;../data2/haarcascades/haarcascade_frontalface_alt.xml&amp;#39;&lt;/span&gt;)&lt;span style="color:#75715e"&gt;# 加载级联分类器，这里使用的是intel训练出来的人脸识别分类器&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; img&lt;span style="color:#f92672"&gt;.&lt;/span&gt;ndim &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;3&lt;/span&gt;:&lt;span style="color:#75715e"&gt;# 判断图片是否是灰度图像，如果img.ndim==3那就表示不是灰度图像&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; gray &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cvtColor(img, cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;COLOR_BGR2GRAY)&lt;span style="color:#75715e"&gt;# 将图片转化为灰度图像&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; gray &lt;span style="color:#f92672"&gt;=&lt;/span&gt; img
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; faces &lt;span style="color:#f92672"&gt;=&lt;/span&gt; face_cascade&lt;span style="color:#f92672"&gt;.&lt;/span&gt;detectMultiScale(gray, scaleFactor&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1.2&lt;/span&gt;, minNeighbors&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;4&lt;/span&gt;, minSize&lt;span style="color:#f92672"&gt;=&lt;/span&gt;(&lt;span style="color:#ae81ff"&gt;30&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;30&lt;/span&gt;), flags &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;CASCADE_SCALE_IMAGE)&lt;span style="color:#75715e"&gt;# 核心操作，返回图片中所有的人脸的坐标和宽高度&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; result &lt;span style="color:#f92672"&gt;=&lt;/span&gt; []
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; (x, y, width, height) &lt;span style="color:#f92672"&gt;in&lt;/span&gt; faces:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print (x, y, width, height)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; result&lt;span style="color:#f92672"&gt;.&lt;/span&gt;append((x, y, x&lt;span style="color:#f92672"&gt;+&lt;/span&gt;width, y&lt;span style="color:#f92672"&gt;+&lt;/span&gt;height))&lt;span style="color:#75715e"&gt;# 将原始数据，转化为人脸的四个点的坐标&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; result
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;drawFaces&lt;/span&gt;(image_name):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; faces &lt;span style="color:#f92672"&gt;=&lt;/span&gt; detectFaces(image_name)&lt;span style="color:#75715e"&gt;# 此处的返回值是一个元组，(x, y, width, height)，每一个元组都包括人脸的（x,y）坐标，还有人脸的宽度和高度，有这些数据，我们就可以把人脸标记出来，比如画一个矩形框出来&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print faces
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; faces:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; imga &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;imread(image_name)&lt;span style="color:#75715e"&gt;# 读取图片&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; draw_rects(imga, faces, (&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;,&lt;span style="color:#ae81ff"&gt;255&lt;/span&gt;,&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;))&lt;span style="color:#75715e"&gt;# 画矩形标记&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;imshow(&lt;span style="color:#e6db74"&gt;&amp;#39;img&amp;#39;&lt;/span&gt;, imga)&lt;span style="color:#75715e"&gt;# 显示修改后的矩形&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;waitKey(&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;draw_rects&lt;/span&gt;(img, rects, color):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; x1, y1, x2, y2 &lt;span style="color:#f92672"&gt;in&lt;/span&gt; rects:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;rectangle(img, (x1, y1), (x2, y2), color, &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;)&lt;span style="color:#75715e"&gt;# 调用cv2的矩形函数，画矩形&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;saveFaces&lt;/span&gt;(image_name):&lt;span style="color:#75715e"&gt;# 将人脸截取并保存成图片&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; faces &lt;span style="color:#f92672"&gt;=&lt;/span&gt; detectFaces(image_name)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; faces:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; save_dir &lt;span style="color:#f92672"&gt;=&lt;/span&gt; image_name&lt;span style="color:#f92672"&gt;.&lt;/span&gt;split(&lt;span style="color:#e6db74"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;)[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;] &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;_faces_&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;not&lt;/span&gt; os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;path&lt;span style="color:#f92672"&gt;.&lt;/span&gt;isdir(save_dir):&lt;span style="color:#75715e"&gt;# 检测目录是否存在，如果不存在那就创建目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;mkdir(save_dir)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; count &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; (x1, y1, x2, y2) &lt;span style="color:#f92672"&gt;in&lt;/span&gt; faces:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; imga &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;imread(image_name)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; file_name &lt;span style="color:#f92672"&gt;=&lt;/span&gt; os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;path&lt;span style="color:#f92672"&gt;.&lt;/span&gt;join(save_dir,str(count)&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;.jpg&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; roi &lt;span style="color:#f92672"&gt;=&lt;/span&gt; imga[y1:y2,x1:x2]&lt;span style="color:#75715e"&gt;# 这一步是重点，他就像取一个数组一样，把人脸的部分保存出来&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;imwrite(file_name,cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cvtColor(cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;resize(roi,(&lt;span style="color:#ae81ff"&gt;92&lt;/span&gt;,&lt;span style="color:#ae81ff"&gt;112&lt;/span&gt;)), cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;COLOR_BGR2GRAY))&lt;span style="color:#75715e"&gt;# 把图片的size重新设定维（92,112），并将图片转换为灰度图像&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# cv2.imshow(&amp;#39;aaa&amp;#39;,imga)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;drawFaces(&lt;span style="color:#e6db74"&gt;&amp;#39;../at/chen.jpg&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;saveFaces(&lt;span style="color:#e6db74"&gt;&amp;#39;../at/chen.jpg&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里面的截取人脸并保存的saveFaces函数，我觉得还不错。网上找到的代码，调用了Image库，我的代码全部都是用cv2搞定的，没有用Image库。画矩形也是，我也都是用cv2自带的东西完成的。
+我用以上代码生成的数据，去进行人脸识别，惨不忍睹。&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://blog.csdn.net/u012162613/article/details/43523507" target="_blank" rel="noopener"
+&gt;Python-OpenCV人脸检测(代码)&lt;/a&gt;
+2 &lt;a class="link" href="http://wangwei007.blog.51cto.com/68019/1104940" target="_blank" rel="noopener"
+&gt;python os.path模块常用方法详解&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸识别</title><link>https://jackroyal.github.io/post/face-recognizer/</link><pubDate>Sun, 26 Apr 2015 10:50:00 +0000</pubDate><guid>https://jackroyal.github.io/post/face-recognizer/</guid><description>&lt;p&gt;最近搞了两个星期的opencv，人脸识别方向，感觉没有什么前途，看不到论文在哪里啊。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# !/usr/bin/env python&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# -*- coding:utf-8-*-&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; os
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; sys
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; cv2
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; numpy &lt;span style="color:#66d9ef"&gt;as&lt;/span&gt; np
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;z &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {} &lt;span style="color:#75715e"&gt;# 存储关于每张图片对应的lable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;for_pre &lt;span style="color:#f92672"&gt;=&lt;/span&gt; [] &lt;span style="color:#75715e"&gt;# 存储用来进行测试的图片，规则是每个人10张图，5张用来训练，5张用来测试&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;normalize&lt;/span&gt;(X, low, high, dtype&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&amp;#34;对数据进行正常化处理，让其处于最高和最低值之间.&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; X &lt;span style="color:#f92672"&gt;=&lt;/span&gt; np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;asarray(X)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; minX, maxX &lt;span style="color:#f92672"&gt;=&lt;/span&gt; np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;min(X), np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;max(X)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# normalize to [0...1].&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; X &lt;span style="color:#f92672"&gt;=&lt;/span&gt; X &lt;span style="color:#f92672"&gt;-&lt;/span&gt; float(minX)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; X &lt;span style="color:#f92672"&gt;=&lt;/span&gt; X &lt;span style="color:#f92672"&gt;/&lt;/span&gt; float((maxX &lt;span style="color:#f92672"&gt;-&lt;/span&gt; minX))
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# scale to [low...high].&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; X &lt;span style="color:#f92672"&gt;=&lt;/span&gt; X &lt;span style="color:#f92672"&gt;*&lt;/span&gt; (high&lt;span style="color:#f92672"&gt;-&lt;/span&gt;low)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; X &lt;span style="color:#f92672"&gt;=&lt;/span&gt; X &lt;span style="color:#f92672"&gt;+&lt;/span&gt; low
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; dtype &lt;span style="color:#f92672"&gt;is&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;asarray(X)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;asarray(X, dtype&lt;span style="color:#f92672"&gt;=&lt;/span&gt;dtype)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;read_images&lt;/span&gt;(path, sz&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&amp;#34;从文件夹中读取图像，并且将其大小限制在一定范围之内
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 参数:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; path: 图片的路径
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; sz: 设定图像的大小以元组的形式，例如(92,112)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 返回值:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 返回一个list的数据[X,y]
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; X: 一个numpy的数组，里面存储的是所有的图片的矩阵.
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; y:一个list存储的，都是与X中图片对应的lable
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; c &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; X,y &lt;span style="color:#f92672"&gt;=&lt;/span&gt; [], []
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; dirname, dirnames, filenames &lt;span style="color:#f92672"&gt;in&lt;/span&gt; os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;walk(path):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; subdirname &lt;span style="color:#f92672"&gt;in&lt;/span&gt; dirnames:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; subject_path &lt;span style="color:#f92672"&gt;=&lt;/span&gt; os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;path&lt;span style="color:#f92672"&gt;.&lt;/span&gt;join(dirname, subdirname)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; filename &lt;span style="color:#f92672"&gt;in&lt;/span&gt; os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;listdir(subject_path):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;try&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; im &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;imread(os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;path&lt;span style="color:#f92672"&gt;.&lt;/span&gt;join(subject_path, filename), cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;IMREAD_GRAYSCALE)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# resize to given size (if given)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; (sz &lt;span style="color:#f92672"&gt;is&lt;/span&gt; &lt;span style="color:#f92672"&gt;not&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; im &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;resize(im, sz)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; y&lt;span style="color:#f92672"&gt;.&lt;/span&gt;count(c) &lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;4&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; for_pre&lt;span style="color:#f92672"&gt;.&lt;/span&gt;append({&lt;span style="color:#e6db74"&gt;&amp;#39;no&amp;#39;&lt;/span&gt;:c,&lt;span style="color:#e6db74"&gt;&amp;#39;src&amp;#39;&lt;/span&gt;:np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;asarray(im, dtype&lt;span style="color:#f92672"&gt;=&lt;/span&gt;np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;uint8)})
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; X&lt;span style="color:#f92672"&gt;.&lt;/span&gt;append(np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;asarray(im, dtype&lt;span style="color:#f92672"&gt;=&lt;/span&gt;np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;uint8))
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; y&lt;span style="color:#f92672"&gt;.&lt;/span&gt;append(c)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;global&lt;/span&gt; z
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; z[os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;path&lt;span style="color:#f92672"&gt;.&lt;/span&gt;join(subject_path, filename)] &lt;span style="color:#f92672"&gt;=&lt;/span&gt; c
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;except&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;IOError&lt;/span&gt;, (errno, strerror):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;I/O error(&lt;/span&gt;&lt;span style="color:#e6db74"&gt;{0}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;): &lt;/span&gt;&lt;span style="color:#e6db74"&gt;{1}&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;format(errno, strerror)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;except&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;Unexpected error:&amp;#34;&lt;/span&gt;, sys&lt;span style="color:#f92672"&gt;.&lt;/span&gt;exc_info()[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;raise&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; c &lt;span style="color:#f92672"&gt;=&lt;/span&gt; c&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; [X,y]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;prediction&lt;/span&gt;(model):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;&amp;#34;&amp;#34;图像预测
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 参数:
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; model: 就是图片训练的那个model
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 数据集中每个人存储了10张图片，我把其中的5张存储到for_pre，作为训练数据。用已知的lable和预测的lable作比较，得出图片识别正确的概率
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; &amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tn &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt; &lt;span style="color:#75715e"&gt;# 识别正确的图片数&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; item &lt;span style="color:#f92672"&gt;in&lt;/span&gt; for_pre:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; [p_label, p_confidence] &lt;span style="color:#f92672"&gt;=&lt;/span&gt; model&lt;span style="color:#f92672"&gt;.&lt;/span&gt;predict(cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;resize(item[&lt;span style="color:#e6db74"&gt;&amp;#39;src&amp;#39;&lt;/span&gt;],(&lt;span style="color:#ae81ff"&gt;92&lt;/span&gt;,&lt;span style="color:#ae81ff"&gt;112&lt;/span&gt;)))
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; p_label &lt;span style="color:#f92672"&gt;==&lt;/span&gt; item[&lt;span style="color:#e6db74"&gt;&amp;#39;no&amp;#39;&lt;/span&gt;]:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tn &lt;span style="color:#f92672"&gt;=&lt;/span&gt; tn&lt;span style="color:#f92672"&gt;+&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#39;the answer is &lt;/span&gt;&lt;span style="color:#e6db74"&gt;%d&lt;/span&gt;&lt;span style="color:#e6db74"&gt;,&amp;#39;&lt;/span&gt; &lt;span style="color:#f92672"&gt;%&lt;/span&gt; item[&lt;span style="color:#e6db74"&gt;&amp;#39;no&amp;#39;&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;Predicted label = &lt;/span&gt;&lt;span style="color:#e6db74"&gt;%d&lt;/span&gt;&lt;span style="color:#e6db74"&gt; (confidence=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;%.2f&lt;/span&gt;&lt;span style="color:#e6db74"&gt;)&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;%&lt;/span&gt; (p_label, p_confidence)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;总共有&lt;/span&gt;&lt;span style="color:#e6db74"&gt;%d&lt;/span&gt;&lt;span style="color:#e6db74"&gt;次预测，其中正确次数为&lt;/span&gt;&lt;span style="color:#e6db74"&gt;%d&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;%&lt;/span&gt;(len(for_pre),tn)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; __name__ &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;__main__&amp;#34;&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# This is where we write the images, if an output_dir is given&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# in command line:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; out_dir &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# You&amp;#39;ll need at least a path to your image data, please see&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# the tutorial coming with this source code on how to prepare&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# your image data:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(sys&lt;span style="color:#f92672"&gt;.&lt;/span&gt;argv) &lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;USAGE: face_rec.py &amp;lt;/path/to/images&amp;gt; [&amp;lt;/path/to/store/images/at&amp;gt;]&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; sys&lt;span style="color:#f92672"&gt;.&lt;/span&gt;exit()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Now read in the image data. This must be a valid path!&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; [X,y] &lt;span style="color:#f92672"&gt;=&lt;/span&gt; read_images(sys&lt;span style="color:#f92672"&gt;.&lt;/span&gt;argv[&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;], (&lt;span style="color:#ae81ff"&gt;92&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;112&lt;/span&gt;))
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Convert labels to 32bit integers. This is a workaround for 64bit machines,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# because the labels will truncated else. This will be fixed in code as&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# soon as possible, so Python users don&amp;#39;t need to know about this.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Thanks to Leo Dirac for reporting:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; y &lt;span style="color:#f92672"&gt;=&lt;/span&gt; np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;asarray(y, dtype&lt;span style="color:#f92672"&gt;=&lt;/span&gt;np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;int32)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# If a out_dir is given, set it:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; len(sys&lt;span style="color:#f92672"&gt;.&lt;/span&gt;argv) &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;3&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; out_dir &lt;span style="color:#f92672"&gt;=&lt;/span&gt; sys&lt;span style="color:#f92672"&gt;.&lt;/span&gt;argv[&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;]
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Create the Eigenfaces model. We are going to use the default&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# parameters for this simple example, please read the documentation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# for thresholding:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; model &lt;span style="color:#f92672"&gt;=&lt;/span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;createEigenFaceRecognizer()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Read&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Learn the model. Remember our function returns Python lists,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# so we use np.asarray to turn them into NumPy lists to make&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# the OpenCV wrapper happy:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; model&lt;span style="color:#f92672"&gt;.&lt;/span&gt;train(np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;asarray(X), np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;asarray(y))
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; prediction(model) &lt;span style="color:#75715e"&gt;# 图片预测&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# You can see the available parameters with getParams():&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print model&lt;span style="color:#f92672"&gt;.&lt;/span&gt;getParams()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Now let&amp;#39;s get some data:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; mean &lt;span style="color:#f92672"&gt;=&lt;/span&gt; model&lt;span style="color:#f92672"&gt;.&lt;/span&gt;getMat(&lt;span style="color:#e6db74"&gt;&amp;#34;mean&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print out_dir &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;/out.xml&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; f &lt;span style="color:#f92672"&gt;=&lt;/span&gt; open(out_dir &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;/out.xml&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; model&lt;span style="color:#f92672"&gt;.&lt;/span&gt;save(out_dir &lt;span style="color:#f92672"&gt;+&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;/out.xml&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; eigenvectors &lt;span style="color:#f92672"&gt;=&lt;/span&gt; model&lt;span style="color:#f92672"&gt;.&lt;/span&gt;getMat(&lt;span style="color:#e6db74"&gt;&amp;#34;eigenvectors&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# We&amp;#39;ll save the mean, by first normalizing it:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; mean_norm &lt;span style="color:#f92672"&gt;=&lt;/span&gt; normalize(mean, &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;, &lt;span style="color:#ae81ff"&gt;255&lt;/span&gt;, dtype&lt;span style="color:#f92672"&gt;=&lt;/span&gt;np&lt;span style="color:#f92672"&gt;.&lt;/span&gt;uint8)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; mean_resized &lt;span style="color:#f92672"&gt;=&lt;/span&gt; mean_norm&lt;span style="color:#f92672"&gt;.&lt;/span&gt;reshape(X[&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;]&lt;span style="color:#f92672"&gt;.&lt;/span&gt;shape)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; out_dir &lt;span style="color:#f92672"&gt;is&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;imshow(&lt;span style="color:#e6db74"&gt;&amp;#34;mean&amp;#34;&lt;/span&gt;, mean_resized)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;imwrite(&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;&lt;span style="color:#e6db74"&gt;%s&lt;/span&gt;&lt;span style="color:#e6db74"&gt;/mean.png&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;%&lt;/span&gt; (out_dir), mean_resized)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Turn the first (at most) 16 eigenvectors into grayscale&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# images. You could also use cv::normalize here, but sticking&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# to NumPy is much easier for now.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Note: eigenvectors are stored by column:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# for i in xrange(min(len(X), 16)):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# eigenvector_i = eigenvectors[:,i].reshape(X[0].shape)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# eigenvector_i_norm = normalize(eigenvector_i, 0, 255, dtype=np.uint8)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# # Show or save the images:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# if out_dir is None:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# cv2.imshow(&amp;#34;%s/eigenface_%d&amp;#34; % (out_dir,i), eigenvector_i_norm)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# else:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# cv2.imwrite(&amp;#34;%s/eigenface_%d.png&amp;#34; % (out_dir,i), eigenvector_i_norm)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# Show the images:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print z
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; out_dir &lt;span style="color:#f92672"&gt;is&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;waitKey(&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;代码执行效果如下
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
+loading="lazy"
+alt="人脸识别执行效果"
+&gt;
+我在这里输出的是那些预测错误的。&lt;code&gt;总共有200次预测，其中正确次数为186。&lt;/code&gt;这预测率有点低啊，我用的数据都是来自于&lt;a class="link" href="http://www.cl.cam.ac.uk/research/dtg/attarchive/facedatabase.html" target="_blank" rel="noopener"
+&gt; AT&amp;amp;T Facedatabase&lt;/a&gt;。一共40个人，每个人10张图，图片宽高是92*112像素，全部是灰度图像。
+至于如何提高图片识别的效率，我也不知道。&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html" target="_blank" rel="noopener"
+&gt;http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html&lt;/a&gt;
+2 &lt;a class="link" href="https://code.google.com/p/pythonxy/source/browse/src/python/OpenCV/DOC/samples/python2/facerec_demo.py?repo=xy-27&amp;amp;r=a2e41c7a3cb6db536b948747872cab71c696b44e" target="_blank" rel="noopener"
+&gt;python调用opencv实现人脸识别&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

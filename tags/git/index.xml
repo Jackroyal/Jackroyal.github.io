@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/git/</link><description>Recent content in Git on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</title><link>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</link><pubDate>Sun, 06 Mar 2016 15:50:46 +0000</pubDate><guid>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</guid><description>&lt;p&gt;上一篇文章&lt;a class="link" href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener"
+&gt;解决 Github Pages 禁止百度爬虫的方法&lt;/a&gt;,提到了解决百度爬虫被github禁用掉的方法.
+&lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;
+然后今天去上gitcafe,偶然看到这个
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
+loading="lazy"
+alt="GitCafe 项目迁移至 Coding.net 公告"
+&gt;
+额(⊙o⊙)…,holly shit.不过没办法,人家都被收购了,我们只能改变策略了.
+话说,两家都是做代码托管的,这也是顺(bao)应(tuan)潮(qu)流(nuan)咩?&lt;/p&gt;
+&lt;p&gt;思路跟原来差不多,就是我们把其中的gitcafe内容替换成coding.net就好,以下简称coding.
+&lt;code&gt;把博客同时发布到github pages和coding pages.然后使用dnspod设置域名解析,国内线路解析到coding.net,国外线路解析到github.&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;注册coding账号&lt;/li&gt;
+&lt;li&gt;新建一个项目,名字与你的用户名相同,比如我的名字是&lt;code&gt;Jackroyal&lt;/code&gt;,新建一个项目名为&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;添加ssh公钥&lt;/li&gt;
+&lt;li&gt;新建coding-pages分支&lt;/li&gt;
+&lt;li&gt;开启pages服务&lt;/li&gt;
+&lt;li&gt;修改hexo配置&lt;/li&gt;
+&lt;li&gt;修改dns设置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="1-注册coding账号"&gt;1 注册coding账号
+&lt;/h1&gt;&lt;p&gt;这个很简单不必说,注册需要填写用户名,邮箱和密码,比如我的用户名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="2-新建和用户名同名的项目"&gt;2 新建和用户名同名的项目
+&lt;/h1&gt;&lt;p&gt;在注册好账号以后,我们就去新建一个项目,方法和gitcafe不同和gihub类似,就是和用户名同名,一模一样的就行.我的项目名是&lt;code&gt;Jackroyal&lt;/code&gt;,项目属性&lt;code&gt;公开&lt;/code&gt;
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
+loading="lazy"
+alt="新建同名项目"
+&gt;&lt;/p&gt;
+&lt;h1 id="3-添加ssh公钥"&gt;3 添加&lt;code&gt;ssh&lt;/code&gt;公钥
+&lt;/h1&gt;&lt;p&gt;首先,我们提交代码库有两种方式,一种是https,一种是ssh,两种方式都可以,但是因为我们使用hexo来发布博客的时候是没有地方输入密码的,所以我们才考虑使用&lt;code&gt;ssh&lt;/code&gt;方式,不过也不一定,我们还是可以使用https方式来提交hexo的.&lt;/p&gt;
+&lt;h2 id="31-使用ssh方式发布博客"&gt;3.1 使用ssh方式发布博客
+&lt;/h2&gt;&lt;p&gt;我们只需要找到本地的ssh公钥,然后上传到coding上去就行,点击&lt;a class="link" href="https://coding.net/user/account/setting/keys" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;设置.查看本地ssh公钥的方法和上篇博客一样.
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+loading="lazy"
+alt="使用git客户端查看ssh公钥私钥"
+&gt;
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+loading="lazy"
+alt="查看公钥"
+&gt;
+复制那一段,然后在coding上添加上去就行&lt;/p&gt;
+&lt;h2 id="32-使用https方式发布"&gt;3.2 使用https方式发布
+&lt;/h2&gt;&lt;p&gt;如果非要使用https方式,也是可以的,核心思路就是在本地做一次&lt;code&gt;push&lt;/code&gt;操作就行.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我们先&lt;code&gt;git clone&lt;/code&gt;命令,我的项目就是&lt;code&gt;git clone https://git.coding.net/Jackroyal/Jackroyal.git&lt;/code&gt;得到coding上刚才新建的项目.&lt;/li&gt;
+&lt;li&gt;克隆完成后,接着我们进到项目目录,我们新建一个文件或者修改一个文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git add .&lt;/code&gt;,把修改提交到暂存区&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git commit -m &amp;quot;测试提交&amp;quot;&lt;/code&gt;,将修改提交到本地仓库&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git push&lt;/code&gt;,将修改提交到远程仓库&lt;/li&gt;
+&lt;li&gt;接下来,会让你输入用户名和密码,你输入&lt;/li&gt;
+&lt;li&gt;然后项目就会提交,因为这个状态会保留下来,你下次在提交就可以不用输入用户名和密码了,这样为我们使用hexo发布代码提供条件
+ps:这种方式,可能过一段时间又不行了,报错&lt;code&gt;could not read Username for 'https://git.coding.net': Invalid argument&lt;/code&gt;,你再做一次上面的操作就行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="4-新建coding-pages分支"&gt;4 新建coding-pages分支
+&lt;/h1&gt;&lt;p&gt;当我们可以提交代码的时候,我们先来新建分支,和gitcafe差不多,它需要一个特别的分支名字,而不是像github默认的master分支,名字是&lt;code&gt;coding-pages&lt;/code&gt;,如下图所示
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
+loading="lazy"
+alt="新建coding分支"
+&gt;
+我们把它设为默认分支&lt;/p&gt;
+&lt;h1 id="5-开启pages服务"&gt;5 开启pages服务
+&lt;/h1&gt;&lt;p&gt;接下来我们需要手动去开启pages服务.在项目主页的&lt;code&gt;pages&lt;/code&gt;选项卡,点击开启服务,同时我们,添加域名绑定
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
+loading="lazy"
+alt="开启pages服务"
+&gt;
+域名绑定我们还要去修改dns解析,我们先用它分配给我们的域名去访问&lt;a class="link" href="http://jackroyal.coding.me/" target="_blank" rel="noopener"
+&gt;http://jackroyal.coding.me/&lt;/a&gt;,看看能不能正常访问&lt;/p&gt;
+&lt;h1 id="5-修改hexo配置"&gt;5 修改hexo配置
+&lt;/h1&gt;&lt;p&gt;前面的准备工作做得差不多,我们修改博客的配置信息,打开博客根目录的&lt;code&gt;_config.yml&lt;/code&gt;文件,格式和之前github的差不多:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+- type: git
+repo: &amp;#39;https://github.com/Jackroyal/Jackroyal.github.io.git&amp;#39;
+branch: master
+- type: git
+repo: &amp;#39;https://git.coding.net/Jackroyal/Jackroyal.git&amp;#39;
+branch: coding-pages
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;尤其注意在配置的时候注意留空格,这种键值对,比如&lt;code&gt;type: git&lt;/code&gt;,其中的冒号后面到git,有个空格的,不然配置文件就会读取错误.
+还要注意branch名称,分支必须是&lt;code&gt;coding-pages&lt;/code&gt;
+**PS:如上面所说,我选择的是https方式发布,所以我的repo是https的,如果你选择ssh方式去认证,那么你的地址应该是类似这样的&lt;code&gt;git@git.coding.net:Jackroyal/Jackroyal.git&lt;/code&gt;
+**&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
+loading="lazy"
+alt="添加coding的repo信息"
+&gt;&lt;/p&gt;
+&lt;h1 id="7-修改dns设置"&gt;7 修改dns设置
+&lt;/h1&gt;&lt;p&gt;就像第5步页面提示的,我们要绑定自己的域名,需要去修改dns解析记录,只需要添加一条CNAME指向你的&lt;code&gt;jackroyal.coding.me&lt;/code&gt;即可.
+注意后面加个点,也就是正确的填法是&lt;code&gt;jackroyal.coding.me.&lt;/code&gt;,如下图所示.修改完成后大概等几分钟才能生效
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
+loading="lazy"
+alt="修改dns设置"
+&gt;&lt;/p&gt;
+&lt;h1 id="8-从gitcafe迁移"&gt;8 从gitcafe迁移
+&lt;/h1&gt;&lt;p&gt;如果我们选择从gitcafe迁移的话,他会把我们原来的博客迁移过来.为了适应coding,你只需要从上面第二步开始就好,尤其注意的是,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,重要的事情说三遍,因为你迁移过来的分支名称是&lt;code&gt;gitcafe-pages&lt;/code&gt;.
+也就是核心问题,必须有个和用户名同名的项目,项目必须有个分支是&lt;code&gt;coding-pages&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其他没提的事情和上一篇是一样的.
+最后执行&lt;code&gt;hexo d -g&lt;/code&gt;,打完收工&lt;/p&gt;</description></item><item><title>git使用笔记(2)</title><link>https://jackroyal.github.io/post/my-git-note2/</link><pubDate>Wed, 04 Nov 2015 16:52:25 +0000</pubDate><guid>https://jackroyal.github.io/post/my-git-note2/</guid><description>&lt;p&gt;上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.&lt;/p&gt;
+&lt;h1 id="撤销操作"&gt;撤销操作
+&lt;/h1&gt;&lt;p&gt;撤销操作,我经常会用到,有时候写的代码没有考虑周全,或者有疏漏,需要重新提交什么的.&lt;/p&gt;
+&lt;h1 id="1-撤销工作空间最近的修改"&gt;1 撤销工作空间最近的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:比如上次push以后的完整干净的目录,工作空间没有任何修改,暂存区也没有任何修改,如下图:
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
+loading="lazy"
+alt="上一次提交后干净的工作目录"
+&gt;
+这时候,你手贱,改了一下其中的一个文件,但是这次更改是没有意义的.我们继续使用&lt;code&gt;git status&lt;/code&gt;来查看
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1exp9ngk82jj20it07i75f.jpg"
+loading="lazy"
+alt="修改一个文件后执行git status的结果"
+&gt;
+我们现在想撤销这次修改.
+解决方法:现在这个修改只是工作区的修改,我们要撤销很简单执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git checkout a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定&lt;/p&gt;
+&lt;h1 id="2-撤销暂存区最近的修改"&gt;2 撤销暂存区最近的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:假如在上面说的那种情况下,你手贱改错了文件,而且你没有撤销,你还执行&lt;code&gt;git add a.txt&lt;/code&gt;,将修改提交到暂存区了.具体情况如下图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa1cbny2j20ge0790td.jpg"
+loading="lazy"
+alt="错误的修改被提交到了暂存区"
+&gt;
+现在我们要从暂存区撤回那个修改
+解决办法:我们使用&lt;code&gt;git reset HEAD a.txt&lt;/code&gt;,将文件从暂存区撤出来,又回到上面的工作空间被修改的状态,如图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa3azt15j20hg09twft.jpg"
+loading="lazy"
+alt="从暂存区撤回"
+&gt;
+ps:上面的命令也可以用下面的命令,语法格式是&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;,括号中填路径&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git reset a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;总的来说,&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;就是&lt;code&gt;git add &amp;lt;path&amp;gt;&lt;/code&gt;的反向操作&lt;/p&gt;
+&lt;h1 id="3-撤销提交到本地仓库的修改"&gt;3 撤销提交到本地仓库的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:假如你在&lt;code&gt;1.2&lt;/code&gt;还没有回头,一路手贱下去,将暂存区的修改&lt;code&gt;commit&lt;/code&gt;到本地仓库了
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expa8o47yvj20fi087gmv.jpg"
+loading="lazy"
+alt="错误的修改被提交到本地仓库"
+&gt;
+我们现在要从仓库撤销这次没用的提交
+解决方法:&lt;/p&gt;
+&lt;h4 id="131-方案一--再新建一次提交"&gt;1.3.1 方案一 再新建一次提交
+&lt;/h4&gt;&lt;p&gt;我们可以新建一次提交,然后让所修改的文件回到之前的状态,执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git revert HEAD
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;含义很简单,逆转,这样你的&lt;code&gt;log&lt;/code&gt;里面会多一次提交,然后文件也回到的之前的状态
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expb97iondj20it0catb7.jpg"
+loading="lazy"
+alt="执行git revert 后的log"
+&gt;&lt;/p&gt;
+&lt;p&gt;#3.2 方案二 干净的撤销上一次commit
+上面的方案一对于一个强迫症来说,不能忍啊,本来就是一次错误的提交,为了弥补这个错误,我却还要多提交一次,完全不能忍受.
+方案二,我们使用&lt;code&gt;git reset&lt;/code&gt;命令.我们执行&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git reset HEAD^
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个命令表示重置HEAD指针,我们要指向上一次提交(也就是取消最近的一次,HEAD表示当前指针,HEAD^是上一次,HEAD^^是上上次,HEAD^^^是上三次),&lt;code&gt;git reset&lt;/code&gt;命令可以添加&lt;code&gt;--mixed&lt;/code&gt;,&lt;code&gt;--soft&lt;/code&gt;,&lt;code&gt;--hard&lt;/code&gt;三种参数,&lt;code&gt;--soft&lt;/code&gt;程度最轻,只会撤销提交,对当前暂存区和当前工作空间不会有任何更改,默认的参数是&lt;code&gt;--mixed&lt;/code&gt;,他会将暂存区的文件撤销&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git reset --soft :取消了commit
+git reset --mixed（默认） :取消了commit ，取消了add
+git reset --hard :取消了commit ，取消了add，取消源文件修改
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="33-方案三--修改最后一次提交"&gt;3.3 方案三 修改最后一次提交
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;首先强调,下面说的实在本地仓库的操作.&lt;/strong&gt;
+应用场景:对于上面提到的错误的提交,我们还可以修改他的内容,删除我们错误的修改,将它恢复到原来的样子,我们可以使用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit --amend
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个方法是将当前暂存区快照提交,也就是你后面的修改合在一起,然后再提交.最后查看&lt;code&gt;log&lt;/code&gt;的时候,会只有一次提交,前面的一次提交就被删除,在&lt;code&gt;log&lt;/code&gt;中只看到这次提交.
+用具体例子来说.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit -m &lt;span style="color:#e6db74"&gt;&amp;#34;这是第一次提交&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#commit完,我们修改工作空间的内容,然后再执行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add b.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit --amend
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#这条命令会弹出一个编辑窗口,你可以修改提交信息&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#假设我们将提交信息修改为&amp;#34;这是第二次提交&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着当我们使用&lt;code&gt;git log&lt;/code&gt;来查看的时候,你只会看到提交信息是&amp;quot;这是第二次提交&amp;quot;.
+解决方法:
+我们先将文件内容恢复到上一次(当前是HEAD,上一次就是HEAD^)提交时候的样子,然后执行&lt;code&gt;git commit --amend&lt;/code&gt;,看到如下错误提示,就是说这次文件没有任何修改(废话,我已经恢复正确的样子了,当然一模一样了),默认是不允许空提交的,你只有强制使用&lt;code&gt;--allow-empty&lt;/code&gt;才行,或者执行方案二
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1expt5luwo4j20io06cq3w.jpg"
+loading="lazy"
+alt="执行git commit –amend内容没有变化的错误提示"
+&gt;&lt;/p&gt;
+&lt;h1 id="4-总结"&gt;4 总结
+&lt;/h1&gt;&lt;p&gt;盗图一张,总结上面说的内容
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
+loading="lazy"
+alt="工作空间,暂存区,本地仓库之间的关机和转换"
+&gt;
+打完收工&lt;/p&gt;
+&lt;h3 id="附言"&gt;附言
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;PS&lt;/strong&gt;:现在再来解释开头说的,这是本地仓库的操作.
+因为,我们本地仓库执行了&lt;code&gt;git commit&lt;/code&gt;后,所做的更改只会在本地,如果接着执行了&lt;code&gt;git push&lt;/code&gt;那么,所做的更改就会被提交到&lt;code&gt;git&lt;/code&gt;,在上面的例子中那么首先提交到github的就是&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;.这时候,当你执行完&lt;code&gt;git commit --amend&lt;/code&gt;的时候,本地仓库的上次提交会被删除,也就是不存在提示信息为&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;,此时本地仓库完成了修改,你想提交到github,就会报错了.如图所示
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp93i04qtj20it0cajua.jpg"
+loading="lazy"
+alt="本地执行–amend操作后直接提交到github报错"
+&gt;
+解决方法就是,&lt;strong&gt;Force&lt;/strong&gt;
+没错,强制提交&lt;code&gt;git push -f&lt;/code&gt;,这样他就会像本地一样,删除上一次提交,添加这一次提交&lt;/p&gt;
+&lt;h1 id="友情链接"&gt;友情链接
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://help.github.com/articles/changing-a-commit-message/" target="_blank" rel="noopener"
+&gt;修改提交信息&lt;/a&gt;
+2 &lt;a class="link" href="https://github.com/blog/2019-how-to-undo-almost-anything-with-git" target="_blank" rel="noopener"
+&gt;如何撤销在git上的各种修改,好文&lt;/a&gt;
+3 &lt;a class="link" href="http://my.oschina.net/MinGKai/blog/144932" target="_blank" rel="noopener"
+&gt;git revert和git reset的区别&lt;/a&gt;
+4 &lt;a class="link" href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html" target="_blank" rel="noopener"
+&gt;git常用命令介绍,带效果图的&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git使用笔记(1)</title><link>https://jackroyal.github.io/post/my-git-note1/</link><pubDate>Wed, 04 Nov 2015 12:17:04 +0000</pubDate><guid>https://jackroyal.github.io/post/my-git-note1/</guid><description>&lt;p&gt;git也用了一段时间了,还是写点笔记,记录一下.&lt;/p&gt;
+&lt;h1 id="准备条件"&gt;准备条件
+&lt;/h1&gt;&lt;p&gt;首先假装你已经安装好了git&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在Linux下
+我用的是&lt;code&gt;ubuntu&lt;/code&gt;,安装非常easy,使用&lt;code&gt;sudo apt-get install git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在windows下
+在windows下安装,就使用&lt;a class="link" href="https://git-scm.com/downloads" target="_blank" rel="noopener"
+&gt;git-downloads&lt;/a&gt;,点击下载,安装,就ok.
+ps:如果你足够幸运,可以试试&lt;a class="link" href="https://desktop.github.com/" target="_blank" rel="noopener"
+&gt;github的windows版&lt;/a&gt;,这个的好处是,带有图形化界面.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="1-初始化git设置"&gt;1 初始化git设置
+&lt;/h1&gt;&lt;p&gt;新装好git后,我们先配置个人的用户名和email,这两条配置很重要,因为在git的日志中,都会带上这两条信息.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ git config --global user.name &lt;span style="color:#e6db74"&gt;&amp;#34;John Doe&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ git config --global user.email johndoe@example.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果用了&lt;code&gt;--global&lt;/code&gt;选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉&lt;code&gt;--global&lt;/code&gt;选项重新配置即可，新的设定保存在当前项目的&lt;code&gt;.git/config&lt;/code&gt;文件里。&lt;/p&gt;
+&lt;h1 id="2-新建第一个仓库"&gt;2 新建第一个仓库
+&lt;/h1&gt;&lt;p&gt;建立第一个仓库有两种方式,一种是完全新建一个仓库,第二种是克隆一个现有仓库.&lt;/p&gt;
+&lt;h4 id="21-完全新建一个仓库"&gt;2.1 完全新建一个仓库
+&lt;/h4&gt;&lt;p&gt;你先切换到你想建项目的地方,比如&lt;code&gt;f:/blog/&lt;/code&gt;,然后执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;初始化后再在当前目录新建一个名为&lt;code&gt;.git&lt;/code&gt;的目录,git所有的东西都存在这里面.当然我们不用管.&lt;/p&gt;
+&lt;h4 id="22-克隆一个现有仓库"&gt;2.2 克隆一个现有仓库
+&lt;/h4&gt;&lt;p&gt;这个也是很easy,直接一条命令搞定&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/Jackroyal/blog.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;他会在你的当前目录新建一个&lt;code&gt;blog&lt;/code&gt;文件夹,在&lt;code&gt;blog&lt;/code&gt;文件夹里面他会把相关的文件都下载下来,就可以用了.&lt;/p&gt;
+&lt;h1 id="3-提交更新"&gt;3 提交更新
+&lt;/h1&gt;&lt;h4 id="31-提交工作空间文件到暂存区"&gt;3.1 提交工作空间文件到暂存区
+&lt;/h4&gt;&lt;p&gt;执行&lt;code&gt;touch a.txt&lt;/code&gt;,我们在目录中新建一个文件名叫&lt;code&gt;a.txt&lt;/code&gt;,然后我们修改它的内容.
+接下来,我们来查看下状态&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行结果如下图:
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exoxiu5jyij20it0933zl.jpg"
+loading="lazy"
+alt="执行git status查看工作区文件状态"
+&gt;
+就像图片中提示的,我们新加的&lt;code&gt;a.txt&lt;/code&gt;是未跟踪文件,我们执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们把&lt;code&gt;a.txt&lt;/code&gt;添加到暂存区,再次执行&lt;code&gt;git status&lt;/code&gt;,查看状态,执行结果如图所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exoxp6duu1j20it07o0th.jpg"
+loading="lazy"
+alt="添加到暂存区后再次执行git status"
+&gt;&lt;/p&gt;
+&lt;h4 id="32-将暂存区文件保存到本地仓库"&gt;3.2 将暂存区文件保存到本地仓库
+&lt;/h4&gt;&lt;p&gt;假如你要做的修改已经改完,已经保存到暂存区了,我们准备提交到本地仓库.执行&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git commit -m &amp;#34;这是提交内容&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;参数&lt;code&gt;-m&lt;/code&gt;,就是添加说明,方便以后查看,你就可以知道自己做了哪些更改&lt;/p&gt;
+&lt;h4 id="33-将本地仓库内容提交到远程仓库"&gt;3.3 将本地仓库内容提交到远程仓库
+&lt;/h4&gt;&lt;p&gt;上面的步骤都弄好以后,我们提交到远程仓库&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; git push origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就行了,一个基本的流程就是这样.
+推荐看看下面友情链接里面的那本书,pro git
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp17u1ltjj208r0boq38.jpg"
+loading="lazy"
+alt="pro git封面"
+&gt;&lt;/p&gt;
+&lt;h1 id="友情链接"&gt;友情链接
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://iissnan.com/progit/" target="_blank" rel="noopener"
+&gt;pro git中文书籍在线版&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

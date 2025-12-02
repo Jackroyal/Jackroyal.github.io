@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Digitalocean on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/digitalocean/</link><description>Recent content in Digitalocean on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/digitalocean/index.xml" rel="self" type="application/rss+xml"/><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://jackroyal.github.io/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
+&lt;p&gt;我去锐速官网注册了账号,可惜,在官方支持的linux版本中并没有我这个内核版本.我用的是&lt;code&gt;3.13.0-37-generic&lt;/code&gt;的&lt;code&gt;32&lt;/code&gt;位版本,锐速官网并没有支持.&lt;code&gt;32&lt;/code&gt;位版本支持的相对较少,支持的最新版本是&lt;code&gt;3.13.0-29-generic&lt;/code&gt;.
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
+loading="lazy"
+alt="锐速官网linux支持列表"
+&gt;
+所以没办法,只能把我的&lt;code&gt;ubuntu&lt;/code&gt;降级回去,还是小折腾了一下.下面就来说下降级&lt;/p&gt;
+&lt;h1 id="实验环境"&gt;实验环境：
+&lt;/h1&gt;&lt;p&gt;digitalocean的云服务器
+Linux OS: Ubuntu
+Version: 14.04
+Kernel: 3.13.0-37-generic
+Bits: 32-bit&lt;/p&gt;
+&lt;h1 id="实验步骤"&gt;实验步骤
+&lt;/h1&gt;&lt;p&gt;ssh登录服务器,然后安装新内核,blablabla&amp;hellip;
+你要是这样想就跟我一样,想错了.
+因为我们使用的是&lt;code&gt;digitalocean&lt;/code&gt;的云服务器,不是普通的个人单机,所以那套方法不顶用,我照着那个方法,安装了新的内核,然后更新&lt;code&gt;grub&lt;/code&gt;,怎么弄都没用,最后才找到答案.
+&lt;strong&gt;争取的做法:&lt;/strong&gt;
+1 登录你的&lt;code&gt;digitalocean&lt;/code&gt;控制台
+2 点击&lt;code&gt;setting-&amp;gt;kernel&lt;/code&gt;,效果如下图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
+loading="lazy"
+alt="控制台的kernel页面"
+&gt;
+3 点击下拉列表,找到你要的&lt;code&gt;kernel&lt;/code&gt;,比如我要的是&lt;code&gt;Ubuntu 14.04 x32 vmlinuz-3.13.0-29-generic&lt;/code&gt;,然后点击&lt;code&gt;change&lt;/code&gt;,等一会儿,页面会自动刷新,内核更新就成功了
+4 重要的一步,我就是这步有点问题,又浪费了点时间.更新完内核,我们发现自己的服务器查看内核的时候并没有变化,我们首先想到的是重启服务器.我们直接在终端&lt;code&gt;sudo reboot&lt;/code&gt;.但是启动以后,你会发现还是没有变化,什么鬼?
+真正的答案是,我们现在终端关机,也即是执行&lt;code&gt;sudo poweroff&lt;/code&gt;,先关机.然后我们在控制台的power选项卡中,有个&lt;code&gt;power on&lt;/code&gt;的按钮,我们启动服务器,就发现内核已经更新了.
+ok 打完收工&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-upgrade-ubuntu-12-04-lts-to-ubuntu-14-04-lts" target="_blank" rel="noopener"
+&gt;How to Upgrade Ubuntu 12.04 LTS to Ubuntu 14.04 LTS&lt;/a&gt;
+2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-update-a-digitalocean-server-s-kernel" target="_blank" rel="noopener"
+&gt;How To Update a DigitalOcean Server&amp;rsquo;s Kernel&lt;/a&gt;&lt;/p&gt;</description></item><item><title>digitalocean配置ipv6</title><link>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</link><pubDate>Tue, 16 Jun 2015 22:24:18 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</guid><description>&lt;p&gt;之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.&lt;/p&gt;
+&lt;h1 id="前提条件"&gt;前提条件
+&lt;/h1&gt;&lt;p&gt;首先你得有一台digitalocean的vps,建议选择洛杉矶的服务器,
+选个5美元的就够了.&lt;/p&gt;
+&lt;h1 id="1-新建droplet"&gt;1 新建droplet
+&lt;/h1&gt;&lt;p&gt;如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg"
+loading="lazy"
+alt="新建droplet,尤其注意勾选ipv6"
+&gt;
+注意勾选ipv6,后面的步骤,请参考第3步&lt;/p&gt;
+&lt;h1 id="2-修改droplet"&gt;2 修改droplet
+&lt;/h1&gt;&lt;p&gt;我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.
+你打开droplet的&lt;code&gt;setting&lt;/code&gt;,在&lt;code&gt;network&lt;/code&gt;中应该可以看到&lt;code&gt;enable ipv6&lt;/code&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg"
+loading="lazy"
+alt="带有启用ipv6选项的页面"
+&gt;
+启用后,稍后片刻,页面如下.
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
+loading="lazy"
+alt="在droplet的setting中启用ipv6后的页面"
+&gt;&lt;/p&gt;
+&lt;h1 id="3-设置ipv6"&gt;3 设置ipv6
+&lt;/h1&gt;&lt;p&gt;当我们启用ipv6支持以后,还需要对服务器进行设置.&lt;/p&gt;
+&lt;h2 id="第一步--我们把ipv6的地址添加到网卡中"&gt;第一步 我们把ipv6的地址添加到网卡中
+&lt;/h2&gt;&lt;p&gt;我们编辑&lt;code&gt;/etc/network/interfaces&lt;/code&gt;这个文件,使用命令&lt;code&gt;sudo vi /etc/network/interfaces&lt;/code&gt;
+修改后内容如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# This file describes the network interfaces available on your
+# system and how to activate them. For more information, see
+# interfaces(5).
+# The loopback network interface
+auto lo
+iface lo inet loopback
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 你的ipv4
+netmask 255.255.192.0
+gateway 你的ipv4网关
+dns-nameservers 8.8.8.8 8.8.4.4
+# 以上内容不需要修改,只需要添加下面的部分
+iface eth0 inet6 static
+address 上图中的ipv6地址
+netmask 64
+gateway 网关地址
+autoconf 0
+dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),&lt;!-- raw HTML omitted --&gt;如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
+loading="lazy"
+alt="ipv6成功启用后"
+&gt;&lt;/p&gt;
+&lt;h2 id="第二步-测试ipv6-是否配置成功"&gt;第二步 测试ipv6 是否配置成功
+&lt;/h2&gt;&lt;p&gt;我们使用ping命令来测试,ping是测试ipv4的,测试ipv6是用ping6,命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ping6 ipv6.google.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PING ipv6.google.com&lt;span style="color:#f92672"&gt;(&lt;/span&gt;nuq04s29-in-x0e.1e100.net&lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;56&lt;/span&gt; data bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;2.23 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.97 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;3&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.95 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;4&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;2.14 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;5&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.93 ms
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果发包成功,那就可以进行下一步了&lt;/p&gt;
+&lt;h1 id="4-修改hosts"&gt;4 修改hosts
+&lt;/h1&gt;&lt;p&gt;因为ipv4无法访问google scholar,所以我们配置下hosts,让所有对访问google学术的,都使用ipv6去访问.执行命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo vi /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们在hosts文件的后面,添加如下内容:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;2607:f8b0:4007:805::100f scholar.google.cn
+2607:f8b0:4007:805::100f scholar.google.com
+2607:f8b0:4007:805::100f scholar.google.com.hk
+2607:f8b0:4007:805::100f scholar.l.google.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ok,打完收工,睡觉&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.v2ex.com/t/163133" target="_blank" rel="noopener"
+&gt;一个解决 Google Scholar block DigitalOcean SFO IP 的方法&lt;/a&gt;
+2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-enable-ipv6-for-digitalocean-droplets" target="_blank" rel="noopener"
+&gt;How To Enable IPv6 for DigitalOcean Droplets&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

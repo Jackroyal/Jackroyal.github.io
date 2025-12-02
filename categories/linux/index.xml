@@ -1,0 +1,1079 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/linux/</link><description>Recent content in Linux on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>修复ubuntu终端中文显示和输入的问题</title><link>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</link><pubDate>Mon, 24 Apr 2017 13:37:01 +0000</pubDate><guid>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</guid><description>&lt;p&gt;我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文.&lt;/p&gt;
+&lt;p&gt;昨晚没事,就查了一下资料,修复了这个问题.&lt;/p&gt;
+&lt;h1 id="1-目标"&gt;1 目标
+&lt;/h1&gt;&lt;p&gt;本文的目标主要是修复中文文件名乱码和中文输入的问题,本文的目标不是把整个系统的所有语言体系都改成中文,只是单纯的修复中文输入问题和中文文件名显示问题.&lt;/p&gt;
+&lt;h1 id="2-环境"&gt;2 环境
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;服务器环境&lt;/strong&gt;: Ubuntu Server 16.04 lts
+&lt;strong&gt;本地环境&lt;/strong&gt;: windows7
+&lt;strong&gt;软件环境&lt;/strong&gt;: Xshell 和 Xftp&lt;/p&gt;
+&lt;h1 id="3-修改配置"&gt;3 修改配置
+&lt;/h1&gt;&lt;p&gt;与中文编码相关的配置主要包括: 本地编码和服务器编码.我们首先设置服务器端编码:&lt;/p&gt;
+&lt;h2 id="31-服务器编码配置"&gt;3.1 服务器编码配置
+&lt;/h2&gt;&lt;p&gt;首先,我们使用xshell连接登录服务器,然后在终端中输入&lt;code&gt;locale&lt;/code&gt;命令,得到结果如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ locale
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LANG&lt;span style="color:#f92672"&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LANGUAGE&lt;span style="color:#f92672"&gt;=&lt;/span&gt;C:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_CTYPE&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_NUMERIC&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_TIME&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_COLLATE&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_MONETARY&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_MESSAGES&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_PAPER&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_NAME&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_ADDRESS&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_TELEPHONE&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_MEASUREMENT&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_IDENTIFICATION&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_ALL&lt;span style="color:#f92672"&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;各个选项的含义如下:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;语言符号及其分类(LC_CTYPE)&lt;/li&gt;
+&lt;li&gt;数字(LC_NUMERIC)&lt;/li&gt;
+&lt;li&gt;比较和排序习惯(LC_COLLATE)&lt;/li&gt;
+&lt;li&gt;时间显示格式(LC_TIME)&lt;/li&gt;
+&lt;li&gt;货币单位(LC_MONETARY)&lt;/li&gt;
+&lt;li&gt;信息主要是提示信息,错误信息, 状态信息, 标题, 标签, 按钮和菜单等(LC_MESSAGES)&lt;/li&gt;
+&lt;li&gt;姓名书写方式(LC_NAME)&lt;/li&gt;
+&lt;li&gt;地址书写方式(LC_ADDRESS)&lt;/li&gt;
+&lt;li&gt;电话号码书写方式(LC_TELEPHONE)&lt;/li&gt;
+&lt;li&gt;度量衡表达方式(LC_MEASUREMENT)&lt;/li&gt;
+&lt;li&gt;默认纸张尺寸大小(LC_PAPER)&lt;/li&gt;
+&lt;li&gt;对locale自身包含信息的概述(LC_IDENTIFICATION)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;关于&lt;code&gt;locale&lt;/code&gt;更多的信息,请查看&lt;a class="link" href="http://wiki.ubuntu.org.cn/Locale" target="_blank" rel="noopener"
+&gt;Locale-wiki&lt;/a&gt;
+我们要修复的是中文文件名的显示和中文输入的问题,所以我们接下来只需要设置&lt;code&gt;LC_CTYPE&lt;/code&gt;即可.&lt;/p&gt;
+&lt;p&gt;查看系统支持的编码方式:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;locale -a
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;看看输出内容中是否包含&lt;code&gt;zh_CN.utf-8&lt;/code&gt;,如果不包含的话,我们需要添加这个配置项&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo locale-gen zh_CN.utf-8
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;修改后,我的输出内容如下,已经包含&lt;code&gt;zh_CN.utf-8&lt;/code&gt;
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fexql3wkdej2076047744.jpg"
+loading="lazy"
+alt="查看系统支持的编码方式"
+&gt;
+接下来,修改&lt;code&gt;LC_CTYPE&lt;/code&gt;的值,使用&lt;code&gt;export LC_CTYPE='zh_CN.UTF-8'&lt;/code&gt;,命令来修改.
+直接执行&lt;code&gt;export LC_CTYPE='zh_CN.UTF-8'&lt;/code&gt;那么只对当前会话有效,
+&lt;strong&gt;所有用户(永久)&lt;/strong&gt;:修改/etc/profile
+&lt;strong&gt;当前用户(永久)&lt;/strong&gt;:修改~/.bashrc&lt;/p&gt;
+&lt;p&gt;建议直接修改&lt;code&gt;/etc/profile&lt;/code&gt;文件,这样所有用户都可以使用.
+修改完成后,退出登录,重新登录一次,再输入&lt;code&gt;locale&lt;/code&gt;命令,可以得到如下输出:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LANG&lt;span style="color:#f92672"&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LANGUAGE&lt;span style="color:#f92672"&gt;=&lt;/span&gt;C:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_CTYPE&lt;span style="color:#f92672"&gt;=&lt;/span&gt;zh_CN.UTF-8
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_NUMERIC&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_TIME&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_COLLATE&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_MONETARY&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_MESSAGES&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_PAPER&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_NAME&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_ADDRESS&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_TELEPHONE&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_MEASUREMENT&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_IDENTIFICATION&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;POSIX&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;LC_ALL&lt;span style="color:#f92672"&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;应该就可以输入中文了&lt;/p&gt;
+&lt;h2 id="32-本地配置"&gt;3.2 本地配置
+&lt;/h2&gt;&lt;p&gt;在windows中,中文的默认编码是GBK,所以为了避免出现在ftp中看着正常,在xshell中看着乱码的问题.我们要修改xftp中的编码方式.打开xftp,文件-&amp;gt;属性-&amp;gt;选项,勾选上&lt;code&gt;使用UTF-8编码&lt;/code&gt;.
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fexreyc5kyj20c007wt8w.jpg"
+loading="lazy"
+alt="修改xftp编码方式"
+&gt;&lt;/p&gt;
+&lt;h2 id="33-编码转换"&gt;3.3 编码转换
+&lt;/h2&gt;&lt;p&gt;上面的修改完成后,基本可以解决之前提到的目标.新上传的文件肯定是正常的,但是之前上传的文件依旧是乱码,所以我们需要使用工具转换一下.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo apt-get install convmv
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用法很简单:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;convmv -f GBK -t UTF-8 --notest ./*
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中,&lt;code&gt;-f&lt;/code&gt;表示源编码;&lt;code&gt;-t&lt;/code&gt;表示目标编码;如果没有&lt;code&gt;--notest&lt;/code&gt;选项,这条命令只会检测,不会执行;后面跟着需要操作的文件目录;如果需要递归执行,可以加上&lt;code&gt;-r&lt;/code&gt;选项.&lt;/p&gt;
+&lt;p&gt;打完收工&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="http://wiki.ubuntu.org.cn/Locale" target="_blank" rel="noopener"
+&gt;Locale-wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://segmentfault.com/q/1010000000150673" target="_blank" rel="noopener"
+&gt;MacOS用iTerm连接到Linux上，不能输入中文&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Nginx上多站点的https配置</title><link>https://jackroyal.github.io/post/nginx-https-setting-on-multiple-sites/</link><pubDate>Wed, 05 Apr 2017 13:09:24 +0000</pubDate><guid>https://jackroyal.github.io/post/nginx-https-setting-on-multiple-sites/</guid><description>&lt;p&gt;&lt;strong&gt;更新&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;2017-06-13 修改证书生成目录,为方便后续的git push自动更新,将acme验证目录移出网站根目录&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;此处接上篇&lt;a class="link" href="https://bblove.me/2017/04/05/nginx-installation-and-setting-in-ubuntu-server" target="_blank" rel="noopener"
+&gt;在ubuntu上安装和配置Nginx&lt;/a&gt;,本文在之前的基础上配置https.&lt;/p&gt;
+&lt;h1 id="1-环境和目标"&gt;1 环境和目标
+&lt;/h1&gt;&lt;p&gt;服务器:ubuntu server 16.04.2 LTS
+主要工具:xshell
+本文的目标是使用Nginx的TLS SNI技术,使用一个服务器(即一个ip),给多个域名配置https.我有一个腾讯云服务器,买了两个域名,都指向这台服务器,我现在想两个域名都上https,而且&lt;code&gt;www.bblove.me&lt;/code&gt;跳转到&lt;code&gt;bblove.me&lt;/code&gt;,我只想使用&lt;code&gt;bblove.me&lt;/code&gt;这个较短的域名.
+但是不是所有的浏览器都支持SNI,下面的截图来自屈大的博客
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1febqcpfjoaj20kv08mjrs.jpg"
+loading="lazy"
+alt="SNI支持情况"
+&gt;
+由于是个人博客,随意折腾,所以不犹豫,直接上https.&lt;/p&gt;
+&lt;h1 id="2-证书"&gt;2 证书
+&lt;/h1&gt;&lt;p&gt;我们使用Let&amp;rsquo;s Encrypt提供的免费证书,每次有90天的有效期,过期之后需要再更新,不过这对于程序员来说,根本就不是事儿对吧.点击&lt;a class="link" href="https://github.com/Neilpang/acme.sh" target="_blank" rel="noopener"
+&gt;ACME&lt;/a&gt;,我们使用ACME来自动获取证书.主要步骤分三步:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;安装 acme.sh&lt;/li&gt;
+&lt;li&gt;生成证书&lt;/li&gt;
+&lt;li&gt;copy 证书到 nginx
+具体步骤,参考github上的wiki &lt;a class="link" href="https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener"
+&gt;ACME使用说明&lt;/a&gt;
+下面我简单说下我这边的配置:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="21-安装acmesh"&gt;2.1 安装acme.sh
+&lt;/h2&gt;&lt;p&gt;安装的命令很简单&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;curl https://get.acme.sh | sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;建议将脚本放在自己的home目录下,并且建立一个alias&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;acme.sh&lt;span style="color:#f92672"&gt;=&lt;/span&gt;~/.acme.sh/acme.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;操作的目录都只会在&lt;code&gt;~/acme.sh&lt;/code&gt;目录,不会污染系统其他的文件夹和目录&lt;/p&gt;
+&lt;h2 id="22-生成证书"&gt;2.2 生成证书
+&lt;/h2&gt;&lt;p&gt;脚本安装好后,下一步开始生成证书,生成证书的过程中,Let&amp;rsquo;s Encrypt需要对域名的所有权进行验证,这个很好理解,证书发行机构需要确定你是否对该域名拥有所有权.验证的方式有两种:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用http验证
+acme脚本会生成一个验证文件,并放到网站根目录,然后Let&amp;rsquo;s Encrypt会尝试访问这个文件,完成验证&lt;/li&gt;
+&lt;li&gt;使用DNS验证
+顾名思义,只需要在DNS设置中添加一条txt解析记录,即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文采用的是http验证,DNS验证就不细说了,想使用DNS验证的直接看 &lt;a class="link" href="https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener"
+&gt;ACME使用说明&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我一共有两个域名&lt;code&gt;bblove.me&lt;/code&gt;和&lt;code&gt;huirongis.me&lt;/code&gt;,主域名加上带&lt;code&gt;www&lt;/code&gt;的子域名,也就是一共有4个域名.
+生成证书有下面三种思路:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;所有的4个域名都使用同一个证书,此法最简单,可以避免发生域名和证书不匹配的情况&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;www.bblove.me&lt;/code&gt;和&lt;code&gt;bblove.me&lt;/code&gt;使用同一个证书,另外一个域名同理,也就是总共使用两个证书&lt;/li&gt;
+&lt;li&gt;使用4个不同的证书,这种情况比较复杂,如果想实现&lt;code&gt;www&lt;/code&gt;跳转到不带&lt;code&gt;www&lt;/code&gt;的,处理不好容易出现证书错误的问题&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;由于我最后只使用&lt;code&gt;https://bblove.me&lt;/code&gt;这个域名,验证方式选择的http方式,&lt;code&gt;bblove.me&lt;/code&gt;和&lt;code&gt;huirongis.me&lt;/code&gt;指向不同的根目录,为了方便后续管理和维护,所以我选择方案二,即&lt;code&gt;bblove.me&lt;/code&gt;和&lt;code&gt;www.bblove.me&lt;/code&gt;共用一个证书,&lt;code&gt;huirongis.me&lt;/code&gt;同理.
+确定好方案后,下面开始生成证书,使用如下命令即可.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;acme.sh --issue -d bblove.me -d www.bblove.me -w /home/chen/www/nginx_acme/bblove_me/ --force
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其中&lt;code&gt;-d&lt;/code&gt;表示域名,可以添加多个;&lt;code&gt;-w&lt;/code&gt;表示网站的根目录,一条命令执行完成,即可得到证书.
+顺利的话,执行结果如下(此处配图输入命令未更新,输出结果是一致的):
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fecw65xpvrj20lv0ll0vo.jpg"
+loading="lazy"
+alt="生成证书"
+&gt;
+如果出错的话,在那条命令后面追加&lt;code&gt;--debug&lt;/code&gt;,查看详细的信息,我有遇到过文件权限的错误,只要网站根目录权限和当前home目录对应的用户权限一样就可以了;我还遇到过验证不通过的问题,大家可以在浏览器中访问那个路径,看是否正常,类似&lt;code&gt;http://bblove.me/.well-known/acme-challenge/dfdfdfdafdfdfdfdfdfdfdfd&lt;/code&gt;这样的格式&lt;/p&gt;
+&lt;h2 id="23-安装证书"&gt;2.3 安装证书
+&lt;/h2&gt;&lt;p&gt;在上一步中,我们已经成功的生成了我们要的证书.这一步我们将它安装在我们域名所对应的根目录中,操作很简单.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;acme.sh --installcert -d bblove.me --keypath /home/chen/www/nginx_ssl/bblove_me/bblove_me.key --fullchainpath /home/chen/www/nginx_ssl/bblove_me/bblove_me.cer --reloadcmd &lt;span style="color:#e6db74"&gt;&amp;#34;service nginx force-reload&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行结果如图所示:
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fecwexr6nej20g606gaaf.jpg"
+loading="lazy"
+alt="安装证书"
+&gt;
+至此,证书部分已经操作完成,第二个域名操作同理.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#生成证书&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;acme.sh --issue -d bblove.me -d www.bblove.me -w /home/chen/www/nginx_acme/bblove_me/ --force
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#安装证书&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;acme.sh --installcert -d bblove.me --keypath /home/chen/www/nginx_ssl/bblove_me/bblove_me.key --fullchainpath /home/chen/www/nginx_ssl/bblove_me/bblove_me.cer --reloadcmd &lt;span style="color:#e6db74"&gt;&amp;#34;service nginx force-reload&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#生成证书&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;acme.sh --issue -d huirongis.me -d www.huirongis.me -w /home/chen/www/huirongis_me/ --force
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#安装证书&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;acme.sh --installcert -d huirongis.me --keypath /home/chen/www/nginx_ssl/huirongis_me/huirongis_me.key --fullchainpath /home/chen/www/nginx_ssl/huirongis_me/huirongis_me.cer --reloadcmd &lt;span style="color:#e6db74"&gt;&amp;#34;service nginx force-reload&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="3-修改nginx配置"&gt;3 修改Nginx配置
+&lt;/h1&gt;&lt;p&gt;证书生成完成后,我们需要修改Nginx配置,主要就是启用之前注释掉的HTTPS相关的配置以及,修改对应的目录.
+下面是我的第一个站点的配置:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;server &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; listen 80;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server_name www.bblove.me bblove.me;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server_tokens off;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; access_log /home/chen/www/nginx_log/bblove_me.log;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#access_log /dev/null;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;(&lt;/span&gt;$request_method !~ ^&lt;span style="color:#f92672"&gt;(&lt;/span&gt;GET|HEAD|POST&lt;span style="color:#f92672"&gt;)&lt;/span&gt;$ &lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; 444;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; location ^~ /.well-known/acme-challenge/ &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; alias /home/chen/www/nginx_acme/bblove_me/.well-known/acme-challenge/;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; try_files $uri &lt;span style="color:#f92672"&gt;=&lt;/span&gt;404;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; location / &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; rewrite ^/&lt;span style="color:#f92672"&gt;(&lt;/span&gt;.*&lt;span style="color:#f92672"&gt;)&lt;/span&gt;$ https://bblove.me/$1 permanent;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;server&lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; listen &lt;span style="color:#ae81ff"&gt;443&lt;/span&gt; ssl http2 fastopen&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;3&lt;/span&gt; reuseport;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server_name bblove.me;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server_tokens off;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; access_log /home/chen/www/nginx_log/bblove_me.log;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_certificate /home/chen/www/nginx_ssl/bblove_me/bblove_me.cer;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_certificate_key /home/chen/www/nginx_ssl/bblove_me/bblove_me.key;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#使用openssl dhparam -out dhparams.pem 2048命令生成该文件,将下面配置注释也许&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_dhparam /home/chen/www/nginx_ssl/dhparams.pem;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_prefer_server_ciphers on;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#下面是推荐的加密算法配置,但是在我的机器上有bug,chacha20算法无法正常工作,所以我去掉了其中包含chacha20的算法&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# https://github.com/cloudflare/sslconfig/blob/master/conf&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_session_cache shared:SSL:50m;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_session_timeout 1d;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_session_tickets on;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_stapling on;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_stapling_verify on;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_trusted_certificate /home/chen/www/nginx_ssl/bblove_me/bblove_me.cer;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; resolver 114.114.114.114 valid&lt;span style="color:#f92672"&gt;=&lt;/span&gt;300s;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; resolver_timeout 10s;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;(&lt;/span&gt;$request_method !~ ^&lt;span style="color:#f92672"&gt;(&lt;/span&gt;GET|HEAD|POST|OPTIONS&lt;span style="color:#f92672"&gt;)&lt;/span&gt;$ &lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; 444;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;(&lt;/span&gt;$host !&lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;bblove.me&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; rewrite ^/&lt;span style="color:#f92672"&gt;(&lt;/span&gt;.*&lt;span style="color:#f92672"&gt;)&lt;/span&gt;$ https://bblove.me/$1 permanent;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; location / &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; root /home/chen/www/bblove_me;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; index index.html index.htm;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header Strict-Transport-Security &lt;span style="color:#e6db74"&gt;&amp;#34;max-age=31536000; includeSubDomains; preload&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header X-Frame-Options deny;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header X-Content-Type-Options nosniff;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header Cache-Control no-cache;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header x-xss-protection &lt;span style="color:#e6db74"&gt;&amp;#34; 1; mode=block&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header x-content-type-options nosniff;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;下面是我第二个站点的配置:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;server&lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; listen &lt;span style="color:#ae81ff"&gt;443&lt;/span&gt; ssl http2;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server_name www.huirongis.me huirongis.me;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server_tokens off;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; access_log /home/chen/www/nginx_log/huirongis_me.log;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_certificate /home/chen/www/nginx_ssl/huirongis_me/huirongis_me.cer;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_certificate_key /home/chen/www/nginx_ssl/huirongis_me/huirongis_me.key;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#ssl_dhparam /home/chen/www/nginx_ssl/huirongis_me/huirongis_me.cer;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;#ssl_ciphers EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_prefer_server_ciphers on;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_session_cache shared:SSL:50m;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_session_timeout 1d;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_session_tickets on;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_stapling on;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_stapling_verify on;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ssl_trusted_certificate /home/chen/www/nginx_ssl/huirongis_me/huirongis_me.cer;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; resolver 114.114.114.114 valid&lt;span style="color:#f92672"&gt;=&lt;/span&gt;300s;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; resolver_timeout 10s;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;(&lt;/span&gt;$request_method !~ ^&lt;span style="color:#f92672"&gt;(&lt;/span&gt;GET|HEAD|POST|OPTIONS&lt;span style="color:#f92672"&gt;)&lt;/span&gt;$ &lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; 444;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;(&lt;/span&gt;$host !&lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;huirongis.me&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; rewrite ^/&lt;span style="color:#f92672"&gt;(&lt;/span&gt;.*&lt;span style="color:#f92672"&gt;)&lt;/span&gt;$ https://huirongis.me/$1 permanent;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; location / &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; root /home/chen/www/huirongis_me;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; index index.html index.htm;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header Strict-Transport-Security &lt;span style="color:#e6db74"&gt;&amp;#34;max-age=31536000; includeSubDomains; preload&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header X-Frame-Options deny;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header X-Content-Type-Options nosniff;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header Cache-Control no-cache;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header x-xss-protection &lt;span style="color:#e6db74"&gt;&amp;#34; 1; mode=block&amp;#34;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; add_header x-content-type-options nosniff;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;server &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server_name www.huirongis.me huirongis.me;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; server_tokens off;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; access_log /dev/null;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;(&lt;/span&gt;$request_method !~ ^&lt;span style="color:#f92672"&gt;(&lt;/span&gt;GET|HEAD|POST&lt;span style="color:#f92672"&gt;)&lt;/span&gt;$ &lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; 444;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; location ^~ /.well-known/acme-challenge/ &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; alias /home/chen/www/nginx_acme/huirongis_me/.well-known/acme-challenge/;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; try_files $uri &lt;span style="color:#f92672"&gt;=&lt;/span&gt;404;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; location / &lt;span style="color:#f92672"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; rewrite ^/&lt;span style="color:#f92672"&gt;(&lt;/span&gt;.*&lt;span style="color:#f92672"&gt;)&lt;/span&gt;$ https://huirongis.me/$1 permanent;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;该配置的主体内容,都是参考的屈大的配置,但是由于屈大的是单站点,所以为了对应多站点,做了一些改动.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;改动1: server的第一行listen &lt;code&gt;fastopen=3 reuseport&lt;/code&gt;的选项,只能用在一个站点上,不能两个站点都加这段配置&lt;/li&gt;
+&lt;li&gt;改动2: ssl_dhparam 配置,另外一个站点我懒得弄了,你可以自己生成文件,两个站点都配上.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;有些配置的含义和原理,屈大都给了详细的分析,想了解的可以去看看.&lt;/p&gt;
+&lt;p&gt;再贴一下本站目录结构:
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fgivj9x7g0j20nj0ert9g.jpg"
+loading="lazy"
+alt="本站目录设置"
+&gt;&lt;/p&gt;
+&lt;h1 id="4-修改http资源为https"&gt;4 修改http资源为https
+&lt;/h1&gt;&lt;p&gt;ok,都这里基本都搞定了,应该可以看到小绿锁了.在chrome中按&lt;code&gt;F12&lt;/code&gt;-&amp;gt;&lt;code&gt;console&lt;/code&gt;,查看原因.如果你的网站中包含其他第三方http资源,可能会没有看到小绿锁,只需要将http资源修改为https的就行,比如图片资源,本站使用新浪微博图床,只需要将原来的http格式的图片加个s,变成https就可以了.如果资源没有https的,那就需要将资源下载到服务器本地.
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fecyz408dqj20yc0ga431.jpg"
+loading="lazy"
+alt="小绿锁"
+&gt;
+至此,整个网站的https配置完成.&lt;/p&gt;
+&lt;h1 id="5-问题和优化"&gt;5 问题和优化
+&lt;/h1&gt;&lt;p&gt;现在还有问题没有解决:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;加密算法的问题,我的服务器配置chacha20算法不成功,只要客户端协商的算法中有chacha20,服务器就会返回&lt;code&gt;bad record mac&lt;/code&gt;错误,现在我只能把它禁用&lt;/li&gt;
+&lt;li&gt;证书的自动更新问题,由于我后期还配置了其他的东西,所以证书自动更新一直不成功,需要我手动去更新&lt;/li&gt;
+&lt;li&gt;将域名提交到https://hstspreload.org/,具体原理请参考&lt;a class="link" href="https://imququ.com/post/sth-about-switch-to-https.html#toc-2" target="_blank" rel="noopener"
+&gt;合理使用&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://imququ.com/post/sth-about-switch-to-https-2.html" target="_blank" rel="noopener"
+&gt;关于启用 HTTPS 的一些经验分享（二）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://imququ.com/post/my-nginx-conf.html" target="_blank" rel="noopener"
+&gt;本博客 Nginx 配置之完整篇&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://imququ.com/post/sth-about-switch-to-https.html#toc-2" target="_blank" rel="noopener"
+&gt;关于启用 HTTPS 的一些经验分享（一）&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>在ubuntu上安装和配置Nginx</title><link>https://jackroyal.github.io/post/nginx-installation-and-setting-in-ubuntu-server/</link><pubDate>Wed, 05 Apr 2017 10:51:24 +0000</pubDate><guid>https://jackroyal.github.io/post/nginx-installation-and-setting-in-ubuntu-server/</guid><description>&lt;p&gt;废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了&lt;/p&gt;
+&lt;h1 id="1-系统环境"&gt;1 系统环境
+&lt;/h1&gt;&lt;p&gt;服务器:ubuntu server 16.04.2 LTS
+主要工具:xshell&lt;/p&gt;
+&lt;p&gt;我这个服务器是腾讯云的主机,装的最新的ubuntu server lts发行版,32位系统.&lt;/p&gt;
+&lt;h1 id="2-系统安装"&gt;2 系统安装
+&lt;/h1&gt;&lt;p&gt;我这里是完全参考的屈大的教程,因为屈大教程会不断更新,所以我这里就不赘述,直接贴地址
+&lt;a class="link" href="https://imququ.com/post/my-nginx-conf.html" title="本博客Nginx配置之完整篇"
+target="_blank" rel="noopener"
+&gt;https://imququ.com/post/my-nginx-conf.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ps:由于屈大的Nginx配置是https一步到位,我的建议是,刚开始玩的话,先把所以https相关的配置注释掉,等一切顺利跑起来了,后期再加上https的内容&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Nginx全局配置&lt;/code&gt;,直接抄屈大的就行,只需要把最后一行,改成你自己的服务器的路径&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; include /home/jerry/www/nginx_conf/*.conf;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;web站点配置&lt;/code&gt;注释掉https相关内容后,如下(我修改了屈大部分目录的路径,原理一样的):&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;server{
+listen 80;
+server_name bblove.me www.bblove.me;
+server_tokens off;
+access_log /home/chen/www/nginx_log/bblove_me.log;
+# ssl_certificate /home/chen/www/nginx_ssl/bblove_me/bblove_me.cer;
+# ssl_certificate_key /home/chen/www/nginx_ssl/bblove_me/bblove_me.key;
+# ssl_dhparam /home/chen/www/nginx_ssl/dhparams.pem;
+# ssl_prefer_server_ciphers on;
+# ssl_ciphers EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5;
+# ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+# ssl_session_cache shared:SSL:50m;
+# ssl_session_timeout 1d;
+# ssl_session_tickets on;
+# ssl_stapling on;
+# ssl_stapling_verify on;
+# ssl_trusted_certificate /home/chen/www/nginx_ssl/bblove_me/bblove_me.cer;
+resolver 114.114.114.114 valid=300s;
+resolver_timeout 10s;
+if ($request_method !~ ^(GET|HEAD|POST|OPTIONS)$ ) {
+return 444;
+}
+# if ($host != &amp;#39;bblove.me&amp;#39;){
+# rewrite ^/(.*)$ https://bblove.me/$1 permanent;
+# }
+location / {
+root /home/chen/www/bblove_me;
+index index.html index.htm;
+add_header Strict-Transport-Security &amp;#34;max-age=31536000; includeSubDomains; preload&amp;#34;;
+add_header X-Frame-Options deny;
+add_header X-Content-Type-Options nosniff;
+add_header Cache-Control no-cache;
+add_header x-xss-protection &amp;#34; 1; mode=block&amp;#34;;
+add_header x-content-type-options nosniff;
+}
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;上面的配置完成后,使用&lt;code&gt;sudo service nginx reload&lt;/code&gt;,重新加载配置文件,如果没有生效,就重启一下服务器.如果服务出错,可以使用&lt;code&gt;sudo service nginx status&lt;/code&gt;查看是哪一行的配置出错,修改以后再reload.
+到此步,服务器应该就配置好了,可以使用ip访问你的服务器了&lt;code&gt;http://x.x.x.x&lt;/code&gt;,此处如果无法访问,请查看
+&lt;a class="link" href="#4-%e7%bb%93%e5%b0%be" &gt;安全组配置&lt;/a&gt;,检查是否开放了80端口&lt;/p&gt;
+&lt;h1 id="3-修改dns配置"&gt;3 修改DNS配置
+&lt;/h1&gt;&lt;p&gt;我使用的DNSPOD的服务,直接去管理后台,添加两条解析记录,将&lt;code&gt;www&lt;/code&gt;和&lt;code&gt;@&lt;/code&gt;添加A记录,指向自己的服务器ip.
+如果你不添加&lt;code&gt;www&lt;/code&gt;的话,那访问你的博客只能使用&lt;code&gt;bblove.me&lt;/code&gt;访问.添加两条记录的话,&lt;code&gt;www.bblove.me&lt;/code&gt;和&lt;code&gt;bblove.me&lt;/code&gt;都可访问你的博客.
+而且,后面配置&lt;code&gt;https&lt;/code&gt;的时候,如果要上HSTS的功能,就必须要配置&lt;code&gt;www&lt;/code&gt;.
+&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1febmtogaq5j20v904gglw.jpg"
+loading="lazy"
+alt="DNSPOD配置"
+&gt;
+配置好之后,可能要等一会儿才会生效
+到这一步,你的服务器应该就可以使用域名访问了,http://域名&lt;/p&gt;
+&lt;h1 id="4-本站目录设置"&gt;4 本站目录设置
+&lt;/h1&gt;&lt;p&gt;本站因为后期会布置多站点,所以设置目录结构如下,&lt;code&gt;www&lt;/code&gt;目录下包含两个域名对应的网站根目录,同时还设置了配置文件的目录,日志文件的目录,https证书相关目录等,如图所示.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1fecyn6c5hyj20fg0hn0tc.jpg"
+loading="lazy"
+alt="本站目录设置"
+&gt;&lt;/p&gt;
+&lt;h1 id="5-结尾"&gt;5 结尾
+&lt;/h1&gt;&lt;p&gt;我把多站点配置和https配置放到下一篇博客,这篇就简单讲这么多吧.&lt;/p&gt;
+&lt;p&gt;小建议:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;配置Nginx的时候善用&lt;code&gt;sudo service nginx status&lt;/code&gt;,这个用来定位错误很方便&lt;/li&gt;
+&lt;li&gt;如果使用云服务器,比如腾讯云的话,需要修改安全组策略,把80端口和443端口放开&lt;img src="https://ws1.sinaimg.cn/large/692869a3gy1febolh4yq0j21170fiq4b.jpg"
+loading="lazy"
+alt="安全组配置"
+&gt;&lt;/li&gt;
+&lt;li&gt;如果想查看端口是否打开,可以使用&lt;a class="link" href="http://tool.chinaz.com/port/" target="_blank" rel="noopener"
+&gt;站长工具-在线端口扫描&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>git使用笔记(2)</title><link>https://jackroyal.github.io/post/my-git-note2/</link><pubDate>Wed, 04 Nov 2015 16:52:25 +0000</pubDate><guid>https://jackroyal.github.io/post/my-git-note2/</guid><description>&lt;p&gt;上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.&lt;/p&gt;
+&lt;h1 id="撤销操作"&gt;撤销操作
+&lt;/h1&gt;&lt;p&gt;撤销操作,我经常会用到,有时候写的代码没有考虑周全,或者有疏漏,需要重新提交什么的.&lt;/p&gt;
+&lt;h1 id="1-撤销工作空间最近的修改"&gt;1 撤销工作空间最近的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:比如上次push以后的完整干净的目录,工作空间没有任何修改,暂存区也没有任何修改,如下图:
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
+loading="lazy"
+alt="上一次提交后干净的工作目录"
+&gt;
+这时候,你手贱,改了一下其中的一个文件,但是这次更改是没有意义的.我们继续使用&lt;code&gt;git status&lt;/code&gt;来查看
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1exp9ngk82jj20it07i75f.jpg"
+loading="lazy"
+alt="修改一个文件后执行git status的结果"
+&gt;
+我们现在想撤销这次修改.
+解决方法:现在这个修改只是工作区的修改,我们要撤销很简单执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git checkout a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定&lt;/p&gt;
+&lt;h1 id="2-撤销暂存区最近的修改"&gt;2 撤销暂存区最近的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:假如在上面说的那种情况下,你手贱改错了文件,而且你没有撤销,你还执行&lt;code&gt;git add a.txt&lt;/code&gt;,将修改提交到暂存区了.具体情况如下图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa1cbny2j20ge0790td.jpg"
+loading="lazy"
+alt="错误的修改被提交到了暂存区"
+&gt;
+现在我们要从暂存区撤回那个修改
+解决办法:我们使用&lt;code&gt;git reset HEAD a.txt&lt;/code&gt;,将文件从暂存区撤出来,又回到上面的工作空间被修改的状态,如图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa3azt15j20hg09twft.jpg"
+loading="lazy"
+alt="从暂存区撤回"
+&gt;
+ps:上面的命令也可以用下面的命令,语法格式是&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;,括号中填路径&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git reset a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;总的来说,&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;就是&lt;code&gt;git add &amp;lt;path&amp;gt;&lt;/code&gt;的反向操作&lt;/p&gt;
+&lt;h1 id="3-撤销提交到本地仓库的修改"&gt;3 撤销提交到本地仓库的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:假如你在&lt;code&gt;1.2&lt;/code&gt;还没有回头,一路手贱下去,将暂存区的修改&lt;code&gt;commit&lt;/code&gt;到本地仓库了
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expa8o47yvj20fi087gmv.jpg"
+loading="lazy"
+alt="错误的修改被提交到本地仓库"
+&gt;
+我们现在要从仓库撤销这次没用的提交
+解决方法:&lt;/p&gt;
+&lt;h4 id="131-方案一--再新建一次提交"&gt;1.3.1 方案一 再新建一次提交
+&lt;/h4&gt;&lt;p&gt;我们可以新建一次提交,然后让所修改的文件回到之前的状态,执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git revert HEAD
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;含义很简单,逆转,这样你的&lt;code&gt;log&lt;/code&gt;里面会多一次提交,然后文件也回到的之前的状态
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expb97iondj20it0catb7.jpg"
+loading="lazy"
+alt="执行git revert 后的log"
+&gt;&lt;/p&gt;
+&lt;p&gt;#3.2 方案二 干净的撤销上一次commit
+上面的方案一对于一个强迫症来说,不能忍啊,本来就是一次错误的提交,为了弥补这个错误,我却还要多提交一次,完全不能忍受.
+方案二,我们使用&lt;code&gt;git reset&lt;/code&gt;命令.我们执行&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git reset HEAD^
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个命令表示重置HEAD指针,我们要指向上一次提交(也就是取消最近的一次,HEAD表示当前指针,HEAD^是上一次,HEAD^^是上上次,HEAD^^^是上三次),&lt;code&gt;git reset&lt;/code&gt;命令可以添加&lt;code&gt;--mixed&lt;/code&gt;,&lt;code&gt;--soft&lt;/code&gt;,&lt;code&gt;--hard&lt;/code&gt;三种参数,&lt;code&gt;--soft&lt;/code&gt;程度最轻,只会撤销提交,对当前暂存区和当前工作空间不会有任何更改,默认的参数是&lt;code&gt;--mixed&lt;/code&gt;,他会将暂存区的文件撤销&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git reset --soft :取消了commit
+git reset --mixed（默认） :取消了commit ，取消了add
+git reset --hard :取消了commit ，取消了add，取消源文件修改
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="33-方案三--修改最后一次提交"&gt;3.3 方案三 修改最后一次提交
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;首先强调,下面说的实在本地仓库的操作.&lt;/strong&gt;
+应用场景:对于上面提到的错误的提交,我们还可以修改他的内容,删除我们错误的修改,将它恢复到原来的样子,我们可以使用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit --amend
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个方法是将当前暂存区快照提交,也就是你后面的修改合在一起,然后再提交.最后查看&lt;code&gt;log&lt;/code&gt;的时候,会只有一次提交,前面的一次提交就被删除,在&lt;code&gt;log&lt;/code&gt;中只看到这次提交.
+用具体例子来说.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit -m &lt;span style="color:#e6db74"&gt;&amp;#34;这是第一次提交&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#commit完,我们修改工作空间的内容,然后再执行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add b.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit --amend
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#这条命令会弹出一个编辑窗口,你可以修改提交信息&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#假设我们将提交信息修改为&amp;#34;这是第二次提交&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着当我们使用&lt;code&gt;git log&lt;/code&gt;来查看的时候,你只会看到提交信息是&amp;quot;这是第二次提交&amp;quot;.
+解决方法:
+我们先将文件内容恢复到上一次(当前是HEAD,上一次就是HEAD^)提交时候的样子,然后执行&lt;code&gt;git commit --amend&lt;/code&gt;,看到如下错误提示,就是说这次文件没有任何修改(废话,我已经恢复正确的样子了,当然一模一样了),默认是不允许空提交的,你只有强制使用&lt;code&gt;--allow-empty&lt;/code&gt;才行,或者执行方案二
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1expt5luwo4j20io06cq3w.jpg"
+loading="lazy"
+alt="执行git commit –amend内容没有变化的错误提示"
+&gt;&lt;/p&gt;
+&lt;h1 id="4-总结"&gt;4 总结
+&lt;/h1&gt;&lt;p&gt;盗图一张,总结上面说的内容
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
+loading="lazy"
+alt="工作空间,暂存区,本地仓库之间的关机和转换"
+&gt;
+打完收工&lt;/p&gt;
+&lt;h3 id="附言"&gt;附言
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;PS&lt;/strong&gt;:现在再来解释开头说的,这是本地仓库的操作.
+因为,我们本地仓库执行了&lt;code&gt;git commit&lt;/code&gt;后,所做的更改只会在本地,如果接着执行了&lt;code&gt;git push&lt;/code&gt;那么,所做的更改就会被提交到&lt;code&gt;git&lt;/code&gt;,在上面的例子中那么首先提交到github的就是&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;.这时候,当你执行完&lt;code&gt;git commit --amend&lt;/code&gt;的时候,本地仓库的上次提交会被删除,也就是不存在提示信息为&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;,此时本地仓库完成了修改,你想提交到github,就会报错了.如图所示
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp93i04qtj20it0cajua.jpg"
+loading="lazy"
+alt="本地执行–amend操作后直接提交到github报错"
+&gt;
+解决方法就是,&lt;strong&gt;Force&lt;/strong&gt;
+没错,强制提交&lt;code&gt;git push -f&lt;/code&gt;,这样他就会像本地一样,删除上一次提交,添加这一次提交&lt;/p&gt;
+&lt;h1 id="友情链接"&gt;友情链接
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://help.github.com/articles/changing-a-commit-message/" target="_blank" rel="noopener"
+&gt;修改提交信息&lt;/a&gt;
+2 &lt;a class="link" href="https://github.com/blog/2019-how-to-undo-almost-anything-with-git" target="_blank" rel="noopener"
+&gt;如何撤销在git上的各种修改,好文&lt;/a&gt;
+3 &lt;a class="link" href="http://my.oschina.net/MinGKai/blog/144932" target="_blank" rel="noopener"
+&gt;git revert和git reset的区别&lt;/a&gt;
+4 &lt;a class="link" href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html" target="_blank" rel="noopener"
+&gt;git常用命令介绍,带效果图的&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git使用笔记(1)</title><link>https://jackroyal.github.io/post/my-git-note1/</link><pubDate>Wed, 04 Nov 2015 12:17:04 +0000</pubDate><guid>https://jackroyal.github.io/post/my-git-note1/</guid><description>&lt;p&gt;git也用了一段时间了,还是写点笔记,记录一下.&lt;/p&gt;
+&lt;h1 id="准备条件"&gt;准备条件
+&lt;/h1&gt;&lt;p&gt;首先假装你已经安装好了git&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在Linux下
+我用的是&lt;code&gt;ubuntu&lt;/code&gt;,安装非常easy,使用&lt;code&gt;sudo apt-get install git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在windows下
+在windows下安装,就使用&lt;a class="link" href="https://git-scm.com/downloads" target="_blank" rel="noopener"
+&gt;git-downloads&lt;/a&gt;,点击下载,安装,就ok.
+ps:如果你足够幸运,可以试试&lt;a class="link" href="https://desktop.github.com/" target="_blank" rel="noopener"
+&gt;github的windows版&lt;/a&gt;,这个的好处是,带有图形化界面.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="1-初始化git设置"&gt;1 初始化git设置
+&lt;/h1&gt;&lt;p&gt;新装好git后,我们先配置个人的用户名和email,这两条配置很重要,因为在git的日志中,都会带上这两条信息.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ git config --global user.name &lt;span style="color:#e6db74"&gt;&amp;#34;John Doe&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ git config --global user.email johndoe@example.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果用了&lt;code&gt;--global&lt;/code&gt;选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉&lt;code&gt;--global&lt;/code&gt;选项重新配置即可，新的设定保存在当前项目的&lt;code&gt;.git/config&lt;/code&gt;文件里。&lt;/p&gt;
+&lt;h1 id="2-新建第一个仓库"&gt;2 新建第一个仓库
+&lt;/h1&gt;&lt;p&gt;建立第一个仓库有两种方式,一种是完全新建一个仓库,第二种是克隆一个现有仓库.&lt;/p&gt;
+&lt;h4 id="21-完全新建一个仓库"&gt;2.1 完全新建一个仓库
+&lt;/h4&gt;&lt;p&gt;你先切换到你想建项目的地方,比如&lt;code&gt;f:/blog/&lt;/code&gt;,然后执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;初始化后再在当前目录新建一个名为&lt;code&gt;.git&lt;/code&gt;的目录,git所有的东西都存在这里面.当然我们不用管.&lt;/p&gt;
+&lt;h4 id="22-克隆一个现有仓库"&gt;2.2 克隆一个现有仓库
+&lt;/h4&gt;&lt;p&gt;这个也是很easy,直接一条命令搞定&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/Jackroyal/blog.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;他会在你的当前目录新建一个&lt;code&gt;blog&lt;/code&gt;文件夹,在&lt;code&gt;blog&lt;/code&gt;文件夹里面他会把相关的文件都下载下来,就可以用了.&lt;/p&gt;
+&lt;h1 id="3-提交更新"&gt;3 提交更新
+&lt;/h1&gt;&lt;h4 id="31-提交工作空间文件到暂存区"&gt;3.1 提交工作空间文件到暂存区
+&lt;/h4&gt;&lt;p&gt;执行&lt;code&gt;touch a.txt&lt;/code&gt;,我们在目录中新建一个文件名叫&lt;code&gt;a.txt&lt;/code&gt;,然后我们修改它的内容.
+接下来,我们来查看下状态&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行结果如下图:
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exoxiu5jyij20it0933zl.jpg"
+loading="lazy"
+alt="执行git status查看工作区文件状态"
+&gt;
+就像图片中提示的,我们新加的&lt;code&gt;a.txt&lt;/code&gt;是未跟踪文件,我们执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们把&lt;code&gt;a.txt&lt;/code&gt;添加到暂存区,再次执行&lt;code&gt;git status&lt;/code&gt;,查看状态,执行结果如图所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exoxp6duu1j20it07o0th.jpg"
+loading="lazy"
+alt="添加到暂存区后再次执行git status"
+&gt;&lt;/p&gt;
+&lt;h4 id="32-将暂存区文件保存到本地仓库"&gt;3.2 将暂存区文件保存到本地仓库
+&lt;/h4&gt;&lt;p&gt;假如你要做的修改已经改完,已经保存到暂存区了,我们准备提交到本地仓库.执行&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git commit -m &amp;#34;这是提交内容&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;参数&lt;code&gt;-m&lt;/code&gt;,就是添加说明,方便以后查看,你就可以知道自己做了哪些更改&lt;/p&gt;
+&lt;h4 id="33-将本地仓库内容提交到远程仓库"&gt;3.3 将本地仓库内容提交到远程仓库
+&lt;/h4&gt;&lt;p&gt;上面的步骤都弄好以后,我们提交到远程仓库&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; git push origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就行了,一个基本的流程就是这样.
+推荐看看下面友情链接里面的那本书,pro git
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp17u1ltjj208r0boq38.jpg"
+loading="lazy"
+alt="pro git封面"
+&gt;&lt;/p&gt;
+&lt;h1 id="友情链接"&gt;友情链接
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://iissnan.com/progit/" target="_blank" rel="noopener"
+&gt;pro git中文书籍在线版&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu 14.04配置thinkphp路由,隐藏index.php</title><link>https://jackroyal.github.io/post/ubuntu-14-04-setting-about-thinkphp-url-rewrite/</link><pubDate>Mon, 29 Jun 2015 20:16:17 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-14-04-setting-about-thinkphp-url-rewrite/</guid><description>&lt;p&gt;今天把代码发布到服务器上去,发现服务器的rewrite有问题,无法实现隐藏index.php的功能.&lt;/p&gt;
+&lt;h1 id="环境"&gt;环境
+&lt;/h1&gt;&lt;p&gt;服务器:ubuntu 14.04 lts
+apache:2.4.7
+php:5.5.9-
+mysql:5.5.43&lt;/p&gt;
+&lt;h1 id="开启rewrite模块"&gt;开启rewrite模块
+&lt;/h1&gt;&lt;p&gt;在ubuntu中,开启很简单,执行以下bash命令即可&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo a2enmod rewrite
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="添加htaccess支持"&gt;添加.htaccess支持
+&lt;/h1&gt;&lt;p&gt;默认apache会忽视所有的规则重写,即使添加了&lt;code&gt;.htaccess&lt;/code&gt;文件,他不认.
+在ubuntu 14.04中设置,跟其他版本的ubuntu有点不同
+核心操作还是修改 &lt;code&gt;AllowOverride None&lt;/code&gt;为&lt;code&gt; AllowOverride All&lt;/code&gt;.
+问题是这个文件到底在哪儿.
+在网上找的教程中,有的说是在&lt;code&gt;/etc/apache2/sites-available/000-default.conf&lt;/code&gt;中,在我这个版本的apache中,它不在这里.
+他在&lt;code&gt;/etc/apache2/apache2.conf&lt;/code&gt;中.
+我们打开这个文件,大概在166行.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;Directory /var/www/&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; Options Indexes FollowSymLinks
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; AllowOverride All
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; Require all granted
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;/Directory&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="重启apache服务器"&gt;重启apache服务器
+&lt;/h1&gt;&lt;p&gt;ok,都改完了,就剩一步,重启apache服务器.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo service apache2 restart
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定!
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etl9v3c6wzj20go09dmx6.jpg"
+loading="lazy"
+alt="热疯了,空调房都热"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class="link" href="http://www.dev-metal.com/enable-mod_rewrite-ubuntu-14-04-lts/" target="_blank" rel="noopener"
+&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>digitalocean配置ipv6</title><link>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</link><pubDate>Tue, 16 Jun 2015 22:24:18 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</guid><description>&lt;p&gt;之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.&lt;/p&gt;
+&lt;h1 id="前提条件"&gt;前提条件
+&lt;/h1&gt;&lt;p&gt;首先你得有一台digitalocean的vps,建议选择洛杉矶的服务器,
+选个5美元的就够了.&lt;/p&gt;
+&lt;h1 id="1-新建droplet"&gt;1 新建droplet
+&lt;/h1&gt;&lt;p&gt;如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg"
+loading="lazy"
+alt="新建droplet,尤其注意勾选ipv6"
+&gt;
+注意勾选ipv6,后面的步骤,请参考第3步&lt;/p&gt;
+&lt;h1 id="2-修改droplet"&gt;2 修改droplet
+&lt;/h1&gt;&lt;p&gt;我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.
+你打开droplet的&lt;code&gt;setting&lt;/code&gt;,在&lt;code&gt;network&lt;/code&gt;中应该可以看到&lt;code&gt;enable ipv6&lt;/code&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg"
+loading="lazy"
+alt="带有启用ipv6选项的页面"
+&gt;
+启用后,稍后片刻,页面如下.
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
+loading="lazy"
+alt="在droplet的setting中启用ipv6后的页面"
+&gt;&lt;/p&gt;
+&lt;h1 id="3-设置ipv6"&gt;3 设置ipv6
+&lt;/h1&gt;&lt;p&gt;当我们启用ipv6支持以后,还需要对服务器进行设置.&lt;/p&gt;
+&lt;h2 id="第一步--我们把ipv6的地址添加到网卡中"&gt;第一步 我们把ipv6的地址添加到网卡中
+&lt;/h2&gt;&lt;p&gt;我们编辑&lt;code&gt;/etc/network/interfaces&lt;/code&gt;这个文件,使用命令&lt;code&gt;sudo vi /etc/network/interfaces&lt;/code&gt;
+修改后内容如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# This file describes the network interfaces available on your
+# system and how to activate them. For more information, see
+# interfaces(5).
+# The loopback network interface
+auto lo
+iface lo inet loopback
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 你的ipv4
+netmask 255.255.192.0
+gateway 你的ipv4网关
+dns-nameservers 8.8.8.8 8.8.4.4
+# 以上内容不需要修改,只需要添加下面的部分
+iface eth0 inet6 static
+address 上图中的ipv6地址
+netmask 64
+gateway 网关地址
+autoconf 0
+dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),&lt;!-- raw HTML omitted --&gt;如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
+loading="lazy"
+alt="ipv6成功启用后"
+&gt;&lt;/p&gt;
+&lt;h2 id="第二步-测试ipv6-是否配置成功"&gt;第二步 测试ipv6 是否配置成功
+&lt;/h2&gt;&lt;p&gt;我们使用ping命令来测试,ping是测试ipv4的,测试ipv6是用ping6,命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ping6 ipv6.google.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PING ipv6.google.com&lt;span style="color:#f92672"&gt;(&lt;/span&gt;nuq04s29-in-x0e.1e100.net&lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;56&lt;/span&gt; data bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;2.23 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.97 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;3&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.95 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;4&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;2.14 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;5&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.93 ms
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果发包成功,那就可以进行下一步了&lt;/p&gt;
+&lt;h1 id="4-修改hosts"&gt;4 修改hosts
+&lt;/h1&gt;&lt;p&gt;因为ipv4无法访问google scholar,所以我们配置下hosts,让所有对访问google学术的,都使用ipv6去访问.执行命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo vi /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们在hosts文件的后面,添加如下内容:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;2607:f8b0:4007:805::100f scholar.google.cn
+2607:f8b0:4007:805::100f scholar.google.com
+2607:f8b0:4007:805::100f scholar.google.com.hk
+2607:f8b0:4007:805::100f scholar.l.google.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ok,打完收工,睡觉&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.v2ex.com/t/163133" target="_blank" rel="noopener"
+&gt;一个解决 Google Scholar block DigitalOcean SFO IP 的方法&lt;/a&gt;
+2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-enable-ipv6-for-digitalocean-droplets" target="_blank" rel="noopener"
+&gt;How To Enable IPv6 for DigitalOcean Droplets&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu 14.04 安装denyhosts</title><link>https://jackroyal.github.io/post/ubuntu-denyhosts/</link><pubDate>Tue, 28 Apr 2015 20:19:23 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-denyhosts/</guid><description>&lt;h1 id="起因"&gt;起因
+&lt;/h1&gt;&lt;p&gt;因为之前服务器两次被黑，妈蛋。今天在上google+的时候，无意中看到一个维护vps的帖子，就顺手把我的服务器维护下。
+之前被黑经历也很简单，因为方便管理的缘故，我给root用户设置了密码，没错，是弱口令，一扫不要一分钟就可以出来的那种。
+我在那篇帖子中看到denyhosts这货。东西很简单，分析你的日志，如果有人连续登陆几次密码都错误，那么把他的ip添加到denyhost当中，禁止它继续扫描。这货还很多功能，可以设置禁止时间以后，自动解禁；可以配置自动解禁的次数;还可以配置用户密码尝试的次数，给管理员发邮件等。&lt;/p&gt;
+&lt;h1 id="安装"&gt;安装
+&lt;/h1&gt;&lt;h2 id="1下载源码包解压源码包"&gt;1、下载源码包,解压源码包
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;wget http:&lt;span style="color:#f92672"&gt;//&lt;/span&gt;sourceforge&lt;span style="color:#f92672"&gt;.&lt;/span&gt;net&lt;span style="color:#f92672"&gt;/&lt;/span&gt;projects&lt;span style="color:#f92672"&gt;/&lt;/span&gt;denyhosts&lt;span style="color:#f92672"&gt;/&lt;/span&gt;files&lt;span style="color:#f92672"&gt;/&lt;/span&gt;denyhosts&lt;span style="color:#f92672"&gt;/&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2.6&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&lt;/span&gt;DenyHosts&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2.6&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;tar&lt;span style="color:#f92672"&gt;.&lt;/span&gt;gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;tar zxvf DenyHosts&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2.6&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;tar&lt;span style="color:#f92672"&gt;.&lt;/span&gt;gz
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd DenyHosts&lt;span style="color:#f92672"&gt;-&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2.6&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="2安装部署"&gt;2、安装部署
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;python setup&lt;span style="color:#f92672"&gt;.&lt;/span&gt;py install
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cd &lt;span style="color:#f92672"&gt;/&lt;/span&gt;usr&lt;span style="color:#f92672"&gt;/&lt;/span&gt;share&lt;span style="color:#f92672"&gt;/&lt;/span&gt;denyhosts&lt;span style="color:#f92672"&gt;/&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cp denyhosts&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cfg&lt;span style="color:#f92672"&gt;-&lt;/span&gt;dist denyhosts&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cfg
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cp daemon&lt;span style="color:#f92672"&gt;-&lt;/span&gt;control&lt;span style="color:#f92672"&gt;-&lt;/span&gt;dist daemon&lt;span style="color:#f92672"&gt;-&lt;/span&gt;control
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="3编辑配置文件denyhostscfg"&gt;3、编辑配置文件denyhosts.cfg
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo vi denyhosts&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cfg
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;几个常见的参数如下所示：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;PURGE_DENY：当一个IP被阻止以后，过多长时间被自动解禁。可选如3m（三分钟）、5h（5小时）、2d（两天）、8w（8周）、1y（一年）；
+PURGE_THRESHOLD：定义了某一IP最多被解封多少次。即某一IP由于暴力破解SSH密码被阻止/解封达到了PURGE_THRESHOLD次，则会被永久禁止；
+BLOCK_SERVICE：需要阻止的服务名；
+DENY_THRESHOLD_INVALID：某一无效用户名（不存在的用户）尝试多少次登录后被阻止；
+DENY_THRESHOLD_VALID：某一有效用户名尝试多少次登陆后被阻止（比如账号正确但密码错误），root除外；
+DENY_THRESHOLD_ROOT：root用户尝试登录多少次后被阻止；
+HOSTNAME_LOOKUP：是否尝试解析源IP的域名；```
+一般我们就用默认就好，我们只需要改两个地方：
+### 第一个，我们注释掉第12行，启用第15行，修改以后结果如下(原因是ubuntu中的log不在/var/log/secure中，而是在/var/log/auth.log中)
+![修改后的denyhosts.cfg](https://ww3.sinaimg.cn/large/692869a3gw1erll3zp3xpj20id0b5q63.jpg)
+### 第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置
+去掉前面的`# `,就行了，修改后结果如下
+```bash
+63 # purge entries older than 5 days
+64 PURGE_DENY = 5d
+65 ###################################################################### #
+66
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="4编辑配置文件daemon-control"&gt;4、编辑配置文件daemon-control
+&lt;/h2&gt;&lt;p&gt;因为在ubuntu系统中，有些文件不在预设的位置，所以我们需要编辑这个文件
+我们只需要改第14行就好了，修改&lt;code&gt;/usr/bin/denyhosts.py&lt;/code&gt;为&lt;code&gt;/usr/local/bin/denyhosts.py&lt;/code&gt;，修改后结果如下&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#ae81ff"&gt;13&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#ae81ff"&gt;14&lt;/span&gt; DENYHOSTS_BIN &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/local/bin/denyhosts.py&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#ae81ff"&gt;15&lt;/span&gt; DENYHOSTS_LOCK &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;/var/lock/subsys/denyhosts&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#ae81ff"&gt;16&lt;/span&gt; DENYHOSTS_CFG &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/share/denyhosts/denyhosts.cfg&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#ae81ff"&gt;17&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#ae81ff"&gt;18&lt;/span&gt; PYTHON_BIN &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;/usr/bin/env python&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#ae81ff"&gt;19&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="5运行"&gt;5、运行
+&lt;/h2&gt;&lt;p&gt;运行，额，错误一堆啊，我们执行&lt;code&gt;sudo ./daemon-control start&lt;/code&gt;,然后得到如下错误&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;starting DenyHosts: /usr/bin/env python /usr/local/bin/denyhosts.py --daemon --config&lt;span style="color:#f92672"&gt;=&lt;/span&gt;/usr/share/denyhosts/denyhosts.cfg
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;DenyHosts could not obtain lock &lt;span style="color:#f92672"&gt;(&lt;/span&gt;pid: &lt;span style="color:#f92672"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;[&lt;/span&gt;Errno 2&lt;span style="color:#f92672"&gt;]&lt;/span&gt; No such file or directory: &lt;span style="color:#e6db74"&gt;&amp;#39;/var/lock/subsys/denyhosts&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们可以去&lt;code&gt;/var/lock&lt;/code&gt;下面的确看不到subsys这个文件夹，那我们就手动创建他&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;mkdir -p /var/lock/subsys
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;继续执行&lt;code&gt;sudo ./daemon-control start&lt;/code&gt;，应该就会成功
+ps：如果还不成功，他缺什么文件我们就用&lt;code&gt;touch&lt;/code&gt;新建这个文件，如果说&lt;code&gt;file exists&lt;/code&gt;,我们就删除那个文件&lt;/p&gt;
+&lt;h2 id="6添加到开机启动"&gt;6、添加到开机启动
+&lt;/h2&gt;&lt;p&gt;第一种是将DenyHosts作为类似apache、mysql一样的服务，这种方法可以通过 /etc/init.d/denyhosts 命令来控制其状态。方法如下：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;cd /etc/init.d
+ln -s /usr/share/denyhosts/daemon-control denyhosts
+# 上面的操作就把他变成了一个服务 我们可以使用service denyhosts start来启动服务
+# 下面把他添加到开机自启动，我们这里需要安装一个软件来实现
+# ubuntu中没有chkconfig命令，网上的教程是用的chkconfig，具体操作查看后面的参考文献1，ubuntu中对应的是update-rc.d，但是不好用，所以我用sysv-rc-conf
+sudo apt-get install sysv-rc-conf
+sudo sysv-rc-conf
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们设置运行级别2345，编辑以后如下所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
+loading="lazy"
+alt="设置denyhosts开机自启动"
+&gt;
+按&lt;code&gt;q&lt;/code&gt;，退出并保存&lt;/p&gt;
+&lt;p&gt;第二种是将Denyhosts直接加入rc.local中自动启动（类似于Windows中的“启动文件夹”）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;echo &lt;span style="color:#e6db74"&gt;&amp;#39;/usr/share/denyhosts/daemon-control start&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; /etc/rc.local
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.bootf.com/571.html" target="_blank" rel="noopener"
+&gt;通过DenyHosts阻止SSH暴力攻击教程&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;2 &lt;a class="link" href="http://askubuntu.com/questions/534324/var-log-secure-not-present-in-14-04-is-there-any-alternative" target="_blank" rel="noopener"
+&gt;/var/log/secure not present in 14.04 ,is there any alternative?&lt;/a&gt;&lt;/p&gt;</description></item><item><title>shadowsocks的安装和配置--在ubuntu和ubuntu中</title><link>https://jackroyal.github.io/post/use-ss/</link><pubDate>Mon, 09 Mar 2015 22:26:21 +0000</pubDate><guid>https://jackroyal.github.io/post/use-ss/</guid><description>&lt;p&gt;最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。
+搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。&lt;/p&gt;
+&lt;h1 id="1-系统环境"&gt;1 系统环境
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;服务器&lt;/strong&gt;:DigitalOcean上的Ubuntu 14.04 LTS
+&lt;strong&gt;客户端&lt;/strong&gt;:Ubuntu 14.04 LTS&lt;/p&gt;
+&lt;h1 id="2-服务器端安装和配置"&gt;2 服务器端安装和配置
+&lt;/h1&gt;&lt;p&gt;这里主要是参考github的&lt;a class="link" href="https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener"
+&gt;官方说明&lt;/a&gt;
+通过ssh登陆的服务器上去,这里不在赘述如何登陆.
+以下主要针对linux服务器,windows服务器查看&lt;a class="link" href="https://github.com/shadowsocks/shadowsocks/wiki/Install-Shadowsocks-Server-on-Windows" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="安装"&gt;安装
+&lt;/h2&gt;&lt;p&gt;Linux不同的发行版本执行的命令如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Debian / Ubuntu:
+apt-get install python-pip
+pip install shadowsocks
+CentOS:
+yum install python-setuptools &amp;amp;&amp;amp; easy_install pip
+pip install shadowsocks
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="配置"&gt;配置
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;sudo vi /etc/shadowsocks.json
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;配置文件的内容大致如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;{
+&amp;#34;server&amp;#34;:&amp;#34;你的服务器的ip&amp;#34;,
+&amp;#34;server_port&amp;#34;:8388,
+&amp;#34;local_address&amp;#34;: &amp;#34;127.0.0.1&amp;#34;,
+&amp;#34;local_port&amp;#34;:1080,
+&amp;#34;password&amp;#34;:&amp;#34;你设置的密码&amp;#34;,
+&amp;#34;timeout&amp;#34;:300,
+&amp;#34;method&amp;#34;:&amp;#34;aes-256-cfb&amp;#34;,
+&amp;#34;fast_open&amp;#34;: false
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;参数名称 解释&lt;/strong&gt;
+server 安装shadowsocks服务器ip
+server_port 服务器端口号
+local_address 本地服务器默认是127.0.0.1
+local_port 本地监听的端口号
+password 密码
+timeout 超时时间,单位是秒
+method 加密方法默认是: &amp;ldquo;aes-256-cfb&amp;quot;可以用其他加密方法
+fast_open 是否使用TCP_FASTOPEN,默认为不使用
+workers number of workers, available on Unix/Linux&lt;/p&gt;
+&lt;h2 id="运行"&gt;运行
+&lt;/h2&gt;&lt;p&gt;前台运行的命令
+&lt;code&gt;ssserver -c /etc/shadowsocks.json&lt;/code&gt;
+后台运行
+&lt;code&gt;ssserver -c /etc/shadowsocks.json -d start&lt;/code&gt;
+&lt;code&gt;ssserver -c /etc/shadowsocks.json -d stop&lt;/code&gt;
+ps:我上述两条命令都会出错,这两条命令来自官方的github,我用的是下面的
+&lt;code&gt;nohup ssserver -c /etc/shadowsocks.json &amp;gt; aa.log&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="开机自启"&gt;开机自启
+&lt;/h2&gt;&lt;p&gt;我们把它写入/etc/rc.local中就可以完成开机自启动了.&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo vi /etc/rc.local # 打开rc.local文件
+# 然后在exit前面加入下面这一行
+# nohup /usr/local/bin/ssserver -c /etc/shadowsocks.json &amp;gt; aa.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ps:这里我之前犯了一个错误,没有写&lt;code&gt;ssserver&lt;/code&gt;的绝对路径,导致开机无法自启动,但是手动执行的话,又是可以执行的&lt;/p&gt;
+&lt;h1 id="3-客户端的安装和配置"&gt;3 客户端的安装和配置
+&lt;/h1&gt;&lt;p&gt;客户端按理说和服务器端类似,安装shadowsocks,但是我的就是这个出了问题.&lt;/p&gt;
+&lt;h2 id="1-安装相关软件"&gt;1) 安装相关软件
+&lt;/h2&gt;&lt;p&gt;shadowsocks有各种客户端版本,各个系统都有.在ubuntu下带图形化界面的有shadowsocks-qt5,还可以直接用命令行.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;图形化:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo add-apt-repository ppa:hzwhuang/ss-qt5
+sudo apt-get update
+sudo apt-get install shadowsocks-qt5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;*PS:*我的电脑安装这个以后,会自动卸载我的chrome
+*PPS:*我刚才又试了一次,我在安装了命令行模式的shadowsocks以后,现在不会卸载我的chrome,总算正常了&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;The following extra packages will be installed:
+libbotan-1.10-0 libqrencode3 libqtshadowsocks libzbar0
+The following packages will be REMOVED:
+libbotan-1.10-0:i386 libqtshadowsocks:i386 libzbar0:i386
+The following NEW packages will be installed:
+libbotan-1.10-0 libqrencode3 libqtshadowsocks libzbar0 shadowsocks-qt5
+0 upgraded, 5 newly installed, 3 to remove and 19 not upgraded.
+Need to get 1,280 kB of archives.
+After this operation, 662 kB of additional disk space will be used.
+Do you want to continue? [Y/n]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;命令行模式:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo apt-get install python-pip python-dev build-essential
+sudo pip install pip
+sudo apt-get install python-m2crypto
+sudo pip install shadowsocks
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我因为之前在环境中就安装过pip,所以我只需要执行倒数第三个和第四个命令.
+但是我的倒数第四个命令&lt;code&gt;pip install shadowsocks&lt;/code&gt;一直报错:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Exception: Traceback (most recent call last):
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/basecommand.py&amp;#34;, line 122, in main
+status = self.run(options, args)
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/commands/install.py&amp;#34;, line 278, in run
+requirement_set.prepare_files(finder, force_root_egg_info=self.bundle, bundle=self.bundle)
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/req.py&amp;#34;, line 1177, in prepare_files
+url = finder.find_requirement(req_to_install, upgrade=self.upgrade)
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/index.py&amp;#34;, line 256, in find_requirement
+page_versions.extend(self._package_versions(page.links, req.name.lower()))
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/index.py&amp;#34;, line 432, in _package_versions
+for link in self._sort_links(links):
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/index.py&amp;#34;, line 422, in _sort_links
+for link in links:
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/index.py&amp;#34;, line 769, in links
+for anchor in self.parsed.findall(&amp;#34;.//a&amp;#34;):
+AttributeError: &amp;#39;Document&amp;#39; object has no attribute &amp;#39;findall&amp;#39;
+Storing debug log for failure in /root/.pip/pip.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;网上搜索一番,在&lt;a class="link" href="https://github.com/pypa/pip/issues/1742" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;找到答案.
+解决方法很简单,执行&lt;code&gt;easy_install pip&lt;/code&gt;,就ok(貌似是把pip重新安装了一次).&lt;/p&gt;
+&lt;h2 id="2-客户端运行"&gt;2) 客户端运行
+&lt;/h2&gt;&lt;p&gt;shadowsocks图形化的比较简单,这里不表.
+命令行模式,启动如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sslocal -s 服务器ip -p 8388 -k 密码
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;启动成功后会有如下输出:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;2015-03-10 11:12:59 INFO loading libcrypto from libcrypto.so.1.0.0
+2015-03-10 11:12:59 INFO starting local at 127.0.0.1:1080
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-浏览器代理设置"&gt;3) 浏览器代理设置
+&lt;/h2&gt;&lt;p&gt;一般来说我们不希望shadowsocks做全局的翻墙,那样,访问国内的速度也会变慢,我们在chome浏览器中安装switchysharp,来管理代理.具体设置如下所示:
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
+loading="lazy"
+alt="swichysharp设置"
+&gt;&lt;/p&gt;
+&lt;p&gt;enjoy it!&lt;/p&gt;
+&lt;h1 id="后记"&gt;后记
+&lt;/h1&gt;&lt;p&gt;安卓客户端安装,&lt;a class="link" href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target="_blank" rel="noopener"
+&gt;点我点我&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 这是一篇好博客 &lt;a class="link" href="http://mushapi.com/shadowsocks-install-config-using.html" target="_blank" rel="noopener"
+&gt;http://mushapi.com/shadowsocks-install-config-using.html&lt;/a&gt;
+2 &lt;a class="link" href="https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener"
+&gt;shadowsocks使用说明&lt;/a&gt;
+3 &lt;a class="link" href="https://github.com/pypa/pip/issues/1742" target="_blank" rel="noopener"
+&gt;修复我pip问题的一个issue&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="致谢"&gt;致谢
+&lt;/h1&gt;&lt;p&gt;这个网站可以下载google play的apk,对于我等天朝良民来说,可真是个好东西
+&lt;a class="link" href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target="_blank" rel="noopener"
+&gt;https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我们家&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
+&gt;笨笨的博客&lt;/a&gt;弄好了,欢迎访问&lt;/p&gt;</description></item><item><title>kali安装后设置</title><link>https://jackroyal.github.io/post/after-kali/</link><pubDate>Wed, 04 Mar 2015 14:14:57 +0000</pubDate><guid>https://jackroyal.github.io/post/after-kali/</guid><description>&lt;p&gt;kali安装好了，还有几件事要做
+我们用root的身份登进去系统&lt;/p&gt;
+&lt;h1 id="1-更新软件源"&gt;1 更新软件源
+&lt;/h1&gt;&lt;p&gt;官方自带的软件源速度相对比较慢，资源也少一些，我们添加一些国内的源进去
+vi /etc/apt/sources.list
+（可自由选择，不一定要全部）：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 官方源
+deb http://http.kali.org/kali kali main non-free contrib
+deb-src http://http.kali.org/kali kali main non-free contrib
+deb http://security.kali.org/kali-security kali/updates main contrib non-free
+# 激进源，新手不推荐使用这个软件源
+deb http://repo.kali.org/kali kali-bleeding-edge main
+deb-src http://repo.kali.org/kali kali-bleeding-edge main
+# 中科大kali源
+deb http://mirrors.ustc.edu.cn/kali kali main non-free contrib
+deb-src http://mirrors.ustc.edu.cn/kali kali main non-free contrib
+deb http://mirrors.ustc.edu.cn/kali-security kali/updates main contrib non-free
+# 阿里云kali源
+deb http://mirrors.aliyun.com/kali kali main non-free contrib
+deb-src http://mirrors.aliyun.com/kali kali main non-free contrib
+deb http://mirrors.aliyun.com/kali-security kali/updates main contrib non-free
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;保存之后运行：
+&lt;code&gt;apt-get update &lt;/code&gt; # 刷新系统
+&lt;code&gt;apt-get dist-upgrade &lt;/code&gt; # 安装更新&lt;/p&gt;
+&lt;h1 id="2-安装中文输入法和字体"&gt;2 安装中文输入法和字体
+&lt;/h1&gt;&lt;p&gt;安装字体
+&lt;code&gt;apt-get install ttf-wqy-microhei ttf-wqy-zenhei&lt;/code&gt;
+执行以下命令
+&lt;code&gt;apt-get install fcitx fcitx-googlepinyin&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="3-安装vpn"&gt;3 安装vpn
+&lt;/h1&gt;&lt;p&gt;kali默认情况下vpn是无法使用的，需要安装相关组件&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;apt-get install network-manager-openvpn
+apt-get install network-manager-openvpn-gnome
+apt-get install network-manager-pptp
+apt-get install network-manager-pptp-gnome
+apt-get install network-manager-strongswan
+apt-get install network-manager-vpnc
+apt-get install network-manager-vpnc-gnome
+/etc/init.d/network-manager restart
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="4-网卡管理显示device-not-managed"&gt;4 网卡管理显示“device not managed”
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;vi /etc/NetworkManager/NetworkManager.conf&lt;/code&gt;
+修改&lt;code&gt;managed=false&lt;/code&gt;为&lt;code&gt;managed=true&lt;/code&gt;
+然后重启网络管理
+&lt;code&gt;service network-manager restart&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="5-安装chrome浏览器"&gt;5 安装chrome浏览器
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;apt-get install google-chrome-unstable&lt;/code&gt;&lt;/p&gt;</description></item><item><title>kali和ubuntu双系统安装</title><link>https://jackroyal.github.io/post/kali-and-ubuntu/</link><pubDate>Tue, 03 Mar 2015 21:17:41 +0000</pubDate><guid>https://jackroyal.github.io/post/kali-and-ubuntu/</guid><description>&lt;p&gt;时间忽快忽慢，一转眼，年过完了，又回来学校了，又一个多月没有push了，重新回到github。今天我们家笨笨给我找了点kali的资料，索性就把kali捡起来，第一步安装kali的系统。
+此处背景不再介绍，直奔主题。kali的安装过程和ubuntu的安装过程类似，应该说原理上是一模一样的，只是界面有些不同。我的电脑当前已经安装了win8和ubuntu，现在需要再加一个kali的系统，三系统共存。
+大体分为如下几个步骤：&lt;/p&gt;
+&lt;h3 id="1-下载kali镜像"&gt;1 下载kali镜像
+&lt;/h3&gt;&lt;h3 id="2-刻录u盘"&gt;2 刻录u盘
+&lt;/h3&gt;&lt;h3 id="3-安装kali"&gt;3 安装kali
+&lt;/h3&gt;&lt;hr&gt;
+&lt;h1 id="1-下载kali镜像-1"&gt;1 下载kali镜像
+&lt;/h1&gt;&lt;p&gt;这步很简单，我们去kali的官网下载&lt;a class="link" href="https://www.kali.org/downloads/" target="_blank" rel="noopener"
+&gt;https://www.kali.org/downloads/&lt;/a&gt;,下载对应的版本。我这里下载的是第一个64位版本（&lt;a class="link" href="http://cdimage.kali.org/kali-1.1.0/kali-linux-1.1.0-amd64.iso" target="_blank" rel="noopener"
+&gt;http://cdimage.kali.org/kali-1.1.0/kali-linux-1.1.0-amd64.iso&lt;/a&gt;）,因为是在ubuntu下，我们可以顺手校验一下文件的hash值，防止文件损坏。
+在终端中输入&lt;code&gt; sha1sum /home/chen/kali-linux-1.1.0-amd64.iso&lt;/code&gt;
+查看输出是否是&lt;code&gt;40a1fd1d4864e7fac70438a1bf2095c8c1a4e764&lt;/code&gt;，若正确，则第一步完成。&lt;/p&gt;
+&lt;h1 id="2-刻录u盘-1"&gt;2 刻录u盘
+&lt;/h1&gt;&lt;p&gt;如果采用硬盘安装的话，我们需要在win下面操作，使用easybcd来编辑grub引导，还需要解压文件，相对比较麻烦，我这里采用u盘安装，相对比较简单。
+和安装ubuntu不同，我之前在win下用UltraISO来刻录,
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
+loading="lazy"
+alt="刻录ubuntu"
+&gt;如图所示，便捷启动是可以不修改的，直接默认，点击写入就行。我今天在刻录kali的时候，发现这样写的u盘无法启动，开机的时候会提示&lt;code&gt;failed to boot from USB disk with error: gfxboot.c32: not a COM32R Image boot:&lt;/code&gt;的错误。
+解决方法有两个
+1 linux的用mkusb，windows的用Win32DiskImager 来制作U盘启动
+具体用法：
+&lt;a class="link" href="https://wiki.ubuntu.com/Win32DiskImager/iso2usb" target="_blank" rel="noopener"
+&gt;https://wiki.ubuntu.com/Win32DiskImager/iso2usb&lt;/a&gt;
+&lt;a class="link" href="https://help.ubuntu.com/community/mkusb" target="_blank" rel="noopener"
+&gt;https://help.ubuntu.com/community/mkusb&lt;/a&gt;
+2 在win下用UltraISO来刻录，记得更改便捷启动的设置，如图所示
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1epsw409qr3j20go09rjtp.jpg"
+loading="lazy"
+alt="更改便捷启动"
+&gt;，点击便捷启动-&amp;gt;选择写入新的启动器引导扇区——&amp;gt;syslinus——&amp;gt;写入&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;我采用的是法一，我在ubuntu中用mkusb来刻录&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id="3-安装kali-1"&gt;3 安装kali
+&lt;/h1&gt;&lt;p&gt;下面开始安装kali（以下图片是我用virtualbox虚拟机中安装拍摄的）&lt;/p&gt;
+&lt;h2 id="1-引导成功以后开机画面如图所示"&gt;1 引导成功以后，开机画面如图所示
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
+loading="lazy"
+alt="开机画面"
+&gt;
+我们选择&lt;code&gt;Graphical install&lt;/code&gt;,图形化安装，也可以选择&lt;code&gt;install&lt;/code&gt;那是文字界面安装&lt;/p&gt;
+&lt;h2 id="2-选择语言地区"&gt;2 选择语言，地区
+&lt;/h2&gt;&lt;p&gt;语言： 选择 &lt;code&gt;chinese（simplified）简体中文&lt;/code&gt;
+地区： 选择 &lt;code&gt;中国&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="3-配置网络名称和domain"&gt;3 配置网络名称和domain
+&lt;/h2&gt;&lt;p&gt;这个代表你的电脑在网络上的名称，比如win默认的就是pc-2000123131，也就是别人在网上邻居中看到你的电脑的名称。我们就用默认的&lt;code&gt;localhost&lt;/code&gt;
+domain我们留空不管他，下一步&lt;/p&gt;
+&lt;h2 id="4-设置root密码"&gt;4 设置root密码
+&lt;/h2&gt;&lt;p&gt;我们设置两次一样的密码就行，不要忘记了
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
+loading="lazy"
+alt="设置root密码"
+&gt;&lt;/p&gt;
+&lt;h2 id="5-磁盘分区"&gt;5 磁盘分区
+&lt;/h2&gt;&lt;p&gt;我们选择第三项&lt;code&gt;手动&lt;/code&gt;
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
+loading="lazy"
+alt="磁盘分区选项"
+&gt;
+&lt;strong&gt;分区&lt;/strong&gt;，这里我们一共分&lt;code&gt;三个区&lt;/code&gt;，一个300M的&lt;code&gt;/boot&lt;/code&gt;分区，一个2048M的&lt;code&gt;swap&lt;/code&gt;分区，其他的分为一个&lt;code&gt;/&lt;/code&gt;（你也可以把/home单独分区出来），因为分区方法类似，所以我只讲一个&lt;code&gt;/boot&lt;/code&gt;和&lt;code&gt;swap&lt;/code&gt;分区的步骤
+&lt;strong&gt;boot分区&lt;/strong&gt;
+&lt;strong&gt;注意:&lt;strong&gt;选择&lt;/strong&gt;可启动标志&lt;/strong&gt;，我们只有/boot设置为&lt;code&gt;开&lt;/code&gt;，其他分区的这个选项都是&lt;code&gt;关&lt;/code&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
+loading="lazy"
+alt="boot分区设置"
+&gt;
+设置完成后，选择&lt;code&gt;分区设定结束&lt;/code&gt;，点击继续&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;交换空间&lt;/strong&gt;
+&lt;strong&gt;注意:&lt;strong&gt;交换空间是一种&lt;/strong&gt;文件类型&lt;/strong&gt;，其他的分区是&lt;strong&gt;属于载点&lt;/strong&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
+loading="lazy"
+alt="交换空间swap分区设置"
+&gt;
+设置完成后，选择&lt;code&gt;分区设定结束&lt;/code&gt;，点击继续&lt;/p&gt;
+&lt;p&gt;等分区完成，就选择&lt;code&gt;分区设定结束并将修改写入磁盘&lt;/code&gt;，点击继续，就开始安装kali&lt;/p&gt;
+&lt;h2 id="6-启动引导"&gt;6 启动引导
+&lt;/h2&gt;&lt;p&gt;当系统快安装完成的时候，会出现grub安装的选择,如图所示
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
+loading="lazy"
+alt="交换空间swap分区设置"
+&gt;&lt;/p&gt;
+&lt;p&gt;因为我的系统是&lt;code&gt;win8&lt;/code&gt;和&lt;code&gt;ubuntu&lt;/code&gt;和&lt;code&gt;kali&lt;/code&gt;多系统共存，当前是由&lt;code&gt;win&lt;/code&gt;来引导（当前系统由谁引导就看开机看到的第一个&lt;code&gt;系统选择&lt;/code&gt;是谁的，如果是红色的ubuntu选项，那就说明由ubuntu引导）。
+我这里选择否的话，那么我就需要去&lt;code&gt;win&lt;/code&gt;里面手动添加&lt;code&gt;kali&lt;/code&gt;的引导（使用easybcd来操作）。
+如果你是&lt;code&gt;ubuntu&lt;/code&gt;来引导系统的话，一样需要手动去添加&lt;code&gt;kali&lt;/code&gt;的引导（这里我还不会）。
+所以我选择&lt;code&gt;是&lt;/code&gt;，这样装完三个系统都可以正常开机了。&lt;/p&gt;
+&lt;p&gt;到此所有的安装结束。&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 安装kali 系统 &lt;a class="link" href="http://blog.sina.com.cn/s/blog_779dcd090102va9c.html" target="_blank" rel="noopener"
+&gt;http://blog.sina.com.cn/s/blog_779dcd090102va9c.html&lt;/a&gt;
+2 &lt;a class="link" href="http://www.bkjia.com/Linuxjc/844530.html" target="_blank" rel="noopener"
+&gt;kali系统安装图文教程，kali系统安装图文&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="致谢"&gt;致谢
+&lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
+&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Linux下使用github</title><link>https://jackroyal.github.io/post/linux-how-to-use-github/</link><pubDate>Mon, 19 Jan 2015 00:53:48 +0000</pubDate><guid>https://jackroyal.github.io/post/linux-how-to-use-github/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;我的惰性真是病入膏肓了，已经整整3周没有在github上提交东西了，今天看了《模拟游戏》，索性又捡起来了。下面来总结一下linux下github的使用，也算是给自己一个备份，因为我自己也是老忘记。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用环境：Ubuntu 14.04&lt;/p&gt;
+&lt;h2 id="1-安装git相关软件"&gt;1 安装git相关软件
+&lt;/h2&gt;&lt;p&gt;我的Ubuntu里面没有自带git相关软件，所以我们首先需要安装它，很简单。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo apt-get install git
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="2-初始化git的设置"&gt;2 初始化git的设置
+&lt;/h2&gt;&lt;p&gt;接下来，进行初始化设置，也就是设置你的github账号和密码&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git config --global user.name &amp;#34;zhangsan&amp;#34;# 其中的“zhangsan”输入的就是你注册时候的用户名，这步是设置你提交时候默认的用户名
+# 之后设置提交时候默认的邮箱，在命令行输入：
+git config --global user.email &amp;#34;haha@qq.com&amp;#34;
+# 其中的“haha@qq.com”就是你注册时候用的邮箱，当然也可以用别的邮箱，用别的邮箱的时候你必须在github的主页上设置里面把用的邮箱添加进去
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-开始使用github"&gt;3 开始使用github
+&lt;/h2&gt;&lt;p&gt;1 首先你的github上应该有一个库，如果没有的话，就去github网站上新建一个库，或者fork一个别人的项目，以下的操作都是建立在这个基础上，&lt;code&gt;假设存在一个库https://github.com/Jackroyal/test.git&lt;/code&gt;.
+如果你的github上已经有库了，可以忽略第1步直接进入第2步
+2 我们在本地新建一个文件夹(命名随你便，我取名叫做test_git)&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;mkdir test_git
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3 将远程的库复制下来，我们使用git clone命令来完成&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 如果你的环境不在test_git目录
+# cd test_git
+# 如果在test_git中
+git clone https://github.com/Jackroyal/test.git# 他会在你的本地新建一个test文件夹
+cd test
+# 接下来新建一个测试文件
+touch test.md
+# 修改测试文件的内容
+vi test.md
+# 提交刚才所做的更改
+git add .
+git commit -m &amp;#34;首次提交&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3 push提交到github&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git remote add origin https://github.com/Jackroyal/test.git
+git push
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;之后会提示你输入用户名密码，你输入你github账号和密码就行了
+打完收工，睡觉
+后面会陆续介绍hexo在Linux下的使用&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://blog.chinaunix.net/uid-29040159-id-3799719.html" target="_blank" rel="noopener"
+&gt;ubuntu 下 github 简单的使用教程&lt;/a&gt;
+2 &lt;a class="link" href="http://blog.csdn.net/pony_maggie/article/details/23207847" target="_blank" rel="noopener"
+&gt;Github入门级使用攻略&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

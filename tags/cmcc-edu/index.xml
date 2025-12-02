@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cmcc-Edu on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/cmcc-edu/</link><description>Recent content in Cmcc-Edu on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/cmcc-edu/index.xml" rel="self" type="application/rss+xml"/><item><title>cmcc520扩展使用说明</title><link>https://jackroyal.github.io/post/how-to-use-cmcc520/</link><pubDate>Mon, 24 Nov 2014 21:56:00 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-use-cmcc520/</guid><description>&lt;p&gt;我的cmcc520 2.0版本终于完成了,写个使用说明&lt;/p&gt;
+&lt;p&gt;学校部分范围有CMCC-EDU可用,通过手动修改ssid,可以免费使用.&lt;/p&gt;
+&lt;p&gt;写了个扩展来简化这个过程.&lt;/p&gt;
+&lt;p&gt;1 安装扩展
+将保存下来的 *.crx 文件或*.js 文件直接拖拽到浏览器的“扩展程序”（[chrome://chrome/extensions](&amp;ldquo;Chrome 扩展程序页面&amp;rdquo;)/）页面。
+&lt;img src="https://img.blog.csdn.net/20141124215558921?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;( 注：只有拖动到此页面才能安装，其它页面无效)&lt;/p&gt;
+&lt;p&gt;　　2. 按照提示安装
+&lt;img src="https://img.blog.csdn.net/20141124215611765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt; 
+详细安装过程见&lt;a class="link" href="http://www.williamlong.info/archives/3160.html" target="_blank" rel="noopener"
+&gt;http://www.williamlong.info/archives/3160.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;3,配置软件功能&lt;/p&gt;
+&lt;p&gt;左键点击图标,可以选择开关扩展功能(默认为开启)
+ &lt;img src="https://img.blog.csdn.net/20141124215702865?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;4.使用软件&lt;/p&gt;
+&lt;p&gt;如果软件的功能打开,那么如果当你使用cmcc-edu的时候会自动跳转完成登录,不再需要手动操作,登录成功页面如下,你可以关闭这个页面了
+&lt;img src="https://img.blog.csdn.net/20141124215651437?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;5.下线&lt;/p&gt;
+&lt;p&gt;在任何页面按ALT+X   可以下线&lt;/p&gt;
+&lt;p&gt;Ps,如果按Alt+x无任何提示,可能是快捷键设置有问题
+ &lt;img src="https://img.blog.csdn.net/20141124215717575?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img.blog.csdn.net/20141124215740968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;那就需要你按照上图手动设置快捷键&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;6 反馈
+如果发现任何bug,可以和我联系&lt;/p&gt;
+&lt;p&gt;新浪微博&lt;a class="link" href="http://weibo.com/517123263" target="_blank" rel="noopener"
+&gt;http://weibo.com/517123263&lt;/a&gt;
+Github项目地址 &lt;a class="link" href="https://github.com/Jackroyal/cmcc520" target="_blank" rel="noopener"
+&gt;https://github.com/Jackroyal/cmcc520&lt;/a&gt;
+我的csdn博客&lt;a class="link" href="file:///C:/Users/chenhao/Desktop/%20http:/blog.csdn.net/jackroyal" &gt; http://blog.csdn.net/jackroyal&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;2014/11/24&lt;/p&gt;</description></item><item><title>chrome扩展开发手记-chrome扩展开始第一步manfest.json</title><link>https://jackroyal.github.io/post/chrome-extention-3/</link><pubDate>Mon, 24 Nov 2014 15:16:00 +0000</pubDate><guid>https://jackroyal.github.io/post/chrome-extention-3/</guid><description>&lt;p&gt;参考文档   &lt;a class="link" href="https://lmk123.duapp.com/" target="_blank" rel="noopener"
+&gt;https://lmk123.duapp.com/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;下面开始写chrome扩展了,第一步就是看文档,官方文档有入门指导,先要过一遍&lt;/p&gt;
+&lt;p&gt;我们首先来编写第一个文件manfest.json,这是一个清单文件,告诉系统,我有哪些文件,需要申请哪些权限都在里面,下卖弄给出我的manfest.json&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;cmcc520&amp;#34;&lt;/span&gt;,&lt;span style="color:#75715e"&gt;//扩展的名称
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;version&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;2.0&amp;#34;&lt;/span&gt;,&lt;span style="color:#75715e"&gt;//扩展的版本号,随便写
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;description&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;powered by 搁浅St&amp;#34;&lt;/span&gt;,&lt;span style="color:#75715e"&gt;//扩展的描述,就是在chrome://extension页面中,扩展名称下面的几个字
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;background&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; {&lt;span style="color:#75715e"&gt;//background.js,整个扩展的运行,有个页面在后台运行
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;scripts&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; [&lt;span style="color:#e6db74"&gt;&amp;#34;js/function.js&amp;#34;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#34;bg.js&amp;#34;&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;persistent&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;page_action&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;{&lt;span style="color:#75715e"&gt;//比较常见有page_action和browser_action有,page会出现在地址栏末端,browser会在浏览器上显示一个图标
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;default_icon&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;icon-48.png&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;default_popup&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;popup.html&amp;#34;&lt;/span&gt;,&lt;span style="color:#75715e"&gt;//popup.html点击弹出的页面
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;default_title&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;cmcc520&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;permissions&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;:&lt;/span&gt; [&lt;span style="color:#75715e"&gt;//申请内容脚本的权限,在插入内容到页面时,需要用哪些权限,此处必须声明
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;tabs&amp;#34;&lt;/span&gt;, &lt;span style="color:#e6db74"&gt;&amp;#34;http://\*/\*&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ],
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;icons&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;:&lt;/span&gt; {&lt;span style="color:#75715e"&gt;//图标设置
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;48&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;icon-48.png&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;128&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;icon-128.png&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;commands&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; {&lt;span style="color:#75715e"&gt;//快捷键设置
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;logout_cmcc&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;description&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;退出CMCC登录&amp;#34;&lt;/span&gt;,
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;suggested_key&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Alt+X&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;manifest_version&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;&lt;span style="color:#75715e"&gt;//manifest_version,现在版本1已经不支持,统一都写成2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;简单的属性,这里不再赘述,我重点说一下background,page_action,permissions和commands.&lt;/p&gt;
+&lt;p&gt;background  它是一个包含扩展程序主要逻辑的不可见页面。扩展程序也可以包含其他页面，展现扩展程序的用户界面。如果扩展程序需要与用户加载的网页交互（相对于包含在扩展程序中的页面），扩展程序必须使用内容脚本。后台网页分两种：持续运行的后台网页与事件页面(设置persistent属性)。正如它们的名称所述，持续运行的后台网页保持打开状态，事件页面根据需要打开与关闭。除非您绝对需要您的后台网页一直运行，请首选事件页面。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;background&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; {&lt;span style="color:#75715e"&gt;//background.js,整个扩展的运行,有个页面在后台运行
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;scripts&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; [&lt;span style="color:#e6db74"&gt;&amp;#34;js/function.js&amp;#34;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#34;bg.js&amp;#34;&lt;/span&gt;],
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;persistent&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;比如我的这个 后台执行就是这样的&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://img.blog.csdn.net/20141124194616706?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;采用pageaction还是browseraction取决于你是否想让图标一直可见.`&lt;img src="https://img.blog.csdn.net/20141124193151343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;如图,绿色的是广告终结者,他的图标是pageAction,后面的印象笔记还有switchproxy是browserAction.一般来说,适用于少数页面的扩展建议使用pageaction,适用于大多数页面的建议使用browseraction&lt;/p&gt;
+&lt;p&gt;permissions属性,用来设置和conten_script相关的选项,举个例子,如果你想插入一段代码到页面中去执行,操作页面上的dom,那就写个content_script就行了,使用 content_scripts 字段，扩展程序可以向一个页面中插入多个内容脚本，每个内容脚本可以有多个
+JavaScript 和 CSS 文件,详细情况请看这里&lt;a class="link" href="https://lmk123.duapp.com/extensions/content_scripts" target="_blank" rel="noopener"
+&gt;https://lmk123.duapp.com/extensions/content_scripts&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我现在在做的一个扩展就是做这样的事,百度的搜索结果会先跳到一个百度的网址,然后才是目标网址,我可以使用cotent_scripts来插入脚本,修改百度搜索结果的链接,让他直接跳转到目标页面,而不是百度的搜索结果页面.&lt;/p&gt;
+&lt;p&gt;commands选项是设置快捷键,然后给快捷键设置事件 监听,这样我们按快捷键就会执行相应操作.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;logout_cmcc&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; {&lt;span style="color:#75715e"&gt;//某个快捷操作的名称
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;description&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;退出CMCC登录&amp;#34;&lt;/span&gt;,&lt;span style="color:#75715e"&gt;//快捷操作的描述
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;suggested_key&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; {&lt;span style="color:#75715e"&gt;//默认推荐的快捷键,不能与系统默认的快捷键冲突,否则就会失灵,需要用户手动去设置
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Alt+X&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>chrome扩展开发手记&lt;2&gt;-登录原理分析</title><link>https://jackroyal.github.io/post/chrome-extention-2/</link><pubDate>Mon, 24 Nov 2014 11:18:00 +0000</pubDate><guid>https://jackroyal.github.io/post/chrome-extention-2/</guid><description>&lt;p&gt;上一篇,我们 介绍了一下登录的流程,但是用程序进行登录的话,我们肯定不能那样一步一步,太过复杂,所以我们接下来分下一下登录的具体过程,看看能不能作一些简化&lt;/p&gt;
+&lt;p&gt;我们接下来,给几个页面编个号,下面好分析一点
+A   最原始的跳转 &lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU&lt;/a&gt;
+B  第一次改ssid  &lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;C 第一次点击 请点击登录  以后的地址
+&lt;a class="link" href="http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;D 第二次改ssid  
+&lt;a class="link" href="http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC520&lt;/a&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;从www.baidu.com跳转到A地址,这个步骤没什么特别的,服务器那边做了一个302跳转,然后我们这边就自动跳转到A地址了&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第一次改ssid,也就是从A到B,这个过程也没什么,只是一个单纯的地址跳转,B地址中有一个表单&lt;!-- raw HTML omitted --&gt;
+&lt;img src="https://img.blog.csdn.net/20141124134725891?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;!-- raw HTML omitted --&gt;
+这个表单里面 主要包含四个字段,
+&lt;!-- raw HTML omitted --&gt;wlanacname:1022.0027.270.00
+&lt;!-- raw HTML omitted --&gt;wlanuserip:10.80.97.209
+ssid:iWuhan-Free
+&lt;!-- raw HTML omitted --&gt;userAgent_1:Mozilla/5.0 (Windows NT 6.2)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;我们第一次点击 请提交登录,所做的操作就是把上面的表单提交到  &lt;a class="link" href="http://120.202.164.10:8080/portal/servlets/SingleLoginServlet" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/servlets/SingleLoginServlet&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;
+服务器返回的地址是C,这一步的表单提交主要是为了获取C的地址,就是因为多了的那个loginFree.jsp,这样下一步才能改ssid为CMCC520,否则,如果你越过这一步直接改ssid为CMCC520,就会跳转到其他的页面,比如下面这个&lt;img src="https://img.blog.csdn.net/20141124133708801?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;!-- raw HTML omitted --&gt;
+这个地址如果点击提交,是没有办法正常登陆的,我们必须要到武汉的那个页面才行.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在我们到达C那个页面以后,我们再次修改ssid,就到了D页面,然后在D页面点击  请点击登录,流程和上面的一样,页面效果也是一样,不过表单的值变了一个,具体表单post内容如下
+&lt;!-- raw HTML omitted --&gt;wlanacname:1022.0027.270.00
+&lt;!-- raw HTML omitted --&gt;wlanuserip:10.80.97.209
+ssid:CMCC520
+userAgent_1:Mozilla/5.0 (Windows NT 6.2)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36&lt;!-- raw HTML omitted --&gt;
+提交以后,我们就可以登录成功了,成功以后服务器会做一个302跳转,页面跳转到一个登录计时的页面.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;************************************************************************************************************************************************************
+_&lt;!-- raw HTML omitted --&gt;
+_
+从整体来看,最核心的一个操作就是向&lt;a class="link" href="http://120.202.164.10:8080/portal/servlets/SingleLoginServlet" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/servlets/SingleLoginServlet&lt;/a&gt;提交一个表单,表单内容是
+wlanacname:1022.0027.270.00
+wlanuserip:10.80.97.209
+ssid:CMCC520
+userAgent_1:Mozilla/5.0 (Windows NT 6.2)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36
+然后,然后就没有然后了,那个最后计时页面的跳转没有多大的实际作用,我们只需要post这一个请求就好了
+下一步我们开始制作chrome扩展,核心也是要实现这个post的请求
+&lt;em&gt;************************************************************************************************************************************************************&lt;/em&gt;
+&lt;em&gt;退出登录也是如此,发一个get请求过去,然后从获得的内容中进行判断,判断成功与否&lt;/em&gt;
+__&lt;/p&gt;
+&lt;p&gt;下线请求
+&lt;a class="link" href="http://120.202.164.10:8080/portal/servlets/LogoutServlet?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC520&amp;amp;ATTRIBUTE_USERNAME=iWuhanFree4300&amp;amp;ATTRIBUTE_UUID=26FBE9A694B6221958CF6DE2704F0ECA&amp;amp;ATTRIBUTE_IPADDRESS=10.80.97.209&amp;amp;cancelAutomatismLogin=false" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/servlets/LogoutServlet?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC520&amp;amp;ATTRIBUTE_USERNAME=iWuhanFree4300&amp;amp;ATTRIBUTE_UUID=26FBE9A694B6221958CF6DE2704F0ECA&amp;amp;ATTRIBUTE_IPADDRESS=10.80.97.209&amp;amp;cancelAutomatismLogin=false&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;表单实际内容&lt;/p&gt;
+&lt;p&gt;wlanacname:1022.0027.270.00&lt;/p&gt;
+&lt;p&gt;wlanuserip:10.80.97.209&lt;/p&gt;
+&lt;p&gt;ssid:CMCC520&lt;/p&gt;
+&lt;p&gt;ATTRIBUTE_USERNAME:iWuhanFree4300&lt;/p&gt;
+&lt;p&gt;ATTRIBUTE_UUID:26FBE9A694B6221958CF6DE2704F0ECA&lt;/p&gt;
+&lt;p&gt;ATTRIBUTE_IPADDRESS:10.80.97.209&lt;/p&gt;
+&lt;p&gt;cancelAutomatismLogin:false&lt;/p&gt;</description></item><item><title>chrome扩展开发手记&lt;1&gt;-需求分析</title><link>https://jackroyal.github.io/post/chrome-extention-1/</link><pubDate>Fri, 21 Nov 2014 18:17:00 +0000</pubDate><guid>https://jackroyal.github.io/post/chrome-extention-1/</guid><description>&lt;p&gt;本人的学校在武汉,有CMCC-EDU的网络覆盖,中国移动和武汉市政府搞了一个活动,可以免费公益上网,说白了,就是可以免费使用EDU的网络,如图.
+&lt;img src="https://img.blog.csdn.net/20141121181910580?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;以上是前提.&lt;/p&gt;
+&lt;p&gt;这个网络的使用流程是这样子的.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;你打开任何一个网址,比如http://www.baidu.com  &lt;!-- raw HTML omitted --&gt;
+都会跳转到 &lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
+&gt;&lt;/a&gt;&lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU&lt;/a&gt;  界面如图所示&lt;!-- raw HTML omitted --&gt;
+&lt;img src="https://img.blog.csdn.net/20141124103645611?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/li&gt;
+&lt;li&gt;接下来我们手动更改最上面的网址栏,把ssid改为iWuhan-Free,(注意大小写)&lt;!-- raw HTML omitted --&gt;
+修改后的网址如下&lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free&lt;/a&gt;界面如下&lt;!-- raw HTML omitted --&gt;
+&lt;img src="https://img.blog.csdn.net/20141124104120281?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;/li&gt;
+&lt;li&gt;接下来我们点击,请点击登录按钮,系统反馈如下&lt;!-- raw HTML omitted --&gt;
+&lt;img src="https://img.blog.csdn.net/20141124104623968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+loading="lazy"
+&gt;&lt;!-- raw HTML omitted --&gt;
+我们忽略这个警告,可以注意到,上面的地址栏已经变掉了,多了个loginFree.jsp完整的地址&lt;a class="link" href="http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;接下来,我们再改一次ssid,改为CMCC520,完整地址如下&lt;a class="link" href="http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free" target="_blank" rel="noopener"
+&gt;http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC520&lt;/a&gt; 界面还是和上图一样,就不贴图了,我们再点击一次,请点击登录,然后就会跳到一个计时页面,这样就表示你登录成功,可以上网了&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;登录的流程走完了,下一篇,接下来我们分析一下登录的原理,简化一下登录的流程&lt;/p&gt;</description></item></channel></rss>

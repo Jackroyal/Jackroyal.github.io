@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Github on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/github/</link><description>Recent content in Github on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/github/index.xml" rel="self" type="application/rss+xml"/><item><title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</title><link>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</link><pubDate>Sun, 06 Mar 2016 15:50:46 +0000</pubDate><guid>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</guid><description>&lt;p&gt;上一篇文章&lt;a class="link" href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener"
+&gt;解决 Github Pages 禁止百度爬虫的方法&lt;/a&gt;,提到了解决百度爬虫被github禁用掉的方法.
+&lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;
+然后今天去上gitcafe,偶然看到这个
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
+loading="lazy"
+alt="GitCafe 项目迁移至 Coding.net 公告"
+&gt;
+额(⊙o⊙)…,holly shit.不过没办法,人家都被收购了,我们只能改变策略了.
+话说,两家都是做代码托管的,这也是顺(bao)应(tuan)潮(qu)流(nuan)咩?&lt;/p&gt;
+&lt;p&gt;思路跟原来差不多,就是我们把其中的gitcafe内容替换成coding.net就好,以下简称coding.
+&lt;code&gt;把博客同时发布到github pages和coding pages.然后使用dnspod设置域名解析,国内线路解析到coding.net,国外线路解析到github.&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;注册coding账号&lt;/li&gt;
+&lt;li&gt;新建一个项目,名字与你的用户名相同,比如我的名字是&lt;code&gt;Jackroyal&lt;/code&gt;,新建一个项目名为&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;添加ssh公钥&lt;/li&gt;
+&lt;li&gt;新建coding-pages分支&lt;/li&gt;
+&lt;li&gt;开启pages服务&lt;/li&gt;
+&lt;li&gt;修改hexo配置&lt;/li&gt;
+&lt;li&gt;修改dns设置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="1-注册coding账号"&gt;1 注册coding账号
+&lt;/h1&gt;&lt;p&gt;这个很简单不必说,注册需要填写用户名,邮箱和密码,比如我的用户名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="2-新建和用户名同名的项目"&gt;2 新建和用户名同名的项目
+&lt;/h1&gt;&lt;p&gt;在注册好账号以后,我们就去新建一个项目,方法和gitcafe不同和gihub类似,就是和用户名同名,一模一样的就行.我的项目名是&lt;code&gt;Jackroyal&lt;/code&gt;,项目属性&lt;code&gt;公开&lt;/code&gt;
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
+loading="lazy"
+alt="新建同名项目"
+&gt;&lt;/p&gt;
+&lt;h1 id="3-添加ssh公钥"&gt;3 添加&lt;code&gt;ssh&lt;/code&gt;公钥
+&lt;/h1&gt;&lt;p&gt;首先,我们提交代码库有两种方式,一种是https,一种是ssh,两种方式都可以,但是因为我们使用hexo来发布博客的时候是没有地方输入密码的,所以我们才考虑使用&lt;code&gt;ssh&lt;/code&gt;方式,不过也不一定,我们还是可以使用https方式来提交hexo的.&lt;/p&gt;
+&lt;h2 id="31-使用ssh方式发布博客"&gt;3.1 使用ssh方式发布博客
+&lt;/h2&gt;&lt;p&gt;我们只需要找到本地的ssh公钥,然后上传到coding上去就行,点击&lt;a class="link" href="https://coding.net/user/account/setting/keys" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;设置.查看本地ssh公钥的方法和上篇博客一样.
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+loading="lazy"
+alt="使用git客户端查看ssh公钥私钥"
+&gt;
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+loading="lazy"
+alt="查看公钥"
+&gt;
+复制那一段,然后在coding上添加上去就行&lt;/p&gt;
+&lt;h2 id="32-使用https方式发布"&gt;3.2 使用https方式发布
+&lt;/h2&gt;&lt;p&gt;如果非要使用https方式,也是可以的,核心思路就是在本地做一次&lt;code&gt;push&lt;/code&gt;操作就行.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我们先&lt;code&gt;git clone&lt;/code&gt;命令,我的项目就是&lt;code&gt;git clone https://git.coding.net/Jackroyal/Jackroyal.git&lt;/code&gt;得到coding上刚才新建的项目.&lt;/li&gt;
+&lt;li&gt;克隆完成后,接着我们进到项目目录,我们新建一个文件或者修改一个文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git add .&lt;/code&gt;,把修改提交到暂存区&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git commit -m &amp;quot;测试提交&amp;quot;&lt;/code&gt;,将修改提交到本地仓库&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;git push&lt;/code&gt;,将修改提交到远程仓库&lt;/li&gt;
+&lt;li&gt;接下来,会让你输入用户名和密码,你输入&lt;/li&gt;
+&lt;li&gt;然后项目就会提交,因为这个状态会保留下来,你下次在提交就可以不用输入用户名和密码了,这样为我们使用hexo发布代码提供条件
+ps:这种方式,可能过一段时间又不行了,报错&lt;code&gt;could not read Username for 'https://git.coding.net': Invalid argument&lt;/code&gt;,你再做一次上面的操作就行&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="4-新建coding-pages分支"&gt;4 新建coding-pages分支
+&lt;/h1&gt;&lt;p&gt;当我们可以提交代码的时候,我们先来新建分支,和gitcafe差不多,它需要一个特别的分支名字,而不是像github默认的master分支,名字是&lt;code&gt;coding-pages&lt;/code&gt;,如下图所示
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
+loading="lazy"
+alt="新建coding分支"
+&gt;
+我们把它设为默认分支&lt;/p&gt;
+&lt;h1 id="5-开启pages服务"&gt;5 开启pages服务
+&lt;/h1&gt;&lt;p&gt;接下来我们需要手动去开启pages服务.在项目主页的&lt;code&gt;pages&lt;/code&gt;选项卡,点击开启服务,同时我们,添加域名绑定
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
+loading="lazy"
+alt="开启pages服务"
+&gt;
+域名绑定我们还要去修改dns解析,我们先用它分配给我们的域名去访问&lt;a class="link" href="http://jackroyal.coding.me/" target="_blank" rel="noopener"
+&gt;http://jackroyal.coding.me/&lt;/a&gt;,看看能不能正常访问&lt;/p&gt;
+&lt;h1 id="5-修改hexo配置"&gt;5 修改hexo配置
+&lt;/h1&gt;&lt;p&gt;前面的准备工作做得差不多,我们修改博客的配置信息,打开博客根目录的&lt;code&gt;_config.yml&lt;/code&gt;文件,格式和之前github的差不多:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+- type: git
+repo: &amp;#39;https://github.com/Jackroyal/Jackroyal.github.io.git&amp;#39;
+branch: master
+- type: git
+repo: &amp;#39;https://git.coding.net/Jackroyal/Jackroyal.git&amp;#39;
+branch: coding-pages
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;尤其注意在配置的时候注意留空格,这种键值对,比如&lt;code&gt;type: git&lt;/code&gt;,其中的冒号后面到git,有个空格的,不然配置文件就会读取错误.
+还要注意branch名称,分支必须是&lt;code&gt;coding-pages&lt;/code&gt;
+**PS:如上面所说,我选择的是https方式发布,所以我的repo是https的,如果你选择ssh方式去认证,那么你的地址应该是类似这样的&lt;code&gt;git@git.coding.net:Jackroyal/Jackroyal.git&lt;/code&gt;
+**&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
+loading="lazy"
+alt="添加coding的repo信息"
+&gt;&lt;/p&gt;
+&lt;h1 id="7-修改dns设置"&gt;7 修改dns设置
+&lt;/h1&gt;&lt;p&gt;就像第5步页面提示的,我们要绑定自己的域名,需要去修改dns解析记录,只需要添加一条CNAME指向你的&lt;code&gt;jackroyal.coding.me&lt;/code&gt;即可.
+注意后面加个点,也就是正确的填法是&lt;code&gt;jackroyal.coding.me.&lt;/code&gt;,如下图所示.修改完成后大概等几分钟才能生效
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
+loading="lazy"
+alt="修改dns设置"
+&gt;&lt;/p&gt;
+&lt;h1 id="8-从gitcafe迁移"&gt;8 从gitcafe迁移
+&lt;/h1&gt;&lt;p&gt;如果我们选择从gitcafe迁移的话,他会把我们原来的博客迁移过来.为了适应coding,你只需要从上面第二步开始就好,尤其注意的是,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,重要的事情说三遍,因为你迁移过来的分支名称是&lt;code&gt;gitcafe-pages&lt;/code&gt;.
+也就是核心问题,必须有个和用户名同名的项目,项目必须有个分支是&lt;code&gt;coding-pages&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;其他没提的事情和上一篇是一样的.
+最后执行&lt;code&gt;hexo d -g&lt;/code&gt;,打完收工&lt;/p&gt;</description></item><item><title>解决 Github Pages 禁止百度爬虫的方法</title><link>https://jackroyal.github.io/post/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/</link><pubDate>Wed, 25 Nov 2015 11:06:50 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/</guid><description>&lt;p&gt;&lt;em&gt;update&lt;/em&gt;:因为gitcafe在5月31号就关闭了,所以要将文章中的gitcafe换掉,我重新写了一篇,在这里&lt;a class="link" href="http://jackroyal.github.io/2016/03/06/migrate-pages-from-gitcafe-to-coding/" target="_blank" rel="noopener"
+&gt;解决 Github Pages 禁止百度爬虫的方法2&amp;ndash;从gitcafe迁移到coding.net&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;最近,我的github student package里面送的一个namecheap域名终于下来了.That is to say:我终于有自己的域名了,这就是我的域名&lt;a class="link" href="http://bblove.me" target="_blank" rel="noopener"
+&gt;http://bblove.me&lt;/a&gt;,欢迎来访.&lt;/p&gt;
+&lt;p&gt;有域名以后,就在想办法解决百度爬虫的问题.&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Hi Jackroyal,
+We are currently blocking the Baidu user agent from crawling GitHub Pages
+sites in response to this user agent being responsible for an excessive amount
+of requests, which was causing availability issues for other GitHub customers.
+This is unlikely to change any time soon, so if you need the Baidu user agent
+to be able to crawl your site you will need to host it elsewhere.
+Cheers,
+Scott
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这是我之前跟github反映百度spider无法抓取我的github pages,他们给我的回复邮件.也就是说他们把百度spider给禁掉了,桑不起.
+直接说解决方法:
+&lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="实现方法"&gt;实现方法
+&lt;/h1&gt;&lt;h1 id="1-准备条件"&gt;1 准备条件
+&lt;/h1&gt;&lt;p&gt;一共需要一下这几个东西:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一个github账户&lt;/li&gt;
+&lt;li&gt;一个gitcafe账户&lt;/li&gt;
+&lt;li&gt;一个dnspod账号&lt;/li&gt;
+&lt;li&gt;一个域名&lt;/li&gt;
+&lt;li&gt;github for windows(或者git客户端也行)
+没了,就这么多就行.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="2-初始操作"&gt;2 初始操作
+&lt;/h1&gt;&lt;p&gt;我们在github和gitcafe上面把自己的博客搭建起来,首先要建仓库.
+&lt;strong&gt;github&lt;/strong&gt;:
+首先登录你的github,然后新建一个公共仓库,仓库名是你的用户名加上&lt;code&gt;yourname.github.io&lt;/code&gt;,如下图所示,我的用户名是&lt;code&gt;Jackroyal&lt;/code&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
+loading="lazy"
+alt="github新建仓库"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;gitcafe&lt;/strong&gt;:
+操作方法差不多,不过有点区别是,gitcafe新建的公开项目,是和用户名一致的,比如我的用户名是&lt;code&gt;Jackroyal&lt;/code&gt;,那我新建的仓库名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;仓库新建成功后,你获取到的链接应该是类似下面的&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;https://github.com/Jackroyal/Jackroyal.github.io.git
+https://gitcafe.com/Jackroyal/Jackroyal.git
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这就是你的两个page对应的仓库.&lt;/p&gt;
+&lt;h1 id="3-搭建博客"&gt;3 搭建博客
+&lt;/h1&gt;&lt;h2 id="31-搭建github-pages"&gt;3.1 搭建github pages
+&lt;/h2&gt;&lt;p&gt;当你的仓库建好了,我们就开始搭建博客,因为之前的博客有写,具体过程就不赘述&lt;a class="link" href="http://jackroyal.github.io/2015/06/16/hexo-3-0-update/" target="_blank" rel="noopener"
+&gt;安装和配置hexo 3.0&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;按照上面的教程一步一步,就能搭建好博客,然后你就可以访问你的gihub pages了,访问链接就是&lt;code&gt;http://yourname.github.io&lt;/code&gt;,比如我的即使&lt;code&gt;http://jackroyal.github.io&lt;/code&gt;.
+现在我们开始搭建gitcafe上面的pages了.由于hexo现在已经支持多发布,所以很简单,我们只需要配置deploy的信息,修改&lt;code&gt;_config.yml&lt;/code&gt;.添加gitcafe的仓库信息.我的修改结果如下,&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+- type: git
+repo: &amp;#39;https://github.com/Jackroyal/Jackroyal.github.io.git&amp;#39;
+branch: master
+- type: git
+repo: &amp;#39;https://gitcafe.com/Jackroyal/Jackroyal.git&amp;#39;
+branch: gitcafe-pages
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;尤其需要注意的是,两个的branch是不同的,&lt;code&gt;github&lt;/code&gt;默认分支是&lt;code&gt;master&lt;/code&gt;,&lt;code&gt;gitcafe&lt;/code&gt;默认分支是&lt;code&gt;gitcafe-pages&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="32-添加gitcafe的ssh公钥"&gt;3.2 添加gitcafe的ssh公钥
+&lt;/h2&gt;&lt;p&gt;由于我使用的是&lt;code&gt;github for windows&lt;/code&gt;的终端界面,也就是github官方提供的客户端,他的好处是,我使用github的时候,不需要配置ssh公钥,密钥之类的东西.如果你用的不是这个,用的是git的客户端,那就需要配置ssh公钥,参考这里&lt;a class="link" href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="noopener"
+&gt;github配置公钥&lt;/a&gt;.
+对的,你猜到了,我们现在需要配置gitcafe的ssh公钥,因为&lt;code&gt;github for windows&lt;/code&gt;会自动帮我们上传公钥,gitcafe就只能手动了.&lt;/p&gt;
+&lt;h3 id="321-查看本地公钥"&gt;3.2.1 查看本地公钥
+&lt;/h3&gt;&lt;p&gt;我们打开你使用的git终端,首先切回用户目录,然后进入&lt;code&gt;.ssh&lt;/code&gt;目录,里面就有公钥和私钥,如下图所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+loading="lazy"
+alt="使用git客户端查看ssh公钥私钥"
+&gt;
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye78gs0hvj20it0ca761.jpg"
+loading="lazy"
+alt="使用github for windows查看ssh公钥私钥"
+&gt;
+我们就是要读取后缀是&lt;code&gt;.pub&lt;/code&gt;的那个文件,比如我的读取命令就是&lt;code&gt;cat github_rsa.pub&lt;/code&gt;,执行结果如下
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+loading="lazy"
+alt="查看公钥"
+&gt;&lt;/p&gt;
+&lt;h3 id="322-添加公钥到gitcafe"&gt;3.2.2 添加公钥到gitcafe
+&lt;/h3&gt;&lt;p&gt;我们在&lt;a class="link" href="https://gitcafe.com/account/public_keys" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;来设置gitcafe的公钥.
+&lt;em&gt;PS:需要注意的是,公钥后面的chen@chen-pc是不需要的,我的带上以后,gitcafe说是公钥非法,不过不怕,gitcafe会帮你正确格式化&lt;/em&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
+loading="lazy"
+alt="正确的ssh格式"
+&gt;
+反正就是把公钥加上去,就ok了&lt;/p&gt;
+&lt;h2 id="34-同步博客到gitcafe"&gt;3.4 同步博客到gitcafe
+&lt;/h2&gt;&lt;p&gt;上面的配置好了以后,我们就可以把博客内容同步到gitcafe了,方法很简单,执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;hexo d -g
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后就可以啦.&lt;/p&gt;
+&lt;h1 id="4-配置域名"&gt;4 配置域名
+&lt;/h1&gt;&lt;p&gt;首先你得有个域名,像我一样,哈哈.&lt;/p&gt;
+&lt;h2 id="41-修改域名注册的解析服务器"&gt;4.1 修改域名注册的解析服务器
+&lt;/h2&gt;&lt;p&gt;我们在要把域名解析服务,设置到dnspod,因为他是国内的,而且服务很好.我们登录自己的域名管理后台,选择对应的域名进行管理,然后找到&lt;code&gt;nameservers&lt;/code&gt;的设置,如图所示
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7orkymjj210j0i7tde.jpg"
+loading="lazy"
+alt="修改nameservers的设置"
+&gt;
+修改的值是&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; f1g1ns1.dnspod.net
+f1g1ns2.dnspod.net
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;常见的域名注册商修改到dnspod,官方提供了教程,看&lt;a class="link" href="https://support.dnspod.cn/Kb/guide/" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;-
+改完以后可能要等一段时间才能生效,最多72小时
+ok,改完以后,这边就完了,我们登录dnspod&lt;/p&gt;
+&lt;h2 id="42-修改dnspod解析记录"&gt;4.2 修改dnspod解析记录
+&lt;/h2&gt;&lt;p&gt;我们登录dnspod,然后添加域名
+如果4.1中的设置生效了,你的域名就会添加成功了,我们直接进行下一步,修改解析记录,上图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
+loading="lazy"
+alt="dns解析记录"
+&gt;
+我们一共添加了5条记录,其中一条泛解析和www解析是针对国内的,所以执行gitcafe;2条泛解析和www解析是针对国外的,所以指向github.
+就是添加&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;@ A 默认 192.30.252.153
+@ A 默认 192.30.252.154
+@ CNAME 国内 gitcafe.io.
+www CNAME 默认 jackroyal.github.io.
+www CNAME 国内 gitcafe.io.
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其他设置项目默认就行了,上面的配置完了,如果你走国外ip访问你的域名的话,会出现404,因为我们还差一步.走国内线路访问一样会出错,都是没绑定的结果.&lt;/p&gt;
+&lt;h2 id="43-添加github的cname文件添加gitcafe自定义域名"&gt;4.3 添加github的CNAME文件,添加gitcafe自定义域名
+&lt;/h2&gt;&lt;p&gt;现在只差最后一步了,我们先来配置github的CNAME文件,官网有个教程&lt;a class="link" href="https://help.github.com/articles/adding-a-cname-file-to-your-repository/" target="_blank" rel="noopener"
+&gt;配置CNAME文件&lt;/a&gt;.说白了,就是在你的网站根目录,添加一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件,里面的内容就是你的域名&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;bblove.me
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有任何多余的信息,如下图
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
+loading="lazy"
+alt="配置github的CNAME"
+&gt;
+上面的配置现在访问没问题,但是你一重新发布博客,就需要重新手动添加&lt;code&gt;CNAME&lt;/code&gt;文件,太麻烦.
+一劳永逸的方法,在你的&lt;code&gt;hexo&lt;/code&gt;目录下的&lt;code&gt;source&lt;/code&gt;目录中,新建一个&lt;code&gt;CNAME&lt;/code&gt;文件夹,然后他每次在你发布博客的时候,都会在你的网站根目录生成一个&lt;code&gt;CNAME&lt;/code&gt;文件.
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
+loading="lazy"
+alt="添加CNAME的目录结构"
+&gt;
+现在github的配置彻底结束.&lt;/p&gt;
+&lt;p&gt;接下来配置gitcafe:
+1 我们在gitcafe的项目主页,点击&lt;code&gt;项目设置&lt;/code&gt;,如下图(之所以截图,是因为我找半天才看到&amp;hellip;)
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyeadedmh1j20z508eadm.jpg"
+loading="lazy"
+alt="gitcafe点击’项目设置’"
+&gt;
+2 然后我们点击&lt;code&gt;pages服务&lt;/code&gt;标签,然后添加自己的域名,这些域名是我们之前在dnspod中设置了解析的
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
+loading="lazy"
+alt="gitcafe配置自定义域名"
+&gt;&lt;/p&gt;
+&lt;p&gt;彻底打完收工了&lt;/p&gt;
+&lt;h1 id="5-总结"&gt;5 总结
+&lt;/h1&gt;&lt;p&gt;总算写完了,写到这里,我一共写了,141行了,写了个把小时.这次主要参考了下面的几篇文章,都写在友情链接里面了.参考了他们的思路,因为他们的方法里面需要自己单独购买vps或者购买CDN,共同的问题是增加了开销,买vps会导致你每次写博客都需要单独发布一次到vps上太麻烦.我后来在网上看到gitcafe也有&lt;code&gt;gitcafe pages&lt;/code&gt;服务,如果用这个来处理的话,一来,不会增加多余的开销,他们都是免费的;二来,由于hexo对于多部署的支持,多部署很简单,一次配置,以后就可以不用理会了.
+ok,收工&lt;/p&gt;
+&lt;h1 id="友情链接"&gt;友情链接
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/" target="_blank" rel="noopener"
+&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;
+2 &lt;a class="link" href="http://www.dozer.cc/2015/06/github-pages-and-cdn.html" target="_blank" rel="noopener"
+&gt;利用 CDN 解决百度爬虫被 Github Pages 拒绝的问题&lt;/a&gt;
+3 &lt;a class="link" href="https://help.gitcafe.com/manuals/help/pages-services" target="_blank" rel="noopener"
+&gt;gitcafe官方文档&amp;ndash;pages服务&lt;/a&gt;
+4 &lt;a class="link" href="https://help.gitcafe.com/manuals/help/ssh-key" target="_blank" rel="noopener"
+&gt;gitcafe官方文档&amp;ndash;配置ssh公钥&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git使用笔记(2)</title><link>https://jackroyal.github.io/post/my-git-note2/</link><pubDate>Wed, 04 Nov 2015 16:52:25 +0000</pubDate><guid>https://jackroyal.github.io/post/my-git-note2/</guid><description>&lt;p&gt;上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.&lt;/p&gt;
+&lt;h1 id="撤销操作"&gt;撤销操作
+&lt;/h1&gt;&lt;p&gt;撤销操作,我经常会用到,有时候写的代码没有考虑周全,或者有疏漏,需要重新提交什么的.&lt;/p&gt;
+&lt;h1 id="1-撤销工作空间最近的修改"&gt;1 撤销工作空间最近的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:比如上次push以后的完整干净的目录,工作空间没有任何修改,暂存区也没有任何修改,如下图:
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
+loading="lazy"
+alt="上一次提交后干净的工作目录"
+&gt;
+这时候,你手贱,改了一下其中的一个文件,但是这次更改是没有意义的.我们继续使用&lt;code&gt;git status&lt;/code&gt;来查看
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1exp9ngk82jj20it07i75f.jpg"
+loading="lazy"
+alt="修改一个文件后执行git status的结果"
+&gt;
+我们现在想撤销这次修改.
+解决方法:现在这个修改只是工作区的修改,我们要撤销很简单执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git checkout a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定&lt;/p&gt;
+&lt;h1 id="2-撤销暂存区最近的修改"&gt;2 撤销暂存区最近的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:假如在上面说的那种情况下,你手贱改错了文件,而且你没有撤销,你还执行&lt;code&gt;git add a.txt&lt;/code&gt;,将修改提交到暂存区了.具体情况如下图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa1cbny2j20ge0790td.jpg"
+loading="lazy"
+alt="错误的修改被提交到了暂存区"
+&gt;
+现在我们要从暂存区撤回那个修改
+解决办法:我们使用&lt;code&gt;git reset HEAD a.txt&lt;/code&gt;,将文件从暂存区撤出来,又回到上面的工作空间被修改的状态,如图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa3azt15j20hg09twft.jpg"
+loading="lazy"
+alt="从暂存区撤回"
+&gt;
+ps:上面的命令也可以用下面的命令,语法格式是&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;,括号中填路径&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git reset a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;总的来说,&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;就是&lt;code&gt;git add &amp;lt;path&amp;gt;&lt;/code&gt;的反向操作&lt;/p&gt;
+&lt;h1 id="3-撤销提交到本地仓库的修改"&gt;3 撤销提交到本地仓库的修改
+&lt;/h1&gt;&lt;p&gt;应用场景:假如你在&lt;code&gt;1.2&lt;/code&gt;还没有回头,一路手贱下去,将暂存区的修改&lt;code&gt;commit&lt;/code&gt;到本地仓库了
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expa8o47yvj20fi087gmv.jpg"
+loading="lazy"
+alt="错误的修改被提交到本地仓库"
+&gt;
+我们现在要从仓库撤销这次没用的提交
+解决方法:&lt;/p&gt;
+&lt;h4 id="131-方案一--再新建一次提交"&gt;1.3.1 方案一 再新建一次提交
+&lt;/h4&gt;&lt;p&gt;我们可以新建一次提交,然后让所修改的文件回到之前的状态,执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git revert HEAD
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;含义很简单,逆转,这样你的&lt;code&gt;log&lt;/code&gt;里面会多一次提交,然后文件也回到的之前的状态
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expb97iondj20it0catb7.jpg"
+loading="lazy"
+alt="执行git revert 后的log"
+&gt;&lt;/p&gt;
+&lt;p&gt;#3.2 方案二 干净的撤销上一次commit
+上面的方案一对于一个强迫症来说,不能忍啊,本来就是一次错误的提交,为了弥补这个错误,我却还要多提交一次,完全不能忍受.
+方案二,我们使用&lt;code&gt;git reset&lt;/code&gt;命令.我们执行&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git reset HEAD^
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这个命令表示重置HEAD指针,我们要指向上一次提交(也就是取消最近的一次,HEAD表示当前指针,HEAD^是上一次,HEAD^^是上上次,HEAD^^^是上三次),&lt;code&gt;git reset&lt;/code&gt;命令可以添加&lt;code&gt;--mixed&lt;/code&gt;,&lt;code&gt;--soft&lt;/code&gt;,&lt;code&gt;--hard&lt;/code&gt;三种参数,&lt;code&gt;--soft&lt;/code&gt;程度最轻,只会撤销提交,对当前暂存区和当前工作空间不会有任何更改,默认的参数是&lt;code&gt;--mixed&lt;/code&gt;,他会将暂存区的文件撤销&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git reset --soft :取消了commit
+git reset --mixed（默认） :取消了commit ，取消了add
+git reset --hard :取消了commit ，取消了add，取消源文件修改
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="33-方案三--修改最后一次提交"&gt;3.3 方案三 修改最后一次提交
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;首先强调,下面说的实在本地仓库的操作.&lt;/strong&gt;
+应用场景:对于上面提到的错误的提交,我们还可以修改他的内容,删除我们错误的修改,将它恢复到原来的样子,我们可以使用&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit --amend
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个方法是将当前暂存区快照提交,也就是你后面的修改合在一起,然后再提交.最后查看&lt;code&gt;log&lt;/code&gt;的时候,会只有一次提交,前面的一次提交就被删除,在&lt;code&gt;log&lt;/code&gt;中只看到这次提交.
+用具体例子来说.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit -m &lt;span style="color:#e6db74"&gt;&amp;#34;这是第一次提交&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#commit完,我们修改工作空间的内容,然后再执行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add b.txt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git commit --amend
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#这条命令会弹出一个编辑窗口,你可以修改提交信息&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;#假设我们将提交信息修改为&amp;#34;这是第二次提交&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着当我们使用&lt;code&gt;git log&lt;/code&gt;来查看的时候,你只会看到提交信息是&amp;quot;这是第二次提交&amp;quot;.
+解决方法:
+我们先将文件内容恢复到上一次(当前是HEAD,上一次就是HEAD^)提交时候的样子,然后执行&lt;code&gt;git commit --amend&lt;/code&gt;,看到如下错误提示,就是说这次文件没有任何修改(废话,我已经恢复正确的样子了,当然一模一样了),默认是不允许空提交的,你只有强制使用&lt;code&gt;--allow-empty&lt;/code&gt;才行,或者执行方案二
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1expt5luwo4j20io06cq3w.jpg"
+loading="lazy"
+alt="执行git commit –amend内容没有变化的错误提示"
+&gt;&lt;/p&gt;
+&lt;h1 id="4-总结"&gt;4 总结
+&lt;/h1&gt;&lt;p&gt;盗图一张,总结上面说的内容
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
+loading="lazy"
+alt="工作空间,暂存区,本地仓库之间的关机和转换"
+&gt;
+打完收工&lt;/p&gt;
+&lt;h3 id="附言"&gt;附言
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;PS&lt;/strong&gt;:现在再来解释开头说的,这是本地仓库的操作.
+因为,我们本地仓库执行了&lt;code&gt;git commit&lt;/code&gt;后,所做的更改只会在本地,如果接着执行了&lt;code&gt;git push&lt;/code&gt;那么,所做的更改就会被提交到&lt;code&gt;git&lt;/code&gt;,在上面的例子中那么首先提交到github的就是&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;.这时候,当你执行完&lt;code&gt;git commit --amend&lt;/code&gt;的时候,本地仓库的上次提交会被删除,也就是不存在提示信息为&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;,此时本地仓库完成了修改,你想提交到github,就会报错了.如图所示
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp93i04qtj20it0cajua.jpg"
+loading="lazy"
+alt="本地执行–amend操作后直接提交到github报错"
+&gt;
+解决方法就是,&lt;strong&gt;Force&lt;/strong&gt;
+没错,强制提交&lt;code&gt;git push -f&lt;/code&gt;,这样他就会像本地一样,删除上一次提交,添加这一次提交&lt;/p&gt;
+&lt;h1 id="友情链接"&gt;友情链接
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://help.github.com/articles/changing-a-commit-message/" target="_blank" rel="noopener"
+&gt;修改提交信息&lt;/a&gt;
+2 &lt;a class="link" href="https://github.com/blog/2019-how-to-undo-almost-anything-with-git" target="_blank" rel="noopener"
+&gt;如何撤销在git上的各种修改,好文&lt;/a&gt;
+3 &lt;a class="link" href="http://my.oschina.net/MinGKai/blog/144932" target="_blank" rel="noopener"
+&gt;git revert和git reset的区别&lt;/a&gt;
+4 &lt;a class="link" href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html" target="_blank" rel="noopener"
+&gt;git常用命令介绍,带效果图的&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git使用笔记(1)</title><link>https://jackroyal.github.io/post/my-git-note1/</link><pubDate>Wed, 04 Nov 2015 12:17:04 +0000</pubDate><guid>https://jackroyal.github.io/post/my-git-note1/</guid><description>&lt;p&gt;git也用了一段时间了,还是写点笔记,记录一下.&lt;/p&gt;
+&lt;h1 id="准备条件"&gt;准备条件
+&lt;/h1&gt;&lt;p&gt;首先假装你已经安装好了git&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在Linux下
+我用的是&lt;code&gt;ubuntu&lt;/code&gt;,安装非常easy,使用&lt;code&gt;sudo apt-get install git&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;在windows下
+在windows下安装,就使用&lt;a class="link" href="https://git-scm.com/downloads" target="_blank" rel="noopener"
+&gt;git-downloads&lt;/a&gt;,点击下载,安装,就ok.
+ps:如果你足够幸运,可以试试&lt;a class="link" href="https://desktop.github.com/" target="_blank" rel="noopener"
+&gt;github的windows版&lt;/a&gt;,这个的好处是,带有图形化界面.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="1-初始化git设置"&gt;1 初始化git设置
+&lt;/h1&gt;&lt;p&gt;新装好git后,我们先配置个人的用户名和email,这两条配置很重要,因为在git的日志中,都会带上这两条信息.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ git config --global user.name &lt;span style="color:#e6db74"&gt;&amp;#34;John Doe&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$ git config --global user.email johndoe@example.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果用了&lt;code&gt;--global&lt;/code&gt;选项，那么更改的配置文件就是位于你用户主目录下的那个，以后你所有的项目都会默认使用这里配置的用户信息。如果要在某个特定的项目中使用其他名字或者电邮，只要去掉&lt;code&gt;--global&lt;/code&gt;选项重新配置即可，新的设定保存在当前项目的&lt;code&gt;.git/config&lt;/code&gt;文件里。&lt;/p&gt;
+&lt;h1 id="2-新建第一个仓库"&gt;2 新建第一个仓库
+&lt;/h1&gt;&lt;p&gt;建立第一个仓库有两种方式,一种是完全新建一个仓库,第二种是克隆一个现有仓库.&lt;/p&gt;
+&lt;h4 id="21-完全新建一个仓库"&gt;2.1 完全新建一个仓库
+&lt;/h4&gt;&lt;p&gt;你先切换到你想建项目的地方,比如&lt;code&gt;f:/blog/&lt;/code&gt;,然后执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;初始化后再在当前目录新建一个名为&lt;code&gt;.git&lt;/code&gt;的目录,git所有的东西都存在这里面.当然我们不用管.&lt;/p&gt;
+&lt;h4 id="22-克隆一个现有仓库"&gt;2.2 克隆一个现有仓库
+&lt;/h4&gt;&lt;p&gt;这个也是很easy,直接一条命令搞定&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/Jackroyal/blog.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;他会在你的当前目录新建一个&lt;code&gt;blog&lt;/code&gt;文件夹,在&lt;code&gt;blog&lt;/code&gt;文件夹里面他会把相关的文件都下载下来,就可以用了.&lt;/p&gt;
+&lt;h1 id="3-提交更新"&gt;3 提交更新
+&lt;/h1&gt;&lt;h4 id="31-提交工作空间文件到暂存区"&gt;3.1 提交工作空间文件到暂存区
+&lt;/h4&gt;&lt;p&gt;执行&lt;code&gt;touch a.txt&lt;/code&gt;,我们在目录中新建一个文件名叫&lt;code&gt;a.txt&lt;/code&gt;,然后我们修改它的内容.
+接下来,我们来查看下状态&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git status
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行结果如下图:
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exoxiu5jyij20it0933zl.jpg"
+loading="lazy"
+alt="执行git status查看工作区文件状态"
+&gt;
+就像图片中提示的,我们新加的&lt;code&gt;a.txt&lt;/code&gt;是未跟踪文件,我们执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add a.txt
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们把&lt;code&gt;a.txt&lt;/code&gt;添加到暂存区,再次执行&lt;code&gt;git status&lt;/code&gt;,查看状态,执行结果如图所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exoxp6duu1j20it07o0th.jpg"
+loading="lazy"
+alt="添加到暂存区后再次执行git status"
+&gt;&lt;/p&gt;
+&lt;h4 id="32-将暂存区文件保存到本地仓库"&gt;3.2 将暂存区文件保存到本地仓库
+&lt;/h4&gt;&lt;p&gt;假如你要做的修改已经改完,已经保存到暂存区了,我们准备提交到本地仓库.执行&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git commit -m &amp;#34;这是提交内容&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;参数&lt;code&gt;-m&lt;/code&gt;,就是添加说明,方便以后查看,你就可以知道自己做了哪些更改&lt;/p&gt;
+&lt;h4 id="33-将本地仓库内容提交到远程仓库"&gt;3.3 将本地仓库内容提交到远程仓库
+&lt;/h4&gt;&lt;p&gt;上面的步骤都弄好以后,我们提交到远程仓库&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; git push origin master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就行了,一个基本的流程就是这样.
+推荐看看下面友情链接里面的那本书,pro git
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp17u1ltjj208r0boq38.jpg"
+loading="lazy"
+alt="pro git封面"
+&gt;&lt;/p&gt;
+&lt;h1 id="友情链接"&gt;友情链接
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://iissnan.com/progit/" target="_blank" rel="noopener"
+&gt;pro git中文书籍在线版&lt;/a&gt;&lt;/p&gt;</description></item><item><title>blog2markdown程序打包,csdn爬虫</title><link>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</link><pubDate>Sun, 29 Mar 2015 22:08:22 +0000</pubDate><guid>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;项目地址&lt;a class="link" href="https://github.com/Jackroyal/blog2markdown.git" target="_blank" rel="noopener"
+&gt;https://github.com/Jackroyal/blog2markdown.git&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;用来实现普通blog到markdown的搬家，自动将blog的html转换成HEXO可用的Markdown格式
+暂时只做了CSDN&lt;/p&gt;
+&lt;h3 id="update"&gt;UPDATE:
+&lt;/h3&gt;&lt;p&gt;2015-03-29 添加了打包成exe的程序,修复cmd下乱码,win和ubuntu完美运行
+2015-03-29 连夜修复了在win下乱码的问题,删除了冗余代码
+2015-03-28 将某些参数改为从配置文件中读取,加入更多异常判断
+2014-12-15 优化标签解析功能,添加了标题,tag和category
+2014-12-13 实现解析功能,基本完成解析功能
+2014-12-10 实现CSDN的抓取，正在实现parse解析过程&lt;/p&gt;
+&lt;h3 id="bug"&gt;BUG
+&lt;/h3&gt;&lt;p&gt;如果代码中有# 和*会被转义成&lt;code&gt;\#&lt;/code&gt;和&lt;code&gt;\*&lt;/code&gt;
+对table的支持不好&lt;/p&gt;
+&lt;h3 id="依赖库"&gt;依赖库
+&lt;/h3&gt;&lt;p&gt;爬虫使用了&lt;code&gt;beautifulsoup 4.3.2&lt;/code&gt;
+&lt;a class="link" href="http://www.crummy.com/software/BeautifulSoup/" target="_blank" rel="noopener"
+&gt;点我点我&lt;/a&gt;
+你必须安装这个才可以正常使用
+PS:我打包了exe&lt;a class="link" href="http://pan.baidu.com/s/1dDERlOP" target="_blank" rel="noopener"
+&gt;点此下载&lt;/a&gt;,可以什么不装,改完配置文件,直接运行&lt;/p&gt;
+&lt;h1 id="使用"&gt;使用:
+&lt;/h1&gt;&lt;h1 id="-首先编辑配置文件spiderconf"&gt;# 首先,编辑配置文件&lt;code&gt;spider.conf&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;格式如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;[blog]
+# 此处url不需要单引号或者双引号,不然类型识别错误,网址最后不要/
+url=http://blog.csdn.net/jackroyal
+[setting]
+wait_time=5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的&lt;code&gt;url&lt;/code&gt;地址注意不要加引号,下面的&lt;code&gt;wait_time&lt;/code&gt;是指两次抓取的间隔时间,这是为了安全起见,如果高频访问,可能会被封,我设置的&lt;code&gt;5&lt;/code&gt;秒,你可以根据自己需要去设置&lt;/p&gt;
+&lt;h2 id="打包"&gt;打包
+&lt;/h2&gt;&lt;p&gt;我打包了一个&lt;a class="link" href="http://pan.baidu.com/s/1dDERlOP" target="_blank" rel="noopener"
+&gt;exe程序&lt;/a&gt;,放在github项目的dist目录下,在windows系统中,&lt;code&gt;直接下载&lt;/code&gt;,&lt;code&gt;运行&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;PS:由于pyInstaller的问题,导致无法在中文路径下正常运行&lt;/p&gt;
+&lt;p&gt;比如你放在C:/users/张三/spider.exe
+这样是无法正常运行的
+所以应该放在全英文的目录下
+C:/software/spider.exe
+运行结果如图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
+loading="lazy"
+alt="spider运行截图"
+&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
+loading="lazy"
+alt="运行结果截图"
+&gt;&lt;/p&gt;
+&lt;h1 id="源码执行"&gt;源码执行
+&lt;/h1&gt;&lt;p&gt;如果你对我的exe不放心,可以自己执行python源码&lt;/p&gt;
+&lt;h2 id="--执行"&gt;# 执行
+&lt;/h2&gt;&lt;p&gt;在linux下,首先要给予执行权限&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;chmod a+x spider.py ParseBlog.py
+python spider.py
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就可以了,输出文件在output文件夹&lt;/p&gt;
+&lt;p&gt;在win下,经过修复也可以正常运行了,在idle(在win中你安装了python2.7的话就会有这个编辑器)中是可以完全正常的显示中文~~~~,在系统自带的cmd里中文显示会有问题,因为cmd中的编码默认是GBK,我程序基本都是utf-8,如果要在cmd显示正常,显示的代码都要加个str.encode(&amp;lsquo;utf-8&amp;rsquo;)才行.
+不过抓取是没有问题的,此处就不纠结了哈,能用就好~~~~&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 在win下,没有权限的问题,直接执行就好了
+python spider.py
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>Linux下使用github</title><link>https://jackroyal.github.io/post/linux-how-to-use-github/</link><pubDate>Mon, 19 Jan 2015 00:53:48 +0000</pubDate><guid>https://jackroyal.github.io/post/linux-how-to-use-github/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;我的惰性真是病入膏肓了，已经整整3周没有在github上提交东西了，今天看了《模拟游戏》，索性又捡起来了。下面来总结一下linux下github的使用，也算是给自己一个备份，因为我自己也是老忘记。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用环境：Ubuntu 14.04&lt;/p&gt;
+&lt;h2 id="1-安装git相关软件"&gt;1 安装git相关软件
+&lt;/h2&gt;&lt;p&gt;我的Ubuntu里面没有自带git相关软件，所以我们首先需要安装它，很简单。&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo apt-get install git
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="2-初始化git的设置"&gt;2 初始化git的设置
+&lt;/h2&gt;&lt;p&gt;接下来，进行初始化设置，也就是设置你的github账号和密码&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git config --global user.name &amp;#34;zhangsan&amp;#34;# 其中的“zhangsan”输入的就是你注册时候的用户名，这步是设置你提交时候默认的用户名
+# 之后设置提交时候默认的邮箱，在命令行输入：
+git config --global user.email &amp;#34;haha@qq.com&amp;#34;
+# 其中的“haha@qq.com”就是你注册时候用的邮箱，当然也可以用别的邮箱，用别的邮箱的时候你必须在github的主页上设置里面把用的邮箱添加进去
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-开始使用github"&gt;3 开始使用github
+&lt;/h2&gt;&lt;p&gt;1 首先你的github上应该有一个库，如果没有的话，就去github网站上新建一个库，或者fork一个别人的项目，以下的操作都是建立在这个基础上，&lt;code&gt;假设存在一个库https://github.com/Jackroyal/test.git&lt;/code&gt;.
+如果你的github上已经有库了，可以忽略第1步直接进入第2步
+2 我们在本地新建一个文件夹(命名随你便，我取名叫做test_git)&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;mkdir test_git
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3 将远程的库复制下来，我们使用git clone命令来完成&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 如果你的环境不在test_git目录
+# cd test_git
+# 如果在test_git中
+git clone https://github.com/Jackroyal/test.git# 他会在你的本地新建一个test文件夹
+cd test
+# 接下来新建一个测试文件
+touch test.md
+# 修改测试文件的内容
+vi test.md
+# 提交刚才所做的更改
+git add .
+git commit -m &amp;#34;首次提交&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;3 push提交到github&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;git remote add origin https://github.com/Jackroyal/test.git
+git push
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;之后会提示你输入用户名密码，你输入你github账号和密码就行了
+打完收工，睡觉
+后面会陆续介绍hexo在Linux下的使用&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://blog.chinaunix.net/uid-29040159-id-3799719.html" target="_blank" rel="noopener"
+&gt;ubuntu 下 github 简单的使用教程&lt;/a&gt;
+2 &lt;a class="link" href="http://blog.csdn.net/pony_maggie/article/details/23207847" target="_blank" rel="noopener"
+&gt;Github入门级使用攻略&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用hexo建立自己的Github pages</title><link>https://jackroyal.github.io/post/how-to-build-a-blog-with-hexo/</link><pubDate>Thu, 27 Nov 2014 14:48:29 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-build-a-blog-with-hexo/</guid><description>&lt;p&gt;昨天经过一天的&lt;a class="link" href="http://jackroyal.github.io/2014/11/26/new-start/" title="生命在于折腾"
+target="_blank" rel="noopener"
+&gt;折腾&lt;/a&gt;,总算把博客搭建起来了,今天就来写个博客总结一下.
+网上的资料很多,我主要参考的是这篇博客,一路很顺利.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a class="link" href="http://zipperary.com/2013/05/28/hexo-guide-2/" target="_blank" rel="noopener"
+&gt;http://zipperary.com/2013/05/28/hexo-guide-2/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;一个很重要的原因就是他是针对windows的,刚好我也在用windows.&lt;/p&gt;
+&lt;h1 id="安装过程"&gt;安装过程
+&lt;/h1&gt;&lt;h1 id="-1-安装github-for-windows"&gt;# 1. 安装Github for windows
+&lt;/h1&gt;&lt;p&gt;因为我之前就在用Github,所以早就安装了这个.已经装过的同学请忽略这一段.
+下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
+target="_blank" rel="noopener"
+&gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3jw1emplp1lz31j204w033mx0.jpg"
+loading="lazy"
+alt="Github for windows"
+&gt;
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1empluh6hvej210b0j741r.jpg"
+loading="lazy"
+alt="GUI and Bash"
+&gt;
+如果你不喜欢用这个,也可以用上面的博客推荐的&lt;a class="link" href="http://code.google.com/p/msysgit/" target="_blank" rel="noopener"
+&gt;msysgit&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id="-2-安装nodejs"&gt;# 2. 安装Node.js
+&lt;/h1&gt;&lt;p&gt;在 Windows 环境下安装 &lt;a class="link" href="http://nodejs.org/" title="Node.js 官网"
+target="_blank" rel="noopener"
+&gt;Node.js&lt;/a&gt; 非常简单，仅须下载安装文件并执行即可完成安装。（win下建议下载msi格式的，因为这样可以不用配置环境变量之类的）&lt;/p&gt;
+&lt;h1 id="-3-测试nodejs是否安装"&gt;# 3. 测试node.js是否安装
+&lt;/h1&gt;&lt;p&gt;在任何控制台输入(可以按windows键+R,输入cmd,然后输入npm,一般来说不会有问题)&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;返回值如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Usage: npm &amp;lt;command&amp;gt;
+where &amp;lt;command&amp;gt; is one of:
+add-user, adduser, apihelp, author, bin, bugs, c, cache,
+completion, config, ddp, dedupe, deprecate, docs, edit,
+explore, faq, find, find-dupes, get, help, help-search,
+home, i, info, init, install, isntall, issues, la, link,
+list, ll, ln, login, ls, outdated, owner, pack, prefix,
+prune, publish, r, rb, rebuild, remove, repo, restart, rm,
+root, run-script, s, se, search, set, show, shrinkwrap,
+star, stars, start, stop, submodule, t, tag, test, tst, un,
+uninstall, unlink, unpublish, unstar, up, update, v,
+version, view, whoami
+npm &amp;lt;cmd&amp;gt; -h quick help on &amp;lt;cmd&amp;gt;
+npm -l display full usage info
+npm faq commonly asked questions
+npm help &amp;lt;term&amp;gt; search for help on &amp;lt;term&amp;gt;
+npm help npm involved overview
+Specify configs in the ini-formatted file:
+C:\Users\chenhao\.npmrc
+or on the command line via: npm &amp;lt;command&amp;gt; --key value
+Config info can be viewed via: npm help config
+npm@1.4.28 D:\Program Files (x86)\nodejs\node_modules\npm
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看到这个结果,就表示你的node.js已经安装上去了
+*感谢我们家笨笨的反馈：*此处如果npm无效，首先确定win下你采用的是msi格式的安装文件，然后重启下电脑，应该就正常了。&lt;/p&gt;
+&lt;h1 id="-4-安装hexo"&gt;# 4. 安装hexo
+&lt;/h1&gt;&lt;p&gt;接下来的操作我都是用&lt;strong&gt;Github for windows&lt;/strong&gt;自带的Bash来完成的,因为后面会涉及到SSH,用&lt;strong&gt;Github for windows&lt;/strong&gt;,就可以避免这个问题.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在Bash中输入以下命令&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install -g hexo
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;创建hexo文件夹
+创建你hexo放置的文件夹,先用Bash进入到目标文件夹,比如我的是F:/blog/,接下来初始化hexo,自动生成相关的文件,在F:/blog/环境下,输入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;cd /f/blog # 这个命令表示当前进入目录为f：/blog/
+hexo init
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;安装依赖包&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;npm install
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;本地预览,做完以上操作,可以本地预览一下&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo g
+hexo s
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="ok到这里博客搭建基本完成现在要做的就是把它发布到你的github上去"&gt;以上两条命令的意思是:
+生成相关文件(就是生成目标html,静态博客嘛,就是很多html组成)
+打开本地服务器预览(node.js就是干这事的,点击访问&lt;a class="link" href="http://localhost:4000" target="_blank" rel="noopener"
+&gt;http://localhost:4000&lt;/a&gt;,就可以看到了)
+&lt;strong&gt;ok&lt;/strong&gt;,到这里,博客搭建基本完成,现在要做的就是把它发布到你的Github上去
+&lt;/h2&gt;&lt;p&gt;接下来,教你怎么发布到Github上去&lt;/p&gt;
+&lt;h1 id="注册github"&gt;注册Github
+&lt;/h1&gt;&lt;p&gt;这一步没什么说的,如果你连简单的注册都不会,我也不会教你╮(╯▽╰)╭&lt;/p&gt;
+&lt;h1 id="创建公共库"&gt;创建公共库
+&lt;/h1&gt;&lt;p&gt;在自己Github主页右下角，创建一个新的repository(&lt;a class="link" href="https://github.com/new" title="点我新建"
+target="_blank" rel="noopener"
+&gt;点这里&lt;/a&gt;)。比如我的Github账号是Jackroyal，那么我应该创建的repository名字应该是Jackroyal.github.io(注意你的repository名字就是Jackroyal.github.io,我之前用的是Jackroyal怎么尝试都不行)。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PS:有个大小写的问题其实我注册的是Jackroyal,大写的J,但是我访问的时候特别是带https的链接,他会自动转为小写访问.怎么说呢?简单点,你就按照你的用户名来,该大写大写,该小写小写&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="部署"&gt;部署
+&lt;/h1&gt;&lt;p&gt;现在万事俱备,只差部署了,我们来配置下&lt;code&gt;_config.yml&lt;/code&gt;.
+这个文件在路径是F:/blog/_config.yml.
+用编辑器把它打开,修改最后一段
+ps:以下为hexo 2.8x的配置方法,不适用于3.0&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+type: github
+repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;em&gt;update 2015-06-16:&lt;/em&gt;
+现在hexo由2.8升级到3.0了,按照上面的方式安装,你的hexo版本是hexo 3.0,3.0的这段代码的设置内容如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;deploy:
+type: git
+repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;照着我的这个格式修改就好了,把我里面的用户名替换成你的.
+至此基本完成所有搭建步骤.&lt;/p&gt;
+&lt;h1 id="上传"&gt;上传
+&lt;/h1&gt;&lt;p&gt;我们开始上传项目的代码,再重复一次,我一直以来用的工具都是_Github for windows_自带的Bash,所以我没有配置SSH,如果你用的windows自带的终端或者其他比如msysgit,可能需要配置SSH,不然无法使用Github(点击&lt;a class="link" href="https://help.github.com/articles/generating-ssh-keys/" title="https://help.github.com/articles/generating-ssh-keys/"
+target="_blank" rel="noopener"
+&gt;&lt;code&gt;这里&lt;/code&gt;&lt;/a&gt;查看官方教程).
+我们输入以下命令&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo g
+hexo d
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;或者偷个懒&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;hexo d -g
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ok,现在就可以去看看你的个人主页了,逼格满满有木有.&lt;/p&gt;
+&lt;h1 id="问题"&gt;问题
+&lt;/h1&gt;&lt;p&gt;我的中间出过一些问题:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;我的&lt;code&gt;hexo d&lt;/code&gt;的时候出错,可以尝试手动删除&lt;code&gt;.deploy&lt;/code&gt;文件夹,然后执行&lt;code&gt;hexo clean&lt;/code&gt;还有可能出现的情况是,&lt;code&gt;deploy&lt;/code&gt;没错但是一直没有提示&lt;code&gt;deploy done&lt;/code&gt;,那就是骚年,你访问Github网速太慢&lt;/li&gt;
+&lt;li&gt;我&lt;code&gt;deploy d&lt;/code&gt;成功以后,在Github里面已经看到生成的页面了,访问&lt;a class="link" href="http://jackroyal.github.io" target="_blank" rel="noopener"
+&gt;http://jackroyal.github.io&lt;/a&gt;或者&lt;a class="link" href="https://jackroyal.github.io" target="_blank" rel="noopener"
+&gt;https://jackroyal.github.io&lt;/a&gt;一直报404的错误,这种时候等一等就好了,一般等几分钟.如果一直不好那就给官方发个邮件,他们很快会回复你的,有什么问题说清楚就行.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id="致谢"&gt;致谢
+&lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨，是她给我测试和反馈的&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
+&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

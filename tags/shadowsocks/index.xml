@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Shadowsocks on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/shadowsocks/</link><description>Recent content in Shadowsocks on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/shadowsocks/index.xml" rel="self" type="application/rss+xml"/><item><title>digitalocean配置ipv6</title><link>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</link><pubDate>Tue, 16 Jun 2015 22:24:18 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</guid><description>&lt;p&gt;之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.&lt;/p&gt;
+&lt;h1 id="前提条件"&gt;前提条件
+&lt;/h1&gt;&lt;p&gt;首先你得有一台digitalocean的vps,建议选择洛杉矶的服务器,
+选个5美元的就够了.&lt;/p&gt;
+&lt;h1 id="1-新建droplet"&gt;1 新建droplet
+&lt;/h1&gt;&lt;p&gt;如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg"
+loading="lazy"
+alt="新建droplet,尤其注意勾选ipv6"
+&gt;
+注意勾选ipv6,后面的步骤,请参考第3步&lt;/p&gt;
+&lt;h1 id="2-修改droplet"&gt;2 修改droplet
+&lt;/h1&gt;&lt;p&gt;我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.
+你打开droplet的&lt;code&gt;setting&lt;/code&gt;,在&lt;code&gt;network&lt;/code&gt;中应该可以看到&lt;code&gt;enable ipv6&lt;/code&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg"
+loading="lazy"
+alt="带有启用ipv6选项的页面"
+&gt;
+启用后,稍后片刻,页面如下.
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
+loading="lazy"
+alt="在droplet的setting中启用ipv6后的页面"
+&gt;&lt;/p&gt;
+&lt;h1 id="3-设置ipv6"&gt;3 设置ipv6
+&lt;/h1&gt;&lt;p&gt;当我们启用ipv6支持以后,还需要对服务器进行设置.&lt;/p&gt;
+&lt;h2 id="第一步--我们把ipv6的地址添加到网卡中"&gt;第一步 我们把ipv6的地址添加到网卡中
+&lt;/h2&gt;&lt;p&gt;我们编辑&lt;code&gt;/etc/network/interfaces&lt;/code&gt;这个文件,使用命令&lt;code&gt;sudo vi /etc/network/interfaces&lt;/code&gt;
+修改后内容如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# This file describes the network interfaces available on your
+# system and how to activate them. For more information, see
+# interfaces(5).
+# The loopback network interface
+auto lo
+iface lo inet loopback
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 你的ipv4
+netmask 255.255.192.0
+gateway 你的ipv4网关
+dns-nameservers 8.8.8.8 8.8.4.4
+# 以上内容不需要修改,只需要添加下面的部分
+iface eth0 inet6 static
+address 上图中的ipv6地址
+netmask 64
+gateway 网关地址
+autoconf 0
+dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),&lt;!-- raw HTML omitted --&gt;如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
+loading="lazy"
+alt="ipv6成功启用后"
+&gt;&lt;/p&gt;
+&lt;h2 id="第二步-测试ipv6-是否配置成功"&gt;第二步 测试ipv6 是否配置成功
+&lt;/h2&gt;&lt;p&gt;我们使用ping命令来测试,ping是测试ipv4的,测试ipv6是用ping6,命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ping6 ipv6.google.com
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;PING ipv6.google.com&lt;span style="color:#f92672"&gt;(&lt;/span&gt;nuq04s29-in-x0e.1e100.net&lt;span style="color:#f92672"&gt;)&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;56&lt;/span&gt; data bytes
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;1&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;2.23 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;2&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.97 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;3&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.95 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;4&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;2.14 ms
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#ae81ff"&gt;64&lt;/span&gt; bytes from nuq04s29-in-x0e.1e100.net: icmp_seq&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;5&lt;/span&gt; ttl&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;57&lt;/span&gt; time&lt;span style="color:#f92672"&gt;=&lt;/span&gt;1.93 ms
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果发包成功,那就可以进行下一步了&lt;/p&gt;
+&lt;h1 id="4-修改hosts"&gt;4 修改hosts
+&lt;/h1&gt;&lt;p&gt;因为ipv4无法访问google scholar,所以我们配置下hosts,让所有对访问google学术的,都使用ipv6去访问.执行命令如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo vi /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们在hosts文件的后面,添加如下内容:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;2607:f8b0:4007:805::100f scholar.google.cn
+2607:f8b0:4007:805::100f scholar.google.com
+2607:f8b0:4007:805::100f scholar.google.com.hk
+2607:f8b0:4007:805::100f scholar.l.google.com
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ok,打完收工,睡觉&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.v2ex.com/t/163133" target="_blank" rel="noopener"
+&gt;一个解决 Google Scholar block DigitalOcean SFO IP 的方法&lt;/a&gt;
+2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-enable-ipv6-for-digitalocean-droplets" target="_blank" rel="noopener"
+&gt;How To Enable IPv6 for DigitalOcean Droplets&lt;/a&gt;&lt;/p&gt;</description></item><item><title>shadowsocks的安装和配置--在ubuntu和ubuntu中</title><link>https://jackroyal.github.io/post/use-ss/</link><pubDate>Mon, 09 Mar 2015 22:26:21 +0000</pubDate><guid>https://jackroyal.github.io/post/use-ss/</guid><description>&lt;p&gt;最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。
+搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。&lt;/p&gt;
+&lt;h1 id="1-系统环境"&gt;1 系统环境
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;服务器&lt;/strong&gt;:DigitalOcean上的Ubuntu 14.04 LTS
+&lt;strong&gt;客户端&lt;/strong&gt;:Ubuntu 14.04 LTS&lt;/p&gt;
+&lt;h1 id="2-服务器端安装和配置"&gt;2 服务器端安装和配置
+&lt;/h1&gt;&lt;p&gt;这里主要是参考github的&lt;a class="link" href="https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener"
+&gt;官方说明&lt;/a&gt;
+通过ssh登陆的服务器上去,这里不在赘述如何登陆.
+以下主要针对linux服务器,windows服务器查看&lt;a class="link" href="https://github.com/shadowsocks/shadowsocks/wiki/Install-Shadowsocks-Server-on-Windows" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="安装"&gt;安装
+&lt;/h2&gt;&lt;p&gt;Linux不同的发行版本执行的命令如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Debian / Ubuntu:
+apt-get install python-pip
+pip install shadowsocks
+CentOS:
+yum install python-setuptools &amp;amp;&amp;amp; easy_install pip
+pip install shadowsocks
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="配置"&gt;配置
+&lt;/h2&gt;&lt;pre tabindex="0"&gt;&lt;code&gt;sudo vi /etc/shadowsocks.json
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;配置文件的内容大致如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;{
+&amp;#34;server&amp;#34;:&amp;#34;你的服务器的ip&amp;#34;,
+&amp;#34;server_port&amp;#34;:8388,
+&amp;#34;local_address&amp;#34;: &amp;#34;127.0.0.1&amp;#34;,
+&amp;#34;local_port&amp;#34;:1080,
+&amp;#34;password&amp;#34;:&amp;#34;你设置的密码&amp;#34;,
+&amp;#34;timeout&amp;#34;:300,
+&amp;#34;method&amp;#34;:&amp;#34;aes-256-cfb&amp;#34;,
+&amp;#34;fast_open&amp;#34;: false
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;参数名称 解释&lt;/strong&gt;
+server 安装shadowsocks服务器ip
+server_port 服务器端口号
+local_address 本地服务器默认是127.0.0.1
+local_port 本地监听的端口号
+password 密码
+timeout 超时时间,单位是秒
+method 加密方法默认是: &amp;ldquo;aes-256-cfb&amp;quot;可以用其他加密方法
+fast_open 是否使用TCP_FASTOPEN,默认为不使用
+workers number of workers, available on Unix/Linux&lt;/p&gt;
+&lt;h2 id="运行"&gt;运行
+&lt;/h2&gt;&lt;p&gt;前台运行的命令
+&lt;code&gt;ssserver -c /etc/shadowsocks.json&lt;/code&gt;
+后台运行
+&lt;code&gt;ssserver -c /etc/shadowsocks.json -d start&lt;/code&gt;
+&lt;code&gt;ssserver -c /etc/shadowsocks.json -d stop&lt;/code&gt;
+ps:我上述两条命令都会出错,这两条命令来自官方的github,我用的是下面的
+&lt;code&gt;nohup ssserver -c /etc/shadowsocks.json &amp;gt; aa.log&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="开机自启"&gt;开机自启
+&lt;/h2&gt;&lt;p&gt;我们把它写入/etc/rc.local中就可以完成开机自启动了.&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo vi /etc/rc.local # 打开rc.local文件
+# 然后在exit前面加入下面这一行
+# nohup /usr/local/bin/ssserver -c /etc/shadowsocks.json &amp;gt; aa.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;ps:这里我之前犯了一个错误,没有写&lt;code&gt;ssserver&lt;/code&gt;的绝对路径,导致开机无法自启动,但是手动执行的话,又是可以执行的&lt;/p&gt;
+&lt;h1 id="3-客户端的安装和配置"&gt;3 客户端的安装和配置
+&lt;/h1&gt;&lt;p&gt;客户端按理说和服务器端类似,安装shadowsocks,但是我的就是这个出了问题.&lt;/p&gt;
+&lt;h2 id="1-安装相关软件"&gt;1) 安装相关软件
+&lt;/h2&gt;&lt;p&gt;shadowsocks有各种客户端版本,各个系统都有.在ubuntu下带图形化界面的有shadowsocks-qt5,还可以直接用命令行.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;图形化:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo add-apt-repository ppa:hzwhuang/ss-qt5
+sudo apt-get update
+sudo apt-get install shadowsocks-qt5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;*PS:*我的电脑安装这个以后,会自动卸载我的chrome
+*PPS:*我刚才又试了一次,我在安装了命令行模式的shadowsocks以后,现在不会卸载我的chrome,总算正常了&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;The following extra packages will be installed:
+libbotan-1.10-0 libqrencode3 libqtshadowsocks libzbar0
+The following packages will be REMOVED:
+libbotan-1.10-0:i386 libqtshadowsocks:i386 libzbar0:i386
+The following NEW packages will be installed:
+libbotan-1.10-0 libqrencode3 libqtshadowsocks libzbar0 shadowsocks-qt5
+0 upgraded, 5 newly installed, 3 to remove and 19 not upgraded.
+Need to get 1,280 kB of archives.
+After this operation, 662 kB of additional disk space will be used.
+Do you want to continue? [Y/n]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;strong&gt;命令行模式:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sudo apt-get install python-pip python-dev build-essential
+sudo pip install pip
+sudo apt-get install python-m2crypto
+sudo pip install shadowsocks
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我因为之前在环境中就安装过pip,所以我只需要执行倒数第三个和第四个命令.
+但是我的倒数第四个命令&lt;code&gt;pip install shadowsocks&lt;/code&gt;一直报错:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Exception: Traceback (most recent call last):
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/basecommand.py&amp;#34;, line 122, in main
+status = self.run(options, args)
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/commands/install.py&amp;#34;, line 278, in run
+requirement_set.prepare_files(finder, force_root_egg_info=self.bundle, bundle=self.bundle)
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/req.py&amp;#34;, line 1177, in prepare_files
+url = finder.find_requirement(req_to_install, upgrade=self.upgrade)
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/index.py&amp;#34;, line 256, in find_requirement
+page_versions.extend(self._package_versions(page.links, req.name.lower()))
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/index.py&amp;#34;, line 432, in _package_versions
+for link in self._sort_links(links):
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/index.py&amp;#34;, line 422, in _sort_links
+for link in links:
+File &amp;#34;/usr/lib/python2.7/dist-packages/pip/index.py&amp;#34;, line 769, in links
+for anchor in self.parsed.findall(&amp;#34;.//a&amp;#34;):
+AttributeError: &amp;#39;Document&amp;#39; object has no attribute &amp;#39;findall&amp;#39;
+Storing debug log for failure in /root/.pip/pip.log
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;网上搜索一番,在&lt;a class="link" href="https://github.com/pypa/pip/issues/1742" target="_blank" rel="noopener"
+&gt;这里&lt;/a&gt;找到答案.
+解决方法很简单,执行&lt;code&gt;easy_install pip&lt;/code&gt;,就ok(貌似是把pip重新安装了一次).&lt;/p&gt;
+&lt;h2 id="2-客户端运行"&gt;2) 客户端运行
+&lt;/h2&gt;&lt;p&gt;shadowsocks图形化的比较简单,这里不表.
+命令行模式,启动如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;sslocal -s 服务器ip -p 8388 -k 密码
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;启动成功后会有如下输出:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;2015-03-10 11:12:59 INFO loading libcrypto from libcrypto.so.1.0.0
+2015-03-10 11:12:59 INFO starting local at 127.0.0.1:1080
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-浏览器代理设置"&gt;3) 浏览器代理设置
+&lt;/h2&gt;&lt;p&gt;一般来说我们不希望shadowsocks做全局的翻墙,那样,访问国内的速度也会变慢,我们在chome浏览器中安装switchysharp,来管理代理.具体设置如下所示:
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
+loading="lazy"
+alt="swichysharp设置"
+&gt;&lt;/p&gt;
+&lt;p&gt;enjoy it!&lt;/p&gt;
+&lt;h1 id="后记"&gt;后记
+&lt;/h1&gt;&lt;p&gt;安卓客户端安装,&lt;a class="link" href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target="_blank" rel="noopener"
+&gt;点我点我&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 这是一篇好博客 &lt;a class="link" href="http://mushapi.com/shadowsocks-install-config-using.html" target="_blank" rel="noopener"
+&gt;http://mushapi.com/shadowsocks-install-config-using.html&lt;/a&gt;
+2 &lt;a class="link" href="https://github.com/shadowsocks/shadowsocks/wiki/Shadowsocks-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener"
+&gt;shadowsocks使用说明&lt;/a&gt;
+3 &lt;a class="link" href="https://github.com/pypa/pip/issues/1742" target="_blank" rel="noopener"
+&gt;修复我pip问题的一个issue&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="致谢"&gt;致谢
+&lt;/h1&gt;&lt;p&gt;这个网站可以下载google play的apk,对于我等天朝良民来说,可真是个好东西
+&lt;a class="link" href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target="_blank" rel="noopener"
+&gt;https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我们家&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
+&gt;笨笨的博客&lt;/a&gt;弄好了,欢迎访问&lt;/p&gt;</description></item></channel></rss>

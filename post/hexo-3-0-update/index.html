@@ -1,0 +1,190 @@
+<!doctype html><html lang=zh-CN dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="update：2015-06-24 16:56 额，谁会相信，其实这篇文章是拖了一周之后才写的。\n因为最近换回了win7，所以之前搭建的hexo环境都没了，需要重新搭建。在网上看到hexo 3.0 还可以，而且，我妹子也换3.0了，so 我也换成hexo 3.0的。\n安装环境 操作系统：win7 相关版本：\nhexo-cli: 0.1.7 os: Windows_NT 6.1.7601 win32 x64 node: 0.12.4\n安装过程 # 1. 安装Github for windows 因为我之前就在用Github,所以早就安装了这个.已经装过的同学请忽略这一段. 下载 Github for windows 并执行即可完成安装(在线安装,会有点慢)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示 # 2. 安装Node.js 在 Windows 环境下安装 Node.js 非常简单，仅须下载安装文件并执行即可完成安装。（win下建议下载msi格式的，因为这样可以不用配置环境变量之类的）\n# 3. 测试node.js是否安装 在任何控制台输入(可以按windows键+R,输入cmd,然后输入npm,一般来说不会有问题)\nnpm 返回值如下\nUsage: npm <command>\rwhere <command> is one of:\radd-user, adduser, apihelp, author, bin, bugs, c, cache,\rcompletion, config, ddp, dedupe, deprecate, docs, edit,\rexplore, faq, find, find-dupes, get, help, help-search,\rhome, i, info, init, install, isntall, issues, la, link,\rlist, ll, ln, login, ls, outdated, owner, pack, prefix,\rprune, publish, r, rb, rebuild, remove, repo, restart, rm,\rroot, run-script, s, se, search, set, show, shrinkwrap,\rstar, stars, start, stop, submodule, t, tag, test, tst, un,\runinstall, unlink, unpublish, unstar, up, update, v,\rversion, view, whoami\rnpm <cmd> -h quick help on <cmd>\rnpm -l display full usage info\rnpm faq commonly asked questions\rnpm help <term> search for help on <term>\rnpm help npm involved overview\rSpecify configs in the ini-formatted file:\rC:\\Users\\chenhao\\.npmrc\ror on the command line via: npm <command> --key value\rConfig info can be viewed via: npm help config\rnpm@1.4.28 D:\\Program Files (x86)\\nodejs\\node_modules\\npm 看到这个结果,就表示你的node.js已经安装上去了 *感谢我们家笨笨的反馈：*此处如果npm无效，首先确定win下你采用的是msi格式的安装文件，然后重启下电脑，应该就正常了。\n"><title>安装和配置hexo 3.0</title><link rel=canonical href=https://jackroyal.github.io/post/hexo-3-0-update/><link rel=stylesheet href=/scss/style.min.b0e76e98cdd4f7082d1fc36f7af7e0843a81201db2197c03ca426751dc923735.css><meta property='og:title' content="安装和配置hexo 3.0"><meta property='og:description' content="update：2015-06-24 16:56 额，谁会相信，其实这篇文章是拖了一周之后才写的。\n因为最近换回了win7，所以之前搭建的hexo环境都没了，需要重新搭建。在网上看到hexo 3.0 还可以，而且，我妹子也换3.0了，so 我也换成hexo 3.0的。\n安装环境 操作系统：win7 相关版本：\nhexo-cli: 0.1.7 os: Windows_NT 6.1.7601 win32 x64 node: 0.12.4\n安装过程 # 1. 安装Github for windows 因为我之前就在用Github,所以早就安装了这个.已经装过的同学请忽略这一段. 下载 Github for windows 并执行即可完成安装(在线安装,会有点慢)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示 # 2. 安装Node.js 在 Windows 环境下安装 Node.js 非常简单，仅须下载安装文件并执行即可完成安装。（win下建议下载msi格式的，因为这样可以不用配置环境变量之类的）\n# 3. 测试node.js是否安装 在任何控制台输入(可以按windows键+R,输入cmd,然后输入npm,一般来说不会有问题)\nnpm 返回值如下\nUsage: npm <command>\rwhere <command> is one of:\radd-user, adduser, apihelp, author, bin, bugs, c, cache,\rcompletion, config, ddp, dedupe, deprecate, docs, edit,\rexplore, faq, find, find-dupes, get, help, help-search,\rhome, i, info, init, install, isntall, issues, la, link,\rlist, ll, ln, login, ls, outdated, owner, pack, prefix,\rprune, publish, r, rb, rebuild, remove, repo, restart, rm,\rroot, run-script, s, se, search, set, show, shrinkwrap,\rstar, stars, start, stop, submodule, t, tag, test, tst, un,\runinstall, unlink, unpublish, unstar, up, update, v,\rversion, view, whoami\rnpm <cmd> -h quick help on <cmd>\rnpm -l display full usage info\rnpm faq commonly asked questions\rnpm help <term> search for help on <term>\rnpm help npm involved overview\rSpecify configs in the ini-formatted file:\rC:\\Users\\chenhao\\.npmrc\ror on the command line via: npm <command> --key value\rConfig info can be viewed via: npm help config\rnpm@1.4.28 D:\\Program Files (x86)\\nodejs\\node_modules\\npm 看到这个结果,就表示你的node.js已经安装上去了 *感谢我们家笨笨的反馈：*此处如果npm无效，首先确定win下你采用的是msi格式的安装文件，然后重启下电脑，应该就正常了。\n"><meta property='og:url' content='https://jackroyal.github.io/post/hexo-3-0-update/'><meta property='og:site_name' content='搁浅St的blog'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='hexo'><meta property='article:published_time' content='2015-06-16T22:22:43+00:00'><meta property='article:modified_time' content='2025-12-02T17:24:54+00:00'><meta name=twitter:title content="安装和配置hexo 3.0"><meta name=twitter:description content="update：2015-06-24 16:56 额，谁会相信，其实这篇文章是拖了一周之后才写的。\n因为最近换回了win7，所以之前搭建的hexo环境都没了，需要重新搭建。在网上看到hexo 3.0 还可以，而且，我妹子也换3.0了，so 我也换成hexo 3.0的。\n安装环境 操作系统：win7 相关版本：\nhexo-cli: 0.1.7 os: Windows_NT 6.1.7601 win32 x64 node: 0.12.4\n安装过程 # 1. 安装Github for windows 因为我之前就在用Github,所以早就安装了这个.已经装过的同学请忽略这一段. 下载 Github for windows 并执行即可完成安装(在线安装,会有点慢)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示 # 2. 安装Node.js 在 Windows 环境下安装 Node.js 非常简单，仅须下载安装文件并执行即可完成安装。（win下建议下载msi格式的，因为这样可以不用配置环境变量之类的）\n# 3. 测试node.js是否安装 在任何控制台输入(可以按windows键+R,输入cmd,然后输入npm,一般来说不会有问题)\nnpm 返回值如下\nUsage: npm <command>\rwhere <command> is one of:\radd-user, adduser, apihelp, author, bin, bugs, c, cache,\rcompletion, config, ddp, dedupe, deprecate, docs, edit,\rexplore, faq, find, find-dupes, get, help, help-search,\rhome, i, info, init, install, isntall, issues, la, link,\rlist, ll, ln, login, ls, outdated, owner, pack, prefix,\rprune, publish, r, rb, rebuild, remove, repo, restart, rm,\rroot, run-script, s, se, search, set, show, shrinkwrap,\rstar, stars, start, stop, submodule, t, tag, test, tst, un,\runinstall, unlink, unpublish, unstar, up, update, v,\rversion, view, whoami\rnpm <cmd> -h quick help on <cmd>\rnpm -l display full usage info\rnpm faq commonly asked questions\rnpm help <term> search for help on <term>\rnpm help npm involved overview\rSpecify configs in the ini-formatted file:\rC:\\Users\\chenhao\\.npmrc\ror on the command line via: npm <command> --key value\rConfig info can be viewed via: npm help config\rnpm@1.4.28 D:\\Program Files (x86)\\nodejs\\node_modules\\npm 看到这个结果,就表示你的node.js已经安装上去了 *感谢我们家笨笨的反馈：*此处如果npm无效，首先确定win下你采用的是msi格式的安装文件，然后重启下电脑，应该就正常了。\n"></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src="https://avatars.githubusercontent.com/u/1870593?v=4" width=300 height=300 class=site-logo loading=lazy alt=Avatar></a></figure><div class=site-meta><h1 class=site-name><a href=/>搁浅St的blog</a></h1><h2 class=site-description></h2></div></header><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>首页</span></a></li><li><a href=/page/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>分类</span></a></li><li><a href=/page/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>搜索</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ul><li><a href=#ok到这里博客搭建基本完成现在要做的就是把它发布到你的github上去><strong>ok</strong>,到这里,博客搭建基本完成,现在要做的就是把它发布到你的Github上去</a></li></ul><ul><li><a href=#1-安装rss支持>1 安装rss支持</a></li><li><a href=#2-安装sitemap支持>2 安装sitemap支持</a></li><li><a href=#3-最终修改后的配置文件>3 最终修改后的配置文件</a></li></ul></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/hexo/>Hexo</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/hexo-3-0-update/>安装和配置hexo 3.0</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2015-06-16T22:22:43Z>Jun 16, 2015</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>阅读时长: 3 分钟</time></div></footer></div></header><section class=article-content><p>update：2015-06-24 16:56
+额，谁会相信，其实这篇文章是拖了一周之后才写的。</p><p>因为最近换回了win7，所以之前搭建的hexo环境都没了，需要重新搭建。在网上看到hexo 3.0 还可以，而且，我妹子也换3.0了，so 我也换成hexo 3.0的。</p><h1 id=安装环境>安装环境</h1><p><strong>操作系统</strong>：win7
+<strong>相关版本</strong>：<br>hexo-cli: 0.1.7
+os: Windows_NT 6.1.7601 win32 x64
+node: 0.12.4</p><h1 id=安装过程>安装过程</h1><h1 id=-1-安装github-for-windows># 1. 安装Github for windows</h1><p>因为我之前就在用Github,所以早就安装了这个.已经装过的同学请忽略这一段.
+下载 <a class=link href=https://windows.github.com/ title="Github for windows" target=_blank rel=noopener>Github for windows</a> 并执行即可完成安装(<em>在线安装,会有点慢</em>)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
+<img src=https://ww2.sinaimg.cn/large/692869a3jw1emplp1lz31j204w033mx0.jpg loading=lazy alt="Github for windows">
+<img src=https://ww2.sinaimg.cn/large/692869a3gw1empluh6hvej210b0j741r.jpg loading=lazy alt="GUI and Bash"></p><h1 id=-2-安装nodejs># 2. 安装Node.js</h1><p>在 Windows 环境下安装 <a class=link href=http://nodejs.org/ title="Node.js 官网" target=_blank rel=noopener>Node.js</a> 非常简单，仅须下载安装文件并执行即可完成安装。（win下建议下载msi格式的，因为这样可以不用配置环境变量之类的）</p><h1 id=-3-测试nodejs是否安装># 3. 测试node.js是否安装</h1><p>在任何控制台输入(可以按windows键+R,输入cmd,然后输入npm,一般来说不会有问题)</p><pre tabindex=0><code>npm
+</code></pre><p>返回值如下</p><pre tabindex=0><code>Usage: npm &lt;command&gt;
+
+where &lt;command&gt; is one of:
+    add-user, adduser, apihelp, author, bin, bugs, c, cache,
+    completion, config, ddp, dedupe, deprecate, docs, edit,
+    explore, faq, find, find-dupes, get, help, help-search,
+    home, i, info, init, install, isntall, issues, la, link,
+    list, ll, ln, login, ls, outdated, owner, pack, prefix,
+    prune, publish, r, rb, rebuild, remove, repo, restart, rm,
+    root, run-script, s, se, search, set, show, shrinkwrap,
+    star, stars, start, stop, submodule, t, tag, test, tst, un,
+    uninstall, unlink, unpublish, unstar, up, update, v,
+    version, view, whoami
+
+npm &lt;cmd&gt; -h     quick help on &lt;cmd&gt;
+npm -l           display full usage info
+npm faq          commonly asked questions
+npm help &lt;term&gt;  search for help on &lt;term&gt;
+npm help npm     involved overview
+
+Specify configs in the ini-formatted file:
+    C:\Users\chenhao\.npmrc
+or on the command line via: npm &lt;command&gt; --key value
+Config info can be viewed via: npm help config
+
+npm@1.4.28 D:\Program Files (x86)\nodejs\node_modules\npm
+</code></pre><p>看到这个结果,就表示你的node.js已经安装上去了
+*感谢我们家笨笨的反馈：*此处如果npm无效，首先确定win下你采用的是msi格式的安装文件，然后<strong>重启</strong>下电脑，应该就正常了。</p><h1 id=-4-安装hexo># 4. 安装hexo</h1><p>接下来的操作我都是用<strong>Github for windows</strong>自带的Bash来完成的,因为后面会涉及到SSH,用<strong>Github for windows</strong>,就可以避免这个问题.</p><ul><li>在Bash中输入以下命令</li></ul><pre tabindex=0><code>npm install hexo-cli -g
+</code></pre><ul><li>创建hexo文件夹
+创建你hexo放置的文件夹,先用Bash进入到目标文件夹,比如我的是F:/blog/,接下来初始化hexo,自动生成相关的文件,在F:/blog/环境下,输入</li></ul><pre tabindex=0><code>cd /f/blog  # 这个命令表示当前进入目录为f：/blog/
+hexo init
+</code></pre><ul><li>安装依赖包</li></ul><pre tabindex=0><code>npm install
+</code></pre><ul><li>本地预览,做完以上操作,可以本地预览一下</li></ul><pre tabindex=0><code>hexo g
+hexo s
+</code></pre><p>以上两条命令的意思是:
+生成相关文件(就是生成目标html,静态博客嘛,就是很多html组成)
+打开本地服务器预览(node.js就是干这事的,点击访问<a class=link href=http://localhost:4000 target=_blank rel=noopener>http://localhost:4000</a>,就可以看到了)
+**update-2015-09-29:**在3.0版本中将<code>hexo server</code>(简写命令就是<code>hexo s</code>),独立成模块,需要手动安装,不然你执行<code>hexo s</code>,就会出现无法识别这个命令
+安装方法和后面配置模块一样</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>npm install hexo-server --save
+</span></span></code></pre></div><h2 id=ok到这里博客搭建基本完成现在要做的就是把它发布到你的github上去><strong>ok</strong>,到这里,博客搭建基本完成,现在要做的就是把它发布到你的Github上去</h2><p>接下来,教你怎么发布到Github上去</p><h1 id=注册github>注册Github</h1><p>这一步没什么说的,如果你连简单的注册都不会,我也不会教你╮(╯▽╰)╭</p><h1 id=创建公共库>创建公共库</h1><p>在自己Github主页右下角，创建一个新的repository(<a class=link href=https://github.com/new title=点我新建 target=_blank rel=noopener>点这里</a>)。比如我的Github账号是Jackroyal，那么我应该创建的repository名字应该是Jackroyal.github.io(注意你的repository名字就是Jackroyal.github.io,我之前用的是Jackroyal怎么尝试都不行)。</p><blockquote><p>PS:有个大小写的问题其实我注册的是Jackroyal,大写的J,但是我访问的时候特别是带https的链接,他会自动转为小写访问.怎么说呢?简单点,你就按照你的用户名来,该大写大写,该小写小写</p></blockquote><h1 id=部署>部署</h1><p>现在万事俱备,只差部署了.
+hexo3.0,跟2.0不同,deploy插件我们需要手动去安装,执行如下命令:</p><pre tabindex=0><code>npm install hexo-deployer-git --save
+</code></pre><p>接下来,我们来配置deploy的信息,修改<code>_config.yml</code>.
+这个文件在路径是F:/blog/_config.yml.
+用编辑器把它打开,修改最后一段</p><pre tabindex=0><code>deploy:
+  type: git
+  repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+  branch: master
+</code></pre><p>照着我的这个格式修改就好了,把我里面的用户名替换成你的.
+至此基本完成所有搭建步骤.</p><h1 id=上传>上传</h1><p>我们开始上传项目的代码,再重复一次,我一直以来用的工具都是_Github for windows_自带的Bash,所以我没有配置SSH,如果你用的windows自带的终端或者其他比如msysgit,可能需要配置SSH,不然无法使用Github(点击<a class=link href=https://help.github.com/articles/generating-ssh-keys/ title=https://help.github.com/articles/generating-ssh-keys/ target=_blank rel=noopener><code>这里</code></a>查看官方教程).
+我们输入以下命令</p><pre tabindex=0><code>hexo g
+hexo d
+</code></pre><p>或者偷个懒</p><pre tabindex=0><code>hexo d -g
+</code></pre><p>ok,现在就可以去看看你的个人主页了,逼格满满有木有.
+如果发布不成功,继续往下面看.</p><h1 id=配置hexo>配置hexo</h1><p>上面的内容和之前一样,接下来写,配置hexo 3.0的步骤.</p><h2 id=1-安装rss支持>1 安装rss支持</h2><p>执行如下命令:</p><pre tabindex=0><code>npm install hexo-generator-feed --save
+</code></pre><p>我们接下来修改配置文件,编辑<code>_config.yml</code></p><pre tabindex=0><code>feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+</code></pre><h2 id=2-安装sitemap支持>2 安装sitemap支持</h2><p>执行如下命令:</p><pre tabindex=0><code>npm install hexo-generator-sitemap --save
+</code></pre><p>我们接下来修改配置文件,编辑<code>_config.yml</code></p><pre tabindex=0><code>sitemap:
+    path: sitemap.xml
+</code></pre><p><strong>PS:类似的,还可以安装其他的插件,尤其注意<code>hexo-deployer-git</code>这个插件,如果你发布不成功,可能是这个插件没有装</strong></p><pre tabindex=0><code>npm install hexo-generator-index --save
+npm install hexo-generator-archive --save
+npm install hexo-generator-category --save
+npm install hexo-generator-tag --save
+npm install hexo-deployer-git --save
+</code></pre><h2 id=3-最终修改后的配置文件>3 最终修改后的配置文件</h2><p>我把我的配置文件分享出来给大家参考下:</p><pre tabindex=0><code># Hexo Configuration
+# # Docs: http://hexo.io/docs/configuration.html
+# # Source: https://github.com/hexojs/hexo/
+
+# Site
+title: 搁浅St的blog
+subtitle: 我最喜欢笨笨
+description: jackroyal 博客 搁浅St 笨笨
+author: 搁浅St
+author: John Doe
+language: zh-CN
+timezone:
+
+# URL
+# # If your site is put in a subdirectory, set url as &#39;http://yoursite.com/child&#39; and root as &#39;/child/&#39;
+url: http://jackroyal.github.io
+root: /
+permalink: :year/:month/:day/:title/
+permalink_defaults:
+
+# Directory
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# Writing
+new_post_name: :title.md # File name of new posts
+default_layout: post
+titlecase: false # Transform title into titlecase
+external_link: true # Open external links in new tab
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+highlight:
+  enable: true
+  line_number: true
+  auto_detect: true
+  tab_replace:
+
+# Category &amp; Tag
+default_category: uncategorized
+category_map:
+tag_map:
+
+# Date / Time format
+# # Hexo uses Moment.js to parse and display date
+# # You can customize the date format as defined in
+# # http://momentjs.com/docs/# /displaying/format/
+date_format: YYYY-MM-DD
+time_format: HH:mm:ss
+
+# Pagination
+# # Set per_page to 0 to disable pagination
+per_page: 10
+pagination_dir: page
+
+
+# Extensions
+# # Plugins: http://hexo.io/plugins/
+
+index_generator:
+  per_page: 10 ## 首页默认10篇文章标题 如果值为0不分页
+
+archive_generator:
+    per_page: 10 ## 归档页面默认10篇文章标题
+    yearly: true  ## 生成年视图
+    monthly: true ## 生成月视图
+
+tag_generator:
+    per_page: 10 ## 标签分类页面默认10篇文章
+
+category_generator:
+    per_page: 10 ### 分类页面默认10篇文章
+
+sitemap:
+    path: sitemap.xml
+
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+
+duoshuo_shortname: jackroyal  ## 这里填写你的多说的短网址
+# # Themes: http://hexo.io/themes/
+theme: light   ## 主题的名称,我用的是light,默认的是landscape
+
+# Deployment
+# # Docs: http://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo: https://github.com/Jackroyal/Jackroyal.github.io.git
+  branch: master
+</code></pre><p>hexo 3.0有一些新的特性,插件的封装更好了,插件安装和管理很方便.
+hexo还支持多发布,可以同时发布到github和gitcafe.</p><h1 id=参考文献>参考文献</h1><p>1 <a class=link href=https://hexo.io/zh-cn/docs/server.html target=_blank rel=noopener>hexo 服务器</a></p></section><footer class=article-footer><section class=article-tags><a href=/tags/hexo/>Hexo</a></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>最后更新于 Dec 02, 2025 17:24 UTC</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/hexo-setting-with-comments-and-visitors/><div class=article-details><h2 class=article-title>给hexo配置上评论和访问量</h2></div></a></article><article><a href=/post/blog2markdown-csdn-windows/><div class=article-details><h2 class=article-title>blog2markdown程序打包,csdn爬虫</h2></div></a></article><article><a href=/post/hexo-deploy-error/><div class=article-details><h2 class=article-title>hexo发布失败</h2></div></a></article><article><a href=/post/custom-hexo/><div class=article-details><h2 class=article-title>配置hexo</h2></div></a></article><article><a href=/post/how-to-build-a-blog-with-hexo/><div class=article-details><h2 class=article-title>使用hexo建立自己的Github pages</h2></div></a></article></div></div></aside><script src=https://giscus.app/client.js data-repo=Jackroyal/Jackroyal.github.io data-repo-id="MDEwOlJlcG9zaXRvcnkyNzE2MjkzNg==" data-category=Announcements data-category-id=DIC_kwDOAZ55OM4CyHEc data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=top data-theme=light data-lang=zh-CN data-loading crossorigin=anonymous async></script><script>function setGiscusTheme(e){let t=document.querySelector("iframe.giscus-frame");t&&t.contentWindow.postMessage({giscus:{setConfig:{theme:e}}},"https://giscus.app")}(function(){addEventListener("message",t=>{if(event.origin!=="https://giscus.app")return;e()}),window.addEventListener("onColorSchemeChange",e);function e(){setGiscusTheme(document.documentElement.dataset.scheme==="light"?"light":"dark_dimmed")}})()</script><footer class=site-footer><section class=copyright>&copy;
+2025 搁浅St的blog</section><section class=powerby>使用 <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> 构建<br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.32.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

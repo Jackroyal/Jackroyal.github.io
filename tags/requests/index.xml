@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Requests on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/requests/</link><description>Recent content in Requests on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/requests/index.xml" rel="self" type="application/rss+xml"/><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
+&lt;h1 id="安装requests库"&gt;安装requests库
+&lt;/h1&gt;&lt;p&gt;在ubuntu下面安装很简单&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install requests
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;就搞定了&lt;/p&gt;
+&lt;h1 id="快速上手的小例子"&gt;快速上手的小例子
+&lt;/h1&gt;&lt;p&gt;下面给个快速入门，最简单的例子&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; requests
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; requests&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;http://www.baidu.com&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这段代码，很简单。
+第一行，引入requests库，这是必然的。
+第二行，通过get方式获取baidu首页的内容。
+第三行，把返回的response内容，输出出来&lt;/p&gt;
+&lt;p&gt;果然很简单，这样就可以发送一个get请求，同理，你还可以使用
+&lt;code&gt;requests.post&lt;/code&gt;,&lt;code&gt;requests.put&lt;/code&gt;,&lt;code&gt;requests.options&lt;/code&gt;,&lt;code&gt;requests.head&lt;/code&gt;，发送请求，没错就是这么简单，果然比urllib2好用。&lt;/p&gt;
+&lt;h1 id="模拟登录csdn"&gt;模拟登录csdn
+&lt;/h1&gt;&lt;p&gt;我们需要其他的辅助工具&lt;/p&gt;
+&lt;h3 id="浏览器firefox"&gt;浏览器：Firefox
+&lt;/h3&gt;&lt;h3 id="浏览器插件tamper-datafirebug"&gt;浏览器插件：tamper data，firebug
+&lt;/h3&gt;&lt;p&gt;我们需要tamper data来拦截请求，因为chrome没有这个功能的插件，所以这个只能使用firefox来做（除了拦截请求chrome没有，其他的工作都可以用chrome，看个人喜好吧）。&lt;/p&gt;
+&lt;h1 id="分析登录过程"&gt;分析登录过程
+&lt;/h1&gt;&lt;h2 id="1-打开登录页面"&gt;1 打开登录页面
+&lt;/h2&gt;&lt;p&gt;我们首先打开csdn的登录页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;
+这个链接，前面部分是登录的网址，问号后面的参数，顾名思义，referer，就是你从哪里跳过来的，也许是一个页面跳转到登录的，toolbar就是我自己点击顶部导航栏，然后跳转到登录页面的。&lt;/p&gt;
+&lt;h2 id="2-清除相关的cookie"&gt;2 清除相关的cookie
+&lt;/h2&gt;&lt;p&gt;为了排除不必要的干扰，我们先清除掉所有的相关的cookie，这样方便我们分析哪些参数是必须的。
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegc1itw2j20qu075779.jpg"
+loading="lazy"
+alt="firefox中，清除cookie"
+&gt;&lt;/p&gt;
+&lt;h2 id="3-登录过程分析"&gt;3 登录过程分析
+&lt;/h2&gt;&lt;p&gt;清除了cookie后，我们刷新一下页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;，重新获取对应的cookie。
+然后我们就开始用tamper data来拦截请求。
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
+loading="lazy"
+alt="使用tamper data"
+&gt;
+我们点击&lt;code&gt;start tamper&lt;/code&gt;，在网页中填写用户名和密码。点击&lt;code&gt;登录&lt;/code&gt;，会发出一个请求，然后tamper data会拦截下这个请求，询问我们是否拦截，点击tamper，我们可以在这个请求提交之前，查看请求的内容，还可以做删改。
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegkslypyj20y20gntdt.jpg"
+loading="lazy"
+alt="发出第一个登录请求前拦截下来，查看表单内容"
+&gt;
+csdn的登录过程比较简单，发送一个登录表单过去，就登录成功了，不过记得修改headers，这是后话。&lt;/p&gt;
+&lt;h2 id="4-开始模拟登录"&gt;4 开始模拟登录
+&lt;/h2&gt;&lt;p&gt;知道登录过程了，我们就开始写登录的代码。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; requests
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 使用beautifulsoup来处理获取的html内容，这个库需要安装，还是使用pip install beautifulsoup4来安装&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; bs4 &lt;span style="color:#f92672"&gt;import&lt;/span&gt; BeautifulSoup &lt;span style="color:#66d9ef"&gt;as&lt;/span&gt; bs
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 这个函数使用来提取流水号的&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;toJson&lt;/span&gt;(str):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 提取lt流水号，将数据化为一个字典
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; soup &lt;span style="color:#f92672"&gt;=&lt;/span&gt; bs(str)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tt &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;# 提取form表单中所有的input标签，以字典的形式来保存name：value&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; inp &lt;span style="color:#f92672"&gt;in&lt;/span&gt; soup&lt;span style="color:#f92672"&gt;.&lt;/span&gt;form&lt;span style="color:#f92672"&gt;.&lt;/span&gt;find_all(&lt;span style="color:#e6db74"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;) &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tt[inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;)] &lt;span style="color:#f92672"&gt;=&lt;/span&gt;inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;value&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; tt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 这行代码，是用来维持cookie的，你后续的操作都不用担心cookie，他会自动带上相应的cookie&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;s &lt;span style="color:#f92672"&gt;=&lt;/span&gt; requests&lt;span style="color:#f92672"&gt;.&lt;/span&gt;Session()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# 我们需要带表单的参数,这里面有个参数lt,登录操作的流水号，我们需要从html页面中进行提取&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;payload &lt;span style="color:#f92672"&gt;=&lt;/span&gt;{&lt;span style="color:#e6db74"&gt;&amp;#39;username&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;jackroyal&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;password&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;lt&amp;#39;&lt;/span&gt;:soup[&lt;span style="color:#e6db74"&gt;&amp;#34;lt&amp;#34;&lt;/span&gt;],&lt;span style="color:#e6db74"&gt;&amp;#39;execution&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;e1s1&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;_eventId&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;submit&amp;#39;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;post(&lt;span style="color:#e6db74"&gt;&amp;#34;http://passport.csdn.net/account/login&amp;#34;&lt;/span&gt;,data&lt;span style="color:#f92672"&gt;=&lt;/span&gt;payload,headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;header)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ok，至此，登录就成功了&lt;/p&gt;
+&lt;h2 id="5-优化"&gt;5 优化
+&lt;/h2&gt;&lt;p&gt;当你登录成功后，你会问，我怎么知道登录成功了呢？当你试图去抓取&lt;code&gt;http://write.blog.csdn.net/postlist&lt;/code&gt;的内容的时候，你会发现一个403的错误，这是为啥呢？
+很简单，&lt;code&gt;user agent&lt;/code&gt;没有修改，我们用的是默认的&lt;code&gt;user agent&lt;/code&gt;，这可不是一个正常的用户，所以被网站拒绝了。我们加上他就好了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;header &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {&lt;span style="color:#e6db74"&gt;&amp;#39;User-Agent&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0&amp;#39;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;post(&lt;span style="color:#e6db74"&gt;&amp;#34;http://passport.csdn.net/account/login&amp;#34;&lt;/span&gt;,data&lt;span style="color:#f92672"&gt;=&lt;/span&gt;payload,headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;header)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="后话"&gt;后话
+&lt;/h1&gt;&lt;p&gt;上面的代码还是太简单，我们都知道cookie是有有效期的，我在做调试的时候，没修改一次，就要模拟登录一次，这样不好，我们要保存cookie，这样下次就不需要重新发送登录请求了
+分享出完整的代码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# !/usr/bin/env python&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# -*- coding: utf-8 -*-&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; requests
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; time
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; os
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; bs4 &lt;span style="color:#f92672"&gt;import&lt;/span&gt; BeautifulSoup &lt;span style="color:#66d9ef"&gt;as&lt;/span&gt; bs
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;from&lt;/span&gt; cookielib &lt;span style="color:#f92672"&gt;import&lt;/span&gt; LWPCookieJar
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;def&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;toJson&lt;/span&gt;(str):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;&amp;#39;&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; 提取lt流水号，将数据化为一个字典
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#e6db74"&gt; &amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; soup &lt;span style="color:#f92672"&gt;=&lt;/span&gt; bs(str)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tt &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;for&lt;/span&gt; inp &lt;span style="color:#f92672"&gt;in&lt;/span&gt; soup&lt;span style="color:#f92672"&gt;.&lt;/span&gt;form&lt;span style="color:#f92672"&gt;.&lt;/span&gt;find_all(&lt;span style="color:#e6db74"&gt;&amp;#39;input&amp;#39;&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;) &lt;span style="color:#f92672"&gt;!=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; tt[inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;name&amp;#39;&lt;/span&gt;)] &lt;span style="color:#f92672"&gt;=&lt;/span&gt;inp&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#39;value&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; tt
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# cookie setting&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;s &lt;span style="color:#f92672"&gt;=&lt;/span&gt; requests&lt;span style="color:#f92672"&gt;.&lt;/span&gt;Session()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cookies &lt;span style="color:#f92672"&gt;=&lt;/span&gt; LWPCookieJar(&lt;span style="color:#e6db74"&gt;&amp;#39;cookiejar&amp;#39;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;header &lt;span style="color:#f92672"&gt;=&lt;/span&gt; {&lt;span style="color:#e6db74"&gt;&amp;#39;User-Agent&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:38.0) Gecko/20100101 Firefox/38.0&amp;#39;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; &lt;span style="color:#f92672"&gt;not&lt;/span&gt; os&lt;span style="color:#f92672"&gt;.&lt;/span&gt;path&lt;span style="color:#f92672"&gt;.&lt;/span&gt;exists(&lt;span style="color:#e6db74"&gt;&amp;#39;cookiejar&amp;#39;&lt;/span&gt;):
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;there is no cookie,setting&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#34;http://passport.csdn.net/account/login&amp;#34;&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; soup &lt;span style="color:#f92672"&gt;=&lt;/span&gt; toJson(r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; payload &lt;span style="color:#f92672"&gt;=&lt;/span&gt;{&lt;span style="color:#e6db74"&gt;&amp;#39;username&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;jackroyal&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;password&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;123456&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;lt&amp;#39;&lt;/span&gt;:soup[&lt;span style="color:#e6db74"&gt;&amp;#34;lt&amp;#34;&lt;/span&gt;],&lt;span style="color:#e6db74"&gt;&amp;#39;execution&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;e1s1&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;_eventId&amp;#39;&lt;/span&gt;:&lt;span style="color:#e6db74"&gt;&amp;#39;submit&amp;#39;&lt;/span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print payload
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;post(&lt;span style="color:#e6db74"&gt;&amp;#34;http://passport.csdn.net/account/login&amp;#34;&lt;/span&gt;,data&lt;span style="color:#f92672"&gt;=&lt;/span&gt;payload,headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;header)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cookies&lt;span style="color:#f92672"&gt;.&lt;/span&gt;save(ignore_discard&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;else&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; print &lt;span style="color:#e6db74"&gt;&amp;#34;cookie exists,restore&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;cookies&lt;span style="color:#f92672"&gt;.&lt;/span&gt;load(ignore_discard&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;True&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# r = s.get(&amp;#34;https://passport.csdn.net/content/loginbox/loginapi.js&amp;#34;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;r &lt;span style="color:#f92672"&gt;=&lt;/span&gt; s&lt;span style="color:#f92672"&gt;.&lt;/span&gt;get(&lt;span style="color:#e6db74"&gt;&amp;#34;http://write.blog.csdn.net/postlist&amp;#34;&lt;/span&gt;,headers&lt;span style="color:#f92672"&gt;=&lt;/span&gt;header)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;print r&lt;span style="color:#f92672"&gt;.&lt;/span&gt;text
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://requests-docs-cn.readthedocs.org/zh_CN/latest/user/quickstart.html" target="_blank" rel="noopener"
+&gt;requests官方文档快速上手——中文版&lt;/a&gt;
+2 &lt;a class="link" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html" target="_blank" rel="noopener"
+&gt;beautifuisoup官方文档&lt;/a&gt;
+3 &lt;a class="link" href="http://stackoverflow.com/questions/13030095/how-to-save-requests-python-cookies-to-a-file" target="_blank" rel="noopener"
+&gt;python的requests如何保存cookie到文件&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

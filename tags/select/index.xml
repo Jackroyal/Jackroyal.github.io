@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Select on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/select/</link><description>Recent content in Select on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/select/index.xml" rel="self" type="application/rss+xml"/><item><title>sql中left_join和right_join混用</title><link>https://jackroyal.github.io/post/the-use-of-left_join-and-right_join-in-sql/</link><pubDate>Fri, 08 Aug 2014 10:02:00 +0000</pubDate><guid>https://jackroyal.github.io/post/the-use-of-left_join-and-right_join-in-sql/</guid><description>&lt;p&gt;left join(左联接) 返回包括左表中的所有记录和右表中联结字段相等的记录 &lt;/p&gt;
+&lt;p&gt;right join(右联接) 返回包括右表中的所有记录和左表中联结字段相等的记录&lt;/p&gt;
+&lt;p&gt;inner join(等值连接) 只返回两个表中联结字段相等的行&lt;/p&gt;
+&lt;p&gt;如上所言,我们只做一下left join的实验,right join和left join 类似&lt;/p&gt;
+&lt;p&gt;测试一共三张表,a  b   c
+&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;表结构和数据分别如下&lt;/p&gt;
+&lt;p&gt;a表                                                                  b表                                                              c表
+&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;         &lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;          &lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;然后我们来试一下左连接&lt;/p&gt;
+&lt;p&gt;1,  我们来查询a b两张表,连接他们aid=bid的选项
+sql&amp;raquo;SELECT *  FROM a   LEFT JOIN b on aid=bid&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;看图很好理解,因为是a左连接b,所以b中为空的元素 ,在查询结果中以NULL的形式补全&lt;/p&gt;
+&lt;p&gt;同理可得&lt;/p&gt;
+&lt;p&gt;sql&amp;raquo;SELECT * FROM a LEFT JOIN c on aid=cid
+&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;sql&amp;raquo;SELECT * FROM c LEFT JOIN b on bid=cid
+sql&amp;raquo;SELECT * FROM c LEFT JOIN b on cid=bid&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;也就是on后面的顺序无所谓,无论是bid=cid还是cid=bid,重点是前面的left join还是right join&lt;/p&gt;
+&lt;p&gt;2,我们来试一下如果三张表左连接呢,会有什么情况?&lt;/p&gt;
+&lt;p&gt;sql&amp;raquo;SELECT * FROM a&lt;/p&gt;
+&lt;p&gt;           LEFT JOIN b on bid=aid &lt;/p&gt;
+&lt;p&gt;           LEFT JOIN c on aid=cid
+&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;sql&amp;raquo;SELECT * FROM a LEFT JOIN b on bid=aid LEFT JOIN c on bid=cid
+&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;3,如果我用了一个right join呢?&lt;/p&gt;
+&lt;p&gt;sql&amp;raquo;SELECT * FROM a LEFT JOIN b on bid=aid RIGHT JOIN c on bid=cid
+&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;这里该怎么理解呢?
+感谢&lt;a class="link" href="http://blog.csdn.net/sqlserverdiscovery/article/details/6893288" target="_blank" rel="noopener"
+&gt;http://blog.csdn.net/sqlserverdiscovery/article/details/6893288&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我们理解的时候可以把它拆成两部分去理解&lt;/p&gt;
+&lt;p&gt;比如第一部分
+sql&amp;raquo;SELECT * FROM a LEFT JOIN b on bid=aid&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;然后再思考第二部分,假如上图是一张表  我们叫它a_b&lt;/p&gt;
+&lt;p&gt;你可以新建一个视图,就可以真成为一张虚表了&lt;/p&gt;
+&lt;p&gt;sql&amp;raquo;create  VIEW a_b  as (SELECT * FROM a LEFT JOIN b on bid=aid)
+&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;然后我们继续做下面一部分&lt;/p&gt;
+&lt;p&gt;sql&amp;raquo;select * from a_b right join c on bid=cid
+&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;可见,与上面的结果是一样的,当然这是我们理解的过程,实际数据库服务器执行的时候可能不是这样的,它会做一些优化,提高效率&lt;/p&gt;</description></item></channel></rss>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>服务器 on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/</link><description>Recent content in 服务器 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/index.xml" rel="self" type="application/rss+xml"/><item><title>HTTP1.0和HTTP1.1的区别</title><link>https://jackroyal.github.io/post/http-1-0-vs-1-1/</link><pubDate>Fri, 25 Mar 2016 13:36:53 +0000</pubDate><guid>https://jackroyal.github.io/post/http-1-0-vs-1-1/</guid><description>&lt;p&gt;今天研究了下HTTP,还是挺有意思的.
+接下来,就比较一下两者的区别.&lt;/p&gt;
+&lt;h1 id="1-长连接"&gt;1 长连接
+&lt;/h1&gt;&lt;p&gt;这个应该是变化最大的一个了.在1.0的版本中,如果客户端请求头没有设置&lt;code&gt;Connection: Keep-Alive&lt;/code&gt;的话,那么每次请求完成都会立即断开连接,然后客户端又要重新建立一个HTTP连接.假设一个网页包含了10个图片,那么为了请求图片,客户端必须要发送10次请求,无疑这对带宽和资源是极大的浪费,TCP的优势就没有体现出来.
+在HTTP1.1中,&lt;code&gt;keep-Alive&lt;/code&gt;已经被弃用(但是大多数服务器和浏览器都还保留这个选项).在1.1的版本中,持久连接默认就是启用的,除非你显式在响应头部包含&lt;code&gt;Connection: close&lt;/code&gt;,客户端收到响应后才会关闭连接.&lt;/p&gt;
+&lt;h1 id="2-host头域"&gt;2 host头域
+&lt;/h1&gt;&lt;p&gt;在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址,因此,请求消息中的URL并没有传递主机名(hostname).但随着虚拟主机技术的发展,在一台物理服务器上可以存在多个虚拟主机(Multi-homed Web Servers),并且它们共享一个IP地址.
+HTTP1.1的请求消息和响应消息都应支持&lt;code&gt;Host&lt;/code&gt;头域,且请求消息中如果没有&lt;code&gt;Host&lt;/code&gt;头域会报告一个错误(400 Bad Request).此外,服务器应该接受以绝对路径标记的资源请求.&lt;/p&gt;
+&lt;h1 id="3-请求方法"&gt;3 请求方法
+&lt;/h1&gt;&lt;p&gt;HTTP1.1增加了&lt;code&gt;OPTIONS&lt;/code&gt;, &lt;code&gt;PUT&lt;/code&gt;, &lt;code&gt;DELETE&lt;/code&gt;, &lt;code&gt;TRACE&lt;/code&gt;, &lt;code&gt;CONNECT&lt;/code&gt;这些Request方法.
+Method = &lt;strong&gt;&amp;ldquo;OPTIONS&amp;rdquo;&lt;/strong&gt; ; Section 9.2
+| &amp;ldquo;GET&amp;rdquo; ; Section 9.3
+| &amp;ldquo;HEAD&amp;rdquo; ; Section 9.4
+| &amp;ldquo;POST&amp;rdquo; ; Section 9.5
+| &lt;strong&gt;&amp;ldquo;PUT&amp;rdquo;&lt;/strong&gt; ; Section 9.6
+| &lt;strong&gt;&amp;ldquo;DELETE&amp;rdquo;&lt;/strong&gt; ; Section 9.7
+| &lt;strong&gt;&amp;ldquo;TRACE&amp;rdquo;&lt;/strong&gt; ; Section 9.8
+| &lt;strong&gt;&amp;ldquo;CONNECT&amp;rdquo;&lt;/strong&gt; ; Section 9.9
+| extension-method
+extension-method = token
+HTTP1.1 增加的新的status code：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;(HTTP1.0没有定义任何具体的1xx status code, HTTP1.1有2个)
+100 Continue
+101 Switching Protocols
+203 Non-Authoritative Information
+205 Reset Content
+206 Partial Content
+302 Found (在HTTP1.0中有个 302 Moved Temporarily)
+303 See Other
+305 Use Proxy
+307 Temporary Redirect
+405 Method Not Allowed
+406 Not Acceptable
+407 Proxy Authentication Required
+408 Request Timeout
+409 Conflict
+410 Gone
+411 Length Required
+412 Precondition Failed
+413 Request Entity Too Large
+414 Request-URI Too Long
+415 Unsupported Media Type
+416 Requested Range Not Satisfiable
+417 Expectation Failed
+504 Gateway Timeout
+505 HTTP Version Not Supported
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="4-内容长度"&gt;4 内容长度
+&lt;/h1&gt;&lt;p&gt;通常,HTTP应答消息中发送的数据是整个发送的,&lt;code&gt;Content-Length&lt;/code&gt;消息头字段表示数据的长度.数据的长度很重要,因为客户端需要知道哪里是应答消息的结束,以及后续应答消息的开始.但是在一些动态网页中,由于网页是动态生成的,所以没法计算出准确的&lt;code&gt;Content-Length&lt;/code&gt;,这样导致的后果是:如果 &lt;code&gt;Content-Length&lt;/code&gt; 比实际长度短,会造成内容被截断;如果比实体内容长,会造成 pending,浏览器一直转圈圈.
+所以在HTTP1.1中引入了&lt;code&gt;Transfer-Encoding&lt;/code&gt;,如果一个HTTP消息(请求消息或应答消息)的&lt;code&gt;Transfer-Encoding&lt;/code&gt;消息头的值为chunked,那么,消息体由数量未定的块组成,并以最后一个大小为0的块为结束.
+ps:如果同时设置了&lt;code&gt;Content-Length&lt;/code&gt; 和&lt;code&gt;Transfer-Encoding&lt;/code&gt;,那么&lt;code&gt;Transfer-Encoding&lt;/code&gt;的优先级更高,&lt;code&gt;Content-Length&lt;/code&gt;会被忽略.&lt;/p&gt;
+&lt;h1 id="5-缓存"&gt;5 缓存
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;在HTTP/1.0中,使用&lt;code&gt;Expire&lt;/code&gt;头域来判断资源的&lt;code&gt;fresh&lt;/code&gt;或&lt;code&gt;stale&lt;/code&gt;,并使用条件请求(conditional request)来判断资源是否仍有效.例如,cache服务器通过&lt;code&gt;If-Modified-Since&lt;/code&gt;头域向服务器验证资源的&lt;code&gt;Last-Modefied&lt;/code&gt;头域是否有更新,源服务器可能返回304(Not Modified),则表明该对象仍有效;也可能返回200(OK)替换请求的Cache对象.&lt;/li&gt;
+&lt;li&gt;此外,HTTP/1.0中还定义了&lt;code&gt;Pragma:no-cache&lt;/code&gt;头域,客户端使用该头域说明请求资源不能从cache中获取,而必须回源获取.&lt;/li&gt;
+&lt;li&gt;HTTP/1.1在1.0的基础上加入了一些cache的新特性,当缓存对象的Age超过&lt;code&gt;Expire&lt;/code&gt;时变为&lt;code&gt;stale&lt;/code&gt;对象,cache不需要直接抛弃&lt;code&gt;stale&lt;/code&gt;对象,而是与源服务器进行重新激活(revalidation).&lt;/li&gt;
+&lt;li&gt;HTTP/1.0中,&lt;code&gt;If-Modified-Since&lt;/code&gt;头域使用的是绝对时间戳,精确到秒,但使用绝对时间会带来不同机器上的时钟同步问题.而HTTP/1.1中引入了一个&lt;code&gt;ETag&lt;/code&gt;头域用于重激活机制,它的值&lt;code&gt;entity tag&lt;/code&gt;可以用来唯一的描述一个资源.请求消息中可以使用&lt;code&gt;If-None-Match&lt;/code&gt;头域来匹配资源的&lt;code&gt;entitytag&lt;/code&gt;是否有变化.&lt;/li&gt;
+&lt;li&gt;为了使caching机制更加灵活,HTTP/1.1增加了&lt;code&gt;Cache-Control&lt;/code&gt;头域(请求消息和响应消息都可使用),它支持一个可扩展的指令子集：例如&lt;code&gt;max-age&lt;/code&gt;指令支持相对时间戳;&lt;code&gt;private&lt;/code&gt;和&lt;code&gt;no-store&lt;/code&gt;指令禁止对象被缓存;&lt;code&gt;no-transform&lt;/code&gt;阻止Proxy进行任何改变响应的行为.&lt;/li&gt;
+&lt;li&gt;Cache使用关键字索引在磁盘中缓存的对象,在HTTP/1.0中使用资源的URL作为关键字.但可能存在不同的资源基于同一个URL的情况,要区别它们还需要客户端提供更多的信息,如&lt;code&gt;Accept-Language&lt;/code&gt;和&lt;code&gt;Accept-Charset&lt;/code&gt;头域.为了支持这种内容协商机制(content negotiation mechanism),HTTP/1.1在响应消息中引入了Vary头域,该头域列出了请求消息中需要包含哪些头域用于内容协商.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="HTTPs://imququ.com/post/transfer-encoding-header-in-HTTP.html" &gt;HTTP 协议中的 Transfer-Encoding&lt;/a&gt;
+2 &lt;a class="link" href="http://blog.csdn.net/forgotaboutgirl/article/details/6936982" target="_blank" rel="noopener"
+&gt;HTTP/1.1与HTTP/1.0的区别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://jackroyal.github.io/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
+&lt;p&gt;我去锐速官网注册了账号,可惜,在官方支持的linux版本中并没有我这个内核版本.我用的是&lt;code&gt;3.13.0-37-generic&lt;/code&gt;的&lt;code&gt;32&lt;/code&gt;位版本,锐速官网并没有支持.&lt;code&gt;32&lt;/code&gt;位版本支持的相对较少,支持的最新版本是&lt;code&gt;3.13.0-29-generic&lt;/code&gt;.
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
+loading="lazy"
+alt="锐速官网linux支持列表"
+&gt;
+所以没办法,只能把我的&lt;code&gt;ubuntu&lt;/code&gt;降级回去,还是小折腾了一下.下面就来说下降级&lt;/p&gt;
+&lt;h1 id="实验环境"&gt;实验环境：
+&lt;/h1&gt;&lt;p&gt;digitalocean的云服务器
+Linux OS: Ubuntu
+Version: 14.04
+Kernel: 3.13.0-37-generic
+Bits: 32-bit&lt;/p&gt;
+&lt;h1 id="实验步骤"&gt;实验步骤
+&lt;/h1&gt;&lt;p&gt;ssh登录服务器,然后安装新内核,blablabla&amp;hellip;
+你要是这样想就跟我一样,想错了.
+因为我们使用的是&lt;code&gt;digitalocean&lt;/code&gt;的云服务器,不是普通的个人单机,所以那套方法不顶用,我照着那个方法,安装了新的内核,然后更新&lt;code&gt;grub&lt;/code&gt;,怎么弄都没用,最后才找到答案.
+&lt;strong&gt;争取的做法:&lt;/strong&gt;
+1 登录你的&lt;code&gt;digitalocean&lt;/code&gt;控制台
+2 点击&lt;code&gt;setting-&amp;gt;kernel&lt;/code&gt;,效果如下图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
+loading="lazy"
+alt="控制台的kernel页面"
+&gt;
+3 点击下拉列表,找到你要的&lt;code&gt;kernel&lt;/code&gt;,比如我要的是&lt;code&gt;Ubuntu 14.04 x32 vmlinuz-3.13.0-29-generic&lt;/code&gt;,然后点击&lt;code&gt;change&lt;/code&gt;,等一会儿,页面会自动刷新,内核更新就成功了
+4 重要的一步,我就是这步有点问题,又浪费了点时间.更新完内核,我们发现自己的服务器查看内核的时候并没有变化,我们首先想到的是重启服务器.我们直接在终端&lt;code&gt;sudo reboot&lt;/code&gt;.但是启动以后,你会发现还是没有变化,什么鬼?
+真正的答案是,我们现在终端关机,也即是执行&lt;code&gt;sudo poweroff&lt;/code&gt;,先关机.然后我们在控制台的power选项卡中,有个&lt;code&gt;power on&lt;/code&gt;的按钮,我们启动服务器,就发现内核已经更新了.
+ok 打完收工&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-upgrade-ubuntu-12-04-lts-to-ubuntu-14-04-lts" target="_blank" rel="noopener"
+&gt;How to Upgrade Ubuntu 12.04 LTS to Ubuntu 14.04 LTS&lt;/a&gt;
+2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-update-a-digitalocean-server-s-kernel" target="_blank" rel="noopener"
+&gt;How To Update a DigitalOcean Server&amp;rsquo;s Kernel&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下设置apache的目录映射</title><link>https://jackroyal.github.io/post/ubuntu-lamp-alias-setting/</link><pubDate>Thu, 15 Oct 2015 22:12:37 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-lamp-alias-setting/</guid><description>&lt;p&gt;好吧,我的博客一不小心又荒废下来了,话不多说,进入正文.&lt;/p&gt;
+&lt;p&gt;最近的项目一直在忙,发布代码的时候遇到一个麻烦事,由于所有项目代码都放在服务器的根目录,也就是&lt;code&gt;/var/www/html&lt;/code&gt;下;然后还有一个api的页面,我放在一个&lt;code&gt;api&lt;/code&gt;文件夹中,然后把整个&lt;code&gt;api&lt;/code&gt;文件夹放在&lt;code&gt;html&lt;/code&gt;目录下.由于每次发布代码都是替换整个根目录&lt;code&gt;html&lt;/code&gt;下的文件,你懂的,我每次发布项目代码后,&lt;code&gt;api&lt;/code&gt;就没了,需要我单独解压,再复制,blablabla,总之一个字,** 烦 **.
+我突然想起来,phpmyadmin安装后就不在网站的根目录,但是访问的时候我却还是直接在ip后面跟目录,比如&lt;code&gt;http://127.0.0.1/phpmyadmin&lt;/code&gt;,这货应该是用了一个映射,我照着这个样子搞一个,不就行了,说干就干.&lt;/p&gt;
+&lt;h1 id="1-使用的命令"&gt;1 使用的命令
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;Alias&lt;/code&gt; 这个是这次主要使用的命令,使用的方法很简单,如下所示&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-shell" data-lang="shell"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Alias /api /home/ch/api
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;意思就是如果你在ip后面添加&lt;code&gt;/api&lt;/code&gt;后缀,也就是你在浏览器访问&lt;code&gt;http://127.0.0.1/api&lt;/code&gt;,那么实际就会访问到&lt;code&gt;/home/ch/api&lt;/code&gt;目录下&lt;/p&gt;
+&lt;h1 id="2-使用方法"&gt;2 使用方法
+&lt;/h1&gt;&lt;h3 id="linux下"&gt;Linux下
+&lt;/h3&gt;&lt;p&gt;由于我用的是ubuntu,所以具体说下ubuntu下怎么用.
+根据&lt;a class="link" href="http://huirong.github.io/2015/04/01/installLamp/" target="_blank" rel="noopener"
+&gt;在Ubuntu上安装LAMP服务器并简单配置&lt;/a&gt;,这篇文章中关于&lt;code&gt;phpmyadmin&lt;/code&gt;的设置部分,以下为摘抄&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;配置Apache服务器
+如果此时在浏览器中输入http://localhost/phpmyadmin，会提示404错误
+此时应该进行简单的配置，将phpMyAdmin的配置文件，复制到Apache2下
+cp /etc/phpmyadmin/apache.conf /etc/apache2/conf-enabled/phpmyadmin.conf
+然后重启Apache服务器
+service apache2 restart
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们得到启发,本来phpmyadmin也是不在&lt;code&gt;html&lt;/code&gt;根目录下的,上面的操作做了什么呢?
+我们打开&lt;code&gt;/etc/apache2/conf-enabled/phpmyadmin.conf&lt;/code&gt;这个文件看看&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# phpMyAdmin default Apache configuration
+Alias /phpmyadmin /usr/share/phpmyadmin
+&amp;lt;Directory /usr/share/phpmyadmin&amp;gt;
+Options FollowSymLinks
+DirectoryIndex index.php
+&amp;lt;IfModule mod_php5.c&amp;gt;
+AddType application/x-httpd-php .php
+php_flag magic_quotes_gpc Off
+php_flag track_vars On
+php_flag register_globals Off
+php_admin_flag allow_url_fopen Off
+php_value include_path .
+php_admin_value upload_tmp_dir /var/lib/phpmyadmin/tmp
+php_admin_value open_basedir /usr/share/phpmyadmin/:/etc/phpmyadmin/:/var/lib/phpmyadmin/:/usr/share/php/php-gettext/:/usr/share/javascript/
+&amp;lt;/IfModule&amp;gt;
+&amp;lt;/Directory&amp;gt;
+# Authorize for setup
+&amp;lt;Directory /usr/share/phpmyadmin/setup&amp;gt;
+&amp;lt;IfModule mod_authn_file.c&amp;gt;
+AuthType Basic
+AuthName &amp;#34;phpMyAdmin Setup&amp;#34;
+AuthUserFile /etc/phpmyadmin/htpasswd.setup
+&amp;lt;/IfModule&amp;gt;
+Require valid-user
+&amp;lt;/Directory&amp;gt;
+# Disallow web access to directories that don&amp;#39;t need it
+&amp;lt;Directory /usr/share/phpmyadmin/libraries&amp;gt;
+Order Deny,Allow
+Deny from All
+&amp;lt;/Directory&amp;gt;
+&amp;lt;Directory /usr/share/phpmyadmin/setup/lib&amp;gt;
+Order Deny,Allow
+Deny from All
+&amp;lt;/Directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;看看这个文件的第一行,soga,原来他用的也是&lt;code&gt;Alias&lt;/code&gt;命令,接下来我们继续往下走,下面的代码是什么意思呢?下面的代码是用来设置文件目录的权限的,就是&lt;code&gt;&amp;lt;Directory&amp;gt;&lt;/code&gt;标签里面的内容.
+关于这里的设置,我们可以参考[apache官网](&lt;a class="link" href="https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#" target="_blank" rel="noopener"
+&gt;https://httpd.apache.org/docs/2.2/mod/mod_authz_host.html#&lt;/a&gt; order)上的描述.简而言之
+&lt;code&gt;Order Deny,Allow&lt;/code&gt;其实是Allow优先,举个例子&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Order Deny,Allow
+Allow from All
+Deny from All
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;由于&lt;code&gt;Deny&lt;/code&gt;规则在&lt;code&gt;Allow&lt;/code&gt;之前(Order规定的),所以先Deny所有的请求,然后&lt;code&gt;Allow&lt;/code&gt;规则在其后,最后的结果就是所有的人都可以随意访问.假设你要对访问进行限制,建议按照下面这样设置&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Order Deny,Allow
+Allow from 192.168.1.122
+Deny from All
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;也就是指允许ip为&lt;code&gt;192.168.1.122&lt;/code&gt;的用户去访问,其他的用户都会被&lt;code&gt;Deny&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="3-最后的结果"&gt;3 最后的结果
+&lt;/h1&gt;&lt;p&gt;结合上面的分析,给出我最后的结果&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;Alias /api /var/www/api
+&amp;lt;Directory /var/www/api&amp;gt;
+Options FollowSymLinks Includes -Indexes
+AllowOverride None
+Order allow,deny
+allow from all
+&amp;lt;/Directory&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的&lt;code&gt;-Indexes&lt;/code&gt;选项的意思是,不要列出目录
+打完收工&lt;/p&gt;</description></item><item><title>阿里云windows_server_2003_搭建邮件服务器</title><link>https://jackroyal.github.io/post/aliyun-windows-server-2008-mail-server/</link><pubDate>Sat, 28 Jun 2014 22:30:00 +0000</pubDate><guid>https://jackroyal.github.io/post/aliyun-windows-server-2008-mail-server/</guid><description>&lt;p&gt;    笔者最近遇到一个在阿里云上搭建邮件服务器的问题，总算搞定，记录一下。&lt;/p&gt;
+&lt;p&gt;     整个搭建过程，包括pop3服务的安装和开启，smtp服务的安装和开启，dns服务的安装和设置。
+    参考文章&lt;a class="link" href="http://hi.baidu.com/senya/item/63bd6588b6817056e63d1996" target="_blank" rel="noopener"
+&gt;http://hi.baidu.com/senya/item/63bd6588b6817056e63d1996&lt;/a&gt;
+   &lt;a class="link" href="http://firefish.blog.51cto.com/298258/57983" target="_blank" rel="noopener"
+&gt;http://firefish.blog.51cto.com/298258/57983&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;不在赘述，直接粘贴原文&lt;/p&gt;
+&lt;p&gt;__　　一、安装Windows Server 2003邮件服务器组件__&lt;/p&gt;
+&lt;p&gt;(因为盗图的缘故,图片都挂了,这里大家都去看上面的参考文章连接吧,设置dns的时候再回来)&lt;/p&gt;
+&lt;p&gt;图一　“管理您的服务器”控制台&lt;/p&gt;
+&lt;p&gt;　　依次单击“开始”——“管理工具”——“管理您的服务器”，打开“管理您的服务器”控制台。在这个管理控制台中我们可以看到服务器已经成为的角色。单击“添加或删除角色”命令，开始管理服务器的角色。&lt;/p&gt;
+&lt;p&gt;图二　配置服务器向导&lt;/p&gt;
+&lt;p&gt;　　当我们单击“添加或删除角色”命令，就会运行配置服务器向导。&lt;/p&gt;
+&lt;p&gt;图三　服务器管理程序检测网络连接&lt;/p&gt;
+&lt;p&gt;图四　管理服务器角色&lt;/p&gt;
+&lt;p&gt;　　在图四中，可以查看已经安装的服务和支持而没有安装的服务。此时的服务器还不是邮件服务器，选择“邮件服务器(POP3,SMTP)”，单击“下一步”：&lt;/p&gt;
+&lt;p&gt;图五　配置“身份验证方法”及“电子邮件域名”&lt;/p&gt;
+&lt;p&gt;图六　单击“下一步”&lt;/p&gt;
+&lt;p&gt;图七　安装邮件服务:POP3和SMTP&lt;/p&gt;
+&lt;p&gt;图八　安装成功&lt;/p&gt;
+&lt;p&gt;__　　二、管理邮件服务器__&lt;/p&gt;
+&lt;p&gt;　　Windows Server 2003的电子邮件服务器的功能很简单，管理界面也很简洁。单击“管理工具”下的“POP3服务”：&lt;/p&gt;
+&lt;p&gt;图九 POP3服务&lt;/p&gt;
+&lt;p&gt;图十　为用户添加邮箱&lt;/p&gt;
+&lt;p&gt;　　在“POP3服务”中单击“添加邮箱”命令，在弹出的对话框内输入邮箱名（用户名）及密码。&lt;/p&gt;
+&lt;p&gt;图十一&lt;/p&gt;
+&lt;p&gt;__　　三、配置smtp__&lt;/p&gt;
+&lt;p&gt;　　方法和上面类似，在图二的画面中我们选择应用程序服务器&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;如图，我的已经开启了。&lt;/p&gt;
+&lt;p&gt;下一步，依次打开“开始-程序-管理工具-internet信息服务”，在窗口左面，鼠标右键点击“smtp虚拟服务器”属性。切换到常规选项卡”IP地址“选择服务器的ip地址，点击确定就行了。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;四、配置DNS&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;服务器已经配置好了，我们接下来设置下dns，这样才能解析到，不然还是无法使用的&lt;/p&gt;
+&lt;p&gt;依次打开，“开始-程序-管理工具-配置您的服务器向导”&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;选择自定义配置&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;选择dns服务器，下一步&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;点击正向查找域里面的区域名称，在右边的空白处点击右键，新建主机，分别新建POP3，smtp等主机&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;还是空白处，右键，新建邮件交换器，分别新建smtp和pop3的邮件交换器&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+loading="lazy"
+&gt;&lt;/p&gt;
+&lt;p&gt;注意：完全合格的域名后面没有点号，邮件服务器的完全合格的域名后面有点号，例如是smtp.ip-tcp.com.&lt;/p&gt;
+&lt;p&gt;到此，邮件服务器搭建完成，可以去测试了&lt;/p&gt;
+&lt;p&gt;此处参考原文&lt;a class="link" href="http://www.docin.com/p-156566941.html" target="_blank" rel="noopener"
+&gt;http://www.docin.com/p-156566941.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;经过我的测试，可以收邮件，但是不能发邮件（可以自己给自己发，但是不能给qq，网易等邮箱发），一直报错550 5.7.1 Unable to relay for &lt;a class="link" href="mailto:xxx@xxx.com" &gt;&lt;/a&gt;&lt;a class="link" href="mailto:xxx@xxx.com" &gt;xxx@xxx.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;最后找到答案&lt;/p&gt;
+&lt;p&gt;在IIS管理器里打开“默认SMTP虚拟服务器”的属性设置对话框，在“访问”选项卡中，点击“中继”按钮，弹出“中继限制”对话框，默认为选中了“仅以下列表”，修改为选中“仅以下列表除外”即可。&lt;/p&gt;
+&lt;p&gt;另外下面的“允许所有通过身份验证的计算机进行中继，而忽略上表”一项要保持选中状态（默认是选中的）。&lt;/p&gt;</description></item></channel></rss>

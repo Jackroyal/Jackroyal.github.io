@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kali on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/kali/</link><description>Recent content in Kali on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/kali/index.xml" rel="self" type="application/rss+xml"/><item><title>kali安装后设置</title><link>https://jackroyal.github.io/post/after-kali/</link><pubDate>Wed, 04 Mar 2015 14:14:57 +0000</pubDate><guid>https://jackroyal.github.io/post/after-kali/</guid><description>&lt;p&gt;kali安装好了，还有几件事要做
+我们用root的身份登进去系统&lt;/p&gt;
+&lt;h1 id="1-更新软件源"&gt;1 更新软件源
+&lt;/h1&gt;&lt;p&gt;官方自带的软件源速度相对比较慢，资源也少一些，我们添加一些国内的源进去
+vi /etc/apt/sources.list
+（可自由选择，不一定要全部）：&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 官方源
+deb http://http.kali.org/kali kali main non-free contrib
+deb-src http://http.kali.org/kali kali main non-free contrib
+deb http://security.kali.org/kali-security kali/updates main contrib non-free
+# 激进源，新手不推荐使用这个软件源
+deb http://repo.kali.org/kali kali-bleeding-edge main
+deb-src http://repo.kali.org/kali kali-bleeding-edge main
+# 中科大kali源
+deb http://mirrors.ustc.edu.cn/kali kali main non-free contrib
+deb-src http://mirrors.ustc.edu.cn/kali kali main non-free contrib
+deb http://mirrors.ustc.edu.cn/kali-security kali/updates main contrib non-free
+# 阿里云kali源
+deb http://mirrors.aliyun.com/kali kali main non-free contrib
+deb-src http://mirrors.aliyun.com/kali kali main non-free contrib
+deb http://mirrors.aliyun.com/kali-security kali/updates main contrib non-free
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;保存之后运行：
+&lt;code&gt;apt-get update &lt;/code&gt; # 刷新系统
+&lt;code&gt;apt-get dist-upgrade &lt;/code&gt; # 安装更新&lt;/p&gt;
+&lt;h1 id="2-安装中文输入法和字体"&gt;2 安装中文输入法和字体
+&lt;/h1&gt;&lt;p&gt;安装字体
+&lt;code&gt;apt-get install ttf-wqy-microhei ttf-wqy-zenhei&lt;/code&gt;
+执行以下命令
+&lt;code&gt;apt-get install fcitx fcitx-googlepinyin&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="3-安装vpn"&gt;3 安装vpn
+&lt;/h1&gt;&lt;p&gt;kali默认情况下vpn是无法使用的，需要安装相关组件&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;apt-get install network-manager-openvpn
+apt-get install network-manager-openvpn-gnome
+apt-get install network-manager-pptp
+apt-get install network-manager-pptp-gnome
+apt-get install network-manager-strongswan
+apt-get install network-manager-vpnc
+apt-get install network-manager-vpnc-gnome
+/etc/init.d/network-manager restart
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="4-网卡管理显示device-not-managed"&gt;4 网卡管理显示“device not managed”
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;vi /etc/NetworkManager/NetworkManager.conf&lt;/code&gt;
+修改&lt;code&gt;managed=false&lt;/code&gt;为&lt;code&gt;managed=true&lt;/code&gt;
+然后重启网络管理
+&lt;code&gt;service network-manager restart&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="5-安装chrome浏览器"&gt;5 安装chrome浏览器
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;apt-get install google-chrome-unstable&lt;/code&gt;&lt;/p&gt;</description></item><item><title>kali和ubuntu双系统安装</title><link>https://jackroyal.github.io/post/kali-and-ubuntu/</link><pubDate>Tue, 03 Mar 2015 21:17:41 +0000</pubDate><guid>https://jackroyal.github.io/post/kali-and-ubuntu/</guid><description>&lt;p&gt;时间忽快忽慢，一转眼，年过完了，又回来学校了，又一个多月没有push了，重新回到github。今天我们家笨笨给我找了点kali的资料，索性就把kali捡起来，第一步安装kali的系统。
+此处背景不再介绍，直奔主题。kali的安装过程和ubuntu的安装过程类似，应该说原理上是一模一样的，只是界面有些不同。我的电脑当前已经安装了win8和ubuntu，现在需要再加一个kali的系统，三系统共存。
+大体分为如下几个步骤：&lt;/p&gt;
+&lt;h3 id="1-下载kali镜像"&gt;1 下载kali镜像
+&lt;/h3&gt;&lt;h3 id="2-刻录u盘"&gt;2 刻录u盘
+&lt;/h3&gt;&lt;h3 id="3-安装kali"&gt;3 安装kali
+&lt;/h3&gt;&lt;hr&gt;
+&lt;h1 id="1-下载kali镜像-1"&gt;1 下载kali镜像
+&lt;/h1&gt;&lt;p&gt;这步很简单，我们去kali的官网下载&lt;a class="link" href="https://www.kali.org/downloads/" target="_blank" rel="noopener"
+&gt;https://www.kali.org/downloads/&lt;/a&gt;,下载对应的版本。我这里下载的是第一个64位版本（&lt;a class="link" href="http://cdimage.kali.org/kali-1.1.0/kali-linux-1.1.0-amd64.iso" target="_blank" rel="noopener"
+&gt;http://cdimage.kali.org/kali-1.1.0/kali-linux-1.1.0-amd64.iso&lt;/a&gt;）,因为是在ubuntu下，我们可以顺手校验一下文件的hash值，防止文件损坏。
+在终端中输入&lt;code&gt; sha1sum /home/chen/kali-linux-1.1.0-amd64.iso&lt;/code&gt;
+查看输出是否是&lt;code&gt;40a1fd1d4864e7fac70438a1bf2095c8c1a4e764&lt;/code&gt;，若正确，则第一步完成。&lt;/p&gt;
+&lt;h1 id="2-刻录u盘-1"&gt;2 刻录u盘
+&lt;/h1&gt;&lt;p&gt;如果采用硬盘安装的话，我们需要在win下面操作，使用easybcd来编辑grub引导，还需要解压文件，相对比较麻烦，我这里采用u盘安装，相对比较简单。
+和安装ubuntu不同，我之前在win下用UltraISO来刻录,
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
+loading="lazy"
+alt="刻录ubuntu"
+&gt;如图所示，便捷启动是可以不修改的，直接默认，点击写入就行。我今天在刻录kali的时候，发现这样写的u盘无法启动，开机的时候会提示&lt;code&gt;failed to boot from USB disk with error: gfxboot.c32: not a COM32R Image boot:&lt;/code&gt;的错误。
+解决方法有两个
+1 linux的用mkusb，windows的用Win32DiskImager 来制作U盘启动
+具体用法：
+&lt;a class="link" href="https://wiki.ubuntu.com/Win32DiskImager/iso2usb" target="_blank" rel="noopener"
+&gt;https://wiki.ubuntu.com/Win32DiskImager/iso2usb&lt;/a&gt;
+&lt;a class="link" href="https://help.ubuntu.com/community/mkusb" target="_blank" rel="noopener"
+&gt;https://help.ubuntu.com/community/mkusb&lt;/a&gt;
+2 在win下用UltraISO来刻录，记得更改便捷启动的设置，如图所示
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1epsw409qr3j20go09rjtp.jpg"
+loading="lazy"
+alt="更改便捷启动"
+&gt;，点击便捷启动-&amp;gt;选择写入新的启动器引导扇区——&amp;gt;syslinus——&amp;gt;写入&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;我采用的是法一，我在ubuntu中用mkusb来刻录&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id="3-安装kali-1"&gt;3 安装kali
+&lt;/h1&gt;&lt;p&gt;下面开始安装kali（以下图片是我用virtualbox虚拟机中安装拍摄的）&lt;/p&gt;
+&lt;h2 id="1-引导成功以后开机画面如图所示"&gt;1 引导成功以后，开机画面如图所示
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
+loading="lazy"
+alt="开机画面"
+&gt;
+我们选择&lt;code&gt;Graphical install&lt;/code&gt;,图形化安装，也可以选择&lt;code&gt;install&lt;/code&gt;那是文字界面安装&lt;/p&gt;
+&lt;h2 id="2-选择语言地区"&gt;2 选择语言，地区
+&lt;/h2&gt;&lt;p&gt;语言： 选择 &lt;code&gt;chinese（simplified）简体中文&lt;/code&gt;
+地区： 选择 &lt;code&gt;中国&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id="3-配置网络名称和domain"&gt;3 配置网络名称和domain
+&lt;/h2&gt;&lt;p&gt;这个代表你的电脑在网络上的名称，比如win默认的就是pc-2000123131，也就是别人在网上邻居中看到你的电脑的名称。我们就用默认的&lt;code&gt;localhost&lt;/code&gt;
+domain我们留空不管他，下一步&lt;/p&gt;
+&lt;h2 id="4-设置root密码"&gt;4 设置root密码
+&lt;/h2&gt;&lt;p&gt;我们设置两次一样的密码就行，不要忘记了
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
+loading="lazy"
+alt="设置root密码"
+&gt;&lt;/p&gt;
+&lt;h2 id="5-磁盘分区"&gt;5 磁盘分区
+&lt;/h2&gt;&lt;p&gt;我们选择第三项&lt;code&gt;手动&lt;/code&gt;
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
+loading="lazy"
+alt="磁盘分区选项"
+&gt;
+&lt;strong&gt;分区&lt;/strong&gt;，这里我们一共分&lt;code&gt;三个区&lt;/code&gt;，一个300M的&lt;code&gt;/boot&lt;/code&gt;分区，一个2048M的&lt;code&gt;swap&lt;/code&gt;分区，其他的分为一个&lt;code&gt;/&lt;/code&gt;（你也可以把/home单独分区出来），因为分区方法类似，所以我只讲一个&lt;code&gt;/boot&lt;/code&gt;和&lt;code&gt;swap&lt;/code&gt;分区的步骤
+&lt;strong&gt;boot分区&lt;/strong&gt;
+&lt;strong&gt;注意:&lt;strong&gt;选择&lt;/strong&gt;可启动标志&lt;/strong&gt;，我们只有/boot设置为&lt;code&gt;开&lt;/code&gt;，其他分区的这个选项都是&lt;code&gt;关&lt;/code&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
+loading="lazy"
+alt="boot分区设置"
+&gt;
+设置完成后，选择&lt;code&gt;分区设定结束&lt;/code&gt;，点击继续&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;交换空间&lt;/strong&gt;
+&lt;strong&gt;注意:&lt;strong&gt;交换空间是一种&lt;/strong&gt;文件类型&lt;/strong&gt;，其他的分区是&lt;strong&gt;属于载点&lt;/strong&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
+loading="lazy"
+alt="交换空间swap分区设置"
+&gt;
+设置完成后，选择&lt;code&gt;分区设定结束&lt;/code&gt;，点击继续&lt;/p&gt;
+&lt;p&gt;等分区完成，就选择&lt;code&gt;分区设定结束并将修改写入磁盘&lt;/code&gt;，点击继续，就开始安装kali&lt;/p&gt;
+&lt;h2 id="6-启动引导"&gt;6 启动引导
+&lt;/h2&gt;&lt;p&gt;当系统快安装完成的时候，会出现grub安装的选择,如图所示
+&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
+loading="lazy"
+alt="交换空间swap分区设置"
+&gt;&lt;/p&gt;
+&lt;p&gt;因为我的系统是&lt;code&gt;win8&lt;/code&gt;和&lt;code&gt;ubuntu&lt;/code&gt;和&lt;code&gt;kali&lt;/code&gt;多系统共存，当前是由&lt;code&gt;win&lt;/code&gt;来引导（当前系统由谁引导就看开机看到的第一个&lt;code&gt;系统选择&lt;/code&gt;是谁的，如果是红色的ubuntu选项，那就说明由ubuntu引导）。
+我这里选择否的话，那么我就需要去&lt;code&gt;win&lt;/code&gt;里面手动添加&lt;code&gt;kali&lt;/code&gt;的引导（使用easybcd来操作）。
+如果你是&lt;code&gt;ubuntu&lt;/code&gt;来引导系统的话，一样需要手动去添加&lt;code&gt;kali&lt;/code&gt;的引导（这里我还不会）。
+所以我选择&lt;code&gt;是&lt;/code&gt;，这样装完三个系统都可以正常开机了。&lt;/p&gt;
+&lt;p&gt;到此所有的安装结束。&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 安装kali 系统 &lt;a class="link" href="http://blog.sina.com.cn/s/blog_779dcd090102va9c.html" target="_blank" rel="noopener"
+&gt;http://blog.sina.com.cn/s/blog_779dcd090102va9c.html&lt;/a&gt;
+2 &lt;a class="link" href="http://www.bkjia.com/Linuxjc/844530.html" target="_blank" rel="noopener"
+&gt;kali系统安装图文教程，kali系统安装图文&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="致谢"&gt;致谢
+&lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
+&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

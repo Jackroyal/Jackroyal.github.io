@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Windows on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/windows/</link><description>Recent content in Windows on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/windows/index.xml" rel="self" type="application/rss+xml"/><item><title>blog2markdown程序打包,csdn爬虫</title><link>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</link><pubDate>Sun, 29 Mar 2015 22:08:22 +0000</pubDate><guid>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;项目地址&lt;a class="link" href="https://github.com/Jackroyal/blog2markdown.git" target="_blank" rel="noopener"
+&gt;https://github.com/Jackroyal/blog2markdown.git&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;用来实现普通blog到markdown的搬家，自动将blog的html转换成HEXO可用的Markdown格式
+暂时只做了CSDN&lt;/p&gt;
+&lt;h3 id="update"&gt;UPDATE:
+&lt;/h3&gt;&lt;p&gt;2015-03-29 添加了打包成exe的程序,修复cmd下乱码,win和ubuntu完美运行
+2015-03-29 连夜修复了在win下乱码的问题,删除了冗余代码
+2015-03-28 将某些参数改为从配置文件中读取,加入更多异常判断
+2014-12-15 优化标签解析功能,添加了标题,tag和category
+2014-12-13 实现解析功能,基本完成解析功能
+2014-12-10 实现CSDN的抓取，正在实现parse解析过程&lt;/p&gt;
+&lt;h3 id="bug"&gt;BUG
+&lt;/h3&gt;&lt;p&gt;如果代码中有# 和*会被转义成&lt;code&gt;\#&lt;/code&gt;和&lt;code&gt;\*&lt;/code&gt;
+对table的支持不好&lt;/p&gt;
+&lt;h3 id="依赖库"&gt;依赖库
+&lt;/h3&gt;&lt;p&gt;爬虫使用了&lt;code&gt;beautifulsoup 4.3.2&lt;/code&gt;
+&lt;a class="link" href="http://www.crummy.com/software/BeautifulSoup/" target="_blank" rel="noopener"
+&gt;点我点我&lt;/a&gt;
+你必须安装这个才可以正常使用
+PS:我打包了exe&lt;a class="link" href="http://pan.baidu.com/s/1dDERlOP" target="_blank" rel="noopener"
+&gt;点此下载&lt;/a&gt;,可以什么不装,改完配置文件,直接运行&lt;/p&gt;
+&lt;h1 id="使用"&gt;使用:
+&lt;/h1&gt;&lt;h1 id="-首先编辑配置文件spiderconf"&gt;# 首先,编辑配置文件&lt;code&gt;spider.conf&lt;/code&gt;
+&lt;/h1&gt;&lt;p&gt;格式如下:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;[blog]
+# 此处url不需要单引号或者双引号,不然类型识别错误,网址最后不要/
+url=http://blog.csdn.net/jackroyal
+[setting]
+wait_time=5
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的&lt;code&gt;url&lt;/code&gt;地址注意不要加引号,下面的&lt;code&gt;wait_time&lt;/code&gt;是指两次抓取的间隔时间,这是为了安全起见,如果高频访问,可能会被封,我设置的&lt;code&gt;5&lt;/code&gt;秒,你可以根据自己需要去设置&lt;/p&gt;
+&lt;h2 id="打包"&gt;打包
+&lt;/h2&gt;&lt;p&gt;我打包了一个&lt;a class="link" href="http://pan.baidu.com/s/1dDERlOP" target="_blank" rel="noopener"
+&gt;exe程序&lt;/a&gt;,放在github项目的dist目录下,在windows系统中,&lt;code&gt;直接下载&lt;/code&gt;,&lt;code&gt;运行&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;PS:由于pyInstaller的问题,导致无法在中文路径下正常运行&lt;/p&gt;
+&lt;p&gt;比如你放在C:/users/张三/spider.exe
+这样是无法正常运行的
+所以应该放在全英文的目录下
+C:/software/spider.exe
+运行结果如图
+&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
+loading="lazy"
+alt="spider运行截图"
+&gt;
+&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
+loading="lazy"
+alt="运行结果截图"
+&gt;&lt;/p&gt;
+&lt;h1 id="源码执行"&gt;源码执行
+&lt;/h1&gt;&lt;p&gt;如果你对我的exe不放心,可以自己执行python源码&lt;/p&gt;
+&lt;h2 id="--执行"&gt;# 执行
+&lt;/h2&gt;&lt;p&gt;在linux下,首先要给予执行权限&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;chmod a+x spider.py ParseBlog.py
+python spider.py
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就可以了,输出文件在output文件夹&lt;/p&gt;
+&lt;p&gt;在win下,经过修复也可以正常运行了,在idle(在win中你安装了python2.7的话就会有这个编辑器)中是可以完全正常的显示中文~~~~,在系统自带的cmd里中文显示会有问题,因为cmd中的编码默认是GBK,我程序基本都是utf-8,如果要在cmd显示正常,显示的代码都要加个str.encode(&amp;lsquo;utf-8&amp;rsquo;)才行.
+不过抓取是没有问题的,此处就不纠结了哈,能用就好~~~~&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;# 在win下,没有权限的问题,直接执行就好了
+python spider.py
+&lt;/code&gt;&lt;/pre&gt;</description></item></channel></rss>

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Php on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/php/</link><description>Recent content in Php on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 02 Dec 2025 17:24:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/php/index.xml" rel="self" type="application/rss+xml"/><item><title>php学习笔记(3.6)--PHP中的引用</title><link>https://jackroyal.github.io/post/php-learn-note-3-6/</link><pubDate>Sun, 08 Jul 2018 17:40:28 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3-6/</guid><description>&lt;p&gt;最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下.&lt;/p&gt;
+&lt;h1 id="1-什么是引用"&gt;1 什么是引用
+&lt;/h1&gt;&lt;p&gt;引用,第一感觉就是想到C语言中的指针,两个变量指向同一个内存地址.但是php中的引用其实应该是别名, 可以类比的是linux系统中的硬链接,两个文件名实际指向同一个文件.&lt;/p&gt;
+&lt;h1 id="2-引用传值"&gt;2 引用传值
+&lt;/h1&gt;&lt;p&gt;我们在函数传参的时候可能会用到引用.在不同给的php版本中,写法也不同.&lt;/p&gt;
+&lt;h2 id="21-例如在php52中我们可能用到以下写法"&gt;2.1 例如,在php5.2中,我们可能用到以下写法.
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;($var) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; $var&lt;span style="color:#f92672"&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;(&lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$a);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;$a:&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;$a&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;br&amp;gt;&amp;#34;&lt;/span&gt;;&lt;span style="color:#75715e"&gt;//输出$a:1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;但是在php5.3+中就不推荐这种写法了5.3会报warning,在更高版本中,会报fatal错误&lt;code&gt;Call-time pass-by-reference has been removed&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id="22-推荐的写法是在定义函数的时候如果是引用在参数声明处直接标记为引用"&gt;2.2 推荐的写法是,在定义函数的时候如果是引用,在参数声明处直接标记为引用.
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;//在定义函数时,直接声明参数为引用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;(&lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$var) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; $var&lt;span style="color:#f92672"&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;($a);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;$a:&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;$a&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;br&amp;gt;&amp;#34;&lt;/span&gt;;&lt;span style="color:#75715e"&gt;//输出$a:1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="3-引用返回"&gt;3 引用返回
+&lt;/h1&gt;&lt;p&gt;除了引用传值,还有一种常见的情况是引用返回.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;(&lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$var) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; $var&lt;span style="color:#f92672"&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; $var;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;($a);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;4&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;$a:&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;$a&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;br&amp;gt;&amp;#34;&lt;/span&gt;;&lt;span style="color:#75715e"&gt;//输出$a:4
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;$b:&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;$b&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;br&amp;gt;&amp;#34;&lt;/span&gt;;&lt;span style="color:#75715e"&gt;//输出$b:4
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;此处需要注意的是,函数定义处需要显示声明&lt;code&gt;function &amp;amp;foo&lt;/code&gt;,在调用函数的时候也需要显示声明&lt;code&gt;$b=&amp;amp;foo($a)&lt;/code&gt;.这个跟上面讲到的引用传值不同.
+那么如果我调用函数的时候如果不加&lt;code&gt;&amp;amp;&lt;/code&gt;调用,会怎么样呢?&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;(&lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$var) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; $var&lt;span style="color:#f92672"&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; $var;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;($a);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;4&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;$a:&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;$a&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;br&amp;gt;&amp;#34;&lt;/span&gt;;&lt;span style="color:#75715e"&gt;//输出$a:1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;$b:&amp;#39;&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;$b&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;br&amp;gt;&amp;#34;&lt;/span&gt;;&lt;span style="color:#75715e"&gt;//输出$b:4
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面例子中的引用传值只是为了突显这种差别. 也可以用对象来表现这个差别.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;public&lt;/span&gt; $value &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;42&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;public&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;getValue&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;return&lt;/span&gt; $this&lt;span style="color:#f92672"&gt;-&amp;gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;value&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$obj &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;new&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;foo&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$myValue &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$obj&lt;span style="color:#f92672"&gt;-&amp;gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;getValue&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$obj&lt;span style="color:#f92672"&gt;-&amp;gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;value&lt;/span&gt; &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;2&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; $myValue; &lt;span style="color:#75715e"&gt;//输出2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面&lt;code&gt;public function &amp;amp;getValue() {&lt;/code&gt;或&lt;code&gt;$myValue = &amp;amp;$obj-&amp;gt;getValue();&lt;/code&gt;中的&lt;code&gt;&amp;amp;&lt;/code&gt;,无论少了谁,都不是引用返回,会导致最后输出&lt;code&gt;$myValue=42&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id="4-对象的赋值和传值"&gt;4 对象的赋值和传值
+&lt;/h1&gt;&lt;p&gt;在php5中,对象的赋值和参数传递并不是引用传递,实际传递的是对象标识符的拷贝.
+上面已经讲到php中的引用其实是别名,对于对象而言,php5中对象变量并不直接指向对象内容,而是保存了一个对象标识符,通过标识符来访问对象的内容,在将对象变量赋值的时候,其实是将两个变量指向同一个标识符,下面看例子.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;A&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;public&lt;/span&gt; $foo &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;new&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;A&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b &lt;span style="color:#f92672"&gt;=&lt;/span&gt; $a; &lt;span style="color:#75715e"&gt;// $a ,$b都是同一个标识符的拷贝
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#75715e"&gt;// ($a) = ($b) = &amp;lt;id&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; $c &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;new&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;A&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$d &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$c; &lt;span style="color:#75715e"&gt;// $c ,$d是引用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#75715e"&gt;// ($c,$d) = &amp;lt;id&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;上面的例子比较清晰表明了2者的区别,总结下:
+对于普通变量而言:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;变量$a直接指向内容,当产生引用(即别名),那么&lt;code&gt;$a&lt;/code&gt;和&lt;code&gt;$b&lt;/code&gt;都指向同一个内容;
+对于对象而言,中间隔着标识符:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;A&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;public&lt;/span&gt; $foo &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;new&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;A&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$a; &lt;span style="color:#75715e"&gt;// $a ,$b是引用
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;$c &lt;span style="color:#f92672"&gt;=&lt;/span&gt; $a; &lt;span style="color:#75715e"&gt;// $c和$a保存的是同一个标识符,保存在不同的地方
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;通俗的讲,我们可以把标识符理解为门牌号,$a和$c中保存的是同样的门牌号,但是并不是记录在同一个地方,是相同内容的拷贝,他们都可以找到同一个人;而$a和$b只是别名的关系,它俩实际指向同一个,记录在同一个地方.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;$a的小本本记录门牌号A1234
+$b的小本本(实际和$a是同一个小本本,彼此互为别名)记录门牌号A1234
+$c的小本本记录门牌号A1234&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;一图胜千言&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt; $b ----&amp;gt;+
+|
+$a ----&amp;gt;+
+|
+v
++--------+
+| object id |--------+
++--------+ |
+v
++--------+ +--------------+
+$c --&amp;gt;| object id | ---&amp;gt; | object(Class A) |
++--------+ +--------------+
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a class="link" href="http://php.net/manual/zh/language.references.pass.php" target="_blank" rel="noopener"
+&gt;php引用传递&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="http://php.net/manual/zh/language.oop5.references.php" target="_blank" rel="noopener"
+&gt;对象和引用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://segmentfault.com/a/1190000002928594" target="_blank" rel="noopener"
+&gt;在PHP中对象真的是按引用传递的吗&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;</description></item><item><title>php学习笔记(4)--php中cookie没有及时生效</title><link>https://jackroyal.github.io/post/php-learn-note-5/</link><pubDate>Sat, 19 Mar 2016 12:15:32 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-5/</guid><description>&lt;p&gt;update:2016/4/14 9:48:26
+这是最近才在面试题中发现的一个问题,之前用的时候还没发现,仔细一想,有点意思.&lt;/p&gt;
+&lt;h1 id="1-php中的cookie"&gt;1 php中的cookie
+&lt;/h1&gt;</description></item><item><title>php学习笔记(4)--php使用mysqli连接数据库</title><link>https://jackroyal.github.io/post/php-learn-note-4/</link><pubDate>Sat, 12 Mar 2016 10:18:31 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-4/</guid><description>&lt;p&gt;long time no see,用上框架以后,好久没有写原生的sql处理了,想当年用的还是mysql_connect,如今,都已经换mysqli了.&lt;/p&gt;
+&lt;h1 id="1-关于php的数据库连接方式"&gt;1 关于php的数据库连接方式
+&lt;/h1&gt;&lt;p&gt;当考虑连接到MySQL数据库服务器的时候，有三种主要的API可供选择：
+1 PHP的MySQL扩展
+2 PHP的mysqli扩展
+3 PHP数据对象(PDO)&lt;/p&gt;
+&lt;h2 id="11-什么是php的mysql扩展"&gt;1.1 什么是PHP的MySQL扩展?
+&lt;/h2&gt;&lt;p&gt;这是设计开发允许PHP应用与MySQL数据库交互的早期扩展。mysql扩展提供了一个面向过程 的接口，并且是针对MySQL4.1.3或更早版本设计的。因此，这个扩展虽然可以与MySQL4.1.3或更新的数据库服务端 进行交互，但并不支持后期MySQL服务端提供的一些特性。&lt;/p&gt;
+&lt;h2 id="12-什么是php的mysqli扩展"&gt;1.2 什么是PHP的mysqli扩展?
+&lt;/h2&gt;&lt;p&gt;mysqli扩展，我们有时称之为MySQL增强扩展，可以用于使用MySQL4.1.3或更新版本中新的高级特性。mysqli扩展在PHP 5及以后版本中包含。
+1 mysqli扩展有一系列的优势，相对于mysql扩展的提升主要有：
+2 面向对象接口
+3 prepared语句支持（译注：关于prepare请参阅mysql相关文档）
+4 多语句执行支持
+5 事务支持
+6 增强的调试能力
+7 嵌入式服务支持
+在提供了面向对象接口的同时也提供了一个面向过程的接口。&lt;/p&gt;
+&lt;h2 id="13-什么是pdo"&gt;1.3 什么是PDO?
+&lt;/h2&gt;&lt;p&gt;PHP数据对象，是PHP应用中的一个数据库抽象层规范。PDO提供了一个统一的API接口可以使得你的PHP应用不去关心具体要 连接的数据库服务器系统类型。也就是说，如果你使用PDO的API，可以在任何需要的时候无缝切换数据库服务器，比如从Firebird 到MySQL，仅仅需要修改很少的PHP代码。&lt;/p&gt;
+&lt;p&gt;其他数据库抽象层的例子包括Java应用中的JDBC以及Perl中的DBI。&lt;/p&gt;
+&lt;p&gt;当然，PDO也有它自己的先进性，比如一个干净的，简单的，可移植的API，它最主要的缺点是会限制让你不能使用 后期MySQL服务端提供所有的数据库高级特性。比如，PDO不允许使用MySQL支持的多语句执行。&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1f1tvea7khyj20hm0dhac0.jpg"
+loading="lazy"
+alt="PHP中三种主要的MySQL连接方式的功能的比较"
+&gt;&lt;/p&gt;</description></item><item><title>php学习笔记(3.5)--关于引用赋值和一般赋值</title><link>https://jackroyal.github.io/post/php-learn-note-3-5/</link><pubDate>Sat, 05 Mar 2016 13:52:28 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3-5/</guid><description>&lt;p&gt;上一篇提到了,对象赋值的时候有两种赋值方式,一种是直接&lt;code&gt;$a=$b&lt;/code&gt;,第二种是引用赋值&lt;code&gt;$a=&amp;amp;$b&lt;/code&gt;.
+不仅对象赋值的时候会有这两种情况,普通变量赋值也会有这两种情况,为了简单说明,我们先使用简单的普通变量来做说明.&lt;/p&gt;
+&lt;h1 id="1-普通变量的结构"&gt;1 普通变量的结构
+&lt;/h1&gt;&lt;p&gt;在PHP中,所有的变量都是用一个结构zval来保存的,zval大概的结构如下所示:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-c" data-lang="c"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;struct&lt;/span&gt; _zval_struct {
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;/* Variable information */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; zvalue_value value; &lt;span style="color:#75715e"&gt;/* value */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; zend_uint refcount;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; zend_uchar type; &lt;span style="color:#75715e"&gt;/* active type */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; zend_uchar is_ref;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;};
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们这里主要用到的是两个变量,一个是refcount,即是引用计数,一个是is_ref,用来标记是否是引用.&lt;/p&gt;
+&lt;h1 id="2-php环境的设置"&gt;2 php环境的设置
+&lt;/h1&gt;&lt;p&gt;我们在实验过程中,需要去查看refcount和is_ref的变化,所以需要使用php的
+&lt;code&gt;xdebug_debug_zval&lt;/code&gt;函数,你的环境可能默认没有开启这个配置,你需要修改&lt;code&gt;php.ini&lt;/code&gt;文件开启这个配置.
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1m1ximwj1j20wn098dj6.jpg"
+loading="lazy"
+alt="修改php.ini文件"
+&gt;&lt;/p&gt;
+&lt;h1 id="3-refcount和is_ref"&gt;3 refcount和is_ref
+&lt;/h1&gt;&lt;p&gt;我们通常的赋值方式:一般赋值和引用赋值.&lt;/p&gt;
+&lt;h1 id="31-一般赋值"&gt;3.1 一般赋值
+&lt;/h1&gt;&lt;p&gt;当使用一般给新变量赋值的时候,php的内存策略,并不是重新申请一个新的空间,而是把原来的那个recount+1.比如下面的例子:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;aaa&amp;#39;&lt;/span&gt;;&lt;span style="color:#75715e"&gt;//此时$a的recount=1,ref=0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;$b&lt;span style="color:#f92672"&gt;=&lt;/span&gt;$a;&lt;span style="color:#75715e"&gt;//赋值过后,$a的recount=2,ref=0,$b因为指向和$a一样,所以结果和$a一样
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出结果如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;(refcount=2, is_ref=0),string &amp;#39;aaa&amp;#39; (length=3)
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="32-引用赋值"&gt;3.2 引用赋值
+&lt;/h1&gt;&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;aaa&amp;#39;&lt;/span&gt;;&lt;span style="color:#75715e"&gt;//此时$a的recount=1,ref=0
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;$c&lt;span style="color:#f92672"&gt;=&amp;amp;&lt;/span&gt;$a;&lt;span style="color:#75715e"&gt;//赋值过后,$a的recount=2,ref=0,$b因为指向和$a一样,所以结果和$a一样
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;);&lt;span style="color:#75715e"&gt;//
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出结果如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;(refcount=2, is_ref=1),string &amp;#39;aaa&amp;#39; (length=3)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;由上面可知,也就是每次进行赋值的时候,refcount都会+1,如果是引用赋值,is_ref就会被置为一.&lt;/p&gt;
+&lt;h1 id="33-两种赋值方式混合"&gt;3.3 两种赋值方式混合
+&lt;/h1&gt;&lt;p&gt;那如果我们混合上面的两种赋值方式呢?比如下面的代码&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;aaa&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&amp;amp;&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$c&lt;span style="color:#f92672"&gt;=&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你猜输出结果是什么?&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;a: (refcount=2, is_ref=1),string &amp;#39;aaa&amp;#39; (length=3)
+b: (refcount=2, is_ref=1),string &amp;#39;aaa&amp;#39; (length=3)
+c: (refcount=1, is_ref=0),string &amp;#39;aaa&amp;#39; (length=3)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;为什么会这样呢?
+我们一行一行的分析.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首先第一行代码执行完以后,$a的结果应该是&lt;code&gt;(refcount=1, is_ref=0),string 'aaa' (length=3)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;第二行代码执行引用赋值,因为refcount=1,所以$a的refcount直接+1,is_ref变成1,输出即是`(refcount=2, is_ref=1),string &amp;lsquo;aaa&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;第三行代码执行一般赋值,那我们是不是再把refcount+1呢?不是的,因为此时的refcount&amp;gt;1并且is_ref不为0,所以不能执行那个操作,而是直接把$a复制了另外一份,而不是修改$a的计数器.
+所以,最后的输出结果,$c的refcount是1,因为它完全另外申请了一个副本&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我们把上面的代码换个位置&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;aaa&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$c&lt;span style="color:#f92672"&gt;=&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&amp;amp;&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;你再猜猜输出结果是什么?&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;a: (refcount=2, is_ref=1),string &amp;#39;aaa&amp;#39; (length=3)
+b: (refcount=2, is_ref=1),string &amp;#39;aaa&amp;#39; (length=3)
+c: (refcount=1, is_ref=0),string &amp;#39;aaa&amp;#39; (length=3)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;咦?结果是一样的哈?
+对的,结果是一样的,不过执行的过程却是不同的,我们再来一行一行的分析下&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首先第一行代码执行完以后,$a的结果应该是&lt;code&gt;(refcount=1, is_ref=0),string 'aaa' (length=3)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;第二行代码执行一般赋值,同理,因为refcount=1,所以$a的refcount直接+1,is_ref不变,输出即是`(refcount=2, is_ref=0),string &amp;lsquo;aaa&amp;rsquo;&lt;/li&gt;
+&lt;li&gt;第三行代码执行引用赋值,跟上面一样,因为refcount=2了,所以不能直接进行计数器+1,我们先检查is_ref,发现是0.这时,php首先做一个分离操作,也就是把上面一般赋值的那个值,给分离出去,分离后,$a的refcount减去1,也就是$c独立了,那么此时$a和$c的输出结果应该是&lt;code&gt;(refcount=1, is_ref=0),string 'aaa' (length=3)&lt;/code&gt;.在分离操作完成后,再做引用赋值的问题,这时候就简单了,因为$a的refcount是1,所以我们直接refcount+1,is_ref=1就搞定&lt;/li&gt;
+&lt;li&gt;最后输出结果就是上面的结果了&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;php把上面的过程叫做写时复制(copy on write),也就是说,一般赋值$c=$a时候,php并不是立即去申请一个新的变量空间.,而是等到执行引用赋值或者其他写操作的时候(比如这个时候修改$c的值),php才会去开辟一个新的空间给赋值后的变量,也就是分离操作.&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id="4-推广到对象"&gt;4 推广到对象
+&lt;/h1&gt;&lt;p&gt;上面普通变量的赋值,应该说清楚了哈.
+其实对象的赋值和普通变量赋值是同一个道理.下面直接贴代码,不在赘述&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;class&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;A&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;public&lt;/span&gt; $aa&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;我是类属性&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;new&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;A&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;刚执行完$a定义&amp;lt;br&amp;gt;&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;刚执行完$b赋值&amp;lt;br&amp;gt;&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$c&lt;span style="color:#f92672"&gt;=&amp;amp;&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;刚执行完$c赋值&amp;lt;br&amp;gt;&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$d&lt;span style="color:#f92672"&gt;=&lt;/span&gt;$b;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;刚执行完$d赋值&amp;lt;br&amp;gt;&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;d&amp;#39;&lt;/span&gt;);
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出结果如下&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;刚执行完$a定义
+a:
+(refcount=1, is_ref=0),
+object(A)[1]
+public &amp;#39;aa&amp;#39; =&amp;gt; (refcount=1, is_ref=0),string &amp;#39;我是类属性&amp;#39; (length=15)
+刚执行完$b赋值
+b:
+(refcount=2, is_ref=0),
+object(A)[1]
+public &amp;#39;aa&amp;#39; =&amp;gt; (refcount=1, is_ref=0),string &amp;#39;我是类属性&amp;#39; (length=15)
+刚执行完$c赋值
+c:
+(refcount=2, is_ref=1),
+object(A)[1]
+public &amp;#39;aa&amp;#39; =&amp;gt; (refcount=1, is_ref=0),string &amp;#39;我是类属性&amp;#39; (length=15)
+刚执行完$d赋值
+a:
+(refcount=2, is_ref=1),
+object(A)[1]
+public &amp;#39;aa&amp;#39; =&amp;gt; (refcount=1, is_ref=0),string &amp;#39;我是类属性&amp;#39; (length=15)
+b:
+(refcount=2, is_ref=0),
+object(A)[1]
+public &amp;#39;aa&amp;#39; =&amp;gt; (refcount=1, is_ref=0),string &amp;#39;我是类属性&amp;#39; (length=15)
+c:
+(refcount=2, is_ref=1),
+object(A)[1]
+public &amp;#39;aa&amp;#39; =&amp;gt; (refcount=1, is_ref=0),string &amp;#39;我是类属性&amp;#39; (length=15)
+d:
+(refcount=2, is_ref=0),
+object(A)[1]
+public &amp;#39;aa&amp;#39; =&amp;gt; (refcount=1, is_ref=0),string &amp;#39;我是类属性&amp;#39; (length=15)
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id="5-关于debug_zval_dump函数"&gt;5 关于debug_zval_dump函数
+&lt;/h1&gt;&lt;p&gt;php中还有个关于计数的函数叫做&lt;code&gt;debug_zval_dump&lt;/code&gt;,它只返回refcount,不过这个函数好奇葩,输出的数据有时候跟想的都不一样.
+比如:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;aaa&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;debug_zval_dump&lt;/span&gt;($a);&lt;span style="color:#75715e"&gt;//输出3
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#75715e"&gt;?&amp;gt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;原因是:执行&lt;code&gt;debug_zval_dump&lt;/code&gt;相当于执行了一次一般赋值操作,所以,refcount会再加1
+再比如&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;aaa&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$c&lt;span style="color:#f92672"&gt;=&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$c&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;bbb&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;debug_zval_dump&lt;/span&gt;($a,$c);&lt;span style="color:#75715e"&gt;//输出refcount=2,refcount=2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;);&lt;span style="color:#75715e"&gt;//两个值完全相同,都是refcount=1, is_ref=0),string &amp;#39;bbb&amp;#39; (length=3)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;额,这是不是很奇葩?再来一波&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#39;aaa&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$b&lt;span style="color:#f92672"&gt;=&amp;amp;&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$c&lt;span style="color:#f92672"&gt;=&lt;/span&gt;$a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;debug_zval_dump&lt;/span&gt;($a,$b,$c);&lt;span style="color:#75715e"&gt;//refcount分别是1,1,2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;xdebug_debug_zval&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;a&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;b&amp;#39;&lt;/span&gt;,&lt;span style="color:#e6db74"&gt;&amp;#39;c&amp;#39;&lt;/span&gt;);&lt;span style="color:#75715e"&gt;//refcount和is_ref分别是(2,1),(2,1),(1,0)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这是什么鬼?我表示都看不懂
+稍微总结了下,&lt;code&gt;debug_zval_dump&lt;/code&gt;这个函数,如果只是一般赋值,那么还比较正常,赋值一次就是refcount+1操作,最后调用&lt;code&gt;debug_zval_dump&lt;/code&gt;的再+1就好了
+但是一旦涉及到引用赋值,这货就全变成1了,(引用赋值不+1就算了,说好的调用&lt;code&gt;debug_zval_dump&lt;/code&gt;的+1呢?被狗吃了?),完全搞不懂是在搞啥,还是&lt;code&gt;xdebug_debug_zval&lt;/code&gt;函数好.
+打完收工
+ps:其实我在知乎提了个问题,不过没人回答还&lt;a class="link" href="http://www.zhihu.com/question/41044486" target="_blank" rel="noopener"
+&gt;debug_zval_dump的计数问题?&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id="参考文献"&gt;参考文献
+&lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.laruence.com/2008/09/19/520.html" target="_blank" rel="noopener"
+&gt;鸟哥的博客&amp;ndash;深入理解PHP原理之变量分离/引用&lt;/a&gt;
+2 &lt;a class="link" href="http://weizhifeng.net/write-php-extension-part2-2.html" target="_blank" rel="noopener"
+&gt;PHP扩展编写第二步：参数，数组，以及ZVAL「续」&lt;/a&gt;
+3 &lt;a class="link" href="http://php.net/manual/zh/function.debug-zval-dump.php" target="_blank" rel="noopener"
+&gt;php官方文档&amp;ndash;debug_zval_dump函数&lt;/a&gt;
+4 &lt;a class="link" href="https://derickrethans.nl/talks/phparch-php-variables-article.pdf" target="_blank" rel="noopener"
+&gt;英文文档&amp;ndash;php变量&lt;/a&gt;&lt;/p&gt;</description></item><item><title>php学习笔记(3)</title><link>https://jackroyal.github.io/post/php-learn-note-3/</link><pubDate>Fri, 04 Mar 2016 10:06:40 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3/</guid><description>&lt;p&gt;今天开始学习类和面向对象了.&lt;/p&gt;
+&lt;h1 id="1-对象实例化"&gt;1 对象实例化
+&lt;/h1&gt;&lt;p&gt;在实例化对象的时候,必须使用&lt;code&gt;new&lt;/code&gt;关键字.如果该类属于一个名字空间,则必须使用其完整名称.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$instance &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;new&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;SimpleClass&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 也可以这样做：
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;$className &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;Foo&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$instance &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;new&lt;/span&gt; $className(); &lt;span style="color:#75715e"&gt;// Foo()
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#75715e"&gt;?&amp;gt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="11-对象赋值"&gt;1.1 对象赋值
+&lt;/h2&gt;&lt;p&gt;我们创建一个对象的实例后,后面进行赋值的时候有两种赋值.
+第一种是直接&lt;code&gt;$a=$b&lt;/code&gt;,第二种是引用赋值&lt;code&gt;$a=&amp;amp;$b&lt;/code&gt;.
+这两个有什么区别呢?问题可深了,所以我决定单独写一篇文章来说这个问题.
+&lt;a class="link" href="http://jackroyal.github.io/2016/03/05/php-learn-note-3-5/" target="_blank" rel="noopener"
+&gt;php学习笔记(3.5)&amp;ndash;关于引用赋值和一般赋值&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id="12-extends关键字"&gt;1.2 extends关键字
+&lt;/h2&gt;&lt;p&gt;一个类可以在声明中用 extends 关键字继承另一个类的方法和属性.&lt;em&gt;PHP不支持多重继承,一个类只能继承一个基类.&lt;/em&gt;
+被继承的方法和属性可以通过用同样的名字重新声明被覆盖.但是如果父类定义方法时使用了 final,则该方法不可被覆盖.可以通过 parent:: 来访问被覆盖的方法或属性.
+当覆盖方法时,参数必须保持一致否则 PHP 将发出 E_STRICT 级别的错误信息.但构造函数例外,构造函数可在被覆盖时使用不同的参数.&lt;/p&gt;
+&lt;h1 id="2-属性"&gt;2 属性
+&lt;/h1&gt;&lt;p&gt;类的变量成员叫做属性,属性声明是由关键字public,protected或者private开头,然后跟一个普通的变量声明来组成,尤其需要注意的是,属性的变量可以初始化,但是初始化值必须是常数,也就是不能有表达式比如下面的就是错误的:
+&lt;code&gt;public $var1 = 'hello ' . 'world';&lt;/code&gt;,&lt;code&gt;public $var3 = 1+2;&lt;/code&gt;.
+在php5.3之后,nowdocs的结构也是可行的.&lt;/p&gt;</description></item><item><title>php学习笔记(2)</title><link>https://jackroyal.github.io/post/php-learn-note-2/</link><pubDate>Thu, 25 Feb 2016 14:36:20 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-2/</guid><description>&lt;p&gt;今天看的是最基础的变量.&lt;/p&gt;
+&lt;h1 id="1-php变量"&gt;1 php变量
+&lt;/h1&gt;&lt;p&gt;和其他语言类似,php中一个有效的变量名由字母或者下划线开头,后面跟上任意数量的字母,数字,或者下划线.按照正常的正则表达式,它将被表述为：&amp;rsquo;[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*&amp;rsquo;.
+赋值的时候,变量默认总是&lt;code&gt;传值赋值&lt;/code&gt;.
+在php中也可以用&lt;code&gt;引用赋值&lt;/code&gt;,也就是改动新的变量也会因想到原始变量,反之亦然.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$foo &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;Bob&amp;#39;&lt;/span&gt;; &lt;span style="color:#75715e"&gt;// 将 &amp;#39;Bob&amp;#39; 赋给 $foo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;$bar &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#f92672"&gt;&amp;amp;&lt;/span&gt;$foo; &lt;span style="color:#75715e"&gt;// 通过 $bar 引用 $foo
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;$bar &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;My name is &lt;/span&gt;&lt;span style="color:#e6db74"&gt;$bar&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&lt;/span&gt;; &lt;span style="color:#75715e"&gt;// 修改 $bar 变量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; $bar;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; $foo; &lt;span style="color:#75715e"&gt;// $foo 的值也被修改
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#75715e"&gt;?&amp;gt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ps:只有有名字的变量才可以使用引用赋值,也就是无法对一个表达式使用引用赋值.
+使用&lt;code&gt;isset()&lt;/code&gt;来检测变量是否被初始化.&lt;/p&gt;
+&lt;h1 id="2-预定义变量"&gt;2 预定义变量
+&lt;/h1&gt;&lt;p&gt;php会自动用下划线来替换所有的传入变量中的&lt;code&gt;.&lt;/code&gt;号,例子如下所示&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;example&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;com&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;page&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;&lt;span style="color:#f92672"&gt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;chuck&lt;/span&gt;&lt;span style="color:#f92672"&gt;.&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;norris&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;nevercries&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;you&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;can&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;not&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;reference&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;them&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;by&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;the&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;used&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;in&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;the&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;URI&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;//INCORRECT
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; $_GET[&lt;span style="color:#e6db74"&gt;&amp;#39;chuck.norris&amp;#39;&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;instead&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;you&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;must&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;use&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;//CORRECT
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; $_GET[&lt;span style="color:#e6db74"&gt;&amp;#39;chuck_norris&amp;#39;&lt;/span&gt;];
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;?&amp;gt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="3-变量范围"&gt;3 变量范围
+&lt;/h1&gt;&lt;p&gt;变量的范围即它定义的上下文背景（也就是它的生效范围）.大部分的 PHP 变量只有一个单独的范围.这个单独的范围跨度同样包含了 include 和 require 引入的文件.例如：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;include&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;b.inc&amp;#39;&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;?&amp;gt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里变量 $a 将会在包含文件 b.inc 中生效.但是,在用户自定义函数中,一个局部函数范围将被引入.任何用于函数内部的变量按缺省情况将被限制在局部函数范围内.例如：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;$a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;; &lt;span style="color:#75715e"&gt;/* global scope */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;Test&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; $a; &lt;span style="color:#75715e"&gt;/* reference to local scope variable */&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;Test&lt;/span&gt;();
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;?&amp;gt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个脚本不会有任何输出,因为 &lt;code&gt;echo&lt;/code&gt;语句引用了一个局部版本的变量$a,而且在这个范围内,它并没有被赋值.你可能注意到 PHP 的全局变量和 C 语言有一点点不同,在 C 语言中,全局变量在函数中自动生效,除非被局部变量覆盖.这可能引起一些问题,有些人可能不小心就改变了一个全局变量.PHP 中全局变量在函数中使用时必须声明为 &lt;code&gt;global&lt;/code&gt;.
+PS:此处需要注意的是,php不存在类似C和java的块级作用域.比如你在循环中定义的一个变量,在循环外还是可以访问的&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;for&lt;/span&gt;($j&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;; $j&lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#ae81ff"&gt;3&lt;/span&gt;; $j&lt;span style="color:#f92672"&gt;++&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt;($j &lt;span style="color:#f92672"&gt;==&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;)
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; $a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;4&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; $a;&lt;span style="color:#75715e"&gt;//此处将会输出4
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#75715e"&gt;?&amp;gt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="32-静态变量"&gt;3.2 静态变量
+&lt;/h2&gt;&lt;p&gt;php还支持静态变量,静态变量&lt;code&gt;仅在局部函数域中&lt;/code&gt;存在,但当程序执行离开此作用域时,其值并不丢失.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#66d9ef"&gt;function&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;Test&lt;/span&gt;()
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;{
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; $a &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;echo&lt;/span&gt; $a;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; $a&lt;span style="color:#f92672"&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;?&amp;gt;&lt;/span&gt;&lt;span style="color:#960050;background-color:#1e0010"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="4-来自php之外的变量"&gt;4 来自PHP之外的变量
+&lt;/h1&gt;&lt;p&gt;此处主要指的是通过表单提交的变量,从cookie读取的变量&lt;/p&gt;
+&lt;h2 id="41-图片提交表单"&gt;4.1 图片提交表单
+&lt;/h2&gt;&lt;p&gt;除了常用的通过表单按钮提交表单,我们还可以使用图片的形式提交表单,代码如下:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;input&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;image&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;src&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;image.gif&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;sub&amp;#34;&lt;/span&gt; &lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这样在后端接收的时候,还会受到一个叫做&lt;code&gt;sub_x&lt;/code&gt;和&lt;code&gt;sub_y&lt;/code&gt;的变量,它包含了用户点击图片的坐标.此处如果你不定义&lt;code&gt;name&lt;/code&gt;为&lt;code&gt;sub&lt;/code&gt;,那么后端接收变量就是&lt;code&gt;x&lt;/code&gt;和&lt;code&gt;y&lt;/code&gt;.&lt;/p&gt;
+&lt;h1 id="42-php自动转换变量名"&gt;4.2 PHP自动转换变量名
+&lt;/h1&gt;&lt;p&gt;当我们通过表单提交变量的时候,如果表单项的名称包含空格,点号,左中括号,php就会自动把他们转换成下划线.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;input&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;text&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;userName.a&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;input&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;type&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;text&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;name&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;passWor[d&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#75715e"&gt;//输出[userName_a] =&amp;gt; [passWor_d] =&amp;gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#75715e"&gt;//都被转化成下划线了
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;chr(32) ( ) (space)
+chr(46) (.) (dot)
+chr(91) ([) (open square bracket)&lt;/p&gt;
+&lt;p&gt;ps:ascll码值在128-159的字符是合法字符,所以并不会被转义成下划线&lt;/p&gt;</description></item><item><title>php学习笔记(1)</title><link>https://jackroyal.github.io/post/php-learn-note-1/</link><pubDate>Thu, 10 Dec 2015 15:46:03 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-1/</guid><description>&lt;p&gt;php文档学习笔记,正式开始连载了哈,终于开始学习了.&lt;/p&gt;
+&lt;h1 id="布尔值"&gt;布尔值
+&lt;/h1&gt;&lt;p&gt;要明确地将一个值转换成 boolean，用 (bool) 或者 (boolean) 来强制转换。但是很多情况下不需要用强制转换，因为当运算符，函数或者流程控制结构需要一个 boolean 参数时，该值会被自动转换。
+当转换为 boolean 时，以下值被认为是 FALSE：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;布尔值 &lt;strong&gt;FALSE&lt;/strong&gt; 本身&lt;/li&gt;
+&lt;li&gt;整型值 &lt;strong&gt;0&lt;/strong&gt;（零）&lt;/li&gt;
+&lt;li&gt;浮点型值 &lt;strong&gt;0.0&lt;/strong&gt;（零）&lt;/li&gt;
+&lt;li&gt;空字符串，以及字符串 &lt;strong&gt;&amp;ldquo;0&amp;rdquo;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;不包括任何元素的数组&lt;/li&gt;
+&lt;li&gt;不包括任何成员变量的对象（仅 PHP 4.0 适用）&lt;/li&gt;
+&lt;li&gt;特殊类型 &lt;strong&gt;NULL&lt;/strong&gt;（包括尚未赋值的变量）&lt;/li&gt;
+&lt;li&gt;从空标记生成的 &lt;strong&gt;SimpleXML&lt;/strong&gt; 对象&lt;/li&gt;
+&lt;li&gt;所有其它值都被认为是 &lt;strong&gt;TRUE&lt;/strong&gt;（包括任何资源）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;PS:&lt;/strong&gt;
+-1 和其它非零值（不论正负）一样，被认为是 &lt;strong&gt;TRUE&lt;/strong&gt;！
+接下来我们可以试试,自己写一些常见的布尔值&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#a6e22e"&gt;var_dump&lt;/span&gt;((&lt;span style="color:#a6e22e"&gt;bool&lt;/span&gt;)&lt;span style="color:#e6db74"&gt;&amp;#39;0&amp;#39;&lt;/span&gt;); &lt;span style="color:#75715e"&gt;//false
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;var_dump&lt;/span&gt;((&lt;span style="color:#a6e22e"&gt;bool&lt;/span&gt;)&lt;span style="color:#e6db74"&gt;&amp;#39;0.0&amp;#39;&lt;/span&gt;); &lt;span style="color:#75715e"&gt;//true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;var_dump&lt;/span&gt;((&lt;span style="color:#a6e22e"&gt;bool&lt;/span&gt;)&lt;span style="color:#e6db74"&gt;&amp;#39;0.1&amp;#39;&lt;/span&gt;); &lt;span style="color:#75715e"&gt;//true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;var_dump&lt;/span&gt;((&lt;span style="color:#a6e22e"&gt;bool&lt;/span&gt;)&lt;span style="color:#66d9ef"&gt;array&lt;/span&gt;()); &lt;span style="color:#75715e"&gt;//false
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;var_dump&lt;/span&gt;((&lt;span style="color:#a6e22e"&gt;bool&lt;/span&gt;)&lt;span style="color:#e6db74"&gt;&amp;#34;false&amp;#34;&lt;/span&gt;); &lt;span style="color:#75715e"&gt;//true,因为这个字符串不为空,所以为true
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>php中的bool值和类型转换</title><link>https://jackroyal.github.io/post/php-boolean-value/</link><pubDate>Mon, 20 Jul 2015 14:23:21 +0000</pubDate><guid>https://jackroyal.github.io/post/php-boolean-value/</guid><description>&lt;p&gt;最近在写php,发现有个问题一直无法避免,那就是关于php的bool值和类型转换.
+以前每次遇到要校验一个变量&lt;code&gt;$a&lt;/code&gt;,是否为空,都是使用&lt;code&gt;$a==''&lt;/code&gt;去判断,感觉不是很懂,反正一直这样用,也没出太多纰漏,而没有理会什么NUll,&amp;rsquo;&amp;rsquo;,0之类的其他值.今天决定研究下,把它彻底搞清楚.&lt;/p&gt;
+&lt;h1 id="1-php的数据类型"&gt;1 php的数据类型
+&lt;/h1&gt;&lt;p&gt;php支持原始的8总数据类型.
+4总标量类型:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;boolean&lt;/li&gt;
+&lt;li&gt;integer&lt;/li&gt;
+&lt;li&gt;float(也称作double类型)&lt;/li&gt;
+&lt;li&gt;string
+2种复合类型&lt;/li&gt;
+&lt;li&gt;array(数组)&lt;/li&gt;
+&lt;li&gt;object(对象)
+2种特殊类型&lt;/li&gt;
+&lt;li&gt;resource(资源)&lt;/li&gt;
+&lt;li&gt;NULL(无类型)
+实际上 double 和 float 是相同的，由于一些历史的原因，这两个名称同时存在。
+变量的类型通常不是由程序员设定的，确切地说，是由PHP根据该变量使用的上下文在运行时决定的。
+前面几种类型很好理解,现在重点看一下resource类型和NULL类型&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;resource&lt;/code&gt; 是一种特殊变量，保存了到外部资源的一个引用。资源是通过专门的函数来建立和使用的。由于资源类型变量保存有为打开文件、数据库连接、图形画布区域等的特殊句柄，因此将其它类型的值转换为资源没有意义。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;NULL&lt;/code&gt;,特殊的NULL值表示一个变量没有值。NULL类型唯一可能的值就是 NULL。在下列情况下一个变量被认为是NULL：&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;被赋值为 NULL。&lt;/li&gt;
+&lt;li&gt;尚未被赋值。&lt;/li&gt;
+&lt;li&gt;被 unset()。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id="2-常用的比较函数"&gt;2 常用的比较函数
+&lt;/h1&gt;&lt;h3 id="empty"&gt;empty()
+&lt;/h3&gt;&lt;p&gt;这个函数最近经常见到,它比较有特点.
+如果 var 是非空或非零的值，则empty()返回&lt;code&gt;FALSE&lt;/code&gt;。
+换句话说，&amp;quot;&amp;quot;、0、&amp;ldquo;0&amp;rdquo;、NULL、FALSE、array()、var $var以及没有任何属性的对象都将
+被认为是空的，返回 TRUE。
+如果变量没有赋值,empty()也不会报错.&lt;/p&gt;
+&lt;h3 id="is_set"&gt;is_set()
+&lt;/h3&gt;&lt;p&gt;这个函数和is_null()刚好相反,如果一个函数的is_null()返回&lt;code&gt;true&lt;/code&gt;,那么它的is_set()则必定返回相反值,&lt;code&gt;false&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id="is_null"&gt;is_null()
+&lt;/h3&gt;&lt;p&gt;所有的&lt;code&gt;is_&lt;/code&gt;开头的函数,都不会进行类型转换,例如is_bool(&amp;lsquo;0&amp;rsquo;),返回false,因为'0&amp;rsquo;不是一个布尔类型的值.
+详细对比看下图
+&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1euak04nwitj20nf0i2432.jpg"
+loading="lazy"
+alt="使用 PHP 函数对变量 $x 进行比较"
+&gt;&lt;/p&gt;
+&lt;p&gt;更多更详细的比较,大家看这里&lt;a class="link" href="http://php.net/manual/zh/types.comparisons.php" target="_blank" rel="noopener"
+&gt;php类型比较表&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>
