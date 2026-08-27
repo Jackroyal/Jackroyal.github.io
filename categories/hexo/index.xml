@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hexo on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/hexo/</link><description>Recent content in Hexo on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/hexo/index.xml" rel="self" type="application/rss+xml"/><item><title>将hexo部署到自己的个人服务器上</title><link>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</link><pubDate>Sat, 08 Apr 2017 19:22:22 +0000</pubDate><guid>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</guid><description>&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hexo on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/hexo/</link><description>Recent content in Hexo on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/hexo/index.xml" rel="self" type="application/rss+xml"/><item><title>将hexo部署到自己的个人服务器上</title><link>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</link><pubDate>Sat, 08 Apr 2017 19:22:22 +0000</pubDate><guid>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;本文假设你已经配置好了hexo了,这是前提&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;前面两篇文章主要是用来配置自己的服务器.服务器部署完成后,后面就可以开始写博客了.但是每次&lt;code&gt;hexo d&lt;/code&gt;推送到gihub的服务器上了,还需要手动将文件复制到自己的服务器对应网站的根目录,对的,要手动,当然不能忍.&lt;/p&gt;
@@ -246,7 +246,7 @@ ok,大功告成啦,赶快&lt;code&gt;hexo d -g&lt;/code&gt;看看效果吧&lt;/p
 &gt;解决 Github Pages 禁止百度爬虫的方法&lt;/a&gt;,提到了解决百度爬虫被github禁用掉的方法.
 &lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;
 然后今天去上gitcafe,偶然看到这个
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
 loading="lazy"
 alt="GitCafe 项目迁移至 Coding.net 公告"
 &gt;
@@ -267,7 +267,7 @@ alt="GitCafe 项目迁移至 Coding.net 公告"
 &lt;/h1&gt;&lt;p&gt;这个很简单不必说,注册需要填写用户名,邮箱和密码,比如我的用户名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id="2-新建和用户名同名的项目"&gt;2 新建和用户名同名的项目
 &lt;/h1&gt;&lt;p&gt;在注册好账号以后,我们就去新建一个项目,方法和gitcafe不同和gihub类似,就是和用户名同名,一模一样的就行.我的项目名是&lt;code&gt;Jackroyal&lt;/code&gt;,项目属性&lt;code&gt;公开&lt;/code&gt;
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
 loading="lazy"
 alt="新建同名项目"
 &gt;&lt;/p&gt;
@@ -276,11 +276,11 @@ alt="新建同名项目"
 &lt;h2 id="31-使用ssh方式发布博客"&gt;3.1 使用ssh方式发布博客
 &lt;/h2&gt;&lt;p&gt;我们只需要找到本地的ssh公钥,然后上传到coding上去就行,点击&lt;a class="link" href="https://coding.net/user/account/setting/keys" target="_blank" rel="noopener"
 &gt;这里&lt;/a&gt;设置.查看本地ssh公钥的方法和上篇博客一样.
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
 loading="lazy"
 alt="使用git客户端查看ssh公钥私钥"
 &gt;
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
 loading="lazy"
 alt="查看公钥"
 &gt;
@@ -299,14 +299,14 @@ ps:这种方式,可能过一段时间又不行了,报错&lt;code&gt;could not re
 &lt;/ol&gt;
 &lt;h1 id="4-新建coding-pages分支"&gt;4 新建coding-pages分支
 &lt;/h1&gt;&lt;p&gt;当我们可以提交代码的时候,我们先来新建分支,和gitcafe差不多,它需要一个特别的分支名字,而不是像github默认的master分支,名字是&lt;code&gt;coding-pages&lt;/code&gt;,如下图所示
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
 loading="lazy"
 alt="新建coding分支"
 &gt;
 我们把它设为默认分支&lt;/p&gt;
 &lt;h1 id="5-开启pages服务"&gt;5 开启pages服务
 &lt;/h1&gt;&lt;p&gt;接下来我们需要手动去开启pages服务.在项目主页的&lt;code&gt;pages&lt;/code&gt;选项卡,点击开启服务,同时我们,添加域名绑定
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
 loading="lazy"
 alt="开启pages服务"
 &gt;
@@ -325,14 +325,14 @@ branch: coding-pages
 还要注意branch名称,分支必须是&lt;code&gt;coding-pages&lt;/code&gt;
 **PS:如上面所说,我选择的是https方式发布,所以我的repo是https的,如果你选择ssh方式去认证,那么你的地址应该是类似这样的&lt;code&gt;git@git.coding.net:Jackroyal/Jackroyal.git&lt;/code&gt;
 **&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
 loading="lazy"
 alt="添加coding的repo信息"
 &gt;&lt;/p&gt;
 &lt;h1 id="7-修改dns设置"&gt;7 修改dns设置
 &lt;/h1&gt;&lt;p&gt;就像第5步页面提示的,我们要绑定自己的域名,需要去修改dns解析记录,只需要添加一条CNAME指向你的&lt;code&gt;jackroyal.coding.me&lt;/code&gt;即可.
 注意后面加个点,也就是正确的填法是&lt;code&gt;jackroyal.coding.me.&lt;/code&gt;,如下图所示.修改完成后大概等几分钟才能生效
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
 loading="lazy"
 alt="修改dns设置"
 &gt;&lt;/p&gt;
@@ -371,7 +371,7 @@ Scott
 &lt;/h1&gt;&lt;p&gt;我们在github和gitcafe上面把自己的博客搭建起来,首先要建仓库.
 &lt;strong&gt;github&lt;/strong&gt;:
 首先登录你的github,然后新建一个公共仓库,仓库名是你的用户名加上&lt;code&gt;yourname.github.io&lt;/code&gt;,如下图所示,我的用户名是&lt;code&gt;Jackroyal&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
 loading="lazy"
 alt="github新建仓库"
 &gt;&lt;/p&gt;
@@ -401,16 +401,16 @@ branch: gitcafe-pages
 对的,你猜到了,我们现在需要配置gitcafe的ssh公钥,因为&lt;code&gt;github for windows&lt;/code&gt;会自动帮我们上传公钥,gitcafe就只能手动了.&lt;/p&gt;
 &lt;h3 id="321-查看本地公钥"&gt;3.2.1 查看本地公钥
 &lt;/h3&gt;&lt;p&gt;我们打开你使用的git终端,首先切回用户目录,然后进入&lt;code&gt;.ssh&lt;/code&gt;目录,里面就有公钥和私钥,如下图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
 loading="lazy"
 alt="使用git客户端查看ssh公钥私钥"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye78gs0hvj20it0ca761.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye78gs0hvj20it0ca761.jpg"
 loading="lazy"
 alt="使用github for windows查看ssh公钥私钥"
 &gt;
 我们就是要读取后缀是&lt;code&gt;.pub&lt;/code&gt;的那个文件,比如我的读取命令就是&lt;code&gt;cat github_rsa.pub&lt;/code&gt;,执行结果如下
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
 loading="lazy"
 alt="查看公钥"
 &gt;&lt;/p&gt;
@@ -418,7 +418,7 @@ alt="查看公钥"
 &lt;/h3&gt;&lt;p&gt;我们在&lt;a class="link" href="https://gitcafe.com/account/public_keys" target="_blank" rel="noopener"
 &gt;这里&lt;/a&gt;来设置gitcafe的公钥.
 &lt;em&gt;PS:需要注意的是,公钥后面的chen@chen-pc是不需要的,我的带上以后,gitcafe说是公钥非法,不过不怕,gitcafe会帮你正确格式化&lt;/em&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
 loading="lazy"
 alt="正确的ssh格式"
 &gt;
@@ -431,7 +431,7 @@ alt="正确的ssh格式"
 &lt;/h1&gt;&lt;p&gt;首先你得有个域名,像我一样,哈哈.&lt;/p&gt;
 &lt;h2 id="41-修改域名注册的解析服务器"&gt;4.1 修改域名注册的解析服务器
 &lt;/h2&gt;&lt;p&gt;我们在要把域名解析服务,设置到dnspod,因为他是国内的,而且服务很好.我们登录自己的域名管理后台,选择对应的域名进行管理,然后找到&lt;code&gt;nameservers&lt;/code&gt;的设置,如图所示
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7orkymjj210j0i7tde.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7orkymjj210j0i7tde.jpg"
 loading="lazy"
 alt="修改nameservers的设置"
 &gt;
@@ -445,7 +445,7 @@ ok,改完以后,这边就完了,我们登录dnspod&lt;/p&gt;
 &lt;h2 id="42-修改dnspod解析记录"&gt;4.2 修改dnspod解析记录
 &lt;/h2&gt;&lt;p&gt;我们登录dnspod,然后添加域名
 如果4.1中的设置生效了,你的域名就会添加成功了,我们直接进行下一步,修改解析记录,上图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
 loading="lazy"
 alt="dns解析记录"
 &gt;
@@ -462,25 +462,25 @@ www CNAME 国内 gitcafe.io.
 &gt;配置CNAME文件&lt;/a&gt;.说白了,就是在你的网站根目录,添加一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件,里面的内容就是你的域名&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;bblove.me
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有任何多余的信息,如下图
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
 loading="lazy"
 alt="配置github的CNAME"
 &gt;
 上面的配置现在访问没问题,但是你一重新发布博客,就需要重新手动添加&lt;code&gt;CNAME&lt;/code&gt;文件,太麻烦.
 一劳永逸的方法,在你的&lt;code&gt;hexo&lt;/code&gt;目录下的&lt;code&gt;source&lt;/code&gt;目录中,新建一个&lt;code&gt;CNAME&lt;/code&gt;文件夹,然后他每次在你发布博客的时候,都会在你的网站根目录生成一个&lt;code&gt;CNAME&lt;/code&gt;文件.
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
 loading="lazy"
 alt="添加CNAME的目录结构"
 &gt;
 现在github的配置彻底结束.&lt;/p&gt;
 &lt;p&gt;接下来配置gitcafe:
 1 我们在gitcafe的项目主页,点击&lt;code&gt;项目设置&lt;/code&gt;,如下图(之所以截图,是因为我找半天才看到&amp;hellip;)
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyeadedmh1j20z508eadm.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyeadedmh1j20z508eadm.jpg"
 loading="lazy"
 alt="gitcafe点击’项目设置’"
 &gt;
 2 然后我们点击&lt;code&gt;pages服务&lt;/code&gt;标签,然后添加自己的域名,这些域名是我们之前在dnspod中设置了解析的
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
 loading="lazy"
 alt="gitcafe配置自定义域名"
 &gt;&lt;/p&gt;
@@ -511,11 +511,11 @@ node: 0.12.4&lt;/p&gt;
 下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
 target="_blank" rel="noopener"
 &gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3jw1emplp1lz31j204w033mx0.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3jw1emplp1lz31j204w033mx0.jpg"
 loading="lazy"
 alt="Github for windows"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1empluh6hvej210b0j741r.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1empluh6hvej210b0j741r.jpg"
 loading="lazy"
 alt="GUI and Bash"
 &gt;&lt;/p&gt;
@@ -732,11 +732,11 @@ hexo还支持多发布,可以同时发布到github和gitcafe.&lt;/p&gt;
 &gt;不蒜子&lt;/a&gt;,这位非著名码农自己做的访问统计,哈哈,点个赞
 &lt;/h4&gt;&lt;h4 id="3-今天还看到了font-awesome可以显示一些小图标为了显示效果更好一并加上去"&gt;3 今天还看到了font-awesome,可以显示一些小图标,为了显示效果更好,一并加上去
 &lt;/h4&gt;&lt;p&gt;先展示一下最终的效果:&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esm9snxfcuj20su0ad74x.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esm9snxfcuj20su0ad74x.jpg"
 loading="lazy"
 alt="页底关于整站访问量的显示"
 &gt;
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1esm9tcczdij20r00doq4t.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esm9tcczdij20r00doq4t.jpg"
 loading="lazy"
 alt="文章页面关于访问量和评论数量的显示"
 &gt;&lt;/p&gt;
@@ -757,7 +757,7 @@ alt="文章页面关于访问量和评论数量的显示"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最终效果如图&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmas5d58oj20x50jc46f.jpg"
 loading="lazy"
 alt="修改后的article.ejs"
 &gt;
@@ -765,7 +765,7 @@ alt="修改后的article.ejs"
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;ds-thread-count&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;data-thread-key&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;%= page.layout %&amp;gt;-&amp;lt;%= page.slug %&amp;gt;&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;尤其注意&lt;code&gt;data-thread-key&lt;/code&gt;的设置,他和你之前配置多说的时候是一致的,每篇文章有一个独一无二的key,你可以去你的&lt;code&gt;themes/light/layout/_partial/comment.ejs&lt;/code&gt;里找到关于data-thread-key的内容,直接复制过来即可.&lt;/p&gt;
 &lt;p&gt;Ps:这里我们可能还需要配置下数据显示的格式,在你的多说后台管理里面,进入设置界面如图
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1esmayan2utj20w50mx0ya.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmayan2utj20w50mx0ya.jpg"
 loading="lazy"
 alt="多说后台设置"
 &gt;
@@ -792,7 +792,7 @@ alt="多说后台设置"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg"
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmas5d58oj20x50jc46f.jpg"
 loading="lazy"
 alt="修改后的article.ejs"
 &gt;&lt;!-- raw HTML omitted --&gt;2.修改&lt;code&gt;themes/light/layout/_partial/footer.ejs&lt;/code&gt;,下面是footer.ejs的&lt;strong&gt;全部代码&lt;/strong&gt;:&lt;/p&gt;
@@ -822,7 +822,7 @@ padding-left:4px
 .ds-thread-count
 padding-left:4px
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最终效果如图:
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1esmajbsx38j20k30gwadu.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmajbsx38j20k30gwadu.jpg"
 loading="lazy"
 alt="添加css,注意左对齐"
 &gt;&lt;!-- raw HTML omitted --&gt;5.修改&lt;code&gt;themes\light\source\css\_partial\footer.styl&lt;/code&gt;,在最后添加上以下代码&lt;/p&gt;
@@ -843,7 +843,7 @@ padding-left:2em
 &lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
 &gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>hexo发布失败</title><link>https://jackroyal.github.io/post/hexo-deploy-error/</link><pubDate>Sun, 29 Mar 2015 18:09:28 +0000</pubDate><guid>https://jackroyal.github.io/post/hexo-deploy-error/</guid><description>&lt;p&gt;可能受到上次ddos的问题,这两天国内访问github,总是感觉不顺畅.&lt;/p&gt;
 &lt;p&gt;今天下午写了一篇博客,可是却发布不成功,一直卡在这一步:
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqmrrf20j1j20g006676y.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmrrf20j1j20g006676y.jpg"
 loading="lazy"
 alt="hexo发布的时候卡住"
 &gt;&lt;/p&gt;
@@ -1011,12 +1011,12 @@ target="_blank" rel="noopener"
 我们点击&lt;a class="link" href="http://duoshuo.com/create-site/" title="我要安装"
 target="_blank" rel="noopener"
 &gt;我要安装&lt;/a&gt;,界面如下
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1emtdlnpsqaj20wo0lp783.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1emtdlnpsqaj20wo0lp783.jpg"
 loading="lazy"
 alt="duoshuo 创建界面"
 &gt;
 shortname就是jackroyal,创建完成后,跳转到如下界面
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1emtdp96x54j20us0jxn18.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1emtdp96x54j20us0jxn18.jpg"
 loading="lazy"
 alt="获取多说代码"
 &gt;
@@ -1068,7 +1068,7 @@ ds.charset = &amp;#39;UTF-8&amp;#39;;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;首先我们,替换config.disqus_shortname为config.duoshuo_shortname.
 然后修改&lt;code&gt;item.comment&lt;/code&gt;为&lt;code&gt;item.comments&lt;/code&gt;,因为系统中没有comment这个变量,只有comments这个变量,如果不修改comments,那么&lt;code&gt;item.comment&lt;/code&gt;一直为假,所以一直不成立,就不会显示comments字段了.修改后代码如下&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt; &amp;lt;% if (item.comments &amp;amp;&amp;amp; config.duoshuo_shortname){ %&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;产生的效果如图&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1emteitia5uj20tl0fn412.jpg"
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;产生的效果如图&lt;img src="https://jackroyal.github.io/images/692869a3gw1emteitia5uj20tl0fn412.jpg"
 loading="lazy"
 alt="开启和关闭comment的区别"
 &gt;.
@@ -1094,11 +1094,11 @@ target="_blank" rel="noopener"
 下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
 target="_blank" rel="noopener"
 &gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3jw1emplp1lz31j204w033mx0.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3jw1emplp1lz31j204w033mx0.jpg"
 loading="lazy"
 alt="Github for windows"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1empluh6hvej210b0j741r.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1empluh6hvej210b0j741r.jpg"
 loading="lazy"
 alt="GUI and Bash"
 &gt;

@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>扩展 on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/%E6%89%A9%E5%B1%95/</link><description>Recent content in 扩展 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/%E6%89%A9%E5%B1%95/index.xml" rel="self" type="application/rss+xml"/><item><title>cmcc520扩展使用说明</title><link>https://jackroyal.github.io/post/how-to-use-cmcc520/</link><pubDate>Mon, 24 Nov 2014 21:56:00 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-use-cmcc520/</guid><description>&lt;p&gt;我的cmcc520 2.0版本终于完成了,写个使用说明&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>扩展 on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/%E6%89%A9%E5%B1%95/</link><description>Recent content in 扩展 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/%E6%89%A9%E5%B1%95/index.xml" rel="self" type="application/rss+xml"/><item><title>cmcc520扩展使用说明</title><link>https://jackroyal.github.io/post/how-to-use-cmcc520/</link><pubDate>Mon, 24 Nov 2014 21:56:00 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-use-cmcc520/</guid><description>&lt;p&gt;我的cmcc520 2.0版本终于完成了,写个使用说明&lt;/p&gt;
 &lt;p&gt;学校部分范围有CMCC-EDU可用,通过手动修改ssid,可以免费使用.&lt;/p&gt;
 &lt;p&gt;写了个扩展来简化这个过程.&lt;/p&gt;
 &lt;p&gt;1 安装扩展
 将保存下来的 *.crx 文件或*.js 文件直接拖拽到浏览器的“扩展程序”（[chrome://chrome/extensions](&amp;ldquo;Chrome 扩展程序页面&amp;rdquo;)/）页面。
-&lt;img src="https://img.blog.csdn.net/20141124215558921?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124215558921.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;( 注：只有拖动到此页面才能安装，其它页面无效)&lt;/p&gt;
 &lt;p&gt;　　2. 按照提示安装
-&lt;img src="https://img.blog.csdn.net/20141124215611765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124215611765.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt; 
@@ -18,22 +18,22 @@ loading="lazy"
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt;3,配置软件功能&lt;/p&gt;
 &lt;p&gt;左键点击图标,可以选择开关扩展功能(默认为开启)
- &lt;img src="https://img.blog.csdn.net/20141124215702865?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+ &lt;img src="https://jackroyal.github.io/images/20141124215702865.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt;4.使用软件&lt;/p&gt;
 &lt;p&gt;如果软件的功能打开,那么如果当你使用cmcc-edu的时候会自动跳转完成登录,不再需要手动操作,登录成功页面如下,你可以关闭这个页面了
-&lt;img src="https://img.blog.csdn.net/20141124215651437?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124215651437.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;5.下线&lt;/p&gt;
 &lt;p&gt;在任何页面按ALT+X   可以下线&lt;/p&gt;
 &lt;p&gt;Ps,如果按Alt+x无任何提示,可能是快捷键设置有问题
- &lt;img src="https://img.blog.csdn.net/20141124215717575?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+ &lt;img src="https://jackroyal.github.io/images/20141124215717575.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://img.blog.csdn.net/20141124215740968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/20141124215740968.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;那就需要你按照上图手动设置快捷键&lt;/p&gt;
@@ -91,10 +91,10 @@ Github项目地址 &lt;a class="link" href="https://github.com/Jackroyal/cmcc520
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;persistent&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;比如我的这个 后台执行就是这样的&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://img.blog.csdn.net/20141124194616706?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/20141124194616706.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;采用pageaction还是browseraction取决于你是否想让图标一直可见.`&lt;img src="https://img.blog.csdn.net/20141124193151343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;p&gt;采用pageaction还是browseraction取决于你是否想让图标一直可见.`&lt;img src="https://jackroyal.github.io/images/20141124193151343.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;如图,绿色的是广告终结者,他的图标是pageAction,后面的印象笔记还有switchproxy是browserAction.一般来说,适用于少数页面的扩展建议使用pageaction,适用于大多数页面的建议使用browseraction&lt;/p&gt;

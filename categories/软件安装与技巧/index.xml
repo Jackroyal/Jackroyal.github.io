@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>软件安装与技巧 on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%B8%8E%E6%8A%80%E5%B7%A7/</link><description>Recent content in 软件安装与技巧 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%B8%8E%E6%8A%80%E5%B7%A7/index.xml" rel="self" type="application/rss+xml"/><item><title>那些年,我们玩过的离线安装</title><link>https://jackroyal.github.io/post/offline-install/</link><pubDate>Thu, 26 Nov 2015 13:34:46 +0000</pubDate><guid>https://jackroyal.github.io/post/offline-install/</guid><description>&lt;p&gt;由于有些软件,都是下载一个安装器,然后在线安装,由于网速的原因,这种方式一旦失败,就只能重新安装,所以很坑,就找了些离线安装的方法&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>软件安装与技巧 on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%B8%8E%E6%8A%80%E5%B7%A7/</link><description>Recent content in 软件安装与技巧 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%B8%8E%E6%8A%80%E5%B7%A7/index.xml" rel="self" type="application/rss+xml"/><item><title>那些年,我们玩过的离线安装</title><link>https://jackroyal.github.io/post/offline-install/</link><pubDate>Thu, 26 Nov 2015 13:34:46 +0000</pubDate><guid>https://jackroyal.github.io/post/offline-install/</guid><description>&lt;p&gt;由于有些软件,都是下载一个安装器,然后在线安装,由于网速的原因,这种方式一旦失败,就只能重新安装,所以很坑,就找了些离线安装的方法&lt;/p&gt;
 &lt;h1 id="1-adobe-reader离线安装"&gt;1 Adobe reader离线安装
 &lt;/h1&gt;&lt;p&gt;下载离线安装版adobe reader
 &lt;a class="link" href="https://get.adobe.com/cn/reader/enterprise/" target="_blank" rel="noopener"
@@ -33,11 +33,11 @@ opencv版本:opencv 2.4.10&lt;/p&gt;
 &lt;h2 id="复制include文件夹"&gt;复制include文件夹
 &lt;/h2&gt;&lt;p&gt;复制&lt;code&gt;D:\opencv\build\include&lt;/code&gt;目录下的&lt;code&gt;opencv&lt;/code&gt;和&lt;code&gt;opencv2&lt;/code&gt;
 到&lt;code&gt;C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include&lt;/code&gt;.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1es5atg7oimj20kw081ta4.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5atg7oimj20kw081ta4.jpg"
 loading="lazy"
 alt="opencv解压后的include目录"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1es5az6qsa7j20jc099jtf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5az6qsa7j20jc099jtf.jpg"
 loading="lazy"
 alt="复制以后的效果截图"
 &gt;&lt;/p&gt;
@@ -48,7 +48,7 @@ alt="复制以后的效果截图"
 &lt;h2 id="复制bin文件夹"&gt;复制bin文件夹
 &lt;/h2&gt;&lt;p&gt;复制bin目录下的东西,我们只需要系统找得到就行,所以我们这里采用环境变量的搞法&lt;/p&gt;
 &lt;p&gt;我们修改path变量,在后面添加&lt;code&gt;;d:\opencv\build\x86\vc10\bin&lt;/code&gt;,效果如图所示&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1es5bew5vcjj20e10g4go8.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5bew5vcjj20e10g4go8.jpg"
 loading="lazy"
 alt="修改path变量,添加opencv的bin目录路径"
 &gt;&lt;/p&gt;
@@ -112,7 +112,7 @@ alt="修改path变量,添加opencv的bin目录路径"
 编译和生成解决方案没有问题，但是开始执行就出现应用程序无法正常启动 0xc000007b错误窗口
 最后,原来是权限问题,使用管理员权限打开vs就解决了,win7下找兼容性设置,以管理员权限运行
 我的win8没有找到兼容性设置,如图所示操作,每次都能以管理员权限打开vs
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg"
 loading="lazy"
 alt="win8使用管理员权限运行vs2010"
 &gt;&lt;/p&gt;
@@ -120,7 +120,7 @@ alt="win8使用管理员权限运行vs2010"
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.cnblogs.com/freedomshe/archive/2012/04/25/2470540.html" target="_blank" rel="noopener"
 &gt;VS2010+Opencv-2.4.0的配置攻略&lt;/a&gt;&lt;/p&gt;</description></item><item><title>wamp与sql_server_因为端口80冲突,无法开启wamp</title><link>https://jackroyal.github.io/post/wamp-sql_server-80-error/</link><pubDate>Fri, 14 Nov 2014 18:09:00 +0000</pubDate><guid>https://jackroyal.github.io/post/wamp-sql_server-80-error/</guid><description>&lt;p&gt;因为80端口占用,导致无法启动,其实不必关闭sql server太多的东西,只需要关闭SQL Server Reporting Services 就行了,这样也不会影响sql server的使用&lt;/p&gt;
 &lt;p&gt;如图
-&lt;img src="https://img.blog.csdn.net/20141114175909339?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141114175909339.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;打开sqlserver 配置管理器,关闭以上服务&lt;/p&gt;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Php on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/php/</link><description>Recent content in Php on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/php/index.xml" rel="self" type="application/rss+xml"/><item><title>php学习笔记(3.6)--PHP中的引用</title><link>https://jackroyal.github.io/post/php-learn-note-3-6/</link><pubDate>Sun, 08 Jul 2018 17:40:28 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3-6/</guid><description>&lt;p&gt;最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Php on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/php/</link><description>Recent content in Php on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/php/index.xml" rel="self" type="application/rss+xml"/><item><title>php学习笔记(3.6)--PHP中的引用</title><link>https://jackroyal.github.io/post/php-learn-note-3-6/</link><pubDate>Sun, 08 Jul 2018 17:40:28 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3-6/</guid><description>&lt;p&gt;最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下.&lt;/p&gt;
 &lt;h1 id="1-什么是引用"&gt;1 什么是引用
 &lt;/h1&gt;&lt;p&gt;引用,第一感觉就是想到C语言中的指针,两个变量指向同一个内存地址.但是php中的引用其实应该是别名, 可以类比的是linux系统中的硬链接,两个文件名实际指向同一个文件.&lt;/p&gt;
 &lt;h1 id="2-引用传值"&gt;2 引用传值
@@ -135,7 +135,7 @@ $c --&amp;gt;| object id | ---&amp;gt; | object(Class A) |
 &lt;/h2&gt;&lt;p&gt;PHP数据对象，是PHP应用中的一个数据库抽象层规范。PDO提供了一个统一的API接口可以使得你的PHP应用不去关心具体要 连接的数据库服务器系统类型。也就是说，如果你使用PDO的API，可以在任何需要的时候无缝切换数据库服务器，比如从Firebird 到MySQL，仅仅需要修改很少的PHP代码。&lt;/p&gt;
 &lt;p&gt;其他数据库抽象层的例子包括Java应用中的JDBC以及Perl中的DBI。&lt;/p&gt;
 &lt;p&gt;当然，PDO也有它自己的先进性，比如一个干净的，简单的，可移植的API，它最主要的缺点是会限制让你不能使用 后期MySQL服务端提供所有的数据库高级特性。比如，PDO不允许使用MySQL支持的多语句执行。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1f1tvea7khyj20hm0dhac0.jpg"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1tvea7khyj20hm0dhac0.jpg"
 loading="lazy"
 alt="PHP中三种主要的MySQL连接方式的功能的比较"
 &gt;&lt;/p&gt;</description></item><item><title>php学习笔记(3.5)--关于引用赋值和一般赋值</title><link>https://jackroyal.github.io/post/php-learn-note-3-5/</link><pubDate>Sat, 05 Mar 2016 13:52:28 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3-5/</guid><description>&lt;p&gt;上一篇提到了,对象赋值的时候有两种赋值方式,一种是直接&lt;code&gt;$a=$b&lt;/code&gt;,第二种是引用赋值&lt;code&gt;$a=&amp;amp;$b&lt;/code&gt;.
@@ -153,7 +153,7 @@ alt="PHP中三种主要的MySQL连接方式的功能的比较"
 &lt;h1 id="2-php环境的设置"&gt;2 php环境的设置
 &lt;/h1&gt;&lt;p&gt;我们在实验过程中,需要去查看refcount和is_ref的变化,所以需要使用php的
 &lt;code&gt;xdebug_debug_zval&lt;/code&gt;函数,你的环境可能默认没有开启这个配置,你需要修改&lt;code&gt;php.ini&lt;/code&gt;文件开启这个配置.
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1m1ximwj1j20wn098dj6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1m1ximwj1j20wn098dj6.jpg"
 loading="lazy"
 alt="修改php.ini文件"
 &gt;&lt;/p&gt;
@@ -462,7 +462,7 @@ chr(91) ([) (open square bracket)&lt;/p&gt;
 &lt;h3 id="is_null"&gt;is_null()
 &lt;/h3&gt;&lt;p&gt;所有的&lt;code&gt;is_&lt;/code&gt;开头的函数,都不会进行类型转换,例如is_bool(&amp;lsquo;0&amp;rsquo;),返回false,因为'0&amp;rsquo;不是一个布尔类型的值.
 详细对比看下图
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1euak04nwitj20nf0i2432.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1euak04nwitj20nf0i2432.jpg"
 loading="lazy"
 alt="使用 PHP 函数对变量 $x 进行比较"
 &gt;&lt;/p&gt;

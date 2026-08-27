@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/linux/</link><description>Recent content in Linux on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>修复ubuntu终端中文显示和输入的问题</title><link>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</link><pubDate>Mon, 24 Apr 2017 13:37:01 +0000</pubDate><guid>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</guid><description>&lt;p&gt;我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/linux/</link><description>Recent content in Linux on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>修复ubuntu终端中文显示和输入的问题</title><link>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</link><pubDate>Mon, 24 Apr 2017 13:37:01 +0000</pubDate><guid>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</guid><description>&lt;p&gt;我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文.&lt;/p&gt;
 &lt;p&gt;昨晚没事,就查了一下资料,修复了这个问题.&lt;/p&gt;
 &lt;h1 id="1-目标"&gt;1 目标
 &lt;/h1&gt;&lt;p&gt;本文的目标主要是修复中文文件名乱码和中文输入的问题,本文的目标不是把整个系统的所有语言体系都改成中文,只是单纯的修复中文输入问题和中文文件名显示问题.&lt;/p&gt;
@@ -732,7 +732,7 @@ ps:如果同时设置了&lt;code&gt;Content-Length&lt;/code&gt; 和&lt;code&gt;T
 2 &lt;a class="link" href="http://blog.csdn.net/forgotaboutgirl/article/details/6936982" target="_blank" rel="noopener"
 &gt;HTTP/1.1与HTTP/1.0的区别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://jackroyal.github.io/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
 &lt;p&gt;我去锐速官网注册了账号,可惜,在官方支持的linux版本中并没有我这个内核版本.我用的是&lt;code&gt;3.13.0-37-generic&lt;/code&gt;的&lt;code&gt;32&lt;/code&gt;位版本,锐速官网并没有支持.&lt;code&gt;32&lt;/code&gt;位版本支持的相对较少,支持的最新版本是&lt;code&gt;3.13.0-29-generic&lt;/code&gt;.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
 loading="lazy"
 alt="锐速官网linux支持列表"
 &gt;
@@ -750,7 +750,7 @@ Bits: 32-bit&lt;/p&gt;
 &lt;strong&gt;争取的做法:&lt;/strong&gt;
 1 登录你的&lt;code&gt;digitalocean&lt;/code&gt;控制台
 2 点击&lt;code&gt;setting-&amp;gt;kernel&lt;/code&gt;,效果如下图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
 loading="lazy"
 alt="控制台的kernel页面"
 &gt;
@@ -767,12 +767,12 @@ ok 打完收工&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;撤销操作,我经常会用到,有时候写的代码没有考虑周全,或者有疏漏,需要重新提交什么的.&lt;/p&gt;
 &lt;h1 id="1-撤销工作空间最近的修改"&gt;1 撤销工作空间最近的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:比如上次push以后的完整干净的目录,工作空间没有任何修改,暂存区也没有任何修改,如下图:
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
 loading="lazy"
 alt="上一次提交后干净的工作目录"
 &gt;
 这时候,你手贱,改了一下其中的一个文件,但是这次更改是没有意义的.我们继续使用&lt;code&gt;git status&lt;/code&gt;来查看
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1exp9ngk82jj20it07i75f.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp9ngk82jj20it07i75f.jpg"
 loading="lazy"
 alt="修改一个文件后执行git status的结果"
 &gt;
@@ -782,13 +782,13 @@ alt="修改一个文件后执行git status的结果"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定&lt;/p&gt;
 &lt;h1 id="2-撤销暂存区最近的修改"&gt;2 撤销暂存区最近的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:假如在上面说的那种情况下,你手贱改错了文件,而且你没有撤销,你还执行&lt;code&gt;git add a.txt&lt;/code&gt;,将修改提交到暂存区了.具体情况如下图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa1cbny2j20ge0790td.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa1cbny2j20ge0790td.jpg"
 loading="lazy"
 alt="错误的修改被提交到了暂存区"
 &gt;
 现在我们要从暂存区撤回那个修改
 解决办法:我们使用&lt;code&gt;git reset HEAD a.txt&lt;/code&gt;,将文件从暂存区撤出来,又回到上面的工作空间被修改的状态,如图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa3azt15j20hg09twft.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa3azt15j20hg09twft.jpg"
 loading="lazy"
 alt="从暂存区撤回"
 &gt;
@@ -797,7 +797,7 @@ ps:上面的命令也可以用下面的命令,语法格式是&lt;code&gt;git res
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;总的来说,&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;就是&lt;code&gt;git add &amp;lt;path&amp;gt;&lt;/code&gt;的反向操作&lt;/p&gt;
 &lt;h1 id="3-撤销提交到本地仓库的修改"&gt;3 撤销提交到本地仓库的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:假如你在&lt;code&gt;1.2&lt;/code&gt;还没有回头,一路手贱下去,将暂存区的修改&lt;code&gt;commit&lt;/code&gt;到本地仓库了
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expa8o47yvj20fi087gmv.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa8o47yvj20fi087gmv.jpg"
 loading="lazy"
 alt="错误的修改被提交到本地仓库"
 &gt;
@@ -807,7 +807,7 @@ alt="错误的修改被提交到本地仓库"
 &lt;/h4&gt;&lt;p&gt;我们可以新建一次提交,然后让所修改的文件回到之前的状态,执行&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git revert HEAD
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;含义很简单,逆转,这样你的&lt;code&gt;log&lt;/code&gt;里面会多一次提交,然后文件也回到的之前的状态
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expb97iondj20it0catb7.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expb97iondj20it0catb7.jpg"
 loading="lazy"
 alt="执行git revert 后的log"
 &gt;&lt;/p&gt;
@@ -834,13 +834,13 @@ git reset --hard :取消了commit ，取消了add，取消源文件修改
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着当我们使用&lt;code&gt;git log&lt;/code&gt;来查看的时候,你只会看到提交信息是&amp;quot;这是第二次提交&amp;quot;.
 解决方法:
 我们先将文件内容恢复到上一次(当前是HEAD,上一次就是HEAD^)提交时候的样子,然后执行&lt;code&gt;git commit --amend&lt;/code&gt;,看到如下错误提示,就是说这次文件没有任何修改(废话,我已经恢复正确的样子了,当然一模一样了),默认是不允许空提交的,你只有强制使用&lt;code&gt;--allow-empty&lt;/code&gt;才行,或者执行方案二
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1expt5luwo4j20io06cq3w.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expt5luwo4j20io06cq3w.jpg"
 loading="lazy"
 alt="执行git commit –amend内容没有变化的错误提示"
 &gt;&lt;/p&gt;
 &lt;h1 id="4-总结"&gt;4 总结
 &lt;/h1&gt;&lt;p&gt;盗图一张,总结上面说的内容
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
 loading="lazy"
 alt="工作空间,暂存区,本地仓库之间的关机和转换"
 &gt;
@@ -848,7 +848,7 @@ alt="工作空间,暂存区,本地仓库之间的关机和转换"
 &lt;h3 id="附言"&gt;附言
 &lt;/h3&gt;&lt;p&gt;&lt;strong&gt;PS&lt;/strong&gt;:现在再来解释开头说的,这是本地仓库的操作.
 因为,我们本地仓库执行了&lt;code&gt;git commit&lt;/code&gt;后,所做的更改只会在本地,如果接着执行了&lt;code&gt;git push&lt;/code&gt;那么,所做的更改就会被提交到&lt;code&gt;git&lt;/code&gt;,在上面的例子中那么首先提交到github的就是&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;.这时候,当你执行完&lt;code&gt;git commit --amend&lt;/code&gt;的时候,本地仓库的上次提交会被删除,也就是不存在提示信息为&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;,此时本地仓库完成了修改,你想提交到github,就会报错了.如图所示
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp93i04qtj20it0cajua.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp93i04qtj20it0cajua.jpg"
 loading="lazy"
 alt="本地执行–amend操作后直接提交到github报错"
 &gt;
@@ -895,14 +895,14 @@ ps:如果你足够幸运,可以试试&lt;a class="link" href="https://desktop.gi
 接下来,我们来查看下状态&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git status
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行结果如下图:
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exoxiu5jyij20it0933zl.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exoxiu5jyij20it0933zl.jpg"
 loading="lazy"
 alt="执行git status查看工作区文件状态"
 &gt;
 就像图片中提示的,我们新加的&lt;code&gt;a.txt&lt;/code&gt;是未跟踪文件,我们执行&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add a.txt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们把&lt;code&gt;a.txt&lt;/code&gt;添加到暂存区,再次执行&lt;code&gt;git status&lt;/code&gt;,查看状态,执行结果如图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exoxp6duu1j20it07o0th.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exoxp6duu1j20it07o0th.jpg"
 loading="lazy"
 alt="添加到暂存区后再次执行git status"
 &gt;&lt;/p&gt;
@@ -915,7 +915,7 @@ alt="添加到暂存区后再次执行git status"
 &lt;pre tabindex="0"&gt;&lt;code&gt; git push origin master
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就行了,一个基本的流程就是这样.
 推荐看看下面友情链接里面的那本书,pro git
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp17u1ltjj208r0boq38.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp17u1ltjj208r0boq38.jpg"
 loading="lazy"
 alt="pro git封面"
 &gt;&lt;/p&gt;
@@ -947,7 +947,7 @@ DENY_THRESHOLD_ROOT：root用户尝试登录多少次后被阻止；
 HOSTNAME_LOOKUP：是否尝试解析源IP的域名；```
 一般我们就用默认就好，我们只需要改两个地方：
 ### 第一个，我们注释掉第12行，启用第15行，修改以后结果如下(原因是ubuntu中的log不在/var/log/secure中，而是在/var/log/auth.log中)
-![修改后的denyhosts.cfg](https://ww3.sinaimg.cn/large/692869a3gw1erll3zp3xpj20id0b5q63.jpg)
+![修改后的denyhosts.cfg](/images/692869a3gw1erll3zp3xpj20id0b5q63.jpg)
 ### 第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置
 去掉前面的`# `,就行了，修改后结果如下
 ```bash
@@ -984,7 +984,7 @@ ln -s /usr/share/denyhosts/daemon-control denyhosts
 sudo apt-get install sysv-rc-conf
 sudo sysv-rc-conf
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们设置运行级别2345，编辑以后如下所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
 loading="lazy"
 alt="设置denyhosts开机自启动"
 &gt;
@@ -1244,7 +1244,7 @@ Storing debug log for failure in /root/.pip/pip.log
 2015-03-10 11:12:59 INFO starting local at 127.0.0.1:1080
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-浏览器代理设置"&gt;3) 浏览器代理设置
 &lt;/h2&gt;&lt;p&gt;一般来说我们不希望shadowsocks做全局的翻墙,那样,访问国内的速度也会变慢,我们在chome浏览器中安装switchysharp,来管理代理.具体设置如下所示:
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
 loading="lazy"
 alt="swichysharp设置"
 &gt;&lt;/p&gt;
@@ -1325,7 +1325,7 @@ apt-get install network-manager-vpnc-gnome
 &lt;h1 id="2-刻录u盘-1"&gt;2 刻录u盘
 &lt;/h1&gt;&lt;p&gt;如果采用硬盘安装的话，我们需要在win下面操作，使用easybcd来编辑grub引导，还需要解压文件，相对比较麻烦，我这里采用u盘安装，相对比较简单。
 和安装ubuntu不同，我之前在win下用UltraISO来刻录,
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
 loading="lazy"
 alt="刻录ubuntu"
 &gt;如图所示，便捷启动是可以不修改的，直接默认，点击写入就行。我今天在刻录kali的时候，发现这样写的u盘无法启动，开机的时候会提示&lt;code&gt;failed to boot from USB disk with error: gfxboot.c32: not a COM32R Image boot:&lt;/code&gt;的错误。
@@ -1337,7 +1337,7 @@ alt="刻录ubuntu"
 &lt;a class="link" href="https://help.ubuntu.com/community/mkusb" target="_blank" rel="noopener"
 &gt;https://help.ubuntu.com/community/mkusb&lt;/a&gt;
 2 在win下用UltraISO来刻录，记得更改便捷启动的设置，如图所示
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1epsw409qr3j20go09rjtp.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1epsw409qr3j20go09rjtp.jpg"
 loading="lazy"
 alt="更改便捷启动"
 &gt;，点击便捷启动-&amp;gt;选择写入新的启动器引导扇区——&amp;gt;syslinus——&amp;gt;写入&lt;/p&gt;
@@ -1345,7 +1345,7 @@ alt="更改便捷启动"
 &lt;h1 id="3-安装kali-1"&gt;3 安装kali
 &lt;/h1&gt;&lt;p&gt;下面开始安装kali（以下图片是我用virtualbox虚拟机中安装拍摄的）&lt;/p&gt;
 &lt;h2 id="1-引导成功以后开机画面如图所示"&gt;1 引导成功以后，开机画面如图所示
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
 loading="lazy"
 alt="开机画面"
 &gt;
@@ -1358,27 +1358,27 @@ alt="开机画面"
 domain我们留空不管他，下一步&lt;/p&gt;
 &lt;h2 id="4-设置root密码"&gt;4 设置root密码
 &lt;/h2&gt;&lt;p&gt;我们设置两次一样的密码就行，不要忘记了
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
 loading="lazy"
 alt="设置root密码"
 &gt;&lt;/p&gt;
 &lt;h2 id="5-磁盘分区"&gt;5 磁盘分区
 &lt;/h2&gt;&lt;p&gt;我们选择第三项&lt;code&gt;手动&lt;/code&gt;
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
 loading="lazy"
 alt="磁盘分区选项"
 &gt;
 &lt;strong&gt;分区&lt;/strong&gt;，这里我们一共分&lt;code&gt;三个区&lt;/code&gt;，一个300M的&lt;code&gt;/boot&lt;/code&gt;分区，一个2048M的&lt;code&gt;swap&lt;/code&gt;分区，其他的分为一个&lt;code&gt;/&lt;/code&gt;（你也可以把/home单独分区出来），因为分区方法类似，所以我只讲一个&lt;code&gt;/boot&lt;/code&gt;和&lt;code&gt;swap&lt;/code&gt;分区的步骤
 &lt;strong&gt;boot分区&lt;/strong&gt;
 &lt;strong&gt;注意:&lt;strong&gt;选择&lt;/strong&gt;可启动标志&lt;/strong&gt;，我们只有/boot设置为&lt;code&gt;开&lt;/code&gt;，其他分区的这个选项都是&lt;code&gt;关&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
 loading="lazy"
 alt="boot分区设置"
 &gt;
 设置完成后，选择&lt;code&gt;分区设定结束&lt;/code&gt;，点击继续&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;交换空间&lt;/strong&gt;
 &lt;strong&gt;注意:&lt;strong&gt;交换空间是一种&lt;/strong&gt;文件类型&lt;/strong&gt;，其他的分区是&lt;strong&gt;属于载点&lt;/strong&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
 loading="lazy"
 alt="交换空间swap分区设置"
 &gt;
@@ -1386,7 +1386,7 @@ alt="交换空间swap分区设置"
 &lt;p&gt;等分区完成，就选择&lt;code&gt;分区设定结束并将修改写入磁盘&lt;/code&gt;，点击继续，就开始安装kali&lt;/p&gt;
 &lt;h2 id="6-启动引导"&gt;6 启动引导
 &lt;/h2&gt;&lt;p&gt;当系统快安装完成的时候，会出现grub安装的选择,如图所示
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
 loading="lazy"
 alt="交换空间swap分区设置"
 &gt;&lt;/p&gt;

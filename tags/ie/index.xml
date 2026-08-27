@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ie on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/ie/</link><description>Recent content in Ie on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/ie/index.xml" rel="self" type="application/rss+xml"/><item><title>html5在ie中遇到的那些坑</title><link>https://jackroyal.github.io/post/holes-in-ie6-about-html5/</link><pubDate>Fri, 15 May 2015 23:19:43 +0000</pubDate><guid>https://jackroyal.github.io/post/holes-in-ie6-about-html5/</guid><description>&lt;p&gt;这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ie on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/ie/</link><description>Recent content in Ie on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/ie/index.xml" rel="self" type="application/rss+xml"/><item><title>html5在ie中遇到的那些坑</title><link>https://jackroyal.github.io/post/holes-in-ie6-about-html5/</link><pubDate>Fri, 15 May 2015 23:19:43 +0000</pubDate><guid>https://jackroyal.github.io/post/holes-in-ie6-about-html5/</guid><description>&lt;p&gt;这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).
 我第一个想到的是bootstrap,可惜这货太大了,我只是几个简单的页面,没必要用这么大体量的东西.
 搜索一番以后,我找到了我的解决方案,media query,支付宝也是这么解决的.&lt;/p&gt;
 &lt;h1 id="前提条件"&gt;前提条件
@@ -145,12 +145,12 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&amp;#39;./assets/
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;/&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;/&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果我们给父div设置了一个&lt;code&gt;opacity&lt;/code&gt;为0.1,即使我们给子div设置&lt;code&gt;opacity&lt;/code&gt;为1,也是不管用的,如图
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1es5fm0jafhj20iv0ecq46.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5fm0jafhj20iv0ecq46.jpg"
 loading="lazy"
 alt="未设置父div的opacity之前"
 &gt;
 设置父div的&lt;code&gt;opacity&lt;/code&gt;之后
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg"
 loading="lazy"
 alt="设置父div的opacity之后"
 &gt;

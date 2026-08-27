@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ubuntu on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/ubuntu/</link><description>Recent content in Ubuntu on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml"/><item><title>修复ubuntu终端中文显示和输入的问题</title><link>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</link><pubDate>Mon, 24 Apr 2017 13:37:01 +0000</pubDate><guid>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</guid><description>&lt;p&gt;我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ubuntu on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/ubuntu/</link><description>Recent content in Ubuntu on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/ubuntu/index.xml" rel="self" type="application/rss+xml"/><item><title>修复ubuntu终端中文显示和输入的问题</title><link>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</link><pubDate>Mon, 24 Apr 2017 13:37:01 +0000</pubDate><guid>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</guid><description>&lt;p&gt;我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文.&lt;/p&gt;
 &lt;p&gt;昨晚没事,就查了一下资料,修复了这个问题.&lt;/p&gt;
 &lt;h1 id="1-目标"&gt;1 目标
 &lt;/h1&gt;&lt;p&gt;本文的目标主要是修复中文文件名乱码和中文输入的问题,本文的目标不是把整个系统的所有语言体系都改成中文,只是单纯的修复中文输入问题和中文文件名显示问题.&lt;/p&gt;
@@ -520,7 +520,7 @@ mysql:5.5.43&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;ok,都改完了,就剩一步,重启apache服务器.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo service apache2 restart
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定!
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etl9v3c6wzj20go09dmx6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etl9v3c6wzj20go09dmx6.jpg"
 loading="lazy"
 alt="热疯了,空调房都热"
 &gt;&lt;/p&gt;
@@ -531,7 +531,7 @@ alt="热疯了,空调房都热"
 选个5美元的就够了.&lt;/p&gt;
 &lt;h1 id="1-新建droplet"&gt;1 新建droplet
 &lt;/h1&gt;&lt;p&gt;如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfo3h9svlj211h1tidny.jpg"
 loading="lazy"
 alt="新建droplet,尤其注意勾选ipv6"
 &gt;
@@ -539,12 +539,12 @@ alt="新建droplet,尤其注意勾选ipv6"
 &lt;h1 id="2-修改droplet"&gt;2 修改droplet
 &lt;/h1&gt;&lt;p&gt;我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.
 你打开droplet的&lt;code&gt;setting&lt;/code&gt;,在&lt;code&gt;network&lt;/code&gt;中应该可以看到&lt;code&gt;enable ipv6&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfosgf63kj207w05ujrn.jpg"
 loading="lazy"
 alt="带有启用ipv6选项的页面"
 &gt;
 启用后,稍后片刻,页面如下.
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
 loading="lazy"
 alt="在droplet的setting中启用ipv6后的页面"
 &gt;&lt;/p&gt;
@@ -574,7 +574,7 @@ gateway 网关地址
 autoconf 0
 dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),&lt;!-- raw HTML omitted --&gt;如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
 loading="lazy"
 alt="ipv6成功启用后"
 &gt;&lt;/p&gt;
@@ -628,7 +628,7 @@ DENY_THRESHOLD_ROOT：root用户尝试登录多少次后被阻止；
 HOSTNAME_LOOKUP：是否尝试解析源IP的域名；```
 一般我们就用默认就好，我们只需要改两个地方：
 ### 第一个，我们注释掉第12行，启用第15行，修改以后结果如下(原因是ubuntu中的log不在/var/log/secure中，而是在/var/log/auth.log中)
-![修改后的denyhosts.cfg](https://ww3.sinaimg.cn/large/692869a3gw1erll3zp3xpj20id0b5q63.jpg)
+![修改后的denyhosts.cfg](/images/692869a3gw1erll3zp3xpj20id0b5q63.jpg)
 ### 第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置
 去掉前面的`# `,就行了，修改后结果如下
 ```bash
@@ -665,7 +665,7 @@ ln -s /usr/share/denyhosts/daemon-control denyhosts
 sudo apt-get install sysv-rc-conf
 sudo sysv-rc-conf
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们设置运行级别2345，编辑以后如下所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
 loading="lazy"
 alt="设置denyhosts开机自启动"
 &gt;
@@ -788,7 +788,7 @@ Storing debug log for failure in /root/.pip/pip.log
 2015-03-10 11:12:59 INFO starting local at 127.0.0.1:1080
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-浏览器代理设置"&gt;3) 浏览器代理设置
 &lt;/h2&gt;&lt;p&gt;一般来说我们不希望shadowsocks做全局的翻墙,那样,访问国内的速度也会变慢,我们在chome浏览器中安装switchysharp,来管理代理.具体设置如下所示:
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
 loading="lazy"
 alt="swichysharp设置"
 &gt;&lt;/p&gt;

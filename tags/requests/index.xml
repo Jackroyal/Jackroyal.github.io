@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Requests on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/requests/</link><description>Recent content in Requests on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/requests/index.xml" rel="self" type="application/rss+xml"/><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Requests on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/requests/</link><description>Recent content in Requests on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/requests/index.xml" rel="self" type="application/rss+xml"/><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
 &lt;h1 id="安装requests库"&gt;安装requests库
 &lt;/h1&gt;&lt;p&gt;在ubuntu下面安装很简单&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install requests
@@ -25,19 +25,19 @@
 这个链接，前面部分是登录的网址，问号后面的参数，顾名思义，referer，就是你从哪里跳过来的，也许是一个页面跳转到登录的，toolbar就是我自己点击顶部导航栏，然后跳转到登录页面的。&lt;/p&gt;
 &lt;h2 id="2-清除相关的cookie"&gt;2 清除相关的cookie
 &lt;/h2&gt;&lt;p&gt;为了排除不必要的干扰，我们先清除掉所有的相关的cookie，这样方便我们分析哪些参数是必须的。
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegc1itw2j20qu075779.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegc1itw2j20qu075779.jpg"
 loading="lazy"
 alt="firefox中，清除cookie"
 &gt;&lt;/p&gt;
 &lt;h2 id="3-登录过程分析"&gt;3 登录过程分析
 &lt;/h2&gt;&lt;p&gt;清除了cookie后，我们刷新一下页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;，重新获取对应的cookie。
 然后我们就开始用tamper data来拦截请求。
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
 loading="lazy"
 alt="使用tamper data"
 &gt;
 我们点击&lt;code&gt;start tamper&lt;/code&gt;，在网页中填写用户名和密码。点击&lt;code&gt;登录&lt;/code&gt;，会发出一个请求，然后tamper data会拦截下这个请求，询问我们是否拦截，点击tamper，我们可以在这个请求提交之前，查看请求的内容，还可以做删改。
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegkslypyj20y20gntdt.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegkslypyj20y20gntdt.jpg"
 loading="lazy"
 alt="发出第一个登录请求前拦截下来，查看表单内容"
 &gt;

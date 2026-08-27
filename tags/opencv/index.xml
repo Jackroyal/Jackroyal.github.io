@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Opencv on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/opencv/</link><description>Recent content in Opencv on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/opencv/index.xml" rel="self" type="application/rss+xml"/><item><title>win8中使用vs2010配置opencv</title><link>https://jackroyal.github.io/post/opencv-and-vs2010-in-win8/</link><pubDate>Fri, 15 May 2015 19:56:06 +0000</pubDate><guid>https://jackroyal.github.io/post/opencv-and-vs2010-in-win8/</guid><description>&lt;p&gt;今天在师兄的帮助下,总算配置好了opencv.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Opencv on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/opencv/</link><description>Recent content in Opencv on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/opencv/index.xml" rel="self" type="application/rss+xml"/><item><title>win8中使用vs2010配置opencv</title><link>https://jackroyal.github.io/post/opencv-and-vs2010-in-win8/</link><pubDate>Fri, 15 May 2015 19:56:06 +0000</pubDate><guid>https://jackroyal.github.io/post/opencv-and-vs2010-in-win8/</guid><description>&lt;p&gt;今天在师兄的帮助下,总算配置好了opencv.&lt;/p&gt;
 &lt;h1 id="1-系统环境和软件版本"&gt;1 系统环境和软件版本
 &lt;/h1&gt;&lt;p&gt;操作系统:win8 64位
 vs版本:vs2010 32位
@@ -17,11 +17,11 @@ opencv版本:opencv 2.4.10&lt;/p&gt;
 &lt;h2 id="复制include文件夹"&gt;复制include文件夹
 &lt;/h2&gt;&lt;p&gt;复制&lt;code&gt;D:\opencv\build\include&lt;/code&gt;目录下的&lt;code&gt;opencv&lt;/code&gt;和&lt;code&gt;opencv2&lt;/code&gt;
 到&lt;code&gt;C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include&lt;/code&gt;.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1es5atg7oimj20kw081ta4.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5atg7oimj20kw081ta4.jpg"
 loading="lazy"
 alt="opencv解压后的include目录"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1es5az6qsa7j20jc099jtf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5az6qsa7j20jc099jtf.jpg"
 loading="lazy"
 alt="复制以后的效果截图"
 &gt;&lt;/p&gt;
@@ -32,7 +32,7 @@ alt="复制以后的效果截图"
 &lt;h2 id="复制bin文件夹"&gt;复制bin文件夹
 &lt;/h2&gt;&lt;p&gt;复制bin目录下的东西,我们只需要系统找得到就行,所以我们这里采用环境变量的搞法&lt;/p&gt;
 &lt;p&gt;我们修改path变量,在后面添加&lt;code&gt;;d:\opencv\build\x86\vc10\bin&lt;/code&gt;,效果如图所示&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1es5bew5vcjj20e10g4go8.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5bew5vcjj20e10g4go8.jpg"
 loading="lazy"
 alt="修改path变量,添加opencv的bin目录路径"
 &gt;&lt;/p&gt;
@@ -96,7 +96,7 @@ alt="修改path变量,添加opencv的bin目录路径"
 编译和生成解决方案没有问题，但是开始执行就出现应用程序无法正常启动 0xc000007b错误窗口
 最后,原来是权限问题,使用管理员权限打开vs就解决了,win7下找兼容性设置,以管理员权限运行
 我的win8没有找到兼容性设置,如图所示操作,每次都能以管理员权限打开vs
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg"
 loading="lazy"
 alt="win8使用管理员权限运行vs2010"
 &gt;&lt;/p&gt;
@@ -317,7 +317,7 @@ alt="win8使用管理员权限运行vs2010"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; out_dir &lt;span style="color:#f92672"&gt;is&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;waitKey(&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;代码执行效果如下
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
 loading="lazy"
 alt="人脸识别执行效果"
 &gt;

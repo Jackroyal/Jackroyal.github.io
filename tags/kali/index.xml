@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kali on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/kali/</link><description>Recent content in Kali on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/kali/index.xml" rel="self" type="application/rss+xml"/><item><title>kali安装后设置</title><link>https://jackroyal.github.io/post/after-kali/</link><pubDate>Wed, 04 Mar 2015 14:14:57 +0000</pubDate><guid>https://jackroyal.github.io/post/after-kali/</guid><description>&lt;p&gt;kali安装好了，还有几件事要做
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kali on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/kali/</link><description>Recent content in Kali on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/kali/index.xml" rel="self" type="application/rss+xml"/><item><title>kali安装后设置</title><link>https://jackroyal.github.io/post/after-kali/</link><pubDate>Wed, 04 Mar 2015 14:14:57 +0000</pubDate><guid>https://jackroyal.github.io/post/after-kali/</guid><description>&lt;p&gt;kali安装好了，还有几件事要做
 我们用root的身份登进去系统&lt;/p&gt;
 &lt;h1 id="1-更新软件源"&gt;1 更新软件源
 &lt;/h1&gt;&lt;p&gt;官方自带的软件源速度相对比较慢，资源也少一些，我们添加一些国内的源进去
@@ -59,7 +59,7 @@ apt-get install network-manager-vpnc-gnome
 &lt;h1 id="2-刻录u盘-1"&gt;2 刻录u盘
 &lt;/h1&gt;&lt;p&gt;如果采用硬盘安装的话，我们需要在win下面操作，使用easybcd来编辑grub引导，还需要解压文件，相对比较麻烦，我这里采用u盘安装，相对比较简单。
 和安装ubuntu不同，我之前在win下用UltraISO来刻录,
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
 loading="lazy"
 alt="刻录ubuntu"
 &gt;如图所示，便捷启动是可以不修改的，直接默认，点击写入就行。我今天在刻录kali的时候，发现这样写的u盘无法启动，开机的时候会提示&lt;code&gt;failed to boot from USB disk with error: gfxboot.c32: not a COM32R Image boot:&lt;/code&gt;的错误。
@@ -71,7 +71,7 @@ alt="刻录ubuntu"
 &lt;a class="link" href="https://help.ubuntu.com/community/mkusb" target="_blank" rel="noopener"
 &gt;https://help.ubuntu.com/community/mkusb&lt;/a&gt;
 2 在win下用UltraISO来刻录，记得更改便捷启动的设置，如图所示
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1epsw409qr3j20go09rjtp.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1epsw409qr3j20go09rjtp.jpg"
 loading="lazy"
 alt="更改便捷启动"
 &gt;，点击便捷启动-&amp;gt;选择写入新的启动器引导扇区——&amp;gt;syslinus——&amp;gt;写入&lt;/p&gt;
@@ -79,7 +79,7 @@ alt="更改便捷启动"
 &lt;h1 id="3-安装kali-1"&gt;3 安装kali
 &lt;/h1&gt;&lt;p&gt;下面开始安装kali（以下图片是我用virtualbox虚拟机中安装拍摄的）&lt;/p&gt;
 &lt;h2 id="1-引导成功以后开机画面如图所示"&gt;1 引导成功以后，开机画面如图所示
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
 loading="lazy"
 alt="开机画面"
 &gt;
@@ -92,27 +92,27 @@ alt="开机画面"
 domain我们留空不管他，下一步&lt;/p&gt;
 &lt;h2 id="4-设置root密码"&gt;4 设置root密码
 &lt;/h2&gt;&lt;p&gt;我们设置两次一样的密码就行，不要忘记了
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
 loading="lazy"
 alt="设置root密码"
 &gt;&lt;/p&gt;
 &lt;h2 id="5-磁盘分区"&gt;5 磁盘分区
 &lt;/h2&gt;&lt;p&gt;我们选择第三项&lt;code&gt;手动&lt;/code&gt;
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
 loading="lazy"
 alt="磁盘分区选项"
 &gt;
 &lt;strong&gt;分区&lt;/strong&gt;，这里我们一共分&lt;code&gt;三个区&lt;/code&gt;，一个300M的&lt;code&gt;/boot&lt;/code&gt;分区，一个2048M的&lt;code&gt;swap&lt;/code&gt;分区，其他的分为一个&lt;code&gt;/&lt;/code&gt;（你也可以把/home单独分区出来），因为分区方法类似，所以我只讲一个&lt;code&gt;/boot&lt;/code&gt;和&lt;code&gt;swap&lt;/code&gt;分区的步骤
 &lt;strong&gt;boot分区&lt;/strong&gt;
 &lt;strong&gt;注意:&lt;strong&gt;选择&lt;/strong&gt;可启动标志&lt;/strong&gt;，我们只有/boot设置为&lt;code&gt;开&lt;/code&gt;，其他分区的这个选项都是&lt;code&gt;关&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
 loading="lazy"
 alt="boot分区设置"
 &gt;
 设置完成后，选择&lt;code&gt;分区设定结束&lt;/code&gt;，点击继续&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;交换空间&lt;/strong&gt;
 &lt;strong&gt;注意:&lt;strong&gt;交换空间是一种&lt;/strong&gt;文件类型&lt;/strong&gt;，其他的分区是&lt;strong&gt;属于载点&lt;/strong&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
 loading="lazy"
 alt="交换空间swap分区设置"
 &gt;
@@ -120,7 +120,7 @@ alt="交换空间swap分区设置"
 &lt;p&gt;等分区完成，就选择&lt;code&gt;分区设定结束并将修改写入磁盘&lt;/code&gt;，点击继续，就开始安装kali&lt;/p&gt;
 &lt;h2 id="6-启动引导"&gt;6 启动引导
 &lt;/h2&gt;&lt;p&gt;当系统快安装完成的时候，会出现grub安装的选择,如图所示
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
 loading="lazy"
 alt="交换空间swap分区设置"
 &gt;&lt;/p&gt;

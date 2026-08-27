@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>爬虫 on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/%E7%88%AC%E8%99%AB/</link><description>Recent content in 爬虫 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/%E7%88%AC%E8%99%AB/index.xml" rel="self" type="application/rss+xml"/><item><title>ubuntu下使用scrapy抓取cnblogs</title><link>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</link><pubDate>Sun, 26 Apr 2015 16:52:28 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</guid><description>&lt;p&gt;今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>爬虫 on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/%E7%88%AC%E8%99%AB/</link><description>Recent content in 爬虫 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/%E7%88%AC%E8%99%AB/index.xml" rel="self" type="application/rss+xml"/><item><title>ubuntu下使用scrapy抓取cnblogs</title><link>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</link><pubDate>Sun, 26 Apr 2015 16:52:28 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</guid><description>&lt;p&gt;今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。&lt;/p&gt;
 &lt;h1 id="软件安装"&gt;软件安装
 &lt;/h1&gt;&lt;p&gt;我的环境是：ubuntu 14.04 lts
 需要安装相关软件&lt;/p&gt;
@@ -68,7 +68,7 @@ stack
 &lt;/h1&gt;&lt;p&gt;ok，上述工作基本完成，我们来测试一下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还可以这样测试一下，使用shell命令
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
 loading="lazy"
 alt="用shell测试xpath"
 &gt;
@@ -219,7 +219,7 @@ Setting up python-twisted-conch (1:13.2.0-1ubuntu1) ...
 在这里，我遇到一个大坑，无论是伯乐在线翻译的博客
 还是网上搜索到的一般教程，都是使用pymongo.Connection来连接数据库，可是妈蛋，你使用&lt;code&gt;pip install pymongo&lt;/code&gt;安装的版本都是最新版本3.0.1，那个Connection的写法已经不支持，被丢弃了，擦。
 我们来看一下版本，我学到一个新命令&lt;code&gt;pip show pymongo&lt;/code&gt;，用来查看某一个包的版本的。
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1erjct36jnrj20df038dgf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjct36jnrj20df038dgf.jpg"
 loading="lazy"
 alt="查看pymongo版本"
 &gt;
@@ -275,7 +275,7 @@ alt="查看pymongo版本"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ok,搞定，我们再测试一把&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="执行效果如下"&gt;执行效果如下
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
 loading="lazy"
 alt="mongodb数据库管理"
 &gt;&lt;/p&gt;
@@ -299,7 +299,7 @@ alt="mongodb数据库管理"
 &lt;ul&gt;
 &lt;li&gt;1.1 编辑器编码
 &lt;ul&gt;
-&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmn535qb7j208u028t8k.jpg"
+&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmn535qb7j208u028t8k.jpg"
 loading="lazy"
 alt="sublime显示当前文件编码"
 &gt;&lt;/li&gt;
@@ -308,10 +308,10 @@ alt="sublime显示当前文件编码"
 &lt;/li&gt;
 &lt;li&gt;1.2 python解释器
 &lt;ul&gt;
-&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
+&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
 loading="lazy"
 alt="win中python解释器编码"
-&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
+&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
 loading="lazy"
 alt="ubuntu终端解释器的编码"
 &gt;&lt;/li&gt;

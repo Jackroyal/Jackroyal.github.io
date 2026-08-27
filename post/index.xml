@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 搁浅St的blog</title><link>https://jackroyal.github.io/post/</link><description>Recent content in Posts on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>ha-xiaodu折腾记：把米家和其他HA设备接进小度</title><link>https://jackroyal.github.io/post/ha-xiaodu-connect-home-assistant-devices/</link><pubDate>Fri, 28 Aug 2026 01:00:00 +0800</pubDate><guid>https://jackroyal.github.io/post/ha-xiaodu-connect-home-assistant-devices/</guid><description>&lt;p&gt;最近在整理家里的设备，米家有一部分，Zigbee有一部分，空调、窗帘、传感器又散在不同集成里。Home Assistant这边倒是能统一看，自动化也好写，但小度这边一直不够听话：有些设备发现不了，有些能力不全，状态还经常对不上。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 搁浅St的blog</title><link>https://jackroyal.github.io/post/</link><description>Recent content in Posts on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/post/index.xml" rel="self" type="application/rss+xml"/><item><title>ha-xiaodu折腾记：把米家和其他HA设备接进小度</title><link>https://jackroyal.github.io/post/ha-xiaodu-connect-home-assistant-devices/</link><pubDate>Fri, 28 Aug 2026 01:00:00 +0800</pubDate><guid>https://jackroyal.github.io/post/ha-xiaodu-connect-home-assistant-devices/</guid><description>&lt;p&gt;最近在整理家里的设备，米家有一部分，Zigbee有一部分，空调、窗帘、传感器又散在不同集成里。Home Assistant这边倒是能统一看，自动化也好写，但小度这边一直不够听话：有些设备发现不了，有些能力不全，状态还经常对不上。&lt;/p&gt;
 &lt;p&gt;后来我把 HA 当中间层来用，做了一个自定义集成 &lt;code&gt;ha-xiaodu&lt;/code&gt;。简单说，它把 HA 里的设备映射成 DuerOS 认识的设备，再交给小度发现和控制。链路大概是：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;米家 / Zigbee / 蓝牙 / Matter / 其他 HA 集成
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ↓
@@ -1201,14 +1201,14 @@ nA%B=z
 &lt;/h2&gt;&lt;p&gt;PHP数据对象，是PHP应用中的一个数据库抽象层规范。PDO提供了一个统一的API接口可以使得你的PHP应用不去关心具体要 连接的数据库服务器系统类型。也就是说，如果你使用PDO的API，可以在任何需要的时候无缝切换数据库服务器，比如从Firebird 到MySQL，仅仅需要修改很少的PHP代码。&lt;/p&gt;
 &lt;p&gt;其他数据库抽象层的例子包括Java应用中的JDBC以及Perl中的DBI。&lt;/p&gt;
 &lt;p&gt;当然，PDO也有它自己的先进性，比如一个干净的，简单的，可移植的API，它最主要的缺点是会限制让你不能使用 后期MySQL服务端提供所有的数据库高级特性。比如，PDO不允许使用MySQL支持的多语句执行。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1f1tvea7khyj20hm0dhac0.jpg"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1tvea7khyj20hm0dhac0.jpg"
 loading="lazy"
 alt="PHP中三种主要的MySQL连接方式的功能的比较"
 &gt;&lt;/p&gt;</description></item><item><title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</title><link>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</link><pubDate>Sun, 06 Mar 2016 15:50:46 +0000</pubDate><guid>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</guid><description>&lt;p&gt;上一篇文章&lt;a class="link" href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener"
 &gt;解决 Github Pages 禁止百度爬虫的方法&lt;/a&gt;,提到了解决百度爬虫被github禁用掉的方法.
 &lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;
 然后今天去上gitcafe,偶然看到这个
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
 loading="lazy"
 alt="GitCafe 项目迁移至 Coding.net 公告"
 &gt;
@@ -1229,7 +1229,7 @@ alt="GitCafe 项目迁移至 Coding.net 公告"
 &lt;/h1&gt;&lt;p&gt;这个很简单不必说,注册需要填写用户名,邮箱和密码,比如我的用户名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id="2-新建和用户名同名的项目"&gt;2 新建和用户名同名的项目
 &lt;/h1&gt;&lt;p&gt;在注册好账号以后,我们就去新建一个项目,方法和gitcafe不同和gihub类似,就是和用户名同名,一模一样的就行.我的项目名是&lt;code&gt;Jackroyal&lt;/code&gt;,项目属性&lt;code&gt;公开&lt;/code&gt;
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
 loading="lazy"
 alt="新建同名项目"
 &gt;&lt;/p&gt;
@@ -1238,11 +1238,11 @@ alt="新建同名项目"
 &lt;h2 id="31-使用ssh方式发布博客"&gt;3.1 使用ssh方式发布博客
 &lt;/h2&gt;&lt;p&gt;我们只需要找到本地的ssh公钥,然后上传到coding上去就行,点击&lt;a class="link" href="https://coding.net/user/account/setting/keys" target="_blank" rel="noopener"
 &gt;这里&lt;/a&gt;设置.查看本地ssh公钥的方法和上篇博客一样.
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
 loading="lazy"
 alt="使用git客户端查看ssh公钥私钥"
 &gt;
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
 loading="lazy"
 alt="查看公钥"
 &gt;
@@ -1261,14 +1261,14 @@ ps:这种方式,可能过一段时间又不行了,报错&lt;code&gt;could not re
 &lt;/ol&gt;
 &lt;h1 id="4-新建coding-pages分支"&gt;4 新建coding-pages分支
 &lt;/h1&gt;&lt;p&gt;当我们可以提交代码的时候,我们先来新建分支,和gitcafe差不多,它需要一个特别的分支名字,而不是像github默认的master分支,名字是&lt;code&gt;coding-pages&lt;/code&gt;,如下图所示
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
 loading="lazy"
 alt="新建coding分支"
 &gt;
 我们把它设为默认分支&lt;/p&gt;
 &lt;h1 id="5-开启pages服务"&gt;5 开启pages服务
 &lt;/h1&gt;&lt;p&gt;接下来我们需要手动去开启pages服务.在项目主页的&lt;code&gt;pages&lt;/code&gt;选项卡,点击开启服务,同时我们,添加域名绑定
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
 loading="lazy"
 alt="开启pages服务"
 &gt;
@@ -1287,14 +1287,14 @@ branch: coding-pages
 还要注意branch名称,分支必须是&lt;code&gt;coding-pages&lt;/code&gt;
 **PS:如上面所说,我选择的是https方式发布,所以我的repo是https的,如果你选择ssh方式去认证,那么你的地址应该是类似这样的&lt;code&gt;git@git.coding.net:Jackroyal/Jackroyal.git&lt;/code&gt;
 **&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
 loading="lazy"
 alt="添加coding的repo信息"
 &gt;&lt;/p&gt;
 &lt;h1 id="7-修改dns设置"&gt;7 修改dns设置
 &lt;/h1&gt;&lt;p&gt;就像第5步页面提示的,我们要绑定自己的域名,需要去修改dns解析记录,只需要添加一条CNAME指向你的&lt;code&gt;jackroyal.coding.me&lt;/code&gt;即可.
 注意后面加个点,也就是正确的填法是&lt;code&gt;jackroyal.coding.me.&lt;/code&gt;,如下图所示.修改完成后大概等几分钟才能生效
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
 loading="lazy"
 alt="修改dns设置"
 &gt;&lt;/p&gt;
@@ -1317,7 +1317,7 @@ alt="修改dns设置"
 &lt;h1 id="2-php环境的设置"&gt;2 php环境的设置
 &lt;/h1&gt;&lt;p&gt;我们在实验过程中,需要去查看refcount和is_ref的变化,所以需要使用php的
 &lt;code&gt;xdebug_debug_zval&lt;/code&gt;函数,你的环境可能默认没有开启这个配置,你需要修改&lt;code&gt;php.ini&lt;/code&gt;文件开启这个配置.
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1m1ximwj1j20wn098dj6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1m1ximwj1j20wn098dj6.jpg"
 loading="lazy"
 alt="修改php.ini文件"
 &gt;&lt;/p&gt;
@@ -1564,7 +1564,7 @@ chr(46) (.) (dot)
 chr(91) ([) (open square bracket)&lt;/p&gt;
 &lt;p&gt;ps:ascll码值在128-159的字符是合法字符,所以并不会被转义成下划线&lt;/p&gt;</description></item><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://jackroyal.github.io/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
 &lt;p&gt;我去锐速官网注册了账号,可惜,在官方支持的linux版本中并没有我这个内核版本.我用的是&lt;code&gt;3.13.0-37-generic&lt;/code&gt;的&lt;code&gt;32&lt;/code&gt;位版本,锐速官网并没有支持.&lt;code&gt;32&lt;/code&gt;位版本支持的相对较少,支持的最新版本是&lt;code&gt;3.13.0-29-generic&lt;/code&gt;.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
 loading="lazy"
 alt="锐速官网linux支持列表"
 &gt;
@@ -1582,7 +1582,7 @@ Bits: 32-bit&lt;/p&gt;
 &lt;strong&gt;争取的做法:&lt;/strong&gt;
 1 登录你的&lt;code&gt;digitalocean&lt;/code&gt;控制台
 2 点击&lt;code&gt;setting-&amp;gt;kernel&lt;/code&gt;,效果如下图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
 loading="lazy"
 alt="控制台的kernel页面"
 &gt;
@@ -1664,7 +1664,7 @@ Scott
 &lt;/h1&gt;&lt;p&gt;我们在github和gitcafe上面把自己的博客搭建起来,首先要建仓库.
 &lt;strong&gt;github&lt;/strong&gt;:
 首先登录你的github,然后新建一个公共仓库,仓库名是你的用户名加上&lt;code&gt;yourname.github.io&lt;/code&gt;,如下图所示,我的用户名是&lt;code&gt;Jackroyal&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
 loading="lazy"
 alt="github新建仓库"
 &gt;&lt;/p&gt;
@@ -1694,16 +1694,16 @@ branch: gitcafe-pages
 对的,你猜到了,我们现在需要配置gitcafe的ssh公钥,因为&lt;code&gt;github for windows&lt;/code&gt;会自动帮我们上传公钥,gitcafe就只能手动了.&lt;/p&gt;
 &lt;h3 id="321-查看本地公钥"&gt;3.2.1 查看本地公钥
 &lt;/h3&gt;&lt;p&gt;我们打开你使用的git终端,首先切回用户目录,然后进入&lt;code&gt;.ssh&lt;/code&gt;目录,里面就有公钥和私钥,如下图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
 loading="lazy"
 alt="使用git客户端查看ssh公钥私钥"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye78gs0hvj20it0ca761.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye78gs0hvj20it0ca761.jpg"
 loading="lazy"
 alt="使用github for windows查看ssh公钥私钥"
 &gt;
 我们就是要读取后缀是&lt;code&gt;.pub&lt;/code&gt;的那个文件,比如我的读取命令就是&lt;code&gt;cat github_rsa.pub&lt;/code&gt;,执行结果如下
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
 loading="lazy"
 alt="查看公钥"
 &gt;&lt;/p&gt;
@@ -1711,7 +1711,7 @@ alt="查看公钥"
 &lt;/h3&gt;&lt;p&gt;我们在&lt;a class="link" href="https://gitcafe.com/account/public_keys" target="_blank" rel="noopener"
 &gt;这里&lt;/a&gt;来设置gitcafe的公钥.
 &lt;em&gt;PS:需要注意的是,公钥后面的chen@chen-pc是不需要的,我的带上以后,gitcafe说是公钥非法,不过不怕,gitcafe会帮你正确格式化&lt;/em&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
 loading="lazy"
 alt="正确的ssh格式"
 &gt;
@@ -1724,7 +1724,7 @@ alt="正确的ssh格式"
 &lt;/h1&gt;&lt;p&gt;首先你得有个域名,像我一样,哈哈.&lt;/p&gt;
 &lt;h2 id="41-修改域名注册的解析服务器"&gt;4.1 修改域名注册的解析服务器
 &lt;/h2&gt;&lt;p&gt;我们在要把域名解析服务,设置到dnspod,因为他是国内的,而且服务很好.我们登录自己的域名管理后台,选择对应的域名进行管理,然后找到&lt;code&gt;nameservers&lt;/code&gt;的设置,如图所示
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7orkymjj210j0i7tde.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7orkymjj210j0i7tde.jpg"
 loading="lazy"
 alt="修改nameservers的设置"
 &gt;
@@ -1738,7 +1738,7 @@ ok,改完以后,这边就完了,我们登录dnspod&lt;/p&gt;
 &lt;h2 id="42-修改dnspod解析记录"&gt;4.2 修改dnspod解析记录
 &lt;/h2&gt;&lt;p&gt;我们登录dnspod,然后添加域名
 如果4.1中的设置生效了,你的域名就会添加成功了,我们直接进行下一步,修改解析记录,上图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
 loading="lazy"
 alt="dns解析记录"
 &gt;
@@ -1755,25 +1755,25 @@ www CNAME 国内 gitcafe.io.
 &gt;配置CNAME文件&lt;/a&gt;.说白了,就是在你的网站根目录,添加一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件,里面的内容就是你的域名&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;bblove.me
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有任何多余的信息,如下图
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
 loading="lazy"
 alt="配置github的CNAME"
 &gt;
 上面的配置现在访问没问题,但是你一重新发布博客,就需要重新手动添加&lt;code&gt;CNAME&lt;/code&gt;文件,太麻烦.
 一劳永逸的方法,在你的&lt;code&gt;hexo&lt;/code&gt;目录下的&lt;code&gt;source&lt;/code&gt;目录中,新建一个&lt;code&gt;CNAME&lt;/code&gt;文件夹,然后他每次在你发布博客的时候,都会在你的网站根目录生成一个&lt;code&gt;CNAME&lt;/code&gt;文件.
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
 loading="lazy"
 alt="添加CNAME的目录结构"
 &gt;
 现在github的配置彻底结束.&lt;/p&gt;
 &lt;p&gt;接下来配置gitcafe:
 1 我们在gitcafe的项目主页,点击&lt;code&gt;项目设置&lt;/code&gt;,如下图(之所以截图,是因为我找半天才看到&amp;hellip;)
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyeadedmh1j20z508eadm.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyeadedmh1j20z508eadm.jpg"
 loading="lazy"
 alt="gitcafe点击’项目设置’"
 &gt;
 2 然后我们点击&lt;code&gt;pages服务&lt;/code&gt;标签,然后添加自己的域名,这些域名是我们之前在dnspod中设置了解析的
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
 loading="lazy"
 alt="gitcafe配置自定义域名"
 &gt;&lt;/p&gt;
@@ -1794,12 +1794,12 @@ ok,收工&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;撤销操作,我经常会用到,有时候写的代码没有考虑周全,或者有疏漏,需要重新提交什么的.&lt;/p&gt;
 &lt;h1 id="1-撤销工作空间最近的修改"&gt;1 撤销工作空间最近的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:比如上次push以后的完整干净的目录,工作空间没有任何修改,暂存区也没有任何修改,如下图:
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
 loading="lazy"
 alt="上一次提交后干净的工作目录"
 &gt;
 这时候,你手贱,改了一下其中的一个文件,但是这次更改是没有意义的.我们继续使用&lt;code&gt;git status&lt;/code&gt;来查看
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1exp9ngk82jj20it07i75f.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp9ngk82jj20it07i75f.jpg"
 loading="lazy"
 alt="修改一个文件后执行git status的结果"
 &gt;
@@ -1809,13 +1809,13 @@ alt="修改一个文件后执行git status的结果"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定&lt;/p&gt;
 &lt;h1 id="2-撤销暂存区最近的修改"&gt;2 撤销暂存区最近的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:假如在上面说的那种情况下,你手贱改错了文件,而且你没有撤销,你还执行&lt;code&gt;git add a.txt&lt;/code&gt;,将修改提交到暂存区了.具体情况如下图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa1cbny2j20ge0790td.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa1cbny2j20ge0790td.jpg"
 loading="lazy"
 alt="错误的修改被提交到了暂存区"
 &gt;
 现在我们要从暂存区撤回那个修改
 解决办法:我们使用&lt;code&gt;git reset HEAD a.txt&lt;/code&gt;,将文件从暂存区撤出来,又回到上面的工作空间被修改的状态,如图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1expa3azt15j20hg09twft.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa3azt15j20hg09twft.jpg"
 loading="lazy"
 alt="从暂存区撤回"
 &gt;
@@ -1824,7 +1824,7 @@ ps:上面的命令也可以用下面的命令,语法格式是&lt;code&gt;git res
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;总的来说,&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;就是&lt;code&gt;git add &amp;lt;path&amp;gt;&lt;/code&gt;的反向操作&lt;/p&gt;
 &lt;h1 id="3-撤销提交到本地仓库的修改"&gt;3 撤销提交到本地仓库的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:假如你在&lt;code&gt;1.2&lt;/code&gt;还没有回头,一路手贱下去,将暂存区的修改&lt;code&gt;commit&lt;/code&gt;到本地仓库了
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expa8o47yvj20fi087gmv.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa8o47yvj20fi087gmv.jpg"
 loading="lazy"
 alt="错误的修改被提交到本地仓库"
 &gt;
@@ -1834,7 +1834,7 @@ alt="错误的修改被提交到本地仓库"
 &lt;/h4&gt;&lt;p&gt;我们可以新建一次提交,然后让所修改的文件回到之前的状态,执行&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git revert HEAD
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;含义很简单,逆转,这样你的&lt;code&gt;log&lt;/code&gt;里面会多一次提交,然后文件也回到的之前的状态
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1expb97iondj20it0catb7.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expb97iondj20it0catb7.jpg"
 loading="lazy"
 alt="执行git revert 后的log"
 &gt;&lt;/p&gt;
@@ -1861,13 +1861,13 @@ git reset --hard :取消了commit ，取消了add，取消源文件修改
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着当我们使用&lt;code&gt;git log&lt;/code&gt;来查看的时候,你只会看到提交信息是&amp;quot;这是第二次提交&amp;quot;.
 解决方法:
 我们先将文件内容恢复到上一次(当前是HEAD,上一次就是HEAD^)提交时候的样子,然后执行&lt;code&gt;git commit --amend&lt;/code&gt;,看到如下错误提示,就是说这次文件没有任何修改(废话,我已经恢复正确的样子了,当然一模一样了),默认是不允许空提交的,你只有强制使用&lt;code&gt;--allow-empty&lt;/code&gt;才行,或者执行方案二
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1expt5luwo4j20io06cq3w.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1expt5luwo4j20io06cq3w.jpg"
 loading="lazy"
 alt="执行git commit –amend内容没有变化的错误提示"
 &gt;&lt;/p&gt;
 &lt;h1 id="4-总结"&gt;4 总结
 &lt;/h1&gt;&lt;p&gt;盗图一张,总结上面说的内容
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
 loading="lazy"
 alt="工作空间,暂存区,本地仓库之间的关机和转换"
 &gt;
@@ -1875,7 +1875,7 @@ alt="工作空间,暂存区,本地仓库之间的关机和转换"
 &lt;h3 id="附言"&gt;附言
 &lt;/h3&gt;&lt;p&gt;&lt;strong&gt;PS&lt;/strong&gt;:现在再来解释开头说的,这是本地仓库的操作.
 因为,我们本地仓库执行了&lt;code&gt;git commit&lt;/code&gt;后,所做的更改只会在本地,如果接着执行了&lt;code&gt;git push&lt;/code&gt;那么,所做的更改就会被提交到&lt;code&gt;git&lt;/code&gt;,在上面的例子中那么首先提交到github的就是&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;.这时候,当你执行完&lt;code&gt;git commit --amend&lt;/code&gt;的时候,本地仓库的上次提交会被删除,也就是不存在提示信息为&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;,此时本地仓库完成了修改,你想提交到github,就会报错了.如图所示
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp93i04qtj20it0cajua.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp93i04qtj20it0cajua.jpg"
 loading="lazy"
 alt="本地执行–amend操作后直接提交到github报错"
 &gt;
@@ -1922,14 +1922,14 @@ ps:如果你足够幸运,可以试试&lt;a class="link" href="https://desktop.gi
 接下来,我们来查看下状态&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git status
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行结果如下图:
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exoxiu5jyij20it0933zl.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exoxiu5jyij20it0933zl.jpg"
 loading="lazy"
 alt="执行git status查看工作区文件状态"
 &gt;
 就像图片中提示的,我们新加的&lt;code&gt;a.txt&lt;/code&gt;是未跟踪文件,我们执行&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add a.txt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们把&lt;code&gt;a.txt&lt;/code&gt;添加到暂存区,再次执行&lt;code&gt;git status&lt;/code&gt;,查看状态,执行结果如图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1exoxp6duu1j20it07o0th.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exoxp6duu1j20it07o0th.jpg"
 loading="lazy"
 alt="添加到暂存区后再次执行git status"
 &gt;&lt;/p&gt;
@@ -1942,14 +1942,14 @@ alt="添加到暂存区后再次执行git status"
 &lt;pre tabindex="0"&gt;&lt;code&gt; git push origin master
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就行了,一个基本的流程就是这样.
 推荐看看下面友情链接里面的那本书,pro git
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exp17u1ltjj208r0boq38.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp17u1ltjj208r0boq38.jpg"
 loading="lazy"
 alt="pro git封面"
 &gt;&lt;/p&gt;
 &lt;h1 id="友情链接"&gt;友情链接
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://iissnan.com/progit/" target="_blank" rel="noopener"
 &gt;pro git中文书籍在线版&lt;/a&gt;&lt;/p&gt;</description></item><item><title>微信支付app支付3.0接口开发</title><link>https://jackroyal.github.io/post/weixin-app-pay-v3-0/</link><pubDate>Sun, 25 Oct 2015 21:30:03 +0000</pubDate><guid>https://jackroyal.github.io/post/weixin-app-pay-v3-0/</guid><description>&lt;p&gt;最近在做微信支付,因为前段时间做了微信的公众账号支付,我以为是一个东西,结果发现不是,我真是醉了,竟然是独立的两套东西.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1exdqakso33j20ny0dptbi.jpg"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1exdqakso33j20ny0dptbi.jpg"
 loading="lazy"
 alt="微信支付架构图"
 &gt;
@@ -1961,7 +1961,7 @@ alt="微信支付架构图"
 &gt;开放平台&lt;/a&gt;账号,然后添加一个app应用(里面包含你的appid和appkey),并且进行认证,然后就会收到一封邮件,里面包含了你分到的商户号.&lt;/p&gt;
 &lt;h1 id="1-流程图"&gt;1 流程图
 &lt;/h1&gt;&lt;p&gt;接下来,我们需要搞清楚微信app支付开发的流程,如下图所示.
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1exgxrb07bfj20ou0sy453.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1exgxrb07bfj20ou0sy453.jpg"
 loading="lazy"
 alt="微信app支付流程图"
 &gt;
@@ -2131,7 +2131,7 @@ allow from all
 &lt;h3 id="is_null"&gt;is_null()
 &lt;/h3&gt;&lt;p&gt;所有的&lt;code&gt;is_&lt;/code&gt;开头的函数,都不会进行类型转换,例如is_bool(&amp;lsquo;0&amp;rsquo;),返回false,因为'0&amp;rsquo;不是一个布尔类型的值.
 详细对比看下图
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1euak04nwitj20nf0i2432.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1euak04nwitj20nf0i2432.jpg"
 loading="lazy"
 alt="使用 PHP 函数对变量 $x 进行比较"
 &gt;&lt;/p&gt;
@@ -2162,7 +2162,7 @@ mysql:5.5.43&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;ok,都改完了,就剩一步,重启apache服务器.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo service apache2 restart
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定!
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etl9v3c6wzj20go09dmx6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etl9v3c6wzj20go09dmx6.jpg"
 loading="lazy"
 alt="热疯了,空调房都热"
 &gt;&lt;/p&gt;
@@ -2173,7 +2173,7 @@ alt="热疯了,空调房都热"
 选个5美元的就够了.&lt;/p&gt;
 &lt;h1 id="1-新建droplet"&gt;1 新建droplet
 &lt;/h1&gt;&lt;p&gt;如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfo3h9svlj211h1tidny.jpg"
 loading="lazy"
 alt="新建droplet,尤其注意勾选ipv6"
 &gt;
@@ -2181,12 +2181,12 @@ alt="新建droplet,尤其注意勾选ipv6"
 &lt;h1 id="2-修改droplet"&gt;2 修改droplet
 &lt;/h1&gt;&lt;p&gt;我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.
 你打开droplet的&lt;code&gt;setting&lt;/code&gt;,在&lt;code&gt;network&lt;/code&gt;中应该可以看到&lt;code&gt;enable ipv6&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfosgf63kj207w05ujrn.jpg"
 loading="lazy"
 alt="带有启用ipv6选项的页面"
 &gt;
 启用后,稍后片刻,页面如下.
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
 loading="lazy"
 alt="在droplet的setting中启用ipv6后的页面"
 &gt;&lt;/p&gt;
@@ -2216,7 +2216,7 @@ gateway 网关地址
 autoconf 0
 dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),&lt;!-- raw HTML omitted --&gt;如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
 loading="lazy"
 alt="ipv6成功启用后"
 &gt;&lt;/p&gt;
@@ -2259,11 +2259,11 @@ node: 0.12.4&lt;/p&gt;
 下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
 target="_blank" rel="noopener"
 &gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3jw1emplp1lz31j204w033mx0.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3jw1emplp1lz31j204w033mx0.jpg"
 loading="lazy"
 alt="Github for windows"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1empluh6hvej210b0j741r.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1empluh6hvej210b0j741r.jpg"
 loading="lazy"
 alt="GUI and Bash"
 &gt;&lt;/p&gt;
@@ -2480,11 +2480,11 @@ hexo还支持多发布,可以同时发布到github和gitcafe.&lt;/p&gt;
 &gt;不蒜子&lt;/a&gt;,这位非著名码农自己做的访问统计,哈哈,点个赞
 &lt;/h4&gt;&lt;h4 id="3-今天还看到了font-awesome可以显示一些小图标为了显示效果更好一并加上去"&gt;3 今天还看到了font-awesome,可以显示一些小图标,为了显示效果更好,一并加上去
 &lt;/h4&gt;&lt;p&gt;先展示一下最终的效果:&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esm9snxfcuj20su0ad74x.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esm9snxfcuj20su0ad74x.jpg"
 loading="lazy"
 alt="页底关于整站访问量的显示"
 &gt;
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1esm9tcczdij20r00doq4t.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esm9tcczdij20r00doq4t.jpg"
 loading="lazy"
 alt="文章页面关于访问量和评论数量的显示"
 &gt;&lt;/p&gt;
@@ -2505,7 +2505,7 @@ alt="文章页面关于访问量和评论数量的显示"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最终效果如图&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmas5d58oj20x50jc46f.jpg"
 loading="lazy"
 alt="修改后的article.ejs"
 &gt;
@@ -2513,7 +2513,7 @@ alt="修改后的article.ejs"
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;ds-thread-count&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;data-thread-key&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;%= page.layout %&amp;gt;-&amp;lt;%= page.slug %&amp;gt;&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;尤其注意&lt;code&gt;data-thread-key&lt;/code&gt;的设置,他和你之前配置多说的时候是一致的,每篇文章有一个独一无二的key,你可以去你的&lt;code&gt;themes/light/layout/_partial/comment.ejs&lt;/code&gt;里找到关于data-thread-key的内容,直接复制过来即可.&lt;/p&gt;
 &lt;p&gt;Ps:这里我们可能还需要配置下数据显示的格式,在你的多说后台管理里面,进入设置界面如图
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1esmayan2utj20w50mx0ya.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmayan2utj20w50mx0ya.jpg"
 loading="lazy"
 alt="多说后台设置"
 &gt;
@@ -2540,7 +2540,7 @@ alt="多说后台设置"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esmas5d58oj20x50jc46f.jpg"
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmas5d58oj20x50jc46f.jpg"
 loading="lazy"
 alt="修改后的article.ejs"
 &gt;&lt;!-- raw HTML omitted --&gt;2.修改&lt;code&gt;themes/light/layout/_partial/footer.ejs&lt;/code&gt;,下面是footer.ejs的&lt;strong&gt;全部代码&lt;/strong&gt;:&lt;/p&gt;
@@ -2570,7 +2570,7 @@ padding-left:4px
 .ds-thread-count
 padding-left:4px
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最终效果如图:
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1esmajbsx38j20k30gwadu.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmajbsx38j20k30gwadu.jpg"
 loading="lazy"
 alt="添加css,注意左对齐"
 &gt;&lt;!-- raw HTML omitted --&gt;5.修改&lt;code&gt;themes\light\source\css\_partial\footer.styl&lt;/code&gt;,在最后添加上以下代码&lt;/p&gt;
@@ -2616,19 +2616,19 @@ padding-left:2em
 这个链接，前面部分是登录的网址，问号后面的参数，顾名思义，referer，就是你从哪里跳过来的，也许是一个页面跳转到登录的，toolbar就是我自己点击顶部导航栏，然后跳转到登录页面的。&lt;/p&gt;
 &lt;h2 id="2-清除相关的cookie"&gt;2 清除相关的cookie
 &lt;/h2&gt;&lt;p&gt;为了排除不必要的干扰，我们先清除掉所有的相关的cookie，这样方便我们分析哪些参数是必须的。
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegc1itw2j20qu075779.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegc1itw2j20qu075779.jpg"
 loading="lazy"
 alt="firefox中，清除cookie"
 &gt;&lt;/p&gt;
 &lt;h2 id="3-登录过程分析"&gt;3 登录过程分析
 &lt;/h2&gt;&lt;p&gt;清除了cookie后，我们刷新一下页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;，重新获取对应的cookie。
 然后我们就开始用tamper data来拦截请求。
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
 loading="lazy"
 alt="使用tamper data"
 &gt;
 我们点击&lt;code&gt;start tamper&lt;/code&gt;，在网页中填写用户名和密码。点击&lt;code&gt;登录&lt;/code&gt;，会发出一个请求，然后tamper data会拦截下这个请求，询问我们是否拦截，点击tamper，我们可以在这个请求提交之前，查看请求的内容，还可以做删改。
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegkslypyj20y20gntdt.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegkslypyj20y20gntdt.jpg"
 loading="lazy"
 alt="发出第一个登录请求前拦截下来，查看表单内容"
 &gt;
@@ -2864,12 +2864,12 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&amp;#39;./assets/
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;/&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;/&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果我们给父div设置了一个&lt;code&gt;opacity&lt;/code&gt;为0.1,即使我们给子div设置&lt;code&gt;opacity&lt;/code&gt;为1,也是不管用的,如图
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1es5fm0jafhj20iv0ecq46.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5fm0jafhj20iv0ecq46.jpg"
 loading="lazy"
 alt="未设置父div的opacity之前"
 &gt;
 设置父div的&lt;code&gt;opacity&lt;/code&gt;之后
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg"
 loading="lazy"
 alt="设置父div的opacity之后"
 &gt;
@@ -2910,11 +2910,11 @@ opencv版本:opencv 2.4.10&lt;/p&gt;
 &lt;h2 id="复制include文件夹"&gt;复制include文件夹
 &lt;/h2&gt;&lt;p&gt;复制&lt;code&gt;D:\opencv\build\include&lt;/code&gt;目录下的&lt;code&gt;opencv&lt;/code&gt;和&lt;code&gt;opencv2&lt;/code&gt;
 到&lt;code&gt;C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include&lt;/code&gt;.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1es5atg7oimj20kw081ta4.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5atg7oimj20kw081ta4.jpg"
 loading="lazy"
 alt="opencv解压后的include目录"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1es5az6qsa7j20jc099jtf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5az6qsa7j20jc099jtf.jpg"
 loading="lazy"
 alt="复制以后的效果截图"
 &gt;&lt;/p&gt;
@@ -2925,7 +2925,7 @@ alt="复制以后的效果截图"
 &lt;h2 id="复制bin文件夹"&gt;复制bin文件夹
 &lt;/h2&gt;&lt;p&gt;复制bin目录下的东西,我们只需要系统找得到就行,所以我们这里采用环境变量的搞法&lt;/p&gt;
 &lt;p&gt;我们修改path变量,在后面添加&lt;code&gt;;d:\opencv\build\x86\vc10\bin&lt;/code&gt;,效果如图所示&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1es5bew5vcjj20e10g4go8.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5bew5vcjj20e10g4go8.jpg"
 loading="lazy"
 alt="修改path变量,添加opencv的bin目录路径"
 &gt;&lt;/p&gt;
@@ -2989,7 +2989,7 @@ alt="修改path变量,添加opencv的bin目录路径"
 编译和生成解决方案没有问题，但是开始执行就出现应用程序无法正常启动 0xc000007b错误窗口
 最后,原来是权限问题,使用管理员权限打开vs就解决了,win7下找兼容性设置,以管理员权限运行
 我的win8没有找到兼容性设置,如图所示操作,每次都能以管理员权限打开vs
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg"
 loading="lazy"
 alt="win8使用管理员权限运行vs2010"
 &gt;&lt;/p&gt;
@@ -3029,7 +3029,7 @@ DENY_THRESHOLD_ROOT：root用户尝试登录多少次后被阻止；
 HOSTNAME_LOOKUP：是否尝试解析源IP的域名；```
 一般我们就用默认就好，我们只需要改两个地方：
 ### 第一个，我们注释掉第12行，启用第15行，修改以后结果如下(原因是ubuntu中的log不在/var/log/secure中，而是在/var/log/auth.log中)
-![修改后的denyhosts.cfg](https://ww3.sinaimg.cn/large/692869a3gw1erll3zp3xpj20id0b5q63.jpg)
+![修改后的denyhosts.cfg](/images/692869a3gw1erll3zp3xpj20id0b5q63.jpg)
 ### 第二个，我们启用第64行，也就是设置，ip被禁止后，禁止5天，这个时间你可以自行设置
 去掉前面的`# `,就行了，修改后结果如下
 ```bash
@@ -3066,7 +3066,7 @@ ln -s /usr/share/denyhosts/daemon-control denyhosts
 sudo apt-get install sysv-rc-conf
 sudo sysv-rc-conf
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们设置运行级别2345，编辑以后如下所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
 loading="lazy"
 alt="设置denyhosts开机自启动"
 &gt;
@@ -3147,7 +3147,7 @@ stack
 &lt;/h1&gt;&lt;p&gt;ok，上述工作基本完成，我们来测试一下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还可以这样测试一下，使用shell命令
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
 loading="lazy"
 alt="用shell测试xpath"
 &gt;
@@ -3298,7 +3298,7 @@ Setting up python-twisted-conch (1:13.2.0-1ubuntu1) ...
 在这里，我遇到一个大坑，无论是伯乐在线翻译的博客
 还是网上搜索到的一般教程，都是使用pymongo.Connection来连接数据库，可是妈蛋，你使用&lt;code&gt;pip install pymongo&lt;/code&gt;安装的版本都是最新版本3.0.1，那个Connection的写法已经不支持，被丢弃了，擦。
 我们来看一下版本，我学到一个新命令&lt;code&gt;pip show pymongo&lt;/code&gt;，用来查看某一个包的版本的。
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1erjct36jnrj20df038dgf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjct36jnrj20df038dgf.jpg"
 loading="lazy"
 alt="查看pymongo版本"
 &gt;
@@ -3354,7 +3354,7 @@ alt="查看pymongo版本"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ok,搞定，我们再测试一把&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="执行效果如下"&gt;执行效果如下
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
 loading="lazy"
 alt="mongodb数据库管理"
 &gt;&lt;/p&gt;
@@ -3571,7 +3571,7 @@ alt="mongodb数据库管理"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; out_dir &lt;span style="color:#f92672"&gt;is&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;waitKey(&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;代码执行效果如下
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
 loading="lazy"
 alt="人脸识别执行效果"
 &gt;
@@ -3623,11 +3623,11 @@ wait_time=5
 所以应该放在全英文的目录下
 C:/software/spider.exe
 运行结果如图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
 loading="lazy"
 alt="spider运行截图"
 &gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
 loading="lazy"
 alt="运行结果截图"
 &gt;&lt;/p&gt;
@@ -3644,7 +3644,7 @@ python spider.py
 python spider.py
 &lt;/code&gt;&lt;/pre&gt;</description></item><item><title>hexo发布失败</title><link>https://jackroyal.github.io/post/hexo-deploy-error/</link><pubDate>Sun, 29 Mar 2015 18:09:28 +0000</pubDate><guid>https://jackroyal.github.io/post/hexo-deploy-error/</guid><description>&lt;p&gt;可能受到上次ddos的问题,这两天国内访问github,总是感觉不顺畅.&lt;/p&gt;
 &lt;p&gt;今天下午写了一篇博客,可是却发布不成功,一直卡在这一步:
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqmrrf20j1j20g006676y.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmrrf20j1j20g006676y.jpg"
 loading="lazy"
 alt="hexo发布的时候卡住"
 &gt;&lt;/p&gt;
@@ -3691,7 +3691,7 @@ branch: master
 &lt;ul&gt;
 &lt;li&gt;1.1 编辑器编码
 &lt;ul&gt;
-&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmn535qb7j208u028t8k.jpg"
+&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmn535qb7j208u028t8k.jpg"
 loading="lazy"
 alt="sublime显示当前文件编码"
 &gt;&lt;/li&gt;
@@ -3700,10 +3700,10 @@ alt="sublime显示当前文件编码"
 &lt;/li&gt;
 &lt;li&gt;1.2 python解释器
 &lt;ul&gt;
-&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
+&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
 loading="lazy"
 alt="win中python解释器编码"
-&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
+&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
 loading="lazy"
 alt="ubuntu终端解释器的编码"
 &gt;&lt;/li&gt;
@@ -3968,7 +3968,7 @@ try:
 asyncore.loop()
 except KeyboardInterrupt: print
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果如图所示
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
 loading="lazy"
 alt="运行效果"
 &gt;&lt;/p&gt;</description></item><item><title>python学习笔记--socket编程端口复用</title><link>https://jackroyal.github.io/post/python-socket-port-reuse/</link><pubDate>Wed, 18 Mar 2015 08:47:02 +0000</pubDate><guid>https://jackroyal.github.io/post/python-socket-port-reuse/</guid><description>&lt;p&gt;最近在学习socket编程,遇到一个问题:
@@ -4220,7 +4220,7 @@ Storing debug log for failure in /root/.pip/pip.log
 2015-03-10 11:12:59 INFO starting local at 127.0.0.1:1080
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-浏览器代理设置"&gt;3) 浏览器代理设置
 &lt;/h2&gt;&lt;p&gt;一般来说我们不希望shadowsocks做全局的翻墙,那样,访问国内的速度也会变慢,我们在chome浏览器中安装switchysharp,来管理代理.具体设置如下所示:
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
 loading="lazy"
 alt="swichysharp设置"
 &gt;&lt;/p&gt;
@@ -4301,7 +4301,7 @@ apt-get install network-manager-vpnc-gnome
 &lt;h1 id="2-刻录u盘-1"&gt;2 刻录u盘
 &lt;/h1&gt;&lt;p&gt;如果采用硬盘安装的话，我们需要在win下面操作，使用easybcd来编辑grub引导，还需要解压文件，相对比较麻烦，我这里采用u盘安装，相对比较简单。
 和安装ubuntu不同，我之前在win下用UltraISO来刻录,
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
 loading="lazy"
 alt="刻录ubuntu"
 &gt;如图所示，便捷启动是可以不修改的，直接默认，点击写入就行。我今天在刻录kali的时候，发现这样写的u盘无法启动，开机的时候会提示&lt;code&gt;failed to boot from USB disk with error: gfxboot.c32: not a COM32R Image boot:&lt;/code&gt;的错误。
@@ -4313,7 +4313,7 @@ alt="刻录ubuntu"
 &lt;a class="link" href="https://help.ubuntu.com/community/mkusb" target="_blank" rel="noopener"
 &gt;https://help.ubuntu.com/community/mkusb&lt;/a&gt;
 2 在win下用UltraISO来刻录，记得更改便捷启动的设置，如图所示
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1epsw409qr3j20go09rjtp.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1epsw409qr3j20go09rjtp.jpg"
 loading="lazy"
 alt="更改便捷启动"
 &gt;，点击便捷启动-&amp;gt;选择写入新的启动器引导扇区——&amp;gt;syslinus——&amp;gt;写入&lt;/p&gt;
@@ -4321,7 +4321,7 @@ alt="更改便捷启动"
 &lt;h1 id="3-安装kali-1"&gt;3 安装kali
 &lt;/h1&gt;&lt;p&gt;下面开始安装kali（以下图片是我用virtualbox虚拟机中安装拍摄的）&lt;/p&gt;
 &lt;h2 id="1-引导成功以后开机画面如图所示"&gt;1 引导成功以后，开机画面如图所示
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
 loading="lazy"
 alt="开机画面"
 &gt;
@@ -4334,27 +4334,27 @@ alt="开机画面"
 domain我们留空不管他，下一步&lt;/p&gt;
 &lt;h2 id="4-设置root密码"&gt;4 设置root密码
 &lt;/h2&gt;&lt;p&gt;我们设置两次一样的密码就行，不要忘记了
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
 loading="lazy"
 alt="设置root密码"
 &gt;&lt;/p&gt;
 &lt;h2 id="5-磁盘分区"&gt;5 磁盘分区
 &lt;/h2&gt;&lt;p&gt;我们选择第三项&lt;code&gt;手动&lt;/code&gt;
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
 loading="lazy"
 alt="磁盘分区选项"
 &gt;
 &lt;strong&gt;分区&lt;/strong&gt;，这里我们一共分&lt;code&gt;三个区&lt;/code&gt;，一个300M的&lt;code&gt;/boot&lt;/code&gt;分区，一个2048M的&lt;code&gt;swap&lt;/code&gt;分区，其他的分为一个&lt;code&gt;/&lt;/code&gt;（你也可以把/home单独分区出来），因为分区方法类似，所以我只讲一个&lt;code&gt;/boot&lt;/code&gt;和&lt;code&gt;swap&lt;/code&gt;分区的步骤
 &lt;strong&gt;boot分区&lt;/strong&gt;
 &lt;strong&gt;注意:&lt;strong&gt;选择&lt;/strong&gt;可启动标志&lt;/strong&gt;，我们只有/boot设置为&lt;code&gt;开&lt;/code&gt;，其他分区的这个选项都是&lt;code&gt;关&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
 loading="lazy"
 alt="boot分区设置"
 &gt;
 设置完成后，选择&lt;code&gt;分区设定结束&lt;/code&gt;，点击继续&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;交换空间&lt;/strong&gt;
 &lt;strong&gt;注意:&lt;strong&gt;交换空间是一种&lt;/strong&gt;文件类型&lt;/strong&gt;，其他的分区是&lt;strong&gt;属于载点&lt;/strong&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
 loading="lazy"
 alt="交换空间swap分区设置"
 &gt;
@@ -4362,7 +4362,7 @@ alt="交换空间swap分区设置"
 &lt;p&gt;等分区完成，就选择&lt;code&gt;分区设定结束并将修改写入磁盘&lt;/code&gt;，点击继续，就开始安装kali&lt;/p&gt;
 &lt;h2 id="6-启动引导"&gt;6 启动引导
 &lt;/h2&gt;&lt;p&gt;当系统快安装完成的时候，会出现grub安装的选择,如图所示
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
 loading="lazy"
 alt="交换空间swap分区设置"
 &gt;&lt;/p&gt;
@@ -4554,12 +4554,12 @@ target="_blank" rel="noopener"
 我们点击&lt;a class="link" href="http://duoshuo.com/create-site/" title="我要安装"
 target="_blank" rel="noopener"
 &gt;我要安装&lt;/a&gt;,界面如下
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1emtdlnpsqaj20wo0lp783.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1emtdlnpsqaj20wo0lp783.jpg"
 loading="lazy"
 alt="duoshuo 创建界面"
 &gt;
 shortname就是jackroyal,创建完成后,跳转到如下界面
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1emtdp96x54j20us0jxn18.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1emtdp96x54j20us0jxn18.jpg"
 loading="lazy"
 alt="获取多说代码"
 &gt;
@@ -4611,7 +4611,7 @@ ds.charset = &amp;#39;UTF-8&amp;#39;;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;首先我们,替换config.disqus_shortname为config.duoshuo_shortname.
 然后修改&lt;code&gt;item.comment&lt;/code&gt;为&lt;code&gt;item.comments&lt;/code&gt;,因为系统中没有comment这个变量,只有comments这个变量,如果不修改comments,那么&lt;code&gt;item.comment&lt;/code&gt;一直为假,所以一直不成立,就不会显示comments字段了.修改后代码如下&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt; &amp;lt;% if (item.comments &amp;amp;&amp;amp; config.duoshuo_shortname){ %&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;产生的效果如图&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1emteitia5uj20tl0fn412.jpg"
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;产生的效果如图&lt;img src="https://jackroyal.github.io/images/692869a3gw1emteitia5uj20tl0fn412.jpg"
 loading="lazy"
 alt="开启和关闭comment的区别"
 &gt;.
@@ -4637,11 +4637,11 @@ target="_blank" rel="noopener"
 下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
 target="_blank" rel="noopener"
 &gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3jw1emplp1lz31j204w033mx0.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3jw1emplp1lz31j204w033mx0.jpg"
 loading="lazy"
 alt="Github for windows"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1empluh6hvej210b0j741r.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1empluh6hvej210b0j741r.jpg"
 loading="lazy"
 alt="GUI and Bash"
 &gt;
@@ -4755,7 +4755,7 @@ hexo d
 &gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>新的开始</title><link>https://jackroyal.github.io/post/new-start/</link><pubDate>Wed, 26 Nov 2014 21:29:15 +0000</pubDate><guid>https://jackroyal.github.io/post/new-start/</guid><description>&lt;p&gt;今天&lt;strong&gt;折腾&lt;/strong&gt;了一天,终于弄好了,&lt;a class="link" href="http://jackroyal.github.io" title="搁浅St的博客"
 target="_blank" rel="noopener"
 &gt;我的博客&lt;/a&gt;,正式落户Github.
-&lt;img src="https://github.global.ssl.fastly.net/images/modules/logos_page/GitHub-Mark.png"
+&lt;img src="https://jackroyal.github.io/images/GitHub-Mark.png"
 loading="lazy"
 alt="GitHub Mark"
 &gt;&lt;/p&gt;</description></item><item><title>[js]replace替换</title><link>https://jackroyal.github.io/post/js-replace/</link><pubDate>Tue, 25 Nov 2014 22:32:00 +0000</pubDate><guid>https://jackroyal.github.io/post/js-replace/</guid><description>&lt;p&gt;今天做前端试题,用到了replace函数,来记录一下.
@@ -4886,12 +4886,12 @@ stringObject 本身。&lt;/p&gt;
 &lt;p&gt;写了个扩展来简化这个过程.&lt;/p&gt;
 &lt;p&gt;1 安装扩展
 将保存下来的 *.crx 文件或*.js 文件直接拖拽到浏览器的“扩展程序”（[chrome://chrome/extensions](&amp;ldquo;Chrome 扩展程序页面&amp;rdquo;)/）页面。
-&lt;img src="https://img.blog.csdn.net/20141124215558921?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124215558921.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;( 注：只有拖动到此页面才能安装，其它页面无效)&lt;/p&gt;
 &lt;p&gt;　　2. 按照提示安装
-&lt;img src="https://img.blog.csdn.net/20141124215611765?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124215611765.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt; 
@@ -4901,22 +4901,22 @@ loading="lazy"
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt;3,配置软件功能&lt;/p&gt;
 &lt;p&gt;左键点击图标,可以选择开关扩展功能(默认为开启)
- &lt;img src="https://img.blog.csdn.net/20141124215702865?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+ &lt;img src="https://jackroyal.github.io/images/20141124215702865.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt;4.使用软件&lt;/p&gt;
 &lt;p&gt;如果软件的功能打开,那么如果当你使用cmcc-edu的时候会自动跳转完成登录,不再需要手动操作,登录成功页面如下,你可以关闭这个页面了
-&lt;img src="https://img.blog.csdn.net/20141124215651437?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124215651437.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;5.下线&lt;/p&gt;
 &lt;p&gt;在任何页面按ALT+X   可以下线&lt;/p&gt;
 &lt;p&gt;Ps,如果按Alt+x无任何提示,可能是快捷键设置有问题
- &lt;img src="https://img.blog.csdn.net/20141124215717575?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+ &lt;img src="https://jackroyal.github.io/images/20141124215717575.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://img.blog.csdn.net/20141124215740968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/20141124215740968.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;那就需要你按照上图手动设置快捷键&lt;/p&gt;
@@ -4974,10 +4974,10 @@ Github项目地址 &lt;a class="link" href="https://github.com/Jackroyal/cmcc520
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;persistent&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;比如我的这个 后台执行就是这样的&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://img.blog.csdn.net/20141124194616706?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/20141124194616706.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;采用pageaction还是browseraction取决于你是否想让图标一直可见.`&lt;img src="https://img.blog.csdn.net/20141124193151343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;p&gt;采用pageaction还是browseraction取决于你是否想让图标一直可见.`&lt;img src="https://jackroyal.github.io/images/20141124193151343.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;如图,绿色的是广告终结者,他的图标是pageAction,后面的印象笔记还有switchproxy是browserAction.一般来说,适用于少数页面的扩展建议使用pageaction,适用于大多数页面的建议使用browseraction&lt;/p&gt;
@@ -5010,7 +5010,7 @@ B  第一次改ssid  &lt;a class="link" href="http://120.202.164.10:8080/port
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;第一次改ssid,也就是从A到B,这个过程也没什么,只是一个单纯的地址跳转,B地址中有一个表单&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://img.blog.csdn.net/20141124134725891?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124134725891.jpg"
 loading="lazy"
 &gt;&lt;!-- raw HTML omitted --&gt;
 这个表单里面 主要包含四个字段,
@@ -5022,7 +5022,7 @@ ssid:iWuhan-Free
 &lt;li&gt;
 &lt;p&gt;我们第一次点击 请提交登录,所做的操作就是把上面的表单提交到  &lt;a class="link" href="http://120.202.164.10:8080/portal/servlets/SingleLoginServlet" target="_blank" rel="noopener"
 &gt;http://120.202.164.10:8080/portal/servlets/SingleLoginServlet&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;
-服务器返回的地址是C,这一步的表单提交主要是为了获取C的地址,就是因为多了的那个loginFree.jsp,这样下一步才能改ssid为CMCC520,否则,如果你越过这一步直接改ssid为CMCC520,就会跳转到其他的页面,比如下面这个&lt;img src="https://img.blog.csdn.net/20141124133708801?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+服务器返回的地址是C,这一步的表单提交主要是为了获取C的地址,就是因为多了的那个loginFree.jsp,这样下一步才能改ssid为CMCC520,否则,如果你越过这一步直接改ssid为CMCC520,就会跳转到其他的页面,比如下面这个&lt;img src="https://jackroyal.github.io/images/20141124133708801.jpg"
 loading="lazy"
 &gt;&lt;!-- raw HTML omitted --&gt;
 这个地址如果点击提交,是没有办法正常登陆的,我们必须要到武汉的那个页面才行.&lt;/p&gt;
@@ -5061,7 +5061,7 @@ __&lt;/p&gt;
 &lt;p&gt;ATTRIBUTE_UUID:26FBE9A694B6221958CF6DE2704F0ECA&lt;/p&gt;
 &lt;p&gt;ATTRIBUTE_IPADDRESS:10.80.97.209&lt;/p&gt;
 &lt;p&gt;cancelAutomatismLogin:false&lt;/p&gt;</description></item><item><title>chrome扩展开发手记&lt;1&gt;-需求分析</title><link>https://jackroyal.github.io/post/chrome-extention-1/</link><pubDate>Fri, 21 Nov 2014 18:17:00 +0000</pubDate><guid>https://jackroyal.github.io/post/chrome-extention-1/</guid><description>&lt;p&gt;本人的学校在武汉,有CMCC-EDU的网络覆盖,中国移动和武汉市政府搞了一个活动,可以免费公益上网,说白了,就是可以免费使用EDU的网络,如图.
-&lt;img src="https://img.blog.csdn.net/20141121181910580?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141121181910580.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;以上是前提.&lt;/p&gt;
@@ -5071,17 +5071,17 @@ loading="lazy"
 都会跳转到 &lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
 &gt;&lt;/a&gt;&lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
 &gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU&lt;/a&gt;  界面如图所示&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://img.blog.csdn.net/20141124103645611?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124103645611.jpg"
 loading="lazy"
 &gt;&lt;/li&gt;
 &lt;li&gt;接下来我们手动更改最上面的网址栏,把ssid改为iWuhan-Free,(注意大小写)&lt;!-- raw HTML omitted --&gt;
 修改后的网址如下&lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
 &gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free&lt;/a&gt;界面如下&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://img.blog.csdn.net/20141124104120281?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124104120281.jpg"
 loading="lazy"
 &gt;&lt;/li&gt;
 &lt;li&gt;接下来我们点击,请点击登录按钮,系统反馈如下&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://img.blog.csdn.net/20141124104623968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141124104623968.jpg"
 loading="lazy"
 &gt;&lt;!-- raw HTML omitted --&gt;
 我们忽略这个警告,可以注意到,上面的地址栏已经变掉了,多了个loginFree.jsp完整的地址&lt;a class="link" href="http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free" target="_blank" rel="noopener"
@@ -5091,7 +5091,7 @@ loading="lazy"
 &lt;/ol&gt;
 &lt;p&gt;登录的流程走完了,下一篇,接下来我们分析一下登录的原理,简化一下登录的流程&lt;/p&gt;</description></item><item><title>wamp与sql_server_因为端口80冲突,无法开启wamp</title><link>https://jackroyal.github.io/post/wamp-sql_server-80-error/</link><pubDate>Fri, 14 Nov 2014 18:09:00 +0000</pubDate><guid>https://jackroyal.github.io/post/wamp-sql_server-80-error/</guid><description>&lt;p&gt;因为80端口占用,导致无法启动,其实不必关闭sql server太多的东西,只需要关闭SQL Server Reporting Services 就行了,这样也不会影响sql server的使用&lt;/p&gt;
 &lt;p&gt;如图
-&lt;img src="https://img.blog.csdn.net/20141114175909339?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvSmFja3JveWFs/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center"
+&lt;img src="https://jackroyal.github.io/images/20141114175909339.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;打开sqlserver 配置管理器,关闭以上服务&lt;/p&gt;

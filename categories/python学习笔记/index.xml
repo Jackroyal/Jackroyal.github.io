@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python学习笔记 on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link><description>Recent content in Python学习笔记 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python学习笔记 on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link><description>Recent content in Python学习笔记 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
 &lt;h1 id="安装requests库"&gt;安装requests库
 &lt;/h1&gt;&lt;p&gt;在ubuntu下面安装很简单&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install requests
@@ -25,19 +25,19 @@
 这个链接，前面部分是登录的网址，问号后面的参数，顾名思义，referer，就是你从哪里跳过来的，也许是一个页面跳转到登录的，toolbar就是我自己点击顶部导航栏，然后跳转到登录页面的。&lt;/p&gt;
 &lt;h2 id="2-清除相关的cookie"&gt;2 清除相关的cookie
 &lt;/h2&gt;&lt;p&gt;为了排除不必要的干扰，我们先清除掉所有的相关的cookie，这样方便我们分析哪些参数是必须的。
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegc1itw2j20qu075779.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegc1itw2j20qu075779.jpg"
 loading="lazy"
 alt="firefox中，清除cookie"
 &gt;&lt;/p&gt;
 &lt;h2 id="3-登录过程分析"&gt;3 登录过程分析
 &lt;/h2&gt;&lt;p&gt;清除了cookie后，我们刷新一下页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;，重新获取对应的cookie。
 然后我们就开始用tamper data来拦截请求。
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
 loading="lazy"
 alt="使用tamper data"
 &gt;
 我们点击&lt;code&gt;start tamper&lt;/code&gt;，在网页中填写用户名和密码。点击&lt;code&gt;登录&lt;/code&gt;，会发出一个请求，然后tamper data会拦截下这个请求，询问我们是否拦截，点击tamper，我们可以在这个请求提交之前，查看请求的内容，还可以做删改。
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1esegkslypyj20y20gntdt.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegkslypyj20y20gntdt.jpg"
 loading="lazy"
 alt="发出第一个登录请求前拦截下来，查看表单内容"
 &gt;
@@ -196,7 +196,7 @@ stack
 &lt;/h1&gt;&lt;p&gt;ok，上述工作基本完成，我们来测试一下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还可以这样测试一下，使用shell命令
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
 loading="lazy"
 alt="用shell测试xpath"
 &gt;
@@ -347,7 +347,7 @@ Setting up python-twisted-conch (1:13.2.0-1ubuntu1) ...
 在这里，我遇到一个大坑，无论是伯乐在线翻译的博客
 还是网上搜索到的一般教程，都是使用pymongo.Connection来连接数据库，可是妈蛋，你使用&lt;code&gt;pip install pymongo&lt;/code&gt;安装的版本都是最新版本3.0.1，那个Connection的写法已经不支持，被丢弃了，擦。
 我们来看一下版本，我学到一个新命令&lt;code&gt;pip show pymongo&lt;/code&gt;，用来查看某一个包的版本的。
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1erjct36jnrj20df038dgf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjct36jnrj20df038dgf.jpg"
 loading="lazy"
 alt="查看pymongo版本"
 &gt;
@@ -403,7 +403,7 @@ alt="查看pymongo版本"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ok,搞定，我们再测试一把&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="执行效果如下"&gt;执行效果如下
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
 loading="lazy"
 alt="mongodb数据库管理"
 &gt;&lt;/p&gt;
@@ -454,11 +454,11 @@ wait_time=5
 所以应该放在全英文的目录下
 C:/software/spider.exe
 运行结果如图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
 loading="lazy"
 alt="spider运行截图"
 &gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
 loading="lazy"
 alt="运行结果截图"
 &gt;&lt;/p&gt;
@@ -487,7 +487,7 @@ python spider.py
 &lt;ul&gt;
 &lt;li&gt;1.1 编辑器编码
 &lt;ul&gt;
-&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eqmn535qb7j208u028t8k.jpg"
+&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmn535qb7j208u028t8k.jpg"
 loading="lazy"
 alt="sublime显示当前文件编码"
 &gt;&lt;/li&gt;
@@ -496,10 +496,10 @@ alt="sublime显示当前文件编码"
 &lt;/li&gt;
 &lt;li&gt;1.2 python解释器
 &lt;ul&gt;
-&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
+&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
 loading="lazy"
 alt="win中python解释器编码"
-&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
+&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
 loading="lazy"
 alt="ubuntu终端解释器的编码"
 &gt;&lt;/li&gt;
@@ -764,7 +764,7 @@ try:
 asyncore.loop()
 except KeyboardInterrupt: print
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果如图所示
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
 loading="lazy"
 alt="运行效果"
 &gt;&lt;/p&gt;</description></item><item><title>python学习笔记--socket编程端口复用</title><link>https://jackroyal.github.io/post/python-socket-port-reuse/</link><pubDate>Wed, 18 Mar 2015 08:47:02 +0000</pubDate><guid>https://jackroyal.github.io/post/python-socket-port-reuse/</guid><description>&lt;p&gt;最近在学习socket编程,遇到一个问题:

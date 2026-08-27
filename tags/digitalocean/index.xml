@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Digitalocean on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/digitalocean/</link><description>Recent content in Digitalocean on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/digitalocean/index.xml" rel="self" type="application/rss+xml"/><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://jackroyal.github.io/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Digitalocean on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/digitalocean/</link><description>Recent content in Digitalocean on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/digitalocean/index.xml" rel="self" type="application/rss+xml"/><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://jackroyal.github.io/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
 &lt;p&gt;我去锐速官网注册了账号,可惜,在官方支持的linux版本中并没有我这个内核版本.我用的是&lt;code&gt;3.13.0-37-generic&lt;/code&gt;的&lt;code&gt;32&lt;/code&gt;位版本,锐速官网并没有支持.&lt;code&gt;32&lt;/code&gt;位版本支持的相对较少,支持的最新版本是&lt;code&gt;3.13.0-29-generic&lt;/code&gt;.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
 loading="lazy"
 alt="锐速官网linux支持列表"
 &gt;
@@ -18,7 +18,7 @@ Bits: 32-bit&lt;/p&gt;
 &lt;strong&gt;争取的做法:&lt;/strong&gt;
 1 登录你的&lt;code&gt;digitalocean&lt;/code&gt;控制台
 2 点击&lt;code&gt;setting-&amp;gt;kernel&lt;/code&gt;,效果如下图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
 loading="lazy"
 alt="控制台的kernel页面"
 &gt;
@@ -36,7 +36,7 @@ ok 打完收工&lt;/p&gt;
 选个5美元的就够了.&lt;/p&gt;
 &lt;h1 id="1-新建droplet"&gt;1 新建droplet
 &lt;/h1&gt;&lt;p&gt;如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1etfo3h9svlj211h1tidny.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfo3h9svlj211h1tidny.jpg"
 loading="lazy"
 alt="新建droplet,尤其注意勾选ipv6"
 &gt;
@@ -44,12 +44,12 @@ alt="新建droplet,尤其注意勾选ipv6"
 &lt;h1 id="2-修改droplet"&gt;2 修改droplet
 &lt;/h1&gt;&lt;p&gt;我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.
 你打开droplet的&lt;code&gt;setting&lt;/code&gt;,在&lt;code&gt;network&lt;/code&gt;中应该可以看到&lt;code&gt;enable ipv6&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1etfosgf63kj207w05ujrn.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfosgf63kj207w05ujrn.jpg"
 loading="lazy"
 alt="带有启用ipv6选项的页面"
 &gt;
 启用后,稍后片刻,页面如下.
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
 loading="lazy"
 alt="在droplet的setting中启用ipv6后的页面"
 &gt;&lt;/p&gt;
@@ -79,7 +79,7 @@ gateway 网关地址
 autoconf 0
 dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),&lt;!-- raw HTML omitted --&gt;如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
 loading="lazy"
 alt="ipv6成功启用后"
 &gt;&lt;/p&gt;

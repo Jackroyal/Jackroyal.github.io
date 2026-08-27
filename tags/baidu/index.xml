@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Baidu on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/baidu/</link><description>Recent content in Baidu on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/baidu/index.xml" rel="self" type="application/rss+xml"/><item><title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</title><link>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</link><pubDate>Sun, 06 Mar 2016 15:50:46 +0000</pubDate><guid>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</guid><description>&lt;p&gt;上一篇文章&lt;a class="link" href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Baidu on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/baidu/</link><description>Recent content in Baidu on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 18:11:28 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/baidu/index.xml" rel="self" type="application/rss+xml"/><item><title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</title><link>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</link><pubDate>Sun, 06 Mar 2016 15:50:46 +0000</pubDate><guid>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</guid><description>&lt;p&gt;上一篇文章&lt;a class="link" href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener"
 &gt;解决 Github Pages 禁止百度爬虫的方法&lt;/a&gt;,提到了解决百度爬虫被github禁用掉的方法.
 &lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;
 然后今天去上gitcafe,偶然看到这个
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
 loading="lazy"
 alt="GitCafe 项目迁移至 Coding.net 公告"
 &gt;
@@ -23,7 +23,7 @@ alt="GitCafe 项目迁移至 Coding.net 公告"
 &lt;/h1&gt;&lt;p&gt;这个很简单不必说,注册需要填写用户名,邮箱和密码,比如我的用户名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id="2-新建和用户名同名的项目"&gt;2 新建和用户名同名的项目
 &lt;/h1&gt;&lt;p&gt;在注册好账号以后,我们就去新建一个项目,方法和gitcafe不同和gihub类似,就是和用户名同名,一模一样的就行.我的项目名是&lt;code&gt;Jackroyal&lt;/code&gt;,项目属性&lt;code&gt;公开&lt;/code&gt;
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
 loading="lazy"
 alt="新建同名项目"
 &gt;&lt;/p&gt;
@@ -32,11 +32,11 @@ alt="新建同名项目"
 &lt;h2 id="31-使用ssh方式发布博客"&gt;3.1 使用ssh方式发布博客
 &lt;/h2&gt;&lt;p&gt;我们只需要找到本地的ssh公钥,然后上传到coding上去就行,点击&lt;a class="link" href="https://coding.net/user/account/setting/keys" target="_blank" rel="noopener"
 &gt;这里&lt;/a&gt;设置.查看本地ssh公钥的方法和上篇博客一样.
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
 loading="lazy"
 alt="使用git客户端查看ssh公钥私钥"
 &gt;
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
 loading="lazy"
 alt="查看公钥"
 &gt;
@@ -55,14 +55,14 @@ ps:这种方式,可能过一段时间又不行了,报错&lt;code&gt;could not re
 &lt;/ol&gt;
 &lt;h1 id="4-新建coding-pages分支"&gt;4 新建coding-pages分支
 &lt;/h1&gt;&lt;p&gt;当我们可以提交代码的时候,我们先来新建分支,和gitcafe差不多,它需要一个特别的分支名字,而不是像github默认的master分支,名字是&lt;code&gt;coding-pages&lt;/code&gt;,如下图所示
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
 loading="lazy"
 alt="新建coding分支"
 &gt;
 我们把它设为默认分支&lt;/p&gt;
 &lt;h1 id="5-开启pages服务"&gt;5 开启pages服务
 &lt;/h1&gt;&lt;p&gt;接下来我们需要手动去开启pages服务.在项目主页的&lt;code&gt;pages&lt;/code&gt;选项卡,点击开启服务,同时我们,添加域名绑定
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
 loading="lazy"
 alt="开启pages服务"
 &gt;
@@ -81,14 +81,14 @@ branch: coding-pages
 还要注意branch名称,分支必须是&lt;code&gt;coding-pages&lt;/code&gt;
 **PS:如上面所说,我选择的是https方式发布,所以我的repo是https的,如果你选择ssh方式去认证,那么你的地址应该是类似这样的&lt;code&gt;git@git.coding.net:Jackroyal/Jackroyal.git&lt;/code&gt;
 **&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
+&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
 loading="lazy"
 alt="添加coding的repo信息"
 &gt;&lt;/p&gt;
 &lt;h1 id="7-修改dns设置"&gt;7 修改dns设置
 &lt;/h1&gt;&lt;p&gt;就像第5步页面提示的,我们要绑定自己的域名,需要去修改dns解析记录,只需要添加一条CNAME指向你的&lt;code&gt;jackroyal.coding.me&lt;/code&gt;即可.
 注意后面加个点,也就是正确的填法是&lt;code&gt;jackroyal.coding.me.&lt;/code&gt;,如下图所示.修改完成后大概等几分钟才能生效
-&lt;img src="https://ww4.sinaimg.cn/large/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
 loading="lazy"
 alt="修改dns设置"
 &gt;&lt;/p&gt;
@@ -127,7 +127,7 @@ Scott
 &lt;/h1&gt;&lt;p&gt;我们在github和gitcafe上面把自己的博客搭建起来,首先要建仓库.
 &lt;strong&gt;github&lt;/strong&gt;:
 首先登录你的github,然后新建一个公共仓库,仓库名是你的用户名加上&lt;code&gt;yourname.github.io&lt;/code&gt;,如下图所示,我的用户名是&lt;code&gt;Jackroyal&lt;/code&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
 loading="lazy"
 alt="github新建仓库"
 &gt;&lt;/p&gt;
@@ -157,16 +157,16 @@ branch: gitcafe-pages
 对的,你猜到了,我们现在需要配置gitcafe的ssh公钥,因为&lt;code&gt;github for windows&lt;/code&gt;会自动帮我们上传公钥,gitcafe就只能手动了.&lt;/p&gt;
 &lt;h3 id="321-查看本地公钥"&gt;3.2.1 查看本地公钥
 &lt;/h3&gt;&lt;p&gt;我们打开你使用的git终端,首先切回用户目录,然后进入&lt;code&gt;.ssh&lt;/code&gt;目录,里面就有公钥和私钥,如下图所示
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye75djqo9j20gj09475k.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
 loading="lazy"
 alt="使用git客户端查看ssh公钥私钥"
 &gt;
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye78gs0hvj20it0ca761.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye78gs0hvj20it0ca761.jpg"
 loading="lazy"
 alt="使用github for windows查看ssh公钥私钥"
 &gt;
 我们就是要读取后缀是&lt;code&gt;.pub&lt;/code&gt;的那个文件,比如我的读取命令就是&lt;code&gt;cat github_rsa.pub&lt;/code&gt;,执行结果如下
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
 loading="lazy"
 alt="查看公钥"
 &gt;&lt;/p&gt;
@@ -174,7 +174,7 @@ alt="查看公钥"
 &lt;/h3&gt;&lt;p&gt;我们在&lt;a class="link" href="https://gitcafe.com/account/public_keys" target="_blank" rel="noopener"
 &gt;这里&lt;/a&gt;来设置gitcafe的公钥.
 &lt;em&gt;PS:需要注意的是,公钥后面的chen@chen-pc是不需要的,我的带上以后,gitcafe说是公钥非法,不过不怕,gitcafe会帮你正确格式化&lt;/em&gt;
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
 loading="lazy"
 alt="正确的ssh格式"
 &gt;
@@ -187,7 +187,7 @@ alt="正确的ssh格式"
 &lt;/h1&gt;&lt;p&gt;首先你得有个域名,像我一样,哈哈.&lt;/p&gt;
 &lt;h2 id="41-修改域名注册的解析服务器"&gt;4.1 修改域名注册的解析服务器
 &lt;/h2&gt;&lt;p&gt;我们在要把域名解析服务,设置到dnspod,因为他是国内的,而且服务很好.我们登录自己的域名管理后台,选择对应的域名进行管理,然后找到&lt;code&gt;nameservers&lt;/code&gt;的设置,如图所示
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eye7orkymjj210j0i7tde.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7orkymjj210j0i7tde.jpg"
 loading="lazy"
 alt="修改nameservers的设置"
 &gt;
@@ -201,7 +201,7 @@ ok,改完以后,这边就完了,我们登录dnspod&lt;/p&gt;
 &lt;h2 id="42-修改dnspod解析记录"&gt;4.2 修改dnspod解析记录
 &lt;/h2&gt;&lt;p&gt;我们登录dnspod,然后添加域名
 如果4.1中的设置生效了,你的域名就会添加成功了,我们直接进行下一步,修改解析记录,上图
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
 loading="lazy"
 alt="dns解析记录"
 &gt;
@@ -218,25 +218,25 @@ www CNAME 国内 gitcafe.io.
 &gt;配置CNAME文件&lt;/a&gt;.说白了,就是在你的网站根目录,添加一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件,里面的内容就是你的域名&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;bblove.me
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有任何多余的信息,如下图
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
 loading="lazy"
 alt="配置github的CNAME"
 &gt;
 上面的配置现在访问没问题,但是你一重新发布博客,就需要重新手动添加&lt;code&gt;CNAME&lt;/code&gt;文件,太麻烦.
 一劳永逸的方法,在你的&lt;code&gt;hexo&lt;/code&gt;目录下的&lt;code&gt;source&lt;/code&gt;目录中,新建一个&lt;code&gt;CNAME&lt;/code&gt;文件夹,然后他每次在你发布博客的时候,都会在你的网站根目录生成一个&lt;code&gt;CNAME&lt;/code&gt;文件.
-&lt;img src="https://ww2.sinaimg.cn/large/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
 loading="lazy"
 alt="添加CNAME的目录结构"
 &gt;
 现在github的配置彻底结束.&lt;/p&gt;
 &lt;p&gt;接下来配置gitcafe:
 1 我们在gitcafe的项目主页,点击&lt;code&gt;项目设置&lt;/code&gt;,如下图(之所以截图,是因为我找半天才看到&amp;hellip;)
-&lt;img src="https://ww1.sinaimg.cn/large/692869a3gw1eyeadedmh1j20z508eadm.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyeadedmh1j20z508eadm.jpg"
 loading="lazy"
 alt="gitcafe点击’项目设置’"
 &gt;
 2 然后我们点击&lt;code&gt;pages服务&lt;/code&gt;标签,然后添加自己的域名,这些域名是我们之前在dnspod中设置了解析的
-&lt;img src="https://ww3.sinaimg.cn/large/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
+&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
 loading="lazy"
 alt="gitcafe配置自定义域名"
 &gt;&lt;/p&gt;
