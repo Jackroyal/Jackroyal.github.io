@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home Assistant on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/home-assistant/</link><description>Recent content in Home Assistant on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 27 Aug 2026 17:50:54 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/home-assistant/index.xml" rel="self" type="application/rss+xml"/><item><title>ha-xiaodu折腾记：把米家和其他HA设备接进小度</title><link>https://jackroyal.github.io/post/ha-xiaodu-connect-home-assistant-devices/</link><pubDate>Fri, 28 Aug 2026 01:00:00 +0800</pubDate><guid>https://jackroyal.github.io/post/ha-xiaodu-connect-home-assistant-devices/</guid><description>&lt;p&gt;最近在整理家里的设备，米家有一部分，Zigbee有一部分，空调、窗帘、传感器又散在不同集成里。Home Assistant这边倒是能统一看，自动化也好写，但小度这边一直不够听话：有些设备发现不了，有些能力不全，状态还经常对不上。&lt;/p&gt;
+&lt;p&gt;后来我把 HA 当中间层来用，做了一个自定义集成 &lt;code&gt;ha-xiaodu&lt;/code&gt;。简单说，它把 HA 里的设备映射成 DuerOS 认识的设备，再交给小度发现和控制。链路大概是：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;米家 / Zigbee / 蓝牙 / Matter / 其他 HA 集成
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Home Assistant 实体和房间
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ha-xiaodu
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;小度云端
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; ↓
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;小度音箱 / 小度 App
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;ha-xiaodu&lt;/code&gt; 的仓库在这里：&lt;a class="link" href="https://github.com/Jackroyal/ha-xiaodu" target="_blank" rel="noopener"
+&gt;https://github.com/Jackroyal/ha-xiaodu&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;我建议不要一上来就改小度配置，先把 HA 里的设备搞稳，再装桥接层，最后解决小度云端访问 HA 的问题。公网入口这篇用 DDNS 举例；内网穿透后面有空再补。&lt;/p&gt;
+&lt;h1 id="第一步先把设备接进-ha"&gt;第一步：先把设备接进 HA
+&lt;/h1&gt;&lt;p&gt;这一步比后面所有配置都重要。&lt;code&gt;ha-xiaodu&lt;/code&gt; 暴露的是 HA 里已有的实体。如果 HA 里点不开、状态不动、实体名乱七八糟，小度那边只会更乱。&lt;/p&gt;
+&lt;h2 id="接米家"&gt;接米家
+&lt;/h2&gt;&lt;p&gt;我这里用 HA 的 Xiaomi Home 集成接米家。流程不复杂：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 HACS 里安装 Xiaomi Home。&lt;/li&gt;
+&lt;li&gt;打开 &lt;strong&gt;设置 -&amp;gt; 设备与服务 -&amp;gt; 添加集成&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;搜索 Xiaomi Home，登录米家账号。&lt;/li&gt;
+&lt;li&gt;选择家庭，等设备同步进来。&lt;/li&gt;
+&lt;li&gt;先在 HA 页面里手动开几次灯、空调、插座，确认状态能变。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;接完别急着下一步，先在 HA 设备页里看一遍。Xiaomi Home 可以直接把米家里的设备名称和房间同步过来，所以大部分设备不用在 HA 里重新起名。要确认的主要是两件事：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1. 名字改成适合说话的。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 比如：客厅吸顶灯、卧室空调、书房插座。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2. 房间分对。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 客厅就是客厅，卧室就是卧室。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; 后面开小度房间同步会省很多事。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果发现某个设备没带上米家名称，或者变成了 &lt;code&gt;switch.switch_1&lt;/code&gt; 这种不好念的名字，再回米家 App 里改名，或者直接在 HA 里调整。这种名字直接丢给小度，语音体验会很差。&lt;/p&gt;
+&lt;h2 id="其他设备怎么接"&gt;其他设备怎么接
+&lt;/h2&gt;&lt;p&gt;Zigbee2MQTT、ZHA、Matter、品牌集成都行，关键是它们最后要变成 HA 能控制的标准实体。&lt;/p&gt;
+&lt;p&gt;常见对应关系大概这样：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;light -&amp;gt; 开关、亮度、色温、颜色
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;switch -&amp;gt; 开关
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;climate -&amp;gt; 空调开关、温度、模式、风速
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cover -&amp;gt; 窗帘打开、关闭、位置
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;fan -&amp;gt; 风扇开关、风速、模式
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sensor -&amp;gt; 温度、湿度
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;vacuum -&amp;gt; 扫地机启动、暂停、回充
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;media_player -&amp;gt; 播放、暂停、音量
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;有些设备没有现成的小度能力，比如某个自定义场景或私有协议设备。能包装成 &lt;code&gt;switch&lt;/code&gt; 的，就先在 HA 里做成一个开关实体，再让小度控制这个开关。不能包装的，就别硬塞进去。&lt;/p&gt;
+&lt;h1 id="安装-ha-xiaodu"&gt;安装 ha-xiaodu
+&lt;/h1&gt;&lt;p&gt;装法有两种。用 HACS 方便一点，手动复制更适合调试。&lt;/p&gt;
+&lt;h2 id="hacs-安装"&gt;HACS 安装
+&lt;/h2&gt;&lt;p&gt;在 HACS 里添加自定义仓库：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;仓库地址：https://github.com/Jackroyal/ha-xiaodu
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;类别：Integration
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;装完后重启 HA。&lt;/p&gt;
+&lt;h2 id="手动安装"&gt;手动安装
+&lt;/h2&gt;&lt;p&gt;先把仓库拉下来，然后把 &lt;code&gt;custom_components/ha_xiaodu&lt;/code&gt; 整个目录复制到 HA 的 &lt;code&gt;custom_components&lt;/code&gt; 下面：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git clone https://github.com/Jackroyal/ha-xiaodu.git
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;cp -R ha-xiaodu/custom_components/ha_xiaodu /config/custom_components/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用 HAOS 的 Terminal and SSH 时，也可以直接从电脑传：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scp -r custom_components/ha_xiaodu root@192.168.1.10:/config/custom_components/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这里面的 &lt;code&gt;192.168.1.10&lt;/code&gt; 是我举的例子，换成你自己的 HAOS 内网地址。&lt;/p&gt;
+&lt;p&gt;复制完检查一下路径：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;正确：/config/custom_components/ha_xiaodu/manifest.json
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;错误：/config/custom_components/ha_xiaodu/ha_xiaodu/manifest.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;多套一层是老问题。确认没套错后重启：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ha core restart
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="小度为什么必须能访问-ha"&gt;小度为什么必须能访问 HA
+&lt;/h1&gt;&lt;p&gt;正式接入时，DuerOS 云端会回调 &lt;code&gt;ha-xiaodu&lt;/code&gt; 提供的几个 HTTPS 接口：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/api/xiaodu/oauth/authorize
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/api/xiaodu/oauth/token
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/api/xiaodu/service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;所以纯内网地址不能完成正式接入。小度云端不是运行在你家局域网里的，它必须能从外面访问到你 HA 里的这些路径。&lt;/p&gt;
+&lt;p&gt;我的结构是这样：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;小度云端
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -&amp;gt; 公网域名
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -&amp;gt; 路由器端口转发
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -&amp;gt; HAOS 反向代理
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -&amp;gt; HA Core 8123
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; -&amp;gt; ha-xiaodu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="用-ddns-暴露公网入口"&gt;用 DDNS 暴露公网入口
+&lt;/h1&gt;&lt;p&gt;我这次走的是「有公网 IPv4 + DDNS」的路线。它不是唯一方案，只是对我来说最直接。没有公网 IP 的话可以看内网穿透，这部分这篇先不写。&lt;/p&gt;
+&lt;h2 id="1-确认真的有公网-ipv4"&gt;1. 确认真的有公网 IPv4
+&lt;/h2&gt;&lt;p&gt;去路由器看 WAN IP，再用手机流量查一下出口 IP。两边一致才算比较靠谱。&lt;/p&gt;
+&lt;p&gt;如果路由器 WAN IP 是 &lt;code&gt;100.x.x.x&lt;/code&gt;、&lt;code&gt;10.x.x.x&lt;/code&gt;、&lt;code&gt;172.16.x.x&lt;/code&gt; 或者 &lt;code&gt;192.168.x.x&lt;/code&gt;，基本就是运营商侧又套了一层，不是能直接入站的公网 IP。这种就先别折腾端口转发了。&lt;/p&gt;
+&lt;h2 id="2-配域名和-ddns"&gt;2. 配域名和 DDNS
+&lt;/h2&gt;&lt;p&gt;准备一个自己的域名，比如 &lt;code&gt;ha.example.com&lt;/code&gt;。DNS 里加一条 A 记录：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ha.example.com. A 你的公网IP
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;公网 IP 会变的话，就配 DDNS。路由器自带 DDNS、NAS 上的脚本、Cloudflare API 更新都可以，关键是 IP 变了以后域名要跟着变。&lt;/p&gt;
+&lt;p&gt;测试阶段建议 DNS 用“仅 DNS”，别急着套 CDN，不然证书和回源问题会混在一起，排错会麻烦很多。&lt;/p&gt;
+&lt;h2 id="3-端口转发"&gt;3. 端口转发
+&lt;/h2&gt;&lt;p&gt;国内家宽对 &lt;code&gt;80&lt;/code&gt; 和 &lt;code&gt;443&lt;/code&gt; 的入站管控挺常见，有的地区直接拦，有的时好时坏。所以我没把公网入口放在 &lt;code&gt;443&lt;/code&gt;，用的是 &lt;code&gt;8443&lt;/code&gt; 这种非标端口：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;外部协议：TCP
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;外部端口：8443
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;内部目标：HAOS 主机 IP，例如 192.168.1.10
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;内部端口：443
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;外面的 &lt;code&gt;8443&lt;/code&gt; 是给公网访问用的；里面的 &lt;code&gt;443&lt;/code&gt; 还是给 HAOS 反向代理监听。你的反向代理如果也能改成其他监听端口，也可以自己调整，但公网那一段尽量别用 &lt;code&gt;443&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;另外，不要把 HA 的 &lt;code&gt;8123&lt;/code&gt; 直接暴露出去。公网入口统一走 HTTPS，后面由反向代理转到 HA Core 的 &lt;code&gt;8123&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id="4-证书和反向代理"&gt;4. 证书和反向代理
+&lt;/h2&gt;&lt;p&gt;HAOS 上可以用 Let&amp;rsquo;s Encrypt 和 NGINX SSL proxy。我用 DNS 校验，这样不依赖 80 端口。这两个 add-on 的证书目录和文件名默认就是配套的：Let&amp;rsquo;s Encrypt 签出来的证书放到 &lt;code&gt;/ssl&lt;/code&gt;，NGINX SSL proxy 默认也从 &lt;code&gt;/ssl&lt;/code&gt; 读同名文件。所以装完不需要手动挪证书，也不用改证书路径。&lt;/p&gt;
+&lt;p&gt;Cloudflare DNS 的例子大概是这样：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;challenge&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;dns&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;dns&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;provider&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;dns-cloudflare&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;cloudflare_api_token&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;&amp;lt;你的Cloudflare API Token&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;domains&lt;/span&gt;:
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; - &lt;span style="color:#ae81ff"&gt;ha.example.com&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;email&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;&amp;lt;你的邮箱&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;NGINX SSL proxy 只需要配域名和其他选项：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;domain&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;ha.example.com&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;hsts&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;max-age=31536000; includeSubDomains&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;client_max_body_size_megabytes&lt;/span&gt;: &lt;span style="color:#ae81ff"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;cloudflare&lt;/span&gt;: &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;为了少暴露东西，我建议反向代理只放行小度需要的路径，其他公网请求直接 404。至少要放行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/api/xiaodu
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/api/xiaodu/oauth/authorize
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/api/xiaodu/oauth/token
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;/api/xiaodu/service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果 HA 里还有别的 OAuth 回调路径，再按需放行，不要为了省事把整个 HA 管理页面开放到公网。&lt;/p&gt;
+&lt;p&gt;然后到 HA 的 &lt;strong&gt;设置 -&amp;gt; 系统 -&amp;gt; 网络&lt;/strong&gt; 里设置外部地址：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;https://ha.example.com:8443
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果外网请求返回 400，HA 日志里又出现 forwarded 或 trusted proxy 相关内容，多半是反向代理网段没进 &lt;code&gt;trusted_proxies&lt;/code&gt;。把 NGINX 所在网段加进去，并开启 &lt;code&gt;use_x_forwarded_for&lt;/code&gt;。&lt;/p&gt;
+&lt;h1 id="在小度后台建技能"&gt;在小度后台建技能
+&lt;/h1&gt;&lt;p&gt;登录小度开发者平台，创建一个智能家居技能。这里会用到几样东西：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;botId 小度后台基础信息里的技能 ID
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Callback URL 小度平台生成的回调地址
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Client_Id 自己定义
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ClientSecret 自己定义
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Authorize URL HA 里的授权地址
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;Token URL HA 里的 token 地址
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;WebService HA 里的小度服务地址
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;假设公网地址是 &lt;code&gt;https://ha.example.com:8443&lt;/code&gt;，那三个 HA 地址就是：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;https://ha.example.com:8443/api/xiaodu/oauth/authorize
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;https://ha.example.com:8443/api/xiaodu/oauth/token
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;https://ha.example.com:8443/api/xiaodu/service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;Client_Id&lt;/code&gt; 和 &lt;code&gt;ClientSecret&lt;/code&gt; 不是百度后台分配的，是自己定义，然后把两边配一致。Secret 别太短，别用 &lt;code&gt;123456&lt;/code&gt; 这种。&lt;/p&gt;
+&lt;p&gt;还有一个容易搞反的地方：&lt;code&gt;Callback URL&lt;/code&gt; 不是你的 HA 地址，而是小度平台生成出来的地址。它要填到 HA 集成里。&lt;/p&gt;
+&lt;h1 id="在-ha-里配置-ha-xiaodu"&gt;在 HA 里配置 ha-xiaodu
+&lt;/h1&gt;&lt;p&gt;重启 HA 后，打开：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;设置 -&amp;gt; 设备与服务 -&amp;gt; 添加集成 -&amp;gt; xiaodu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;按下面这些填：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;字段&lt;/th&gt;
+&lt;th&gt;填什么&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Client_Id&lt;/td&gt;
+&lt;td&gt;自定义客户端 ID&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;dueros_xxx&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;ClientSecret&lt;/td&gt;
+&lt;td&gt;自定义随机密钥&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;&amp;lt;长随机字符串&amp;gt;&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;xiaodu skill ID&lt;/td&gt;
+&lt;td&gt;小度后台技能 ID&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;12345678&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Callback URL&lt;/td&gt;
+&lt;td&gt;小度平台生成的地址&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;https://xiaodu.baidu.com/...&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Public base URL&lt;/td&gt;
+&lt;td&gt;HA 公网基础地址&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;https://ha.example.com:8443&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;保存后集成会把 Authorize URL、Token URL、WebService 显示出来。再对照小度后台检查一遍，尤其是端口：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;https://ha.example.com:8443/...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;用 &lt;code&gt;8443&lt;/code&gt; 后，所有相关地址都要带 &lt;code&gt;:8443&lt;/code&gt;。不能有些带端口，有些不带。&lt;/p&gt;
+&lt;h1 id="选择要暴露给小度的设备"&gt;选择要暴露给小度的设备
+&lt;/h1&gt;&lt;p&gt;添加成功后，打开集成条目里的 &lt;strong&gt;设备与能力&lt;/strong&gt;。这里我建议别一次全选。&lt;/p&gt;
+&lt;p&gt;先拿两三台设备练手，比如客厅灯、卧室空调、一个插座。流程是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;点「添加 / 移除设备」。&lt;/li&gt;
+&lt;li&gt;选择要暴露的 HA 设备。&lt;/li&gt;
+&lt;li&gt;点进某个设备，勾选能力。&lt;/li&gt;
+&lt;li&gt;保存后让小度重新发现。&lt;/li&gt;
+&lt;li&gt;用小度后台的模拟测试试一遍。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;能力大概可以这样理解：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;灯：开关、亮度、色温、颜色
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;插座：开关
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;空调：开关、目标温度、模式、风速
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;窗帘：打开、关闭、位置
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;传感器：温度、湿度
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;扫地机：启动、暂停、回充
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;控制类设备的开关能力一般是强制的。温湿度这种只读能力按需勾。你不需要把 HA 里的每个实体都丢给小度，暴露得越精准，后面误触发越少。&lt;/p&gt;
+&lt;h1 id="测试"&gt;测试
+&lt;/h1&gt;&lt;p&gt;我一般按这个顺序来：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;小度开发者后台触发设备发现。&lt;/li&gt;
+&lt;li&gt;看设备有没有出现在小度侧。&lt;/li&gt;
+&lt;li&gt;查询一个温湿度传感器。&lt;/li&gt;
+&lt;li&gt;打开一个灯或插座。&lt;/li&gt;
+&lt;li&gt;关掉它。&lt;/li&gt;
+&lt;li&gt;再用音箱和 App 试试真实语音。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;HAOS 上可以看日志：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;ha core logs -f | grep &lt;span style="color:#e6db74"&gt;&amp;#34;Xiaodu access&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;成功的发现请求会看到类似这样的内容：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;kind=dueros
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;namespace=DuerOS.ConnectedHome.Discovery
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;name=DiscoverAppliancesRequest
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;result=DiscoverAppliancesResponse
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;status=200
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果这里连请求都没有，就别急着改 HA 配置，先查域名、端口转发、证书和反向代理。&lt;/p&gt;
+&lt;p&gt;语音可以试这些：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;小度小度，打开客厅灯。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;小度小度，把卧室空调调到 26 度。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;小度小度，关闭书房插座。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;小度小度，客厅温度是多少？
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="我踩到的坑"&gt;我踩到的坑
+&lt;/h1&gt;&lt;h2 id="集成搜索不到"&gt;集成搜索不到
+&lt;/h2&gt;&lt;p&gt;先看目录有没有多套一层：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;错误：/config/custom_components/ha_xiaodu/ha_xiaodu
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;正确：/config/custom_components/ha_xiaodu
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;再看 &lt;code&gt;manifest.json&lt;/code&gt; 是否存在，然后重启 HA。&lt;/p&gt;
+&lt;h2 id="ha-里正常小度发现不到"&gt;HA 里正常，小度发现不到
+&lt;/h2&gt;&lt;p&gt;按顺序查：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1. 小度后台 WebService 地址对不对。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2. 地址里的端口有没有少。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;3. 公网能不能访问 HA。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;4. 反向代理有没有放行 /api/xiaodu。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;5. HA 集成里有没有选中设备。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;6. HA 日志里有没有 Xiaodu access。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;别只盯音箱。正式链路里，小度云端访问不到 HA，音箱喊破天也没用。&lt;/p&gt;
+&lt;h2 id="米家设备状态不准"&gt;米家设备状态不准
+&lt;/h2&gt;&lt;p&gt;这时候问题多半不在 &lt;code&gt;ha-xiaodu&lt;/code&gt;。先回 Xiaomi Home 或米家集成里看：HA 页面能不能控制，状态会不会变，实体有没有被禁用。HA 侧不稳定，桥接层写得再好也没办法。&lt;/p&gt;
+&lt;h2 id="授权页打不开"&gt;授权页打不开
+&lt;/h2&gt;&lt;p&gt;多半是公网入口没通。可以从外面测：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;curl -I https://ha.example.com:8443/api/xiaodu/service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;能拿到 HTTP 状态码，说明入口至少通了。TLS 都失败的话，先解决证书、DNS 和端口转发。&lt;/p&gt;
+&lt;h2 id="控制失败但发现成功"&gt;控制失败但发现成功
+&lt;/h2&gt;&lt;p&gt;这类多半是能力没勾全，或者设备类型映射得不对。比如空调要有温度、模式、风速这些能力；窗帘要有打开、关闭能力。回集成选项里改完，再让小度重新发现。&lt;/p&gt;
+&lt;h1 id="安全上要注意"&gt;安全上要注意
+&lt;/h1&gt;&lt;p&gt;公网入口开了以后，就别图省事了：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-text" data-lang="text"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;1. 只转发需要的非标端口，比如 8443。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;2. 不把 HA 管理页面对公网开放。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;3. ClientSecret 用长随机串。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;4. Cloudflare Token 只给必要权限。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;5. Token、私钥、真实 IP 别提交到 Git。
+&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;6. 定期更新 HA、Xiaomi Home、ha-xiaodu 和加载项。
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id="最后"&gt;最后
+&lt;/h1&gt;&lt;p&gt;这套东西的核心不是“米家转小度”，而是让 HA 当家里的统一中间层。米家、Zigbee、Matter、其他品牌集成都先进 HA，&lt;code&gt;ha-xiaodu&lt;/code&gt; 再把这些实体交给小度。&lt;/p&gt;
+&lt;p&gt;设备命名和房间分好，后面语音体验会顺很多。先暴露少量设备测试，稳定后再慢慢加。&lt;/p&gt;
+&lt;p&gt;这篇先记录到这，内网穿透那部分等后面补。&lt;/p&gt;</description></item></channel></rss>
