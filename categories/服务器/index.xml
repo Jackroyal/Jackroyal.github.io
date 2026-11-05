@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>服务器 on 搁浅St的blog</title><link>https://jackroyal.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/</link><description>Recent content in 服务器 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 28 Aug 2026 16:43:57 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/index.xml" rel="self" type="application/rss+xml"/><item><title>HTTP1.0和HTTP1.1的区别</title><link>https://jackroyal.github.io/post/http-1-0-vs-1-1/</link><pubDate>Fri, 25 Mar 2016 13:36:53 +0000</pubDate><guid>https://jackroyal.github.io/post/http-1-0-vs-1-1/</guid><description>&lt;p&gt;今天研究了下HTTP,还是挺有意思的.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>服务器 on 搁浅St的blog</title><link>https://blog.huirongis.me/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/</link><description>Recent content in 服务器 on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 05 Nov 2026 07:14:17 +0000</lastBuildDate><atom:link href="https://blog.huirongis.me/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/index.xml" rel="self" type="application/rss+xml"/><item><title>HTTP1.0和HTTP1.1的区别</title><link>https://blog.huirongis.me/post/http-1-0-vs-1-1/</link><pubDate>Fri, 25 Mar 2016 13:36:53 +0000</pubDate><guid>https://blog.huirongis.me/post/http-1-0-vs-1-1/</guid><description>&lt;p&gt;今天研究了下HTTP,还是挺有意思的.
 接下来,就比较一下两者的区别.&lt;/p&gt;
 &lt;h1 id="1-长连接"&gt;1 长连接
 &lt;/h1&gt;&lt;p&gt;这个应该是变化最大的一个了.在1.0的版本中,如果客户端请求头没有设置&lt;code&gt;Connection: Keep-Alive&lt;/code&gt;的话,那么每次请求完成都会立即断开连接,然后客户端又要重新建立一个HTTP连接.假设一个网页包含了10个图片,那么为了请求图片,客户端必须要发送10次请求,无疑这对带宽和资源是极大的浪费,TCP的优势就没有体现出来.
@@ -60,9 +60,9 @@ ps:如果同时设置了&lt;code&gt;Content-Length&lt;/code&gt; 和&lt;code&gt;T
 &lt;h1 id="参考文献"&gt;参考文献
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="HTTPs://imququ.com/post/transfer-encoding-header-in-HTTP.html" &gt;HTTP 协议中的 Transfer-Encoding&lt;/a&gt;
 2 &lt;a class="link" href="http://blog.csdn.net/forgotaboutgirl/article/details/6936982" target="_blank" rel="noopener"
-&gt;HTTP/1.1与HTTP/1.0的区别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://jackroyal.github.io/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
+&gt;HTTP/1.1与HTTP/1.0的区别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://blog.huirongis.me/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://blog.huirongis.me/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
 &lt;p&gt;我去锐速官网注册了账号,可惜,在官方支持的linux版本中并没有我这个内核版本.我用的是&lt;code&gt;3.13.0-37-generic&lt;/code&gt;的&lt;code&gt;32&lt;/code&gt;位版本,锐速官网并没有支持.&lt;code&gt;32&lt;/code&gt;位版本支持的相对较少,支持的最新版本是&lt;code&gt;3.13.0-29-generic&lt;/code&gt;.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
 loading="lazy"
 alt="锐速官网linux支持列表"
 &gt;
@@ -80,7 +80,7 @@ Bits: 32-bit&lt;/p&gt;
 &lt;strong&gt;争取的做法:&lt;/strong&gt;
 1 登录你的&lt;code&gt;digitalocean&lt;/code&gt;控制台
 2 点击&lt;code&gt;setting-&amp;gt;kernel&lt;/code&gt;,效果如下图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
 loading="lazy"
 alt="控制台的kernel页面"
 &gt;
@@ -92,7 +92,7 @@ ok 打完收工&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-upgrade-ubuntu-12-04-lts-to-ubuntu-14-04-lts" target="_blank" rel="noopener"
 &gt;How to Upgrade Ubuntu 12.04 LTS to Ubuntu 14.04 LTS&lt;/a&gt;
 2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-update-a-digitalocean-server-s-kernel" target="_blank" rel="noopener"
-&gt;How To Update a DigitalOcean Server&amp;rsquo;s Kernel&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下设置apache的目录映射</title><link>https://jackroyal.github.io/post/ubuntu-lamp-alias-setting/</link><pubDate>Thu, 15 Oct 2015 22:12:37 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-lamp-alias-setting/</guid><description>&lt;p&gt;好吧,我的博客一不小心又荒废下来了,话不多说,进入正文.&lt;/p&gt;
+&gt;How To Update a DigitalOcean Server&amp;rsquo;s Kernel&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下设置apache的目录映射</title><link>https://blog.huirongis.me/post/ubuntu-lamp-alias-setting/</link><pubDate>Thu, 15 Oct 2015 22:12:37 +0000</pubDate><guid>https://blog.huirongis.me/post/ubuntu-lamp-alias-setting/</guid><description>&lt;p&gt;好吧,我的博客一不小心又荒废下来了,话不多说,进入正文.&lt;/p&gt;
 &lt;p&gt;最近的项目一直在忙,发布代码的时候遇到一个麻烦事,由于所有项目代码都放在服务器的根目录,也就是&lt;code&gt;/var/www/html&lt;/code&gt;下;然后还有一个api的页面,我放在一个&lt;code&gt;api&lt;/code&gt;文件夹中,然后把整个&lt;code&gt;api&lt;/code&gt;文件夹放在&lt;code&gt;html&lt;/code&gt;目录下.由于每次发布代码都是替换整个根目录&lt;code&gt;html&lt;/code&gt;下的文件,你懂的,我每次发布项目代码后,&lt;code&gt;api&lt;/code&gt;就没了,需要我单独解压,再复制,blablabla,总之一个字,** 烦 **.
 我突然想起来,phpmyadmin安装后就不在网站的根目录,但是访问的时候我却还是直接在ip后面跟目录,比如&lt;code&gt;http://127.0.0.1/phpmyadmin&lt;/code&gt;,这货应该是用了一个映射,我照着这个样子搞一个,不就行了,说干就干.&lt;/p&gt;
 &lt;h1 id="1-使用的命令"&gt;1 使用的命令
@@ -168,7 +168,7 @@ Order allow,deny
 allow from all
 &amp;lt;/Directory&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的&lt;code&gt;-Indexes&lt;/code&gt;选项的意思是,不要列出目录
-打完收工&lt;/p&gt;</description></item><item><title>阿里云windows_server_2003_搭建邮件服务器</title><link>https://jackroyal.github.io/post/aliyun-windows-server-2008-mail-server/</link><pubDate>Sat, 28 Jun 2014 22:30:00 +0000</pubDate><guid>https://jackroyal.github.io/post/aliyun-windows-server-2008-mail-server/</guid><description>&lt;p&gt;    笔者最近遇到一个在阿里云上搭建邮件服务器的问题，总算搞定，记录一下。&lt;/p&gt;
+打完收工&lt;/p&gt;</description></item><item><title>阿里云windows_server_2003_搭建邮件服务器</title><link>https://blog.huirongis.me/post/aliyun-windows-server-2008-mail-server/</link><pubDate>Sat, 28 Jun 2014 22:30:00 +0000</pubDate><guid>https://blog.huirongis.me/post/aliyun-windows-server-2008-mail-server/</guid><description>&lt;p&gt;    笔者最近遇到一个在阿里云上搭建邮件服务器的问题，总算搞定，记录一下。&lt;/p&gt;
 &lt;p&gt;     整个搭建过程，包括pop3服务的安装和开启，smtp服务的安装和开启，dns服务的安装和设置。
     参考文章&lt;a class="link" href="http://hi.baidu.com/senya/item/63bd6588b6817056e63d1996" target="_blank" rel="noopener"
 &gt;http://hi.baidu.com/senya/item/63bd6588b6817056e63d1996&lt;/a&gt;
@@ -196,7 +196,7 @@ allow from all
 &lt;p&gt;图十一&lt;/p&gt;
 &lt;p&gt;__　　三、配置smtp__&lt;/p&gt;
 &lt;p&gt;　　方法和上面类似，在图二的画面中我们选择应用程序服务器&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;如图，我的已经开启了。&lt;/p&gt;
@@ -204,44 +204,44 @@ loading="lazy"
 &lt;p&gt;&lt;strong&gt;四、配置DNS&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;服务器已经配置好了，我们接下来设置下dns，这样才能解析到，不然还是无法使用的&lt;/p&gt;
 &lt;p&gt;依次打开，“开始-程序-管理工具-配置您的服务器向导”&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;选择自定义配置&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;选择dns服务器，下一步&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;点击正向查找域里面的区域名称，在右边的空白处点击右键，新建主机，分别新建POP3，smtp等主机&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;还是空白处，右键，新建邮件交换器，分别新建smtp和pop3的邮件交换器&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;注意：完全合格的域名后面没有点号，邮件服务器的完全合格的域名后面有点号，例如是smtp.ip-tcp.com.&lt;/p&gt;

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>搁浅St的blog</title><link>https://jackroyal.github.io/</link><description>Recent content on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 28 Aug 2026 16:43:57 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Archives</title><link>https://jackroyal.github.io/page/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://jackroyal.github.io/page/archives/</guid><description/></item><item><title>php学习笔记(3.6)--PHP中的引用</title><link>https://jackroyal.github.io/post/php-learn-note-3-6/</link><pubDate>Sun, 08 Jul 2018 17:40:28 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3-6/</guid><description>&lt;p&gt;最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>搁浅St的blog</title><link>https://blog.huirongis.me/</link><description>Recent content on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 05 Nov 2026 07:14:17 +0000</lastBuildDate><atom:link href="https://blog.huirongis.me/index.xml" rel="self" type="application/rss+xml"/><item><title>Archives</title><link>https://blog.huirongis.me/page/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://blog.huirongis.me/page/archives/</guid><description/></item><item><title>php学习笔记(3.6)--PHP中的引用</title><link>https://blog.huirongis.me/post/php-learn-note-3-6/</link><pubDate>Sun, 08 Jul 2018 17:40:28 +0000</pubDate><guid>https://blog.huirongis.me/post/php-learn-note-3-6/</guid><description>&lt;p&gt;最近再看CI源码, 刚好有碰到引用相关问题, 索性又研究了下.&lt;/p&gt;
 &lt;h1 id="1-什么是引用"&gt;1 什么是引用
 &lt;/h1&gt;&lt;p&gt;引用,第一感觉就是想到C语言中的指针,两个变量指向同一个内存地址.但是php中的引用其实应该是别名, 可以类比的是linux系统中的硬链接,两个文件名实际指向同一个文件.&lt;/p&gt;
 &lt;h1 id="2-引用传值"&gt;2 引用传值
@@ -110,7 +110,7 @@ $c --&amp;gt;| object id | ---&amp;gt; | object(Class A) |
 &gt;对象和引用&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://segmentfault.com/a/1190000002928594" target="_blank" rel="noopener"
 &gt;在PHP中对象真的是按引用传递的吗&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</description></item><item><title>修复ubuntu终端中文显示和输入的问题</title><link>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</link><pubDate>Mon, 24 Apr 2017 13:37:01 +0000</pubDate><guid>https://jackroyal.github.io/post/repair-chinese-input-in-ubuntu/</guid><description>&lt;p&gt;我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文.&lt;/p&gt;
+&lt;/ol&gt;</description></item><item><title>修复ubuntu终端中文显示和输入的问题</title><link>https://blog.huirongis.me/post/repair-chinese-input-in-ubuntu/</link><pubDate>Mon, 24 Apr 2017 13:37:01 +0000</pubDate><guid>https://blog.huirongis.me/post/repair-chinese-input-in-ubuntu/</guid><description>&lt;p&gt;我在管理服务器的时候,一般在win下面使用xshell和xftp两个软件,来进行管理和上传文件.不过一直有个头疼的问题:如果文件名是中文的,上传之后,在ftp软件中看到的是正常的,在xshell终端中看到的却是乱码;而且,在xshell中无法输入中文,所以我在vi中修改文件的时候一般只使用英文.&lt;/p&gt;
 &lt;p&gt;昨晚没事,就查了一下资料,修复了这个问题.&lt;/p&gt;
 &lt;h1 id="1-目标"&gt;1 目标
 &lt;/h1&gt;&lt;p&gt;本文的目标主要是修复中文文件名乱码和中文输入的问题,本文的目标不是把整个系统的所有语言体系都改成中文,只是单纯的修复中文输入问题和中文文件名显示问题.&lt;/p&gt;
@@ -206,7 +206,7 @@ alt="修改xftp编码方式"
 &gt;Locale-wiki&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://segmentfault.com/q/1010000000150673" target="_blank" rel="noopener"
 &gt;MacOS用iTerm连接到Linux上，不能输入中文&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>将hexo部署到自己的个人服务器上</title><link>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</link><pubDate>Sat, 08 Apr 2017 19:22:22 +0000</pubDate><guid>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</guid><description>&lt;blockquote&gt;
+&lt;/ul&gt;</description></item><item><title>将hexo部署到自己的个人服务器上</title><link>https://blog.huirongis.me/post/deploy-hexo-in-my-own-vps/</link><pubDate>Sat, 08 Apr 2017 19:22:22 +0000</pubDate><guid>https://blog.huirongis.me/post/deploy-hexo-in-my-own-vps/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;本文假设你已经配置好了hexo了,这是前提&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;前面两篇文章主要是用来配置自己的服务器.服务器部署完成后,后面就可以开始写博客了.但是每次&lt;code&gt;hexo d&lt;/code&gt;推送到gihub的服务器上了,还需要手动将文件复制到自己的服务器对应网站的根目录,对的,要手动,当然不能忍.&lt;/p&gt;
@@ -450,7 +450,7 @@ ok,大功告成啦,赶快&lt;code&gt;hexo d -g&lt;/code&gt;看看效果吧&lt;/p
 &gt;使用 Git Hook 自动部署 Hexo 到个人 VPS&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="http://blog.csdn.net/linghe301/article/details/8211305#" target="_blank" rel="noopener"
 &gt;Linux启动或禁止SSH用户及IP的登录&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>Nginx上多站点的https配置</title><link>https://jackroyal.github.io/post/nginx-https-setting-on-multiple-sites/</link><pubDate>Wed, 05 Apr 2017 13:09:24 +0000</pubDate><guid>https://jackroyal.github.io/post/nginx-https-setting-on-multiple-sites/</guid><description>&lt;p&gt;&lt;strong&gt;更新&lt;/strong&gt;&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>Nginx上多站点的https配置</title><link>https://blog.huirongis.me/post/nginx-https-setting-on-multiple-sites/</link><pubDate>Wed, 05 Apr 2017 13:09:24 +0000</pubDate><guid>https://blog.huirongis.me/post/nginx-https-setting-on-multiple-sites/</guid><description>&lt;p&gt;&lt;strong&gt;更新&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;2017-06-13 修改证书生成目录,为方便后续的git push自动更新,将acme验证目录移出网站根目录&lt;/li&gt;
 &lt;/ul&gt;
@@ -700,7 +700,7 @@ alt="小绿锁"
 &gt;本博客 Nginx 配置之完整篇&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://imququ.com/post/sth-about-switch-to-https.html#toc-2" target="_blank" rel="noopener"
 &gt;关于启用 HTTPS 的一些经验分享（一）&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>在ubuntu上安装和配置Nginx</title><link>https://jackroyal.github.io/post/nginx-installation-and-setting-in-ubuntu-server/</link><pubDate>Wed, 05 Apr 2017 10:51:24 +0000</pubDate><guid>https://jackroyal.github.io/post/nginx-installation-and-setting-in-ubuntu-server/</guid><description>&lt;p&gt;废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>在ubuntu上安装和配置Nginx</title><link>https://blog.huirongis.me/post/nginx-installation-and-setting-in-ubuntu-server/</link><pubDate>Wed, 05 Apr 2017 10:51:24 +0000</pubDate><guid>https://blog.huirongis.me/post/nginx-installation-and-setting-in-ubuntu-server/</guid><description>&lt;p&gt;废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了&lt;/p&gt;
 &lt;h1 id="1-系统环境"&gt;1 系统环境
 &lt;/h1&gt;&lt;p&gt;服务器:ubuntu server 16.04.2 LTS
 主要工具:xshell&lt;/p&gt;
@@ -780,7 +780,7 @@ alt="安全组配置"
 &gt;&lt;/li&gt;
 &lt;li&gt;如果想查看端口是否打开,可以使用&lt;a class="link" href="http://tool.chinaz.com/port/" target="_blank" rel="noopener"
 &gt;站长工具-在线端口扫描&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>2016这过去的半年</title><link>https://jackroyal.github.io/post/my-life-these-days/</link><pubDate>Sun, 06 Nov 2016 15:39:32 +0000</pubDate><guid>https://jackroyal.github.io/post/my-life-these-days/</guid><description>&lt;p&gt;时间真是匆匆啊,上一篇博客的时间是3月25,今天都已经是11月6号了,过去了7个多月.&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>2016这过去的半年</title><link>https://blog.huirongis.me/post/my-life-these-days/</link><pubDate>Sun, 06 Nov 2016 15:39:32 +0000</pubDate><guid>https://blog.huirongis.me/post/my-life-these-days/</guid><description>&lt;p&gt;时间真是匆匆啊,上一篇博客的时间是3月25,今天都已经是11月6号了,过去了7个多月.&lt;/p&gt;
 &lt;h1 id="1-时光匆匆"&gt;1 时光匆匆
 &lt;/h1&gt;&lt;p&gt;自从上了初中开始,就发觉时间过得快来.接下来到了高中时间有是更快了,到了大学时间简直飞逝.
 人生黄金的10年,转眼已经过了一般,but我依旧没有成为一个大神,还是辣么水水哒.基础知识还是不扎实,做事情总是知其然而不知其所以然,这是我所讨厌的,但是也没有实际的办法.
@@ -822,7 +822,7 @@ alt="在百度的第一天"
 大概一个月过后,就觉悟了,在公司和在学校本来就不同,大家的关系也无法做到像学校那样,所以不必强求,大家友好和平共处,就是正确的处理方式.正如圣哥所说,大家其实都是过客.
 后面的相处就自然的多,简简单单相处.&lt;/p&gt;
 &lt;hr&gt;
-&lt;p&gt;2016-11-06 17:25 就先写到这,吃饭去的,等下食堂就没饭了&lt;/p&gt;</description></item><item><title>HTTP1.0和HTTP1.1的区别</title><link>https://jackroyal.github.io/post/http-1-0-vs-1-1/</link><pubDate>Fri, 25 Mar 2016 13:36:53 +0000</pubDate><guid>https://jackroyal.github.io/post/http-1-0-vs-1-1/</guid><description>&lt;p&gt;今天研究了下HTTP,还是挺有意思的.
+&lt;p&gt;2016-11-06 17:25 就先写到这,吃饭去的,等下食堂就没饭了&lt;/p&gt;</description></item><item><title>HTTP1.0和HTTP1.1的区别</title><link>https://blog.huirongis.me/post/http-1-0-vs-1-1/</link><pubDate>Fri, 25 Mar 2016 13:36:53 +0000</pubDate><guid>https://blog.huirongis.me/post/http-1-0-vs-1-1/</guid><description>&lt;p&gt;今天研究了下HTTP,还是挺有意思的.
 接下来,就比较一下两者的区别.&lt;/p&gt;
 &lt;h1 id="1-长连接"&gt;1 长连接
 &lt;/h1&gt;&lt;p&gt;这个应该是变化最大的一个了.在1.0的版本中,如果客户端请求头没有设置&lt;code&gt;Connection: Keep-Alive&lt;/code&gt;的话,那么每次请求完成都会立即断开连接,然后客户端又要重新建立一个HTTP连接.假设一个网页包含了10个图片,那么为了请求图片,客户端必须要发送10次请求,无疑这对带宽和资源是极大的浪费,TCP的优势就没有体现出来.
@@ -884,7 +884,7 @@ ps:如果同时设置了&lt;code&gt;Content-Length&lt;/code&gt; 和&lt;code&gt;T
 &lt;h1 id="参考文献"&gt;参考文献
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="HTTPs://imququ.com/post/transfer-encoding-header-in-HTTP.html" &gt;HTTP 协议中的 Transfer-Encoding&lt;/a&gt;
 2 &lt;a class="link" href="http://blog.csdn.net/forgotaboutgirl/article/details/6936982" target="_blank" rel="noopener"
-&gt;HTTP/1.1与HTTP/1.0的区别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>解决倒水问题</title><link>https://jackroyal.github.io/post/how-to-solve-the-water-problem/</link><pubDate>Sat, 19 Mar 2016 12:48:58 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-solve-the-water-problem/</guid><description>&lt;p&gt;有两个容器，容积分别为A升和B升，有无限多的水，现在需要C升水。
+&gt;HTTP/1.1与HTTP/1.0的区别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>解决倒水问题</title><link>https://blog.huirongis.me/post/how-to-solve-the-water-problem/</link><pubDate>Sat, 19 Mar 2016 12:48:58 +0000</pubDate><guid>https://blog.huirongis.me/post/how-to-solve-the-water-problem/</guid><description>&lt;p&gt;有两个容器，容积分别为A升和B升，有无限多的水，现在需要C升水。
 我们还有一个足够大的水缸，足够容纳C升水。起初它是空的，我们只能往水缸里倒入水，而不能倒出。
 可以进行的操作是：
 把一个容器灌满；
@@ -923,10 +923,10 @@ nA%B=z
 &lt;a class="link" href="http://www.cnblogs.com/frog112111/archive/2012/08/19/2646012.html" target="_blank" rel="noopener"
 &gt;欧几里得和扩展欧几里得算法&lt;/a&gt;
 &lt;a class="link" href="http://www.cnblogs.com/drizzlecrj/archive/2007/09/14/892340.html" target="_blank" rel="noopener"
-&gt;最大公约数的三种解法&lt;/a&gt;&lt;/p&gt;</description></item><item><title>php学习笔记(4)--php中cookie没有及时生效</title><link>https://jackroyal.github.io/post/php-learn-note-5/</link><pubDate>Sat, 19 Mar 2016 12:15:32 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-5/</guid><description>&lt;p&gt;update:2016/4/14 9:48:26
+&gt;最大公约数的三种解法&lt;/a&gt;&lt;/p&gt;</description></item><item><title>php学习笔记(4)--php中cookie没有及时生效</title><link>https://blog.huirongis.me/post/php-learn-note-5/</link><pubDate>Sat, 19 Mar 2016 12:15:32 +0000</pubDate><guid>https://blog.huirongis.me/post/php-learn-note-5/</guid><description>&lt;p&gt;update:2016/4/14 9:48:26
 这是最近才在面试题中发现的一个问题,之前用的时候还没发现,仔细一想,有点意思.&lt;/p&gt;
 &lt;h1 id="1-php中的cookie"&gt;1 php中的cookie
-&lt;/h1&gt;</description></item><item><title>php学习笔记(4)--php使用mysqli连接数据库</title><link>https://jackroyal.github.io/post/php-learn-note-4/</link><pubDate>Sat, 12 Mar 2016 10:18:31 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-4/</guid><description>&lt;p&gt;long time no see,用上框架以后,好久没有写原生的sql处理了,想当年用的还是mysql_connect,如今,都已经换mysqli了.&lt;/p&gt;
+&lt;/h1&gt;</description></item><item><title>php学习笔记(4)--php使用mysqli连接数据库</title><link>https://blog.huirongis.me/post/php-learn-note-4/</link><pubDate>Sat, 12 Mar 2016 10:18:31 +0000</pubDate><guid>https://blog.huirongis.me/post/php-learn-note-4/</guid><description>&lt;p&gt;long time no see,用上框架以后,好久没有写原生的sql处理了,想当年用的还是mysql_connect,如今,都已经换mysqli了.&lt;/p&gt;
 &lt;h1 id="1-关于php的数据库连接方式"&gt;1 关于php的数据库连接方式
 &lt;/h1&gt;&lt;p&gt;当考虑连接到MySQL数据库服务器的时候，有三种主要的API可供选择：
 1 PHP的MySQL扩展
@@ -948,14 +948,14 @@ nA%B=z
 &lt;/h2&gt;&lt;p&gt;PHP数据对象，是PHP应用中的一个数据库抽象层规范。PDO提供了一个统一的API接口可以使得你的PHP应用不去关心具体要 连接的数据库服务器系统类型。也就是说，如果你使用PDO的API，可以在任何需要的时候无缝切换数据库服务器，比如从Firebird 到MySQL，仅仅需要修改很少的PHP代码。&lt;/p&gt;
 &lt;p&gt;其他数据库抽象层的例子包括Java应用中的JDBC以及Perl中的DBI。&lt;/p&gt;
 &lt;p&gt;当然，PDO也有它自己的先进性，比如一个干净的，简单的，可移植的API，它最主要的缺点是会限制让你不能使用 后期MySQL服务端提供所有的数据库高级特性。比如，PDO不允许使用MySQL支持的多语句执行。&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1tvea7khyj20hm0dhac0.jpg"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1f1tvea7khyj20hm0dhac0.jpg"
 loading="lazy"
 alt="PHP中三种主要的MySQL连接方式的功能的比较"
-&gt;&lt;/p&gt;</description></item><item><title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</title><link>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</link><pubDate>Sun, 06 Mar 2016 15:50:46 +0000</pubDate><guid>https://jackroyal.github.io/post/migrate-pages-from-gitcafe-to-coding/</guid><description>&lt;p&gt;上一篇文章&lt;a class="link" href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener"
+&gt;&lt;/p&gt;</description></item><item><title>解决 Github Pages 禁止百度爬虫的方法2--从gitcafe迁移到coding.net</title><link>https://blog.huirongis.me/post/migrate-pages-from-gitcafe-to-coding/</link><pubDate>Sun, 06 Mar 2016 15:50:46 +0000</pubDate><guid>https://blog.huirongis.me/post/migrate-pages-from-gitcafe-to-coding/</guid><description>&lt;p&gt;上一篇文章&lt;a class="link" href="http://jackroyal.github.io/2015/11/25/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/" target="_blank" rel="noopener"
 &gt;解决 Github Pages 禁止百度爬虫的方法&lt;/a&gt;,提到了解决百度爬虫被github禁用掉的方法.
 &lt;code&gt;把博客同时发布到github pages和gitcafe pages.然后使用dnspod设置域名解析,国内线路解析到gitcafe,国外线路解析到github.&lt;/code&gt;
 然后今天去上gitcafe,偶然看到这个
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f1n79skvt3j20zl0m7k07.jpg"
 loading="lazy"
 alt="GitCafe 项目迁移至 Coding.net 公告"
 &gt;
@@ -976,7 +976,7 @@ alt="GitCafe 项目迁移至 Coding.net 公告"
 &lt;/h1&gt;&lt;p&gt;这个很简单不必说,注册需要填写用户名,邮箱和密码,比如我的用户名就是&lt;code&gt;Jackroyal&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id="2-新建和用户名同名的项目"&gt;2 新建和用户名同名的项目
 &lt;/h1&gt;&lt;p&gt;在注册好账号以后,我们就去新建一个项目,方法和gitcafe不同和gihub类似,就是和用户名同名,一模一样的就行.我的项目名是&lt;code&gt;Jackroyal&lt;/code&gt;,项目属性&lt;code&gt;公开&lt;/code&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f1n8d42xljj20qb0hbmzc.jpg"
 loading="lazy"
 alt="新建同名项目"
 &gt;&lt;/p&gt;
@@ -985,11 +985,11 @@ alt="新建同名项目"
 &lt;h2 id="31-使用ssh方式发布博客"&gt;3.1 使用ssh方式发布博客
 &lt;/h2&gt;&lt;p&gt;我们只需要找到本地的ssh公钥,然后上传到coding上去就行,点击&lt;a class="link" href="https://coding.net/user/account/setting/keys" target="_blank" rel="noopener"
 &gt;这里&lt;/a&gt;设置.查看本地ssh公钥的方法和上篇博客一样.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
 loading="lazy"
 alt="使用git客户端查看ssh公钥私钥"
 &gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
 loading="lazy"
 alt="查看公钥"
 &gt;
@@ -1008,14 +1008,14 @@ ps:这种方式,可能过一段时间又不行了,报错&lt;code&gt;could not re
 &lt;/ol&gt;
 &lt;h1 id="4-新建coding-pages分支"&gt;4 新建coding-pages分支
 &lt;/h1&gt;&lt;p&gt;当我们可以提交代码的时候,我们先来新建分支,和gitcafe差不多,它需要一个特别的分支名字,而不是像github默认的master分支,名字是&lt;code&gt;coding-pages&lt;/code&gt;,如下图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f1n965hcj0j210r0g3jvk.jpg"
 loading="lazy"
 alt="新建coding分支"
 &gt;
 我们把它设为默认分支&lt;/p&gt;
 &lt;h1 id="5-开启pages服务"&gt;5 开启pages服务
 &lt;/h1&gt;&lt;p&gt;接下来我们需要手动去开启pages服务.在项目主页的&lt;code&gt;pages&lt;/code&gt;选项卡,点击开启服务,同时我们,添加域名绑定
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f1n98oezpej20sv0kxtdb.jpg"
 loading="lazy"
 alt="开启pages服务"
 &gt;
@@ -1034,14 +1034,14 @@ branch: coding-pages
 还要注意branch名称,分支必须是&lt;code&gt;coding-pages&lt;/code&gt;
 **PS:如上面所说,我选择的是https方式发布,所以我的repo是https的,如果你选择ssh方式去认证,那么你的地址应该是类似这样的&lt;code&gt;git@git.coding.net:Jackroyal/Jackroyal.git&lt;/code&gt;
 **&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1f1n9byao2wj20o00gqn0e.jpg"
 loading="lazy"
 alt="添加coding的repo信息"
 &gt;&lt;/p&gt;
 &lt;h1 id="7-修改dns设置"&gt;7 修改dns设置
 &lt;/h1&gt;&lt;p&gt;就像第5步页面提示的,我们要绑定自己的域名,需要去修改dns解析记录,只需要添加一条CNAME指向你的&lt;code&gt;jackroyal.coding.me&lt;/code&gt;即可.
 注意后面加个点,也就是正确的填法是&lt;code&gt;jackroyal.coding.me.&lt;/code&gt;,如下图所示.修改完成后大概等几分钟才能生效
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f1n9m6me2ej20nv09c0us.jpg"
 loading="lazy"
 alt="修改dns设置"
 &gt;&lt;/p&gt;
@@ -1049,7 +1049,7 @@ alt="修改dns设置"
 &lt;/h1&gt;&lt;p&gt;如果我们选择从gitcafe迁移的话,他会把我们原来的博客迁移过来.为了适应coding,你只需要从上面第二步开始就好,尤其注意的是,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,&lt;code&gt;新建coding-pages分支&lt;/code&gt;,重要的事情说三遍,因为你迁移过来的分支名称是&lt;code&gt;gitcafe-pages&lt;/code&gt;.
 也就是核心问题,必须有个和用户名同名的项目,项目必须有个分支是&lt;code&gt;coding-pages&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;其他没提的事情和上一篇是一样的.
-最后执行&lt;code&gt;hexo d -g&lt;/code&gt;,打完收工&lt;/p&gt;</description></item><item><title>php学习笔记(3.5)--关于引用赋值和一般赋值</title><link>https://jackroyal.github.io/post/php-learn-note-3-5/</link><pubDate>Sat, 05 Mar 2016 13:52:28 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3-5/</guid><description>&lt;p&gt;上一篇提到了,对象赋值的时候有两种赋值方式,一种是直接&lt;code&gt;$a=$b&lt;/code&gt;,第二种是引用赋值&lt;code&gt;$a=&amp;amp;$b&lt;/code&gt;.
+最后执行&lt;code&gt;hexo d -g&lt;/code&gt;,打完收工&lt;/p&gt;</description></item><item><title>php学习笔记(3.5)--关于引用赋值和一般赋值</title><link>https://blog.huirongis.me/post/php-learn-note-3-5/</link><pubDate>Sat, 05 Mar 2016 13:52:28 +0000</pubDate><guid>https://blog.huirongis.me/post/php-learn-note-3-5/</guid><description>&lt;p&gt;上一篇提到了,对象赋值的时候有两种赋值方式,一种是直接&lt;code&gt;$a=$b&lt;/code&gt;,第二种是引用赋值&lt;code&gt;$a=&amp;amp;$b&lt;/code&gt;.
 不仅对象赋值的时候会有这两种情况,普通变量赋值也会有这两种情况,为了简单说明,我们先使用简单的普通变量来做说明.&lt;/p&gt;
 &lt;h1 id="1-普通变量的结构"&gt;1 普通变量的结构
 &lt;/h1&gt;&lt;p&gt;在PHP中,所有的变量都是用一个结构zval来保存的,zval大概的结构如下所示:&lt;/p&gt;
@@ -1064,7 +1064,7 @@ alt="修改dns设置"
 &lt;h1 id="2-php环境的设置"&gt;2 php环境的设置
 &lt;/h1&gt;&lt;p&gt;我们在实验过程中,需要去查看refcount和is_ref的变化,所以需要使用php的
 &lt;code&gt;xdebug_debug_zval&lt;/code&gt;函数,你的环境可能默认没有开启这个配置,你需要修改&lt;code&gt;php.ini&lt;/code&gt;文件开启这个配置.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f1m1ximwj1j20wn098dj6.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f1m1ximwj1j20wn098dj6.jpg"
 loading="lazy"
 alt="修改php.ini文件"
 &gt;&lt;/p&gt;
@@ -1207,7 +1207,7 @@ ps:其实我在知乎提了个问题,不过没人回答还&lt;a class="link" hre
 3 &lt;a class="link" href="http://php.net/manual/zh/function.debug-zval-dump.php" target="_blank" rel="noopener"
 &gt;php官方文档&amp;ndash;debug_zval_dump函数&lt;/a&gt;
 4 &lt;a class="link" href="https://derickrethans.nl/talks/phparch-php-variables-article.pdf" target="_blank" rel="noopener"
-&gt;英文文档&amp;ndash;php变量&lt;/a&gt;&lt;/p&gt;</description></item><item><title>php学习笔记(3)</title><link>https://jackroyal.github.io/post/php-learn-note-3/</link><pubDate>Fri, 04 Mar 2016 10:06:40 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-3/</guid><description>&lt;p&gt;今天开始学习类和面向对象了.&lt;/p&gt;
+&gt;英文文档&amp;ndash;php变量&lt;/a&gt;&lt;/p&gt;</description></item><item><title>php学习笔记(3)</title><link>https://blog.huirongis.me/post/php-learn-note-3/</link><pubDate>Fri, 04 Mar 2016 10:06:40 +0000</pubDate><guid>https://blog.huirongis.me/post/php-learn-note-3/</guid><description>&lt;p&gt;今天开始学习类和面向对象了.&lt;/p&gt;
 &lt;h1 id="1-对象实例化"&gt;1 对象实例化
 &lt;/h1&gt;&lt;p&gt;在实例化对象的时候,必须使用&lt;code&gt;new&lt;/code&gt;关键字.如果该类属于一个名字空间,则必须使用其完整名称.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-php" data-lang="php"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;?&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;php&lt;/span&gt;
@@ -1230,7 +1230,7 @@ ps:其实我在知乎提了个问题,不过没人回答还&lt;a class="link" hre
 &lt;h1 id="2-属性"&gt;2 属性
 &lt;/h1&gt;&lt;p&gt;类的变量成员叫做属性,属性声明是由关键字public,protected或者private开头,然后跟一个普通的变量声明来组成,尤其需要注意的是,属性的变量可以初始化,但是初始化值必须是常数,也就是不能有表达式比如下面的就是错误的:
 &lt;code&gt;public $var1 = 'hello ' . 'world';&lt;/code&gt;,&lt;code&gt;public $var3 = 1+2;&lt;/code&gt;.
-在php5.3之后,nowdocs的结构也是可行的.&lt;/p&gt;</description></item><item><title>php学习笔记(2)</title><link>https://jackroyal.github.io/post/php-learn-note-2/</link><pubDate>Thu, 25 Feb 2016 14:36:20 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-2/</guid><description>&lt;p&gt;今天看的是最基础的变量.&lt;/p&gt;
+在php5.3之后,nowdocs的结构也是可行的.&lt;/p&gt;</description></item><item><title>php学习笔记(2)</title><link>https://blog.huirongis.me/post/php-learn-note-2/</link><pubDate>Thu, 25 Feb 2016 14:36:20 +0000</pubDate><guid>https://blog.huirongis.me/post/php-learn-note-2/</guid><description>&lt;p&gt;今天看的是最基础的变量.&lt;/p&gt;
 &lt;h1 id="1-php变量"&gt;1 php变量
 &lt;/h1&gt;&lt;p&gt;和其他语言类似,php中一个有效的变量名由字母或者下划线开头,后面跟上任意数量的字母,数字,或者下划线.按照正常的正则表达式,它将被表述为：&amp;rsquo;[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*&amp;rsquo;.
 赋值的时候,变量默认总是&lt;code&gt;传值赋值&lt;/code&gt;.
@@ -1309,9 +1309,9 @@ PS:此处需要注意的是,php不存在类似C和java的块级作用域.比如�
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;chr(32) ( ) (space)
 chr(46) (.) (dot)
 chr(91) ([) (open square bracket)&lt;/p&gt;
-&lt;p&gt;ps:ascll码值在128-159的字符是合法字符,所以并不会被转义成下划线&lt;/p&gt;</description></item><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://jackroyal.github.io/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
+&lt;p&gt;ps:ascll码值在128-159的字符是合法字符,所以并不会被转义成下划线&lt;/p&gt;</description></item><item><title>digitalocean下ubuntu切换内核,使用锐速</title><link>https://blog.huirongis.me/post/digitalocean-switch-kernel/</link><pubDate>Thu, 28 Jan 2016 16:59:10 +0000</pubDate><guid>https://blog.huirongis.me/post/digitalocean-switch-kernel/</guid><description>&lt;p&gt;最近在网上看到,锐速可以用来给服务器加速,然后有人用这个软件来给翻墙服务器加速,据说效果还不错,今天就折腾一下.&lt;/p&gt;
 &lt;p&gt;我去锐速官网注册了账号,可惜,在官方支持的linux版本中并没有我这个内核版本.我用的是&lt;code&gt;3.13.0-37-generic&lt;/code&gt;的&lt;code&gt;32&lt;/code&gt;位版本,锐速官网并没有支持.&lt;code&gt;32&lt;/code&gt;位版本支持的相对较少,支持的最新版本是&lt;code&gt;3.13.0-29-generic&lt;/code&gt;.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f0fbk1mp65j213c0ozdru.jpg"
 loading="lazy"
 alt="锐速官网linux支持列表"
 &gt;
@@ -1329,7 +1329,7 @@ Bits: 32-bit&lt;/p&gt;
 &lt;strong&gt;争取的做法:&lt;/strong&gt;
 1 登录你的&lt;code&gt;digitalocean&lt;/code&gt;控制台
 2 点击&lt;code&gt;setting-&amp;gt;kernel&lt;/code&gt;,效果如下图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1f0fbvo209sj20vd0kkdkf.jpg"
 loading="lazy"
 alt="控制台的kernel页面"
 &gt;
@@ -1341,7 +1341,7 @@ ok 打完收工&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-upgrade-ubuntu-12-04-lts-to-ubuntu-14-04-lts" target="_blank" rel="noopener"
 &gt;How to Upgrade Ubuntu 12.04 LTS to Ubuntu 14.04 LTS&lt;/a&gt;
 2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-update-a-digitalocean-server-s-kernel" target="_blank" rel="noopener"
-&gt;How To Update a DigitalOcean Server&amp;rsquo;s Kernel&lt;/a&gt;&lt;/p&gt;</description></item><item><title>php学习笔记(1)</title><link>https://jackroyal.github.io/post/php-learn-note-1/</link><pubDate>Thu, 10 Dec 2015 15:46:03 +0000</pubDate><guid>https://jackroyal.github.io/post/php-learn-note-1/</guid><description>&lt;p&gt;php文档学习笔记,正式开始连载了哈,终于开始学习了.&lt;/p&gt;
+&gt;How To Update a DigitalOcean Server&amp;rsquo;s Kernel&lt;/a&gt;&lt;/p&gt;</description></item><item><title>php学习笔记(1)</title><link>https://blog.huirongis.me/post/php-learn-note-1/</link><pubDate>Thu, 10 Dec 2015 15:46:03 +0000</pubDate><guid>https://blog.huirongis.me/post/php-learn-note-1/</guid><description>&lt;p&gt;php文档学习笔记,正式开始连载了哈,终于开始学习了.&lt;/p&gt;
 &lt;h1 id="布尔值"&gt;布尔值
 &lt;/h1&gt;&lt;p&gt;要明确地将一个值转换成 boolean，用 (bool) 或者 (boolean) 来强制转换。但是很多情况下不需要用强制转换，因为当运算符，函数或者流程控制结构需要一个 boolean 参数时，该值会被自动转换。
 当转换为 boolean 时，以下值被认为是 FALSE：&lt;/p&gt;
@@ -1364,7 +1364,7 @@ ok 打完收工&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;var_dump&lt;/span&gt;((&lt;span style="color:#a6e22e"&gt;bool&lt;/span&gt;)&lt;span style="color:#e6db74"&gt;&amp;#39;0.1&amp;#39;&lt;/span&gt;); &lt;span style="color:#75715e"&gt;//true
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;var_dump&lt;/span&gt;((&lt;span style="color:#a6e22e"&gt;bool&lt;/span&gt;)&lt;span style="color:#66d9ef"&gt;array&lt;/span&gt;()); &lt;span style="color:#75715e"&gt;//false
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#a6e22e"&gt;var_dump&lt;/span&gt;((&lt;span style="color:#a6e22e"&gt;bool&lt;/span&gt;)&lt;span style="color:#e6db74"&gt;&amp;#34;false&amp;#34;&lt;/span&gt;); &lt;span style="color:#75715e"&gt;//true,因为这个字符串不为空,所以为true
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>那些年,我们玩过的离线安装</title><link>https://jackroyal.github.io/post/offline-install/</link><pubDate>Thu, 26 Nov 2015 13:34:46 +0000</pubDate><guid>https://jackroyal.github.io/post/offline-install/</guid><description>&lt;p&gt;由于有些软件,都是下载一个安装器,然后在线安装,由于网速的原因,这种方式一旦失败,就只能重新安装,所以很坑,就找了些离线安装的方法&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>那些年,我们玩过的离线安装</title><link>https://blog.huirongis.me/post/offline-install/</link><pubDate>Thu, 26 Nov 2015 13:34:46 +0000</pubDate><guid>https://blog.huirongis.me/post/offline-install/</guid><description>&lt;p&gt;由于有些软件,都是下载一个安装器,然后在线安装,由于网速的原因,这种方式一旦失败,就只能重新安装,所以很坑,就找了些离线安装的方法&lt;/p&gt;
 &lt;h1 id="1-adobe-reader离线安装"&gt;1 Adobe reader离线安装
 &lt;/h1&gt;&lt;p&gt;下载离线安装版adobe reader
 &lt;a class="link" href="https://get.adobe.com/cn/reader/enterprise/" target="_blank" rel="noopener"
@@ -1380,7 +1380,7 @@ ok 打完收工&lt;/p&gt;
 &gt;http://www.google.com/chrome/eula.html?hl=zh-CN&amp;standalone=1&amp;extra=betachannel&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;最新开发版（Dev Channel）：
 &lt;a class="link" href="http://www.google.com/chrome/eula.html?hl=zh-CN&amp;amp;standalone=1&amp;amp;extra=devchannel" target="_blank" rel="noopener"
-&gt;http://www.google.com/chrome/eula.html?hl=zh-CN&amp;standalone=1&amp;extra=devchannel&lt;/a&gt;&lt;/p&gt;</description></item><item><title>解决 Github Pages 禁止百度爬虫的方法</title><link>https://jackroyal.github.io/post/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/</link><pubDate>Wed, 25 Nov 2015 11:06:50 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/</guid><description>&lt;p&gt;&lt;em&gt;update&lt;/em&gt;:因为gitcafe在5月31号就关闭了,所以要将文章中的gitcafe换掉,我重新写了一篇,在这里&lt;a class="link" href="http://jackroyal.github.io/2016/03/06/migrate-pages-from-gitcafe-to-coding/" target="_blank" rel="noopener"
+&gt;http://www.google.com/chrome/eula.html?hl=zh-CN&amp;standalone=1&amp;extra=devchannel&lt;/a&gt;&lt;/p&gt;</description></item><item><title>解决 Github Pages 禁止百度爬虫的方法</title><link>https://blog.huirongis.me/post/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/</link><pubDate>Wed, 25 Nov 2015 11:06:50 +0000</pubDate><guid>https://blog.huirongis.me/post/how-to-solve-the-problem-that-github-blocks-the-baidu-spider/</guid><description>&lt;p&gt;&lt;em&gt;update&lt;/em&gt;:因为gitcafe在5月31号就关闭了,所以要将文章中的gitcafe换掉,我重新写了一篇,在这里&lt;a class="link" href="http://jackroyal.github.io/2016/03/06/migrate-pages-from-gitcafe-to-coding/" target="_blank" rel="noopener"
 &gt;解决 Github Pages 禁止百度爬虫的方法2&amp;ndash;从gitcafe迁移到coding.net&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;最近,我的github student package里面送的一个namecheap域名终于下来了.That is to say:我终于有自己的域名了,这就是我的域名&lt;a class="link" href="http://bblove.me" target="_blank" rel="noopener"
 &gt;http://bblove.me&lt;/a&gt;,欢迎来访.&lt;/p&gt;
@@ -1411,7 +1411,7 @@ Scott
 &lt;/h1&gt;&lt;p&gt;我们在github和gitcafe上面把自己的博客搭建起来,首先要建仓库.
 &lt;strong&gt;github&lt;/strong&gt;:
 首先登录你的github,然后新建一个公共仓库,仓库名是你的用户名加上&lt;code&gt;yourname.github.io&lt;/code&gt;,如下图所示,我的用户名是&lt;code&gt;Jackroyal&lt;/code&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye6fpc3w8j20ue0idjv0.jpg"
 loading="lazy"
 alt="github新建仓库"
 &gt;&lt;/p&gt;
@@ -1441,16 +1441,16 @@ branch: gitcafe-pages
 对的,你猜到了,我们现在需要配置gitcafe的ssh公钥,因为&lt;code&gt;github for windows&lt;/code&gt;会自动帮我们上传公钥,gitcafe就只能手动了.&lt;/p&gt;
 &lt;h3 id="321-查看本地公钥"&gt;3.2.1 查看本地公钥
 &lt;/h3&gt;&lt;p&gt;我们打开你使用的git终端,首先切回用户目录,然后进入&lt;code&gt;.ssh&lt;/code&gt;目录,里面就有公钥和私钥,如下图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye75djqo9j20gj09475k.jpg"
 loading="lazy"
 alt="使用git客户端查看ssh公钥私钥"
 &gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye78gs0hvj20it0ca761.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye78gs0hvj20it0ca761.jpg"
 loading="lazy"
 alt="使用github for windows查看ssh公钥私钥"
 &gt;
 我们就是要读取后缀是&lt;code&gt;.pub&lt;/code&gt;的那个文件,比如我的读取命令就是&lt;code&gt;cat github_rsa.pub&lt;/code&gt;,执行结果如下
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye7c2xpavj20if06dt9w.jpg"
 loading="lazy"
 alt="查看公钥"
 &gt;&lt;/p&gt;
@@ -1458,7 +1458,7 @@ alt="查看公钥"
 &lt;/h3&gt;&lt;p&gt;我们在&lt;a class="link" href="https://gitcafe.com/account/public_keys" target="_blank" rel="noopener"
 &gt;这里&lt;/a&gt;来设置gitcafe的公钥.
 &lt;em&gt;PS:需要注意的是,公钥后面的chen@chen-pc是不需要的,我的带上以后,gitcafe说是公钥非法,不过不怕,gitcafe会帮你正确格式化&lt;/em&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye7h4ha7dj20v105n0ve.jpg"
 loading="lazy"
 alt="正确的ssh格式"
 &gt;
@@ -1471,7 +1471,7 @@ alt="正确的ssh格式"
 &lt;/h1&gt;&lt;p&gt;首先你得有个域名,像我一样,哈哈.&lt;/p&gt;
 &lt;h2 id="41-修改域名注册的解析服务器"&gt;4.1 修改域名注册的解析服务器
 &lt;/h2&gt;&lt;p&gt;我们在要把域名解析服务,设置到dnspod,因为他是国内的,而且服务很好.我们登录自己的域名管理后台,选择对应的域名进行管理,然后找到&lt;code&gt;nameservers&lt;/code&gt;的设置,如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye7orkymjj210j0i7tde.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye7orkymjj210j0i7tde.jpg"
 loading="lazy"
 alt="修改nameservers的设置"
 &gt;
@@ -1485,7 +1485,7 @@ ok,改完以后,这边就完了,我们登录dnspod&lt;/p&gt;
 &lt;h2 id="42-修改dnspod解析记录"&gt;4.2 修改dnspod解析记录
 &lt;/h2&gt;&lt;p&gt;我们登录dnspod,然后添加域名
 如果4.1中的设置生效了,你的域名就会添加成功了,我们直接进行下一步,修改解析记录,上图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eye9mfkri4j20mt0efad6.jpg"
 loading="lazy"
 alt="dns解析记录"
 &gt;
@@ -1502,25 +1502,25 @@ www CNAME 国内 gitcafe.io.
 &gt;配置CNAME文件&lt;/a&gt;.说白了,就是在你的网站根目录,添加一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件,里面的内容就是你的域名&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;bblove.me
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;没有任何多余的信息,如下图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eyea41g3amj20uz0a4jtg.jpg"
 loading="lazy"
 alt="配置github的CNAME"
 &gt;
 上面的配置现在访问没问题,但是你一重新发布博客,就需要重新手动添加&lt;code&gt;CNAME&lt;/code&gt;文件,太麻烦.
 一劳永逸的方法,在你的&lt;code&gt;hexo&lt;/code&gt;目录下的&lt;code&gt;source&lt;/code&gt;目录中,新建一个&lt;code&gt;CNAME&lt;/code&gt;文件夹,然后他每次在你发布博客的时候,都会在你的网站根目录生成一个&lt;code&gt;CNAME&lt;/code&gt;文件.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eyea9pgd8cj20ko06ct9v.jpg"
 loading="lazy"
 alt="添加CNAME的目录结构"
 &gt;
 现在github的配置彻底结束.&lt;/p&gt;
 &lt;p&gt;接下来配置gitcafe:
 1 我们在gitcafe的项目主页,点击&lt;code&gt;项目设置&lt;/code&gt;,如下图(之所以截图,是因为我找半天才看到&amp;hellip;)
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyeadedmh1j20z508eadm.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eyeadedmh1j20z508eadm.jpg"
 loading="lazy"
 alt="gitcafe点击’项目设置’"
 &gt;
 2 然后我们点击&lt;code&gt;pages服务&lt;/code&gt;标签,然后添加自己的域名,这些域名是我们之前在dnspod中设置了解析的
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eyeaftjlagj20sp0dvn1i.jpg"
 loading="lazy"
 alt="gitcafe配置自定义域名"
 &gt;&lt;/p&gt;
@@ -1536,17 +1536,17 @@ ok,收工&lt;/p&gt;
 3 &lt;a class="link" href="https://help.gitcafe.com/manuals/help/pages-services" target="_blank" rel="noopener"
 &gt;gitcafe官方文档&amp;ndash;pages服务&lt;/a&gt;
 4 &lt;a class="link" href="https://help.gitcafe.com/manuals/help/ssh-key" target="_blank" rel="noopener"
-&gt;gitcafe官方文档&amp;ndash;配置ssh公钥&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git使用笔记(2)</title><link>https://jackroyal.github.io/post/my-git-note2/</link><pubDate>Wed, 04 Nov 2015 16:52:25 +0000</pubDate><guid>https://jackroyal.github.io/post/my-git-note2/</guid><description>&lt;p&gt;上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.&lt;/p&gt;
+&gt;gitcafe官方文档&amp;ndash;配置ssh公钥&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git使用笔记(2)</title><link>https://blog.huirongis.me/post/my-git-note2/</link><pubDate>Wed, 04 Nov 2015 16:52:25 +0000</pubDate><guid>https://blog.huirongis.me/post/my-git-note2/</guid><description>&lt;p&gt;上一篇笔记,只写了些git的基础操作,这篇写一下稍微高阶一点的操作,实际项目的时候可能经常会用到.&lt;/p&gt;
 &lt;h1 id="撤销操作"&gt;撤销操作
 &lt;/h1&gt;&lt;p&gt;撤销操作,我经常会用到,有时候写的代码没有考虑周全,或者有疏漏,需要重新提交什么的.&lt;/p&gt;
 &lt;h1 id="1-撤销工作空间最近的修改"&gt;1 撤销工作空间最近的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:比如上次push以后的完整干净的目录,工作空间没有任何修改,暂存区也没有任何修改,如下图:
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1exp9lmtz38j20cl0383yn.jpg"
 loading="lazy"
 alt="上一次提交后干净的工作目录"
 &gt;
 这时候,你手贱,改了一下其中的一个文件,但是这次更改是没有意义的.我们继续使用&lt;code&gt;git status&lt;/code&gt;来查看
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp9ngk82jj20it07i75f.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1exp9ngk82jj20it07i75f.jpg"
 loading="lazy"
 alt="修改一个文件后执行git status的结果"
 &gt;
@@ -1556,13 +1556,13 @@ alt="修改一个文件后执行git status的结果"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定&lt;/p&gt;
 &lt;h1 id="2-撤销暂存区最近的修改"&gt;2 撤销暂存区最近的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:假如在上面说的那种情况下,你手贱改错了文件,而且你没有撤销,你还执行&lt;code&gt;git add a.txt&lt;/code&gt;,将修改提交到暂存区了.具体情况如下图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa1cbny2j20ge0790td.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1expa1cbny2j20ge0790td.jpg"
 loading="lazy"
 alt="错误的修改被提交到了暂存区"
 &gt;
 现在我们要从暂存区撤回那个修改
 解决办法:我们使用&lt;code&gt;git reset HEAD a.txt&lt;/code&gt;,将文件从暂存区撤出来,又回到上面的工作空间被修改的状态,如图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa3azt15j20hg09twft.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1expa3azt15j20hg09twft.jpg"
 loading="lazy"
 alt="从暂存区撤回"
 &gt;
@@ -1571,7 +1571,7 @@ ps:上面的命令也可以用下面的命令,语法格式是&lt;code&gt;git res
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;总的来说,&lt;code&gt;git reset &amp;lt;path&amp;gt;&lt;/code&gt;就是&lt;code&gt;git add &amp;lt;path&amp;gt;&lt;/code&gt;的反向操作&lt;/p&gt;
 &lt;h1 id="3-撤销提交到本地仓库的修改"&gt;3 撤销提交到本地仓库的修改
 &lt;/h1&gt;&lt;p&gt;应用场景:假如你在&lt;code&gt;1.2&lt;/code&gt;还没有回头,一路手贱下去,将暂存区的修改&lt;code&gt;commit&lt;/code&gt;到本地仓库了
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1expa8o47yvj20fi087gmv.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1expa8o47yvj20fi087gmv.jpg"
 loading="lazy"
 alt="错误的修改被提交到本地仓库"
 &gt;
@@ -1581,7 +1581,7 @@ alt="错误的修改被提交到本地仓库"
 &lt;/h4&gt;&lt;p&gt;我们可以新建一次提交,然后让所修改的文件回到之前的状态,执行&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git revert HEAD
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;含义很简单,逆转,这样你的&lt;code&gt;log&lt;/code&gt;里面会多一次提交,然后文件也回到的之前的状态
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1expb97iondj20it0catb7.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1expb97iondj20it0catb7.jpg"
 loading="lazy"
 alt="执行git revert 后的log"
 &gt;&lt;/p&gt;
@@ -1608,13 +1608,13 @@ git reset --hard :取消了commit ，取消了add，取消源文件修改
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;接着当我们使用&lt;code&gt;git log&lt;/code&gt;来查看的时候,你只会看到提交信息是&amp;quot;这是第二次提交&amp;quot;.
 解决方法:
 我们先将文件内容恢复到上一次(当前是HEAD,上一次就是HEAD^)提交时候的样子,然后执行&lt;code&gt;git commit --amend&lt;/code&gt;,看到如下错误提示,就是说这次文件没有任何修改(废话,我已经恢复正确的样子了,当然一模一样了),默认是不允许空提交的,你只有强制使用&lt;code&gt;--allow-empty&lt;/code&gt;才行,或者执行方案二
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1expt5luwo4j20io06cq3w.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1expt5luwo4j20io06cq3w.jpg"
 loading="lazy"
 alt="执行git commit –amend内容没有变化的错误提示"
 &gt;&lt;/p&gt;
 &lt;h1 id="4-总结"&gt;4 总结
 &lt;/h1&gt;&lt;p&gt;盗图一张,总结上面说的内容
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1exptkjlw1fj20jg09fq3k.jpg"
 loading="lazy"
 alt="工作空间,暂存区,本地仓库之间的关机和转换"
 &gt;
@@ -1622,7 +1622,7 @@ alt="工作空间,暂存区,本地仓库之间的关机和转换"
 &lt;h3 id="附言"&gt;附言
 &lt;/h3&gt;&lt;p&gt;&lt;strong&gt;PS&lt;/strong&gt;:现在再来解释开头说的,这是本地仓库的操作.
 因为,我们本地仓库执行了&lt;code&gt;git commit&lt;/code&gt;后,所做的更改只会在本地,如果接着执行了&lt;code&gt;git push&lt;/code&gt;那么,所做的更改就会被提交到&lt;code&gt;git&lt;/code&gt;,在上面的例子中那么首先提交到github的就是&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;.这时候,当你执行完&lt;code&gt;git commit --amend&lt;/code&gt;的时候,本地仓库的上次提交会被删除,也就是不存在提示信息为&lt;code&gt;&amp;quot;这是第一次提交&amp;quot;&lt;/code&gt;,此时本地仓库完成了修改,你想提交到github,就会报错了.如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp93i04qtj20it0cajua.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1exp93i04qtj20it0cajua.jpg"
 loading="lazy"
 alt="本地执行–amend操作后直接提交到github报错"
 &gt;
@@ -1636,7 +1636,7 @@ alt="本地执行–amend操作后直接提交到github报错"
 3 &lt;a class="link" href="http://my.oschina.net/MinGKai/blog/144932" target="_blank" rel="noopener"
 &gt;git revert和git reset的区别&lt;/a&gt;
 4 &lt;a class="link" href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html" target="_blank" rel="noopener"
-&gt;git常用命令介绍,带效果图的&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git使用笔记(1)</title><link>https://jackroyal.github.io/post/my-git-note1/</link><pubDate>Wed, 04 Nov 2015 12:17:04 +0000</pubDate><guid>https://jackroyal.github.io/post/my-git-note1/</guid><description>&lt;p&gt;git也用了一段时间了,还是写点笔记,记录一下.&lt;/p&gt;
+&gt;git常用命令介绍,带效果图的&lt;/a&gt;&lt;/p&gt;</description></item><item><title>git使用笔记(1)</title><link>https://blog.huirongis.me/post/my-git-note1/</link><pubDate>Wed, 04 Nov 2015 12:17:04 +0000</pubDate><guid>https://blog.huirongis.me/post/my-git-note1/</guid><description>&lt;p&gt;git也用了一段时间了,还是写点笔记,记录一下.&lt;/p&gt;
 &lt;h1 id="准备条件"&gt;准备条件
 &lt;/h1&gt;&lt;p&gt;首先假装你已经安装好了git&lt;/p&gt;
 &lt;ul&gt;
@@ -1669,14 +1669,14 @@ ps:如果你足够幸运,可以试试&lt;a class="link" href="https://desktop.gi
 接下来,我们来查看下状态&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git status
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;执行结果如下图:
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1exoxiu5jyij20it0933zl.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1exoxiu5jyij20it0933zl.jpg"
 loading="lazy"
 alt="执行git status查看工作区文件状态"
 &gt;
 就像图片中提示的,我们新加的&lt;code&gt;a.txt&lt;/code&gt;是未跟踪文件,我们执行&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;git add a.txt
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;我们把&lt;code&gt;a.txt&lt;/code&gt;添加到暂存区,再次执行&lt;code&gt;git status&lt;/code&gt;,查看状态,执行结果如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1exoxp6duu1j20it07o0th.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1exoxp6duu1j20it07o0th.jpg"
 loading="lazy"
 alt="添加到暂存区后再次执行git status"
 &gt;&lt;/p&gt;
@@ -1689,14 +1689,14 @@ alt="添加到暂存区后再次执行git status"
 &lt;pre tabindex="0"&gt;&lt;code&gt; git push origin master
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;然后就行了,一个基本的流程就是这样.
 推荐看看下面友情链接里面的那本书,pro git
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1exp17u1ltjj208r0boq38.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1exp17u1ltjj208r0boq38.jpg"
 loading="lazy"
 alt="pro git封面"
 &gt;&lt;/p&gt;
 &lt;h1 id="友情链接"&gt;友情链接
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://iissnan.com/progit/" target="_blank" rel="noopener"
-&gt;pro git中文书籍在线版&lt;/a&gt;&lt;/p&gt;</description></item><item><title>微信支付app支付3.0接口开发</title><link>https://jackroyal.github.io/post/weixin-app-pay-v3-0/</link><pubDate>Sun, 25 Oct 2015 21:30:03 +0000</pubDate><guid>https://jackroyal.github.io/post/weixin-app-pay-v3-0/</guid><description>&lt;p&gt;最近在做微信支付,因为前段时间做了微信的公众账号支付,我以为是一个东西,结果发现不是,我真是醉了,竟然是独立的两套东西.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1exdqakso33j20ny0dptbi.jpg"
+&gt;pro git中文书籍在线版&lt;/a&gt;&lt;/p&gt;</description></item><item><title>微信支付app支付3.0接口开发</title><link>https://blog.huirongis.me/post/weixin-app-pay-v3-0/</link><pubDate>Sun, 25 Oct 2015 21:30:03 +0000</pubDate><guid>https://blog.huirongis.me/post/weixin-app-pay-v3-0/</guid><description>&lt;p&gt;最近在做微信支付,因为前段时间做了微信的公众账号支付,我以为是一个东西,结果发现不是,我真是醉了,竟然是独立的两套东西.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1exdqakso33j20ny0dptbi.jpg"
 loading="lazy"
 alt="微信支付架构图"
 &gt;
@@ -1708,7 +1708,7 @@ alt="微信支付架构图"
 &gt;开放平台&lt;/a&gt;账号,然后添加一个app应用(里面包含你的appid和appkey),并且进行认证,然后就会收到一封邮件,里面包含了你分到的商户号.&lt;/p&gt;
 &lt;h1 id="1-流程图"&gt;1 流程图
 &lt;/h1&gt;&lt;p&gt;接下来,我们需要搞清楚微信app支付开发的流程,如下图所示.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1exgxrb07bfj20ou0sy453.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1exgxrb07bfj20ou0sy453.jpg"
 loading="lazy"
 alt="微信app支付流程图"
 &gt;
@@ -1761,7 +1761,7 @@ sdk里面已经封装好了对统一下单接口的调用,包括签名,所以我
 &lt;p&gt;打完收工.&lt;/p&gt;
 &lt;h1 id="参考文献"&gt;参考文献
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://pay.weixin.qq.com/wiki/doc/api/app.php?chapter=11_1" target="_blank" rel="noopener"
-&gt;微信官方sdk下载&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下设置apache的目录映射</title><link>https://jackroyal.github.io/post/ubuntu-lamp-alias-setting/</link><pubDate>Thu, 15 Oct 2015 22:12:37 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-lamp-alias-setting/</guid><description>&lt;p&gt;好吧,我的博客一不小心又荒废下来了,话不多说,进入正文.&lt;/p&gt;
+&gt;微信官方sdk下载&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下设置apache的目录映射</title><link>https://blog.huirongis.me/post/ubuntu-lamp-alias-setting/</link><pubDate>Thu, 15 Oct 2015 22:12:37 +0000</pubDate><guid>https://blog.huirongis.me/post/ubuntu-lamp-alias-setting/</guid><description>&lt;p&gt;好吧,我的博客一不小心又荒废下来了,话不多说,进入正文.&lt;/p&gt;
 &lt;p&gt;最近的项目一直在忙,发布代码的时候遇到一个麻烦事,由于所有项目代码都放在服务器的根目录,也就是&lt;code&gt;/var/www/html&lt;/code&gt;下;然后还有一个api的页面,我放在一个&lt;code&gt;api&lt;/code&gt;文件夹中,然后把整个&lt;code&gt;api&lt;/code&gt;文件夹放在&lt;code&gt;html&lt;/code&gt;目录下.由于每次发布代码都是替换整个根目录&lt;code&gt;html&lt;/code&gt;下的文件,你懂的,我每次发布项目代码后,&lt;code&gt;api&lt;/code&gt;就没了,需要我单独解压,再复制,blablabla,总之一个字,** 烦 **.
 我突然想起来,phpmyadmin安装后就不在网站的根目录,但是访问的时候我却还是直接在ip后面跟目录,比如&lt;code&gt;http://127.0.0.1/phpmyadmin&lt;/code&gt;,这货应该是用了一个映射,我照着这个样子搞一个,不就行了,说干就干.&lt;/p&gt;
 &lt;h1 id="1-使用的命令"&gt;1 使用的命令
@@ -1837,7 +1837,7 @@ Order allow,deny
 allow from all
 &amp;lt;/Directory&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里的&lt;code&gt;-Indexes&lt;/code&gt;选项的意思是,不要列出目录
-打完收工&lt;/p&gt;</description></item><item><title>php中的bool值和类型转换</title><link>https://jackroyal.github.io/post/php-boolean-value/</link><pubDate>Mon, 20 Jul 2015 14:23:21 +0000</pubDate><guid>https://jackroyal.github.io/post/php-boolean-value/</guid><description>&lt;p&gt;最近在写php,发现有个问题一直无法避免,那就是关于php的bool值和类型转换.
+打完收工&lt;/p&gt;</description></item><item><title>php中的bool值和类型转换</title><link>https://blog.huirongis.me/post/php-boolean-value/</link><pubDate>Mon, 20 Jul 2015 14:23:21 +0000</pubDate><guid>https://blog.huirongis.me/post/php-boolean-value/</guid><description>&lt;p&gt;最近在写php,发现有个问题一直无法避免,那就是关于php的bool值和类型转换.
 以前每次遇到要校验一个变量&lt;code&gt;$a&lt;/code&gt;,是否为空,都是使用&lt;code&gt;$a==''&lt;/code&gt;去判断,感觉不是很懂,反正一直这样用,也没出太多纰漏,而没有理会什么NUll,&amp;rsquo;&amp;rsquo;,0之类的其他值.今天决定研究下,把它彻底搞清楚.&lt;/p&gt;
 &lt;h1 id="1-php的数据类型"&gt;1 php的数据类型
 &lt;/h1&gt;&lt;p&gt;php支持原始的8总数据类型.
@@ -1878,12 +1878,12 @@ allow from all
 &lt;h3 id="is_null"&gt;is_null()
 &lt;/h3&gt;&lt;p&gt;所有的&lt;code&gt;is_&lt;/code&gt;开头的函数,都不会进行类型转换,例如is_bool(&amp;lsquo;0&amp;rsquo;),返回false,因为'0&amp;rsquo;不是一个布尔类型的值.
 详细对比看下图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1euak04nwitj20nf0i2432.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1euak04nwitj20nf0i2432.jpg"
 loading="lazy"
 alt="使用 PHP 函数对变量 $x 进行比较"
 &gt;&lt;/p&gt;
 &lt;p&gt;更多更详细的比较,大家看这里&lt;a class="link" href="http://php.net/manual/zh/types.comparisons.php" target="_blank" rel="noopener"
-&gt;php类型比较表&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu 14.04配置thinkphp路由,隐藏index.php</title><link>https://jackroyal.github.io/post/ubuntu-14-04-setting-about-thinkphp-url-rewrite/</link><pubDate>Mon, 29 Jun 2015 20:16:17 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-14-04-setting-about-thinkphp-url-rewrite/</guid><description>&lt;p&gt;今天把代码发布到服务器上去,发现服务器的rewrite有问题,无法实现隐藏index.php的功能.&lt;/p&gt;
+&gt;php类型比较表&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu 14.04配置thinkphp路由,隐藏index.php</title><link>https://blog.huirongis.me/post/ubuntu-14-04-setting-about-thinkphp-url-rewrite/</link><pubDate>Mon, 29 Jun 2015 20:16:17 +0000</pubDate><guid>https://blog.huirongis.me/post/ubuntu-14-04-setting-about-thinkphp-url-rewrite/</guid><description>&lt;p&gt;今天把代码发布到服务器上去,发现服务器的rewrite有问题,无法实现隐藏index.php的功能.&lt;/p&gt;
 &lt;h1 id="环境"&gt;环境
 &lt;/h1&gt;&lt;p&gt;服务器:ubuntu 14.04 lts
 apache:2.4.7
@@ -1909,18 +1909,18 @@ mysql:5.5.43&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;ok,都改完了,就剩一步,重启apache服务器.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;sudo service apache2 restart
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;搞定!
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1etl9v3c6wzj20go09dmx6.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1etl9v3c6wzj20go09dmx6.jpg"
 loading="lazy"
 alt="热疯了,空调房都热"
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class="link" href="http://www.dev-metal.com/enable-mod_rewrite-ubuntu-14-04-lts/" target="_blank" rel="noopener"
-&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>digitalocean配置ipv6</title><link>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</link><pubDate>Tue, 16 Jun 2015 22:24:18 +0000</pubDate><guid>https://jackroyal.github.io/post/digitalocean-support-google-scholar-by-ipv6/</guid><description>&lt;p&gt;之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.&lt;/p&gt;
+&gt;&lt;/a&gt;&lt;/p&gt;</description></item><item><title>digitalocean配置ipv6</title><link>https://blog.huirongis.me/post/digitalocean-support-google-scholar-by-ipv6/</link><pubDate>Tue, 16 Jun 2015 22:24:18 +0000</pubDate><guid>https://blog.huirongis.me/post/digitalocean-support-google-scholar-by-ipv6/</guid><description>&lt;p&gt;之前配置了ubuntu的shadowsocks,用来做代理翻墙.不过,google scholar一直无解,因为digitalocean的ipv4的地址都被google scholar墙掉了.今天(其实离现在已经好多天了),看到一篇文章,很受启发,决定使用ipv6来试试.&lt;/p&gt;
 &lt;h1 id="前提条件"&gt;前提条件
 &lt;/h1&gt;&lt;p&gt;首先你得有一台digitalocean的vps,建议选择洛杉矶的服务器,
 选个5美元的就够了.&lt;/p&gt;
 &lt;h1 id="1-新建droplet"&gt;1 新建droplet
 &lt;/h1&gt;&lt;p&gt;如果你以前没有搭建droplet,今天新建的话,比较简单,我们直接启用ipv6支持.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfo3h9svlj211h1tidny.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1etfo3h9svlj211h1tidny.jpg"
 loading="lazy"
 alt="新建droplet,尤其注意勾选ipv6"
 &gt;
@@ -1928,12 +1928,12 @@ alt="新建droplet,尤其注意勾选ipv6"
 &lt;h1 id="2-修改droplet"&gt;2 修改droplet
 &lt;/h1&gt;&lt;p&gt;我的droplet已经搭建好了,所以只能修改,添加ipv6的支持.
 你打开droplet的&lt;code&gt;setting&lt;/code&gt;,在&lt;code&gt;network&lt;/code&gt;中应该可以看到&lt;code&gt;enable ipv6&lt;/code&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfosgf63kj207w05ujrn.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1etfosgf63kj207w05ujrn.jpg"
 loading="lazy"
 alt="带有启用ipv6选项的页面"
 &gt;
 启用后,稍后片刻,页面如下.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1etfohrljtmj20se0i2tb7.jpg"
 loading="lazy"
 alt="在droplet的setting中启用ipv6后的页面"
 &gt;&lt;/p&gt;
@@ -1963,7 +1963,7 @@ gateway 网关地址
 autoconf 0
 dns-nameservers 2001:4860:4860::8844 2001:4860:4860::8888 209.244.0.3
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;修改完成后,我们重启下服务器(因为我的重启网络服务没有效果,所以我重启了),&lt;!-- raw HTML omitted --&gt;如果你看到如下图片,就表示你的ipv6配置好了,我们后面来测试一下
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1etfp7pj65dj20hs04fzlv.jpg"
 loading="lazy"
 alt="ipv6成功启用后"
 &gt;&lt;/p&gt;
@@ -1991,7 +1991,7 @@ alt="ipv6成功启用后"
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://www.v2ex.com/t/163133" target="_blank" rel="noopener"
 &gt;一个解决 Google Scholar block DigitalOcean SFO IP 的方法&lt;/a&gt;
 2 &lt;a class="link" href="https://www.digitalocean.com/community/tutorials/how-to-enable-ipv6-for-digitalocean-droplets" target="_blank" rel="noopener"
-&gt;How To Enable IPv6 for DigitalOcean Droplets&lt;/a&gt;&lt;/p&gt;</description></item><item><title>安装和配置hexo 3.0</title><link>https://jackroyal.github.io/post/hexo-3-0-update/</link><pubDate>Tue, 16 Jun 2015 22:22:43 +0000</pubDate><guid>https://jackroyal.github.io/post/hexo-3-0-update/</guid><description>&lt;p&gt;update：2015-06-24 16:56
+&gt;How To Enable IPv6 for DigitalOcean Droplets&lt;/a&gt;&lt;/p&gt;</description></item><item><title>安装和配置hexo 3.0</title><link>https://blog.huirongis.me/post/hexo-3-0-update/</link><pubDate>Tue, 16 Jun 2015 22:22:43 +0000</pubDate><guid>https://blog.huirongis.me/post/hexo-3-0-update/</guid><description>&lt;p&gt;update：2015-06-24 16:56
 额，谁会相信，其实这篇文章是拖了一周之后才写的。&lt;/p&gt;
 &lt;p&gt;因为最近换回了win7，所以之前搭建的hexo环境都没了，需要重新搭建。在网上看到hexo 3.0 还可以，而且，我妹子也换3.0了，so 我也换成hexo 3.0的。&lt;/p&gt;
 &lt;h1 id="安装环境"&gt;安装环境
@@ -2006,11 +2006,11 @@ node: 0.12.4&lt;/p&gt;
 下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
 target="_blank" rel="noopener"
 &gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3jw1emplp1lz31j204w033mx0.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3jw1emplp1lz31j204w033mx0.jpg"
 loading="lazy"
 alt="Github for windows"
 &gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1empluh6hvej210b0j741r.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1empluh6hvej210b0j741r.jpg"
 loading="lazy"
 alt="GUI and Bash"
 &gt;&lt;/p&gt;
@@ -2219,7 +2219,7 @@ branch: master
 hexo还支持多发布,可以同时发布到github和gitcafe.&lt;/p&gt;
 &lt;h1 id="参考文献"&gt;参考文献
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="https://hexo.io/zh-cn/docs/server.html" target="_blank" rel="noopener"
-&gt;hexo 服务器&lt;/a&gt;&lt;/p&gt;</description></item><item><title>给hexo配置上评论和访问量</title><link>https://jackroyal.github.io/post/hexo-setting-with-comments-and-visitors/</link><pubDate>Sat, 30 May 2015 14:08:49 +0000</pubDate><guid>https://jackroyal.github.io/post/hexo-setting-with-comments-and-visitors/</guid><description>&lt;p&gt;哈哈,我们家笨笨,绝对是我学习技术的很大很大很大大的动力.更开始用github pages的时候,就觉得没法看访问量和评论数量这事,很蛋疼,不过也没折腾.
+&gt;hexo 服务器&lt;/a&gt;&lt;/p&gt;</description></item><item><title>给hexo配置上评论和访问量</title><link>https://blog.huirongis.me/post/hexo-setting-with-comments-and-visitors/</link><pubDate>Sat, 30 May 2015 14:08:49 +0000</pubDate><guid>https://blog.huirongis.me/post/hexo-setting-with-comments-and-visitors/</guid><description>&lt;p&gt;哈哈,我们家笨笨,绝对是我学习技术的很大很大很大大的动力.更开始用github pages的时候,就觉得没法看访问量和评论数量这事,很蛋疼,不过也没折腾.
 今天上午,我们家笨笨说没有评论和访问量不好,都不知道多少人看了.妹子都发话了,果断要搞定.&lt;/p&gt;
 &lt;p&gt;google一番找到解决方法:&lt;/p&gt;
 &lt;h4 id="1-关于评论数量的显示我们可以直接使用多说官网提供的方法很简单"&gt;1 关于评论数量的显示,我们可以直接使用多说官网提供的方法,很简单
@@ -2227,11 +2227,11 @@ hexo还支持多发布,可以同时发布到github和gitcafe.&lt;/p&gt;
 &gt;不蒜子&lt;/a&gt;,这位非著名码农自己做的访问统计,哈哈,点个赞
 &lt;/h4&gt;&lt;h4 id="3-今天还看到了font-awesome可以显示一些小图标为了显示效果更好一并加上去"&gt;3 今天还看到了font-awesome,可以显示一些小图标,为了显示效果更好,一并加上去
 &lt;/h4&gt;&lt;p&gt;先展示一下最终的效果:&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esm9snxfcuj20su0ad74x.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esm9snxfcuj20su0ad74x.jpg"
 loading="lazy"
 alt="页底关于整站访问量的显示"
 &gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esm9tcczdij20r00doq4t.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esm9tcczdij20r00doq4t.jpg"
 loading="lazy"
 alt="文章页面关于访问量和评论数量的显示"
 &gt;&lt;/p&gt;
@@ -2252,7 +2252,7 @@ alt="文章页面关于访问量和评论数量的显示"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;最终效果如图&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmas5d58oj20x50jc46f.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esmas5d58oj20x50jc46f.jpg"
 loading="lazy"
 alt="修改后的article.ejs"
 &gt;
@@ -2260,7 +2260,7 @@ alt="修改后的article.ejs"
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&amp;lt;&lt;span style="color:#f92672"&gt;span&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;class&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;ds-thread-count&amp;#34;&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;data-thread-key&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;&lt;span style="color:#e6db74"&gt;&amp;#34;&amp;lt;%= page.layout %&amp;gt;-&amp;lt;%= page.slug %&amp;gt;&amp;#34;&lt;/span&gt;&amp;gt;&amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;尤其注意&lt;code&gt;data-thread-key&lt;/code&gt;的设置,他和你之前配置多说的时候是一致的,每篇文章有一个独一无二的key,你可以去你的&lt;code&gt;themes/light/layout/_partial/comment.ejs&lt;/code&gt;里找到关于data-thread-key的内容,直接复制过来即可.&lt;/p&gt;
 &lt;p&gt;Ps:这里我们可能还需要配置下数据显示的格式,在你的多说后台管理里面,进入设置界面如图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmayan2utj20w50mx0ya.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esmayan2utj20w50mx0ya.jpg"
 loading="lazy"
 alt="多说后台设置"
 &gt;
@@ -2287,7 +2287,7 @@ alt="多说后台设置"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;span&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &amp;lt;/&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&amp;gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#960050;background-color:#1e0010"&gt;&amp;lt;&lt;/span&gt;% } %&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmas5d58oj20x50jc46f.jpg"
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1esmas5d58oj20x50jc46f.jpg"
 loading="lazy"
 alt="修改后的article.ejs"
 &gt;&lt;!-- raw HTML omitted --&gt;2.修改&lt;code&gt;themes/light/layout/_partial/footer.ejs&lt;/code&gt;,下面是footer.ejs的&lt;strong&gt;全部代码&lt;/strong&gt;:&lt;/p&gt;
@@ -2317,7 +2317,7 @@ padding-left:4px
 .ds-thread-count
 padding-left:4px
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;最终效果如图:
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esmajbsx38j20k30gwadu.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esmajbsx38j20k30gwadu.jpg"
 loading="lazy"
 alt="添加css,注意左对齐"
 &gt;&lt;!-- raw HTML omitted --&gt;5.修改&lt;code&gt;themes\light\source\css\_partial\footer.styl&lt;/code&gt;,在最后添加上以下代码&lt;/p&gt;
@@ -2336,7 +2336,7 @@ padding-left:2em
 &gt;多说-代码显示【文章评论数】方法&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id="致谢"&gt;致谢
 &lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
-&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
+&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://blog.huirongis.me/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://blog.huirongis.me/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
 &lt;h1 id="安装requests库"&gt;安装requests库
 &lt;/h1&gt;&lt;p&gt;在ubuntu下面安装很简单&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install requests
@@ -2363,19 +2363,19 @@ padding-left:2em
 这个链接，前面部分是登录的网址，问号后面的参数，顾名思义，referer，就是你从哪里跳过来的，也许是一个页面跳转到登录的，toolbar就是我自己点击顶部导航栏，然后跳转到登录页面的。&lt;/p&gt;
 &lt;h2 id="2-清除相关的cookie"&gt;2 清除相关的cookie
 &lt;/h2&gt;&lt;p&gt;为了排除不必要的干扰，我们先清除掉所有的相关的cookie，这样方便我们分析哪些参数是必须的。
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegc1itw2j20qu075779.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esegc1itw2j20qu075779.jpg"
 loading="lazy"
 alt="firefox中，清除cookie"
 &gt;&lt;/p&gt;
 &lt;h2 id="3-登录过程分析"&gt;3 登录过程分析
 &lt;/h2&gt;&lt;p&gt;清除了cookie后，我们刷新一下页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;，重新获取对应的cookie。
 然后我们就开始用tamper data来拦截请求。
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
 loading="lazy"
 alt="使用tamper data"
 &gt;
 我们点击&lt;code&gt;start tamper&lt;/code&gt;，在网页中填写用户名和密码。点击&lt;code&gt;登录&lt;/code&gt;，会发出一个请求，然后tamper data会拦截下这个请求，询问我们是否拦截，点击tamper，我们可以在这个请求提交之前，查看请求的内容，还可以做删改。
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegkslypyj20y20gntdt.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esegkslypyj20y20gntdt.jpg"
 loading="lazy"
 alt="发出第一个登录请求前拦截下来，查看表单内容"
 &gt;
@@ -2464,7 +2464,7 @@ csdn的登录过程比较简单，发送一个登录表单过去，就登录成�
 2 &lt;a class="link" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html" target="_blank" rel="noopener"
 &gt;beautifuisoup官方文档&lt;/a&gt;
 3 &lt;a class="link" href="http://stackoverflow.com/questions/13030095/how-to-save-requests-python-cookies-to-a-file" target="_blank" rel="noopener"
-&gt;python的requests如何保存cookie到文件&lt;/a&gt;&lt;/p&gt;</description></item><item><title>html5在ie中遇到的那些坑</title><link>https://jackroyal.github.io/post/holes-in-ie6-about-html5/</link><pubDate>Fri, 15 May 2015 23:19:43 +0000</pubDate><guid>https://jackroyal.github.io/post/holes-in-ie6-about-html5/</guid><description>&lt;p&gt;这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).
+&gt;python的requests如何保存cookie到文件&lt;/a&gt;&lt;/p&gt;</description></item><item><title>html5在ie中遇到的那些坑</title><link>https://blog.huirongis.me/post/holes-in-ie6-about-html5/</link><pubDate>Fri, 15 May 2015 23:19:43 +0000</pubDate><guid>https://blog.huirongis.me/post/holes-in-ie6-about-html5/</guid><description>&lt;p&gt;这段时间,笨笨找了个活儿,做一个页面,能够适配所有的主流浏览器,包括pc,平板和手机等终端(这和当年某刘提的要求一样啊).
 我第一个想到的是bootstrap,可惜这货太大了,我只是几个简单的页面,没必要用这么大体量的东西.
 搜索一番以后,我找到了我的解决方案,media query,支付宝也是这么解决的.&lt;/p&gt;
 &lt;h1 id="前提条件"&gt;前提条件
@@ -2611,12 +2611,12 @@ filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=&amp;#39;./assets/
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#f92672"&gt;&amp;lt;/&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;&amp;lt;/&lt;/span&gt;&lt;span style="color:#f92672"&gt;div&lt;/span&gt;&lt;span style="color:#f92672"&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;如果我们给父div设置了一个&lt;code&gt;opacity&lt;/code&gt;为0.1,即使我们给子div设置&lt;code&gt;opacity&lt;/code&gt;为1,也是不管用的,如图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5fm0jafhj20iv0ecq46.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1es5fm0jafhj20iv0ecq46.jpg"
 loading="lazy"
 alt="未设置父div的opacity之前"
 &gt;
 设置父div的&lt;code&gt;opacity&lt;/code&gt;之后
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1es5fnsk3pvj20hy0fdwfm.jpg"
 loading="lazy"
 alt="设置父div的opacity之后"
 &gt;
@@ -2638,7 +2638,7 @@ behavior: url(assets/css/pie.htc);/*这一行是核心*/
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.cnblogs.com/yuzhongwusan/p/4184923.html" target="_blank" rel="noopener"
 &gt;meta name=&amp;ldquo;viewport&amp;rdquo; content=&amp;ldquo;width=device-width,initial-scale=1.0&amp;rdquo; 解释&lt;/a&gt;
 2 &lt;a class="link" href="http://css3pie.com/" target="_blank" rel="noopener"
-&gt;pie用hack方式在ie中实现border-radius&lt;/a&gt;&lt;/p&gt;</description></item><item><title>win8中使用vs2010配置opencv</title><link>https://jackroyal.github.io/post/opencv-and-vs2010-in-win8/</link><pubDate>Fri, 15 May 2015 19:56:06 +0000</pubDate><guid>https://jackroyal.github.io/post/opencv-and-vs2010-in-win8/</guid><description>&lt;p&gt;今天在师兄的帮助下,总算配置好了opencv.&lt;/p&gt;
+&gt;pie用hack方式在ie中实现border-radius&lt;/a&gt;&lt;/p&gt;</description></item><item><title>win8中使用vs2010配置opencv</title><link>https://blog.huirongis.me/post/opencv-and-vs2010-in-win8/</link><pubDate>Fri, 15 May 2015 19:56:06 +0000</pubDate><guid>https://blog.huirongis.me/post/opencv-and-vs2010-in-win8/</guid><description>&lt;p&gt;今天在师兄的帮助下,总算配置好了opencv.&lt;/p&gt;
 &lt;h1 id="1-系统环境和软件版本"&gt;1 系统环境和软件版本
 &lt;/h1&gt;&lt;p&gt;操作系统:win8 64位
 vs版本:vs2010 32位
@@ -2657,11 +2657,11 @@ opencv版本:opencv 2.4.10&lt;/p&gt;
 &lt;h2 id="复制include文件夹"&gt;复制include文件夹
 &lt;/h2&gt;&lt;p&gt;复制&lt;code&gt;D:\opencv\build\include&lt;/code&gt;目录下的&lt;code&gt;opencv&lt;/code&gt;和&lt;code&gt;opencv2&lt;/code&gt;
 到&lt;code&gt;C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include&lt;/code&gt;.
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5atg7oimj20kw081ta4.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1es5atg7oimj20kw081ta4.jpg"
 loading="lazy"
 alt="opencv解压后的include目录"
 &gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5az6qsa7j20jc099jtf.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1es5az6qsa7j20jc099jtf.jpg"
 loading="lazy"
 alt="复制以后的效果截图"
 &gt;&lt;/p&gt;
@@ -2672,7 +2672,7 @@ alt="复制以后的效果截图"
 &lt;h2 id="复制bin文件夹"&gt;复制bin文件夹
 &lt;/h2&gt;&lt;p&gt;复制bin目录下的东西,我们只需要系统找得到就行,所以我们这里采用环境变量的搞法&lt;/p&gt;
 &lt;p&gt;我们修改path变量,在后面添加&lt;code&gt;;d:\opencv\build\x86\vc10\bin&lt;/code&gt;,效果如图所示&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5bew5vcjj20e10g4go8.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1es5bew5vcjj20e10g4go8.jpg"
 loading="lazy"
 alt="修改path变量,添加opencv的bin目录路径"
 &gt;&lt;/p&gt;
@@ -2736,13 +2736,13 @@ alt="修改path变量,添加opencv的bin目录路径"
 编译和生成解决方案没有问题，但是开始执行就出现应用程序无法正常启动 0xc000007b错误窗口
 最后,原来是权限问题,使用管理员权限打开vs就解决了,win7下找兼容性设置,以管理员权限运行
 我的win8没有找到兼容性设置,如图所示操作,每次都能以管理员权限打开vs
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1es5bpz7mkqj20mm0giq7k.jpg"
 loading="lazy"
 alt="win8使用管理员权限运行vs2010"
 &gt;&lt;/p&gt;
 &lt;h1 id="参考文献"&gt;参考文献
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.cnblogs.com/freedomshe/archive/2012/04/25/2470540.html" target="_blank" rel="noopener"
-&gt;VS2010+Opencv-2.4.0的配置攻略&lt;/a&gt;&lt;/p&gt;</description></item><item><title>opencv中LBPH的人脸识别代码分析</title><link>https://jackroyal.github.io/post/opencv-lbph-source-code-analysis/</link><pubDate>Wed, 06 May 2015 22:32:42 +0000</pubDate><guid>https://jackroyal.github.io/post/opencv-lbph-source-code-analysis/</guid><description>&lt;p&gt;我开始用opencv的时候，用的是opencv最新的3.0版本。不过我死活找不到LBPH的代码，网上的教程也都是opencv 2.4的，so 我也去下一份2.4的源码来读读。&lt;/p&gt;
+&gt;VS2010+Opencv-2.4.0的配置攻略&lt;/a&gt;&lt;/p&gt;</description></item><item><title>opencv中LBPH的人脸识别代码分析</title><link>https://blog.huirongis.me/post/opencv-lbph-source-code-analysis/</link><pubDate>Wed, 06 May 2015 22:32:42 +0000</pubDate><guid>https://blog.huirongis.me/post/opencv-lbph-source-code-analysis/</guid><description>&lt;p&gt;我开始用opencv的时候，用的是opencv最新的3.0版本。不过我死活找不到LBPH的代码，网上的教程也都是opencv 2.4的，so 我也去下一份2.4的源码来读读。&lt;/p&gt;
 &lt;p&gt;opencv目前支持一下三种方法来实现人脸识别：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Eigenfaces特征脸createEigenFaceRecognizer()&lt;/strong&gt;&lt;/li&gt;
@@ -2750,7 +2750,7 @@ alt="win8使用管理员权限运行vs2010"
 &lt;li&gt;&lt;strong&gt;Local Binary Patterns Histograms局部二值直方图 createLBPHFaceRecognizer()&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;我今天读了一下LBPH的代码。
-自动人脸识别就是如何从一幅图像中提取有意义的特征，把它们放入一种有用的表示方式，然后对他们进行一些分类。&lt;!-- raw HTML omitted --&gt;特征脸方法描述了一个全面的方法来识别人脸：面部图像是一个点，这个点是从高维图像空间找到它在低维空间的表示，这样分类变得很简单。低维子空间低维是使用主元分析(Principal Component Analysis,PCA)找到的，它可以找拥有最大方差的那个轴。虽然这样的转换是从最佳重建角度考虑的，但是他没有把标签问题考虑进去。想象一个情况，如果变化是基于外部来源，比如光照。轴的最大方差不一定包含任何有鉴别性的信息，因此此时的分类是不可能的。因此，一个使用线性鉴别(Linear Discriminant Analysis,LDA)的特定类投影方法被提出来解决人脸识别问题。其中一个基本的想法就是，使类内方差最小的同时，使类外方差最大。&lt;!-- raw HTML omitted --&gt;近年来，各种局部特征提取方法出现。为了避免输入的图像的高维数据，仅仅使用的局部特征描述图像的方法被提出，提取的特征(很有希望的)对于局部遮挡、光照变化、小样本等情况更强健。有关局部特征提取的方法有盖伯小波(Gabor Waelets)，离散傅立叶变换(Discrete Cosinus Transform,DCT)，局部二值模式(Local Binary Patterns,LBP)。使用什么方法来提取时域空间的局部特征依旧是一个开放性的研究问题，因为空间信息是潜在有用的信息。&lt;/p&gt;</description></item><item><title>ubuntu 14.04 安装denyhosts</title><link>https://jackroyal.github.io/post/ubuntu-denyhosts/</link><pubDate>Tue, 28 Apr 2015 20:19:23 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-denyhosts/</guid><description>&lt;h1 id="起因"&gt;起因
+自动人脸识别就是如何从一幅图像中提取有意义的特征，把它们放入一种有用的表示方式，然后对他们进行一些分类。&lt;!-- raw HTML omitted --&gt;特征脸方法描述了一个全面的方法来识别人脸：面部图像是一个点，这个点是从高维图像空间找到它在低维空间的表示，这样分类变得很简单。低维子空间低维是使用主元分析(Principal Component Analysis,PCA)找到的，它可以找拥有最大方差的那个轴。虽然这样的转换是从最佳重建角度考虑的，但是他没有把标签问题考虑进去。想象一个情况，如果变化是基于外部来源，比如光照。轴的最大方差不一定包含任何有鉴别性的信息，因此此时的分类是不可能的。因此，一个使用线性鉴别(Linear Discriminant Analysis,LDA)的特定类投影方法被提出来解决人脸识别问题。其中一个基本的想法就是，使类内方差最小的同时，使类外方差最大。&lt;!-- raw HTML omitted --&gt;近年来，各种局部特征提取方法出现。为了避免输入的图像的高维数据，仅仅使用的局部特征描述图像的方法被提出，提取的特征(很有希望的)对于局部遮挡、光照变化、小样本等情况更强健。有关局部特征提取的方法有盖伯小波(Gabor Waelets)，离散傅立叶变换(Discrete Cosinus Transform,DCT)，局部二值模式(Local Binary Patterns,LBP)。使用什么方法来提取时域空间的局部特征依旧是一个开放性的研究问题，因为空间信息是潜在有用的信息。&lt;/p&gt;</description></item><item><title>ubuntu 14.04 安装denyhosts</title><link>https://blog.huirongis.me/post/ubuntu-denyhosts/</link><pubDate>Tue, 28 Apr 2015 20:19:23 +0000</pubDate><guid>https://blog.huirongis.me/post/ubuntu-denyhosts/</guid><description>&lt;h1 id="起因"&gt;起因
 &lt;/h1&gt;&lt;p&gt;因为之前服务器两次被黑，妈蛋。今天在上google+的时候，无意中看到一个维护vps的帖子，就顺手把我的服务器维护下。
 之前被黑经历也很简单，因为方便管理的缘故，我给root用户设置了密码，没错，是弱口令，一扫不要一分钟就可以出来的那种。
 我在那篇帖子中看到denyhosts这货。东西很简单，分析你的日志，如果有人连续登陆几次密码都错误，那么把他的ip添加到denyhost当中，禁止它继续扫描。这货还很多功能，可以设置禁止时间以后，自动解禁；可以配置自动解禁的次数;还可以配置用户密码尝试的次数，给管理员发邮件等。&lt;/p&gt;
@@ -2813,7 +2813,7 @@ ln -s /usr/share/denyhosts/daemon-control denyhosts
 sudo apt-get install sysv-rc-conf
 sudo sysv-rc-conf
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我们设置运行级别2345，编辑以后如下所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1erlmrt5ht5j20j80m40zg.jpg"
 loading="lazy"
 alt="设置denyhosts开机自启动"
 &gt;
@@ -2824,7 +2824,7 @@ alt="设置denyhosts开机自启动"
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.bootf.com/571.html" target="_blank" rel="noopener"
 &gt;通过DenyHosts阻止SSH暴力攻击教程&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;2 &lt;a class="link" href="http://askubuntu.com/questions/534324/var-log-secure-not-present-in-14-04-is-there-any-alternative" target="_blank" rel="noopener"
-&gt;/var/log/secure not present in 14.04 ,is there any alternative?&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下使用scrapy抓取cnblogs</title><link>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</link><pubDate>Sun, 26 Apr 2015 16:52:28 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</guid><description>&lt;p&gt;今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。&lt;/p&gt;
+&gt;/var/log/secure not present in 14.04 ,is there any alternative?&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下使用scrapy抓取cnblogs</title><link>https://blog.huirongis.me/post/ubuntu-scrapy-stackoverflow/</link><pubDate>Sun, 26 Apr 2015 16:52:28 +0000</pubDate><guid>https://blog.huirongis.me/post/ubuntu-scrapy-stackoverflow/</guid><description>&lt;p&gt;今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。&lt;/p&gt;
 &lt;h1 id="软件安装"&gt;软件安装
 &lt;/h1&gt;&lt;p&gt;我的环境是：ubuntu 14.04 lts
 需要安装相关软件&lt;/p&gt;
@@ -2894,7 +2894,7 @@ stack
 &lt;/h1&gt;&lt;p&gt;ok，上述工作基本完成，我们来测试一下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还可以这样测试一下，使用shell命令
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
 loading="lazy"
 alt="用shell测试xpath"
 &gt;
@@ -3045,7 +3045,7 @@ Setting up python-twisted-conch (1:13.2.0-1ubuntu1) ...
 在这里，我遇到一个大坑，无论是伯乐在线翻译的博客
 还是网上搜索到的一般教程，都是使用pymongo.Connection来连接数据库，可是妈蛋，你使用&lt;code&gt;pip install pymongo&lt;/code&gt;安装的版本都是最新版本3.0.1，那个Connection的写法已经不支持，被丢弃了，擦。
 我们来看一下版本，我学到一个新命令&lt;code&gt;pip show pymongo&lt;/code&gt;，用来查看某一个包的版本的。
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjct36jnrj20df038dgf.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1erjct36jnrj20df038dgf.jpg"
 loading="lazy"
 alt="查看pymongo版本"
 &gt;
@@ -3101,7 +3101,7 @@ alt="查看pymongo版本"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ok,搞定，我们再测试一把&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="执行效果如下"&gt;执行效果如下
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
 loading="lazy"
 alt="mongodb数据库管理"
 &gt;&lt;/p&gt;
@@ -3111,7 +3111,7 @@ alt="mongodb数据库管理"
 2 &lt;a class="link" href="http://stackoverflow.com/questions/8671071/error-to-execute-python-scrappy-module" target="_blank" rel="noopener"
 &gt;http://stackoverflow.com/questions/8671071/error-to-execute-python-scrappy-module&lt;/a&gt;
 3 &lt;a class="link" href="http://python.jobbole.com/81320/" target="_blank" rel="noopener"
-&gt;Python下用Scrapy和MongoDB构建爬虫系统（1）&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸检测</title><link>https://jackroyal.github.io/post/face-detection/</link><pubDate>Sun, 26 Apr 2015 12:54:24 +0000</pubDate><guid>https://jackroyal.github.io/post/face-detection/</guid><description>&lt;p&gt;这两个星期，都在搞这个，就把代码都分享一下，太烂，就不分享到github了。&lt;/p&gt;
+&gt;Python下用Scrapy和MongoDB构建爬虫系统（1）&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸检测</title><link>https://blog.huirongis.me/post/face-detection/</link><pubDate>Sun, 26 Apr 2015 12:54:24 +0000</pubDate><guid>https://blog.huirongis.me/post/face-detection/</guid><description>&lt;p&gt;这两个星期，都在搞这个，就把代码都分享一下，太烂，就不分享到github了。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# !/usr/bin/env python&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# -*- coding:utf-8-*-&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;__author__ &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;chen&amp;#39;&lt;/span&gt;
@@ -3170,7 +3170,7 @@ alt="mongodb数据库管理"
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://blog.csdn.net/u012162613/article/details/43523507" target="_blank" rel="noopener"
 &gt;Python-OpenCV人脸检测(代码)&lt;/a&gt;
 2 &lt;a class="link" href="http://wangwei007.blog.51cto.com/68019/1104940" target="_blank" rel="noopener"
-&gt;python os.path模块常用方法详解&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸识别</title><link>https://jackroyal.github.io/post/face-recognizer/</link><pubDate>Sun, 26 Apr 2015 10:50:00 +0000</pubDate><guid>https://jackroyal.github.io/post/face-recognizer/</guid><description>&lt;p&gt;最近搞了两个星期的opencv，人脸识别方向，感觉没有什么前途，看不到论文在哪里啊。&lt;/p&gt;
+&gt;python os.path模块常用方法详解&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸识别</title><link>https://blog.huirongis.me/post/face-recognizer/</link><pubDate>Sun, 26 Apr 2015 10:50:00 +0000</pubDate><guid>https://blog.huirongis.me/post/face-recognizer/</guid><description>&lt;p&gt;最近搞了两个星期的opencv，人脸识别方向，感觉没有什么前途，看不到论文在哪里啊。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# !/usr/bin/env python&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# -*- coding:utf-8-*-&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; os
@@ -3318,7 +3318,7 @@ alt="mongodb数据库管理"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; out_dir &lt;span style="color:#f92672"&gt;is&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;waitKey(&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;代码执行效果如下
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
 loading="lazy"
 alt="人脸识别执行效果"
 &gt;
@@ -3329,7 +3329,7 @@ alt="人脸识别执行效果"
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html" target="_blank" rel="noopener"
 &gt;http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html&lt;/a&gt;
 2 &lt;a class="link" href="https://code.google.com/p/pythonxy/source/browse/src/python/OpenCV/DOC/samples/python2/facerec_demo.py?repo=xy-27&amp;amp;r=a2e41c7a3cb6db536b948747872cab71c696b44e" target="_blank" rel="noopener"
-&gt;python调用opencv实现人脸识别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>blog2markdown程序打包,csdn爬虫</title><link>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</link><pubDate>Sun, 29 Mar 2015 22:08:22 +0000</pubDate><guid>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</guid><description>&lt;blockquote&gt;
+&gt;python调用opencv实现人脸识别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>blog2markdown程序打包,csdn爬虫</title><link>https://blog.huirongis.me/post/blog2markdown-csdn-windows/</link><pubDate>Sun, 29 Mar 2015 22:08:22 +0000</pubDate><guid>https://blog.huirongis.me/post/blog2markdown-csdn-windows/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;项目地址&lt;a class="link" href="https://github.com/Jackroyal/blog2markdown.git" target="_blank" rel="noopener"
 &gt;https://github.com/Jackroyal/blog2markdown.git&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -3370,11 +3370,11 @@ wait_time=5
 所以应该放在全英文的目录下
 C:/software/spider.exe
 运行结果如图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
 loading="lazy"
 alt="spider运行截图"
 &gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
 loading="lazy"
 alt="运行结果截图"
 &gt;&lt;/p&gt;
@@ -3389,9 +3389,9 @@ python spider.py
 不过抓取是没有问题的,此处就不纠结了哈,能用就好~~~~&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;# 在win下,没有权限的问题,直接执行就好了
 python spider.py
-&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>hexo发布失败</title><link>https://jackroyal.github.io/post/hexo-deploy-error/</link><pubDate>Sun, 29 Mar 2015 18:09:28 +0000</pubDate><guid>https://jackroyal.github.io/post/hexo-deploy-error/</guid><description>&lt;p&gt;可能受到上次ddos的问题,这两天国内访问github,总是感觉不顺畅.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>hexo发布失败</title><link>https://blog.huirongis.me/post/hexo-deploy-error/</link><pubDate>Sun, 29 Mar 2015 18:09:28 +0000</pubDate><guid>https://blog.huirongis.me/post/hexo-deploy-error/</guid><description>&lt;p&gt;可能受到上次ddos的问题,这两天国内访问github,总是感觉不顺畅.&lt;/p&gt;
 &lt;p&gt;今天下午写了一篇博客,可是却发布不成功,一直卡在这一步:
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmrrf20j1j20g006676y.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmrrf20j1j20g006676y.jpg"
 loading="lazy"
 alt="hexo发布的时候卡住"
 &gt;&lt;/p&gt;
@@ -3424,7 +3424,7 @@ branch: master
 最近又发现，使用ssh提交的话，github不会计算到你的conribute里面去，也就是你今天提交了，但是github的contribute不会变化，所以还是改成https吧，不然怎么装B呢？&lt;/p&gt;
 &lt;h3 id="友情链接"&gt;友情链接
 &lt;/h3&gt;&lt;p&gt;&lt;a class="link" href="http://rolight.cn/blog/?p=34" target="_blank" rel="noopener"
-&gt;ubuntu shadowsocks 全局 代理&lt;/a&gt;&lt;/p&gt;</description></item><item><title>python学习笔记--python和beautifulsoup遇到的编码问题</title><link>https://jackroyal.github.io/post/python-blog-spider/</link><pubDate>Sun, 29 Mar 2015 14:43:45 +0000</pubDate><guid>https://jackroyal.github.io/post/python-blog-spider/</guid><description>&lt;p&gt;在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.&lt;/p&gt;
+&gt;ubuntu shadowsocks 全局 代理&lt;/a&gt;&lt;/p&gt;</description></item><item><title>python学习笔记--python和beautifulsoup遇到的编码问题</title><link>https://blog.huirongis.me/post/python-blog-spider/</link><pubDate>Sun, 29 Mar 2015 14:43:45 +0000</pubDate><guid>https://blog.huirongis.me/post/python-blog-spider/</guid><description>&lt;p&gt;在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;项目主页: &lt;a class="link" href="https://github.com/Jackroyal/blog2markdown" target="_blank" rel="noopener"
 &gt;https://github.com/Jackroyal/blog2markdown&lt;/a&gt;&lt;/p&gt;
@@ -3438,7 +3438,7 @@ branch: master
 &lt;ul&gt;
 &lt;li&gt;1.1 编辑器编码
 &lt;ul&gt;
-&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmn535qb7j208u028t8k.jpg"
+&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmn535qb7j208u028t8k.jpg"
 loading="lazy"
 alt="sublime显示当前文件编码"
 &gt;&lt;/li&gt;
@@ -3447,10 +3447,10 @@ alt="sublime显示当前文件编码"
 &lt;/li&gt;
 &lt;li&gt;1.2 python解释器
 &lt;ul&gt;
-&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
+&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
 loading="lazy"
 alt="win中python解释器编码"
-&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
+&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
 loading="lazy"
 alt="ubuntu终端解释器的编码"
 &gt;&lt;/li&gt;
@@ -3546,7 +3546,7 @@ print self.soup.originalEncoding # 修正后代码正确返回&amp;#39;utf-8&amp
 &gt;【总结】Python 2.x中常见字符编码和解码方面的错误及其解决办法&lt;/a&gt;
 2 &lt;a class="link" href="http://www.crifan.com/resolved_python_garbled_chinese_characters_gb2312_gbk_gb18030-related_issues/" target="_blank" rel="noopener"
 &gt;【已解决】python中文字符乱码（GB2312，GBK，GB18030相关的问题）&lt;/a&gt;
-参考资料太多,贴不过来啊,主要都是cifan的博客,里面资料很多,一步一步都有过程,非常好用,谢谢cifan作者&lt;/p&gt;</description></item><item><title>python学习笔记--一个简单聊天室的实现</title><link>https://jackroyal.github.io/post/python-im/</link><pubDate>Thu, 26 Mar 2015 21:33:35 +0000</pubDate><guid>https://jackroyal.github.io/post/python-im/</guid><description>&lt;p&gt;最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.
+参考资料太多,贴不过来啊,主要都是cifan的博客,里面资料很多,一步一步都有过程,非常好用,谢谢cifan作者&lt;/p&gt;</description></item><item><title>python学习笔记--一个简单聊天室的实现</title><link>https://blog.huirongis.me/post/python-im/</link><pubDate>Thu, 26 Mar 2015 21:33:35 +0000</pubDate><guid>https://blog.huirongis.me/post/python-im/</guid><description>&lt;p&gt;最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.
 这是来自书上的一个python聊天程序,我照着敲了一遍,然后给扩展了一下,加了多个房间和创建选择房间的功能,写了好久好久,感觉都拖了一个星期了.
 下一步是做一个gui,恩,那将是我的第一个gui程序.&lt;/p&gt;
 &lt;h1 id="先贴一下代码-server5py"&gt;先贴一下代码 server5.py
@@ -3715,10 +3715,10 @@ try:
 asyncore.loop()
 except KeyboardInterrupt: print
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
 loading="lazy"
 alt="运行效果"
-&gt;&lt;/p&gt;</description></item><item><title>python学习笔记--socket编程端口复用</title><link>https://jackroyal.github.io/post/python-socket-port-reuse/</link><pubDate>Wed, 18 Mar 2015 08:47:02 +0000</pubDate><guid>https://jackroyal.github.io/post/python-socket-port-reuse/</guid><description>&lt;p&gt;最近在学习socket编程,遇到一个问题:
+&gt;&lt;/p&gt;</description></item><item><title>python学习笔记--socket编程端口复用</title><link>https://blog.huirongis.me/post/python-socket-port-reuse/</link><pubDate>Wed, 18 Mar 2015 08:47:02 +0000</pubDate><guid>https://blog.huirongis.me/post/python-socket-port-reuse/</guid><description>&lt;p&gt;最近在学习socket编程,遇到一个问题:
 我先bind一个端口后,如果通过ctr+c关闭进程.接下来执行程序的时候,就会提示&lt;code&gt;socket.error: Address already in use&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;照例google一番,找到&lt;a class="link" href="http://blog.csdn.net/xl_xunzhao/article/details/3130037" target="_blank" rel="noopener"
 &gt;这个&lt;/a&gt;.博主说的情况和我的一样.
@@ -3855,7 +3855,7 @@ prompt()
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://www.cnblogs.com/hazir/p/python_socket_programming.html" target="_blank" rel="noopener"
 &gt;Python Socket 网络编程&lt;/a&gt;
 2 &lt;a class="link" href="http://www.cnblogs.com/hazir/p/python_chat_room.html" target="_blank" rel="noopener"
-&gt;Python Socket 编程——聊天室示例程序&lt;/a&gt;&lt;/p&gt;</description></item><item><title>shadowsocks的安装和配置--在ubuntu和ubuntu中</title><link>https://jackroyal.github.io/post/use-ss/</link><pubDate>Mon, 09 Mar 2015 22:26:21 +0000</pubDate><guid>https://jackroyal.github.io/post/use-ss/</guid><description>&lt;p&gt;最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。
+&gt;Python Socket 编程——聊天室示例程序&lt;/a&gt;&lt;/p&gt;</description></item><item><title>shadowsocks的安装和配置--在ubuntu和ubuntu中</title><link>https://blog.huirongis.me/post/use-ss/</link><pubDate>Mon, 09 Mar 2015 22:26:21 +0000</pubDate><guid>https://blog.huirongis.me/post/use-ss/</guid><description>&lt;p&gt;最近我的vpn一直在抽风，几乎没法正常使用，而且我的chrome也是各种花屏，我快疯了，没办法，只能改用shadowsocks了。
 搭建过程分为两部分:服务端和客户端(这里是主要是ubuntu的客户端)。&lt;/p&gt;
 &lt;h1 id="1-系统环境"&gt;1 系统环境
 &lt;/h1&gt;&lt;p&gt;&lt;strong&gt;服务器&lt;/strong&gt;:DigitalOcean上的Ubuntu 14.04 LTS
@@ -3967,7 +3967,7 @@ Storing debug log for failure in /root/.pip/pip.log
 2015-03-10 11:12:59 INFO starting local at 127.0.0.1:1080
 &lt;/code&gt;&lt;/pre&gt;&lt;h2 id="3-浏览器代理设置"&gt;3) 浏览器代理设置
 &lt;/h2&gt;&lt;p&gt;一般来说我们不希望shadowsocks做全局的翻墙,那样,访问国内的速度也会变慢,我们在chome浏览器中安装switchysharp,来管理代理.具体设置如下所示:
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eq0k16t5ejj20ne0ihmzh.jpg"
 loading="lazy"
 alt="swichysharp设置"
 &gt;&lt;/p&gt;
@@ -3987,7 +3987,7 @@ alt="swichysharp设置"
 &lt;a class="link" href="https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks" target="_blank" rel="noopener"
 &gt;https://apps.evozi.com/apk-downloader/?id=com.github.shadowsocks&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;我们家&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
-&gt;笨笨的博客&lt;/a&gt;弄好了,欢迎访问&lt;/p&gt;</description></item><item><title>kali安装后设置</title><link>https://jackroyal.github.io/post/after-kali/</link><pubDate>Wed, 04 Mar 2015 14:14:57 +0000</pubDate><guid>https://jackroyal.github.io/post/after-kali/</guid><description>&lt;p&gt;kali安装好了，还有几件事要做
+&gt;笨笨的博客&lt;/a&gt;弄好了,欢迎访问&lt;/p&gt;</description></item><item><title>kali安装后设置</title><link>https://blog.huirongis.me/post/after-kali/</link><pubDate>Wed, 04 Mar 2015 14:14:57 +0000</pubDate><guid>https://blog.huirongis.me/post/after-kali/</guid><description>&lt;p&gt;kali安装好了，还有几件事要做
 我们用root的身份登进去系统&lt;/p&gt;
 &lt;h1 id="1-更新软件源"&gt;1 更新软件源
 &lt;/h1&gt;&lt;p&gt;官方自带的软件源速度相对比较慢，资源也少一些，我们添加一些国内的源进去
@@ -4032,7 +4032,7 @@ apt-get install network-manager-vpnc-gnome
 然后重启网络管理
 &lt;code&gt;service network-manager restart&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id="5-安装chrome浏览器"&gt;5 安装chrome浏览器
-&lt;/h1&gt;&lt;p&gt;&lt;code&gt;apt-get install google-chrome-unstable&lt;/code&gt;&lt;/p&gt;</description></item><item><title>kali和ubuntu双系统安装</title><link>https://jackroyal.github.io/post/kali-and-ubuntu/</link><pubDate>Tue, 03 Mar 2015 21:17:41 +0000</pubDate><guid>https://jackroyal.github.io/post/kali-and-ubuntu/</guid><description>&lt;p&gt;时间忽快忽慢，一转眼，年过完了，又回来学校了，又一个多月没有push了，重新回到github。今天我们家笨笨给我找了点kali的资料，索性就把kali捡起来，第一步安装kali的系统。
+&lt;/h1&gt;&lt;p&gt;&lt;code&gt;apt-get install google-chrome-unstable&lt;/code&gt;&lt;/p&gt;</description></item><item><title>kali和ubuntu双系统安装</title><link>https://blog.huirongis.me/post/kali-and-ubuntu/</link><pubDate>Tue, 03 Mar 2015 21:17:41 +0000</pubDate><guid>https://blog.huirongis.me/post/kali-and-ubuntu/</guid><description>&lt;p&gt;时间忽快忽慢，一转眼，年过完了，又回来学校了，又一个多月没有push了，重新回到github。今天我们家笨笨给我找了点kali的资料，索性就把kali捡起来，第一步安装kali的系统。
 此处背景不再介绍，直奔主题。kali的安装过程和ubuntu的安装过程类似，应该说原理上是一模一样的，只是界面有些不同。我的电脑当前已经安装了win8和ubuntu，现在需要再加一个kali的系统，三系统共存。
 大体分为如下几个步骤：&lt;/p&gt;
 &lt;h3 id="1-下载kali镜像"&gt;1 下载kali镜像
@@ -4048,7 +4048,7 @@ apt-get install network-manager-vpnc-gnome
 &lt;h1 id="2-刻录u盘-1"&gt;2 刻录u盘
 &lt;/h1&gt;&lt;p&gt;如果采用硬盘安装的话，我们需要在win下面操作，使用easybcd来编辑grub引导，还需要解压文件，相对比较麻烦，我这里采用u盘安装，相对比较简单。
 和安装ubuntu不同，我之前在win下用UltraISO来刻录,
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1epsvwgs1rqj20fa0c676e.jpg"
 loading="lazy"
 alt="刻录ubuntu"
 &gt;如图所示，便捷启动是可以不修改的，直接默认，点击写入就行。我今天在刻录kali的时候，发现这样写的u盘无法启动，开机的时候会提示&lt;code&gt;failed to boot from USB disk with error: gfxboot.c32: not a COM32R Image boot:&lt;/code&gt;的错误。
@@ -4060,7 +4060,7 @@ alt="刻录ubuntu"
 &lt;a class="link" href="https://help.ubuntu.com/community/mkusb" target="_blank" rel="noopener"
 &gt;https://help.ubuntu.com/community/mkusb&lt;/a&gt;
 2 在win下用UltraISO来刻录，记得更改便捷启动的设置，如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1epsw409qr3j20go09rjtp.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1epsw409qr3j20go09rjtp.jpg"
 loading="lazy"
 alt="更改便捷启动"
 &gt;，点击便捷启动-&amp;gt;选择写入新的启动器引导扇区——&amp;gt;syslinus——&amp;gt;写入&lt;/p&gt;
@@ -4068,7 +4068,7 @@ alt="更改便捷启动"
 &lt;h1 id="3-安装kali-1"&gt;3 安装kali
 &lt;/h1&gt;&lt;p&gt;下面开始安装kali（以下图片是我用virtualbox虚拟机中安装拍摄的）&lt;/p&gt;
 &lt;h2 id="1-引导成功以后开机画面如图所示"&gt;1 引导成功以后，开机画面如图所示
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1eptme5jxk5j20ne0hcjwf.jpg"
 loading="lazy"
 alt="开机画面"
 &gt;
@@ -4081,27 +4081,27 @@ alt="开机画面"
 domain我们留空不管他，下一步&lt;/p&gt;
 &lt;h2 id="4-设置root密码"&gt;4 设置root密码
 &lt;/h2&gt;&lt;p&gt;我们设置两次一样的密码就行，不要忘记了
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eptmmnvzlnj20ne0hcdih.jpg"
 loading="lazy"
 alt="设置root密码"
 &gt;&lt;/p&gt;
 &lt;h2 id="5-磁盘分区"&gt;5 磁盘分区
 &lt;/h2&gt;&lt;p&gt;我们选择第三项&lt;code&gt;手动&lt;/code&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eptmp2uw4ij20ne0hc42t.jpg"
 loading="lazy"
 alt="磁盘分区选项"
 &gt;
 &lt;strong&gt;分区&lt;/strong&gt;，这里我们一共分&lt;code&gt;三个区&lt;/code&gt;，一个300M的&lt;code&gt;/boot&lt;/code&gt;分区，一个2048M的&lt;code&gt;swap&lt;/code&gt;分区，其他的分为一个&lt;code&gt;/&lt;/code&gt;（你也可以把/home单独分区出来），因为分区方法类似，所以我只讲一个&lt;code&gt;/boot&lt;/code&gt;和&lt;code&gt;swap&lt;/code&gt;分区的步骤
 &lt;strong&gt;boot分区&lt;/strong&gt;
 &lt;strong&gt;注意:&lt;strong&gt;选择&lt;/strong&gt;可启动标志&lt;/strong&gt;，我们只有/boot设置为&lt;code&gt;开&lt;/code&gt;，其他分区的这个选项都是&lt;code&gt;关&lt;/code&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eptmu4nonsj20ne0hctbb.jpg"
 loading="lazy"
 alt="boot分区设置"
 &gt;
 设置完成后，选择&lt;code&gt;分区设定结束&lt;/code&gt;，点击继续&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;交换空间&lt;/strong&gt;
 &lt;strong&gt;注意:&lt;strong&gt;交换空间是一种&lt;/strong&gt;文件类型&lt;/strong&gt;，其他的分区是&lt;strong&gt;属于载点&lt;/strong&gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eptn2gehkdj20ne0hc77a.jpg"
 loading="lazy"
 alt="交换空间swap分区设置"
 &gt;
@@ -4109,7 +4109,7 @@ alt="交换空间swap分区设置"
 &lt;p&gt;等分区完成，就选择&lt;code&gt;分区设定结束并将修改写入磁盘&lt;/code&gt;，点击继续，就开始安装kali&lt;/p&gt;
 &lt;h2 id="6-启动引导"&gt;6 启动引导
 &lt;/h2&gt;&lt;p&gt;当系统快安装完成的时候，会出现grub安装的选择,如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eptnhakprmj20ns0j7dij.jpg"
 loading="lazy"
 alt="交换空间swap分区设置"
 &gt;&lt;/p&gt;
@@ -4125,7 +4125,7 @@ alt="交换空间swap分区设置"
 &gt;kali系统安装图文教程，kali系统安装图文&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id="致谢"&gt;致谢
 &lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
-&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Linux下使用github</title><link>https://jackroyal.github.io/post/linux-how-to-use-github/</link><pubDate>Mon, 19 Jan 2015 00:53:48 +0000</pubDate><guid>https://jackroyal.github.io/post/linux-how-to-use-github/</guid><description>&lt;blockquote&gt;
+&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>Linux下使用github</title><link>https://blog.huirongis.me/post/linux-how-to-use-github/</link><pubDate>Mon, 19 Jan 2015 00:53:48 +0000</pubDate><guid>https://blog.huirongis.me/post/linux-how-to-use-github/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;我的惰性真是病入膏肓了，已经整整3周没有在github上提交东西了，今天看了《模拟游戏》，索性又捡起来了。下面来总结一下linux下github的使用，也算是给自己一个备份，因为我自己也是老忘记。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;使用环境：Ubuntu 14.04&lt;/p&gt;
@@ -4166,7 +4166,7 @@ git push
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://blog.chinaunix.net/uid-29040159-id-3799719.html" target="_blank" rel="noopener"
 &gt;ubuntu 下 github 简单的使用教程&lt;/a&gt;
 2 &lt;a class="link" href="http://blog.csdn.net/pony_maggie/article/details/23207847" target="_blank" rel="noopener"
-&gt;Github入门级使用攻略&lt;/a&gt;&lt;/p&gt;</description></item><item><title>近期任务</title><link>https://jackroyal.github.io/post/recent-task/</link><pubDate>Tue, 02 Dec 2014 22:56:31 +0000</pubDate><guid>https://jackroyal.github.io/post/recent-task/</guid><description>&lt;p&gt;2014-12-02 22:56:31 接下来的一个星期，我的任务是学习python爬虫的编写，至少要实现csdn博客转markdown的任务&lt;/p&gt;</description></item><item><title>配置hexo</title><link>https://jackroyal.github.io/post/custom-hexo/</link><pubDate>Fri, 28 Nov 2014 21:07:27 +0000</pubDate><guid>https://jackroyal.github.io/post/custom-hexo/</guid><description>&lt;p&gt;经过&lt;a class="link" href="http://jackroyal.github.io/2014/11/27/how-to-build-a-blog-with-hexo/" target="_blank" rel="noopener"
+&gt;Github入门级使用攻略&lt;/a&gt;&lt;/p&gt;</description></item><item><title>近期任务</title><link>https://blog.huirongis.me/post/recent-task/</link><pubDate>Tue, 02 Dec 2014 22:56:31 +0000</pubDate><guid>https://blog.huirongis.me/post/recent-task/</guid><description>&lt;p&gt;2014-12-02 22:56:31 接下来的一个星期，我的任务是学习python爬虫的编写，至少要实现csdn博客转markdown的任务&lt;/p&gt;</description></item><item><title>配置hexo</title><link>https://blog.huirongis.me/post/custom-hexo/</link><pubDate>Fri, 28 Nov 2014 21:07:27 +0000</pubDate><guid>https://blog.huirongis.me/post/custom-hexo/</guid><description>&lt;p&gt;经过&lt;a class="link" href="http://jackroyal.github.io/2014/11/27/how-to-build-a-blog-with-hexo/" target="_blank" rel="noopener"
 &gt;上篇博客&lt;/a&gt;,我们搭建起了自己的博客,接下来我们对它做些个性化的定制.
 在hexo中,配置文件一共两个(我的hexo安装在F:/blog/),分别是&lt;code&gt;F:/blog/_config.yml&lt;/code&gt;和&lt;code&gt;F:/blog/themes/light/_config.yml&lt;/code&gt;.第一个是全局的配置文件,第二个是主题的配置文件,在继续说之前,我们先来说一下主题安装.&lt;/p&gt;
 &lt;h1 id="主题安装"&gt;主题安装
@@ -4301,12 +4301,12 @@ target="_blank" rel="noopener"
 我们点击&lt;a class="link" href="http://duoshuo.com/create-site/" title="我要安装"
 target="_blank" rel="noopener"
 &gt;我要安装&lt;/a&gt;,界面如下
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1emtdlnpsqaj20wo0lp783.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1emtdlnpsqaj20wo0lp783.jpg"
 loading="lazy"
 alt="duoshuo 创建界面"
 &gt;
 shortname就是jackroyal,创建完成后,跳转到如下界面
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1emtdp96x54j20us0jxn18.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1emtdp96x54j20us0jxn18.jpg"
 loading="lazy"
 alt="获取多说代码"
 &gt;
@@ -4358,7 +4358,7 @@ ds.charset = &amp;#39;UTF-8&amp;#39;;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;首先我们,替换config.disqus_shortname为config.duoshuo_shortname.
 然后修改&lt;code&gt;item.comment&lt;/code&gt;为&lt;code&gt;item.comments&lt;/code&gt;,因为系统中没有comment这个变量,只有comments这个变量,如果不修改comments,那么&lt;code&gt;item.comment&lt;/code&gt;一直为假,所以一直不成立,就不会显示comments字段了.修改后代码如下&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt; &amp;lt;% if (item.comments &amp;amp;&amp;amp; config.duoshuo_shortname){ %&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;产生的效果如图&lt;img src="https://jackroyal.github.io/images/692869a3gw1emteitia5uj20tl0fn412.jpg"
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;产生的效果如图&lt;img src="https://blog.huirongis.me/images/692869a3gw1emteitia5uj20tl0fn412.jpg"
 loading="lazy"
 alt="开启和关闭comment的区别"
 &gt;.
@@ -4369,7 +4369,7 @@ enjoy it&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://zipperary.com/2013/05/29/hexo-guide-3/" target="_blank" rel="noopener"
 &gt;http://zipperary.com/2013/05/29/hexo-guide-3/&lt;/a&gt;
 2 &lt;a class="link" href="http://dev.duoshuo.com/threads/541d3b2b40b5abcd2e4df0e9" target="_blank" rel="noopener"
-&gt;duoshuo官方Hexo使用教程&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用hexo建立自己的Github pages</title><link>https://jackroyal.github.io/post/how-to-build-a-blog-with-hexo/</link><pubDate>Thu, 27 Nov 2014 14:48:29 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-build-a-blog-with-hexo/</guid><description>&lt;p&gt;昨天经过一天的&lt;a class="link" href="http://jackroyal.github.io/2014/11/26/new-start/" title="生命在于折腾"
+&gt;duoshuo官方Hexo使用教程&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用hexo建立自己的Github pages</title><link>https://blog.huirongis.me/post/how-to-build-a-blog-with-hexo/</link><pubDate>Thu, 27 Nov 2014 14:48:29 +0000</pubDate><guid>https://blog.huirongis.me/post/how-to-build-a-blog-with-hexo/</guid><description>&lt;p&gt;昨天经过一天的&lt;a class="link" href="http://jackroyal.github.io/2014/11/26/new-start/" title="生命在于折腾"
 target="_blank" rel="noopener"
 &gt;折腾&lt;/a&gt;,总算把博客搭建起来了,今天就来写个博客总结一下.
 网上的资料很多,我主要参考的是这篇博客,一路很顺利.&lt;/p&gt;
@@ -4384,11 +4384,11 @@ target="_blank" rel="noopener"
 下载 &lt;a class="link" href="https://windows.github.com/" title="Github for windows"
 target="_blank" rel="noopener"
 &gt;Github for windows&lt;/a&gt; 并执行即可完成安装(&lt;em&gt;在线安装,会有点慢&lt;/em&gt;)。这个软件的的好处是有一个带GUI的界面,还有一个终端界面.如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3jw1emplp1lz31j204w033mx0.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3jw1emplp1lz31j204w033mx0.jpg"
 loading="lazy"
 alt="Github for windows"
 &gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1empluh6hvej210b0j741r.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1empluh6hvej210b0j741r.jpg"
 loading="lazy"
 alt="GUI and Bash"
 &gt;
@@ -4499,13 +4499,13 @@ hexo d
 &lt;/ol&gt;
 &lt;h1 id="致谢"&gt;致谢
 &lt;/h1&gt;&lt;p&gt;这里，要感谢我最亲爱的笨笨，是她给我测试和反馈的&lt;a class="link" href="http://huirong.github.io" target="_blank" rel="noopener"
-&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>新的开始</title><link>https://jackroyal.github.io/post/new-start/</link><pubDate>Wed, 26 Nov 2014 21:29:15 +0000</pubDate><guid>https://jackroyal.github.io/post/new-start/</guid><description>&lt;p&gt;今天&lt;strong&gt;折腾&lt;/strong&gt;了一天,终于弄好了,&lt;a class="link" href="http://jackroyal.github.io" title="搁浅St的博客"
+&gt;http://huirong.github.io&lt;/a&gt;&lt;/p&gt;</description></item><item><title>新的开始</title><link>https://blog.huirongis.me/post/new-start/</link><pubDate>Wed, 26 Nov 2014 21:29:15 +0000</pubDate><guid>https://blog.huirongis.me/post/new-start/</guid><description>&lt;p&gt;今天&lt;strong&gt;折腾&lt;/strong&gt;了一天,终于弄好了,&lt;a class="link" href="http://jackroyal.github.io" title="搁浅St的博客"
 target="_blank" rel="noopener"
 &gt;我的博客&lt;/a&gt;,正式落户Github.
-&lt;img src="https://jackroyal.github.io/images/GitHub-Mark.png"
+&lt;img src="https://blog.huirongis.me/images/GitHub-Mark.png"
 loading="lazy"
 alt="GitHub Mark"
-&gt;&lt;/p&gt;</description></item><item><title>[js]replace替换</title><link>https://jackroyal.github.io/post/js-replace/</link><pubDate>Tue, 25 Nov 2014 22:32:00 +0000</pubDate><guid>https://jackroyal.github.io/post/js-replace/</guid><description>&lt;p&gt;今天做前端试题,用到了replace函数,来记录一下.
+&gt;&lt;/p&gt;</description></item><item><title>[js]replace替换</title><link>https://blog.huirongis.me/post/js-replace/</link><pubDate>Tue, 25 Nov 2014 22:32:00 +0000</pubDate><guid>https://blog.huirongis.me/post/js-replace/</guid><description>&lt;p&gt;今天做前端试题,用到了replace函数,来记录一下.
 (以下部分知识点来自&lt;a class="link" href="http://www.w3cschool.cn/jsref_replace.html" target="_blank" rel="noopener"
 &gt;http://www.w3cschool.cn/jsref_replace.html&lt;/a&gt;)&lt;/p&gt;
 &lt;h2 id="定义和用法"&gt;定义和用法
@@ -4564,7 +4564,7 @@ stringObject 本身。&lt;/p&gt;
 &lt;p&gt;11&lt;/p&gt;
 &lt;p&gt;my name is imweba &lt;/p&gt;
 &lt;p&gt;&amp;ldquo;undefined undefined undefined undefined &amp;ldquo;//这一行是因为function必须要有return,我没写return,所以就都是undefined&lt;/p&gt;
-&lt;p&gt;ok  打完收工&lt;/p&gt;</description></item><item><title>[js]前端试题</title><link>https://jackroyal.github.io/post/js-problem/</link><pubDate>Tue, 25 Nov 2014 22:26:00 +0000</pubDate><guid>https://jackroyal.github.io/post/js-problem/</guid><description>&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 1、获取页面id为 hello 的节点
+&lt;p&gt;ok  打完收工&lt;/p&gt;</description></item><item><title>[js]前端试题</title><link>https://blog.huirongis.me/post/js-problem/</link><pubDate>Tue, 25 Nov 2014 22:26:00 +0000</pubDate><guid>https://blog.huirongis.me/post/js-problem/</guid><description>&lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 1、获取页面id为 hello 的节点
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;he&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;document.&lt;span style="color:#a6e22e"&gt;getElementById&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;hello&amp;#39;&lt;/span&gt;);
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;// 2、获取页面所有 div 标签
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt;&lt;span style="color:#66d9ef"&gt;var&lt;/span&gt; &lt;span style="color:#a6e22e"&gt;di&lt;/span&gt;&lt;span style="color:#f92672"&gt;=&lt;/span&gt;document.&lt;span style="color:#a6e22e"&gt;getElementsByTagName&lt;/span&gt;(&lt;span style="color:#e6db74"&gt;&amp;#39;div&amp;#39;&lt;/span&gt;);
@@ -4628,17 +4628,17 @@ stringObject 本身。&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>cmcc520扩展使用说明</title><link>https://jackroyal.github.io/post/how-to-use-cmcc520/</link><pubDate>Mon, 24 Nov 2014 21:56:00 +0000</pubDate><guid>https://jackroyal.github.io/post/how-to-use-cmcc520/</guid><description>&lt;p&gt;我的cmcc520 2.0版本终于完成了,写个使用说明&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>cmcc520扩展使用说明</title><link>https://blog.huirongis.me/post/how-to-use-cmcc520/</link><pubDate>Mon, 24 Nov 2014 21:56:00 +0000</pubDate><guid>https://blog.huirongis.me/post/how-to-use-cmcc520/</guid><description>&lt;p&gt;我的cmcc520 2.0版本终于完成了,写个使用说明&lt;/p&gt;
 &lt;p&gt;学校部分范围有CMCC-EDU可用,通过手动修改ssid,可以免费使用.&lt;/p&gt;
 &lt;p&gt;写了个扩展来简化这个过程.&lt;/p&gt;
 &lt;p&gt;1 安装扩展
 将保存下来的 *.crx 文件或*.js 文件直接拖拽到浏览器的“扩展程序”（[chrome://chrome/extensions](&amp;ldquo;Chrome 扩展程序页面&amp;rdquo;)/）页面。
-&lt;img src="https://jackroyal.github.io/images/20141124215558921.jpg"
+&lt;img src="https://blog.huirongis.me/images/20141124215558921.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;( 注：只有拖动到此页面才能安装，其它页面无效)&lt;/p&gt;
 &lt;p&gt;　　2. 按照提示安装
-&lt;img src="https://jackroyal.github.io/images/20141124215611765.jpg"
+&lt;img src="https://blog.huirongis.me/images/20141124215611765.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt; 
@@ -4648,22 +4648,22 @@ loading="lazy"
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt;3,配置软件功能&lt;/p&gt;
 &lt;p&gt;左键点击图标,可以选择开关扩展功能(默认为开启)
- &lt;img src="https://jackroyal.github.io/images/20141124215702865.jpg"
+ &lt;img src="https://blog.huirongis.me/images/20141124215702865.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt;4.使用软件&lt;/p&gt;
 &lt;p&gt;如果软件的功能打开,那么如果当你使用cmcc-edu的时候会自动跳转完成登录,不再需要手动操作,登录成功页面如下,你可以关闭这个页面了
-&lt;img src="https://jackroyal.github.io/images/20141124215651437.jpg"
+&lt;img src="https://blog.huirongis.me/images/20141124215651437.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;5.下线&lt;/p&gt;
 &lt;p&gt;在任何页面按ALT+X   可以下线&lt;/p&gt;
 &lt;p&gt;Ps,如果按Alt+x无任何提示,可能是快捷键设置有问题
- &lt;img src="https://jackroyal.github.io/images/20141124215717575.jpg"
+ &lt;img src="https://blog.huirongis.me/images/20141124215717575.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/20141124215740968.jpg"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/20141124215740968.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;那就需要你按照上图手动设置快捷键&lt;/p&gt;
@@ -4679,7 +4679,7 @@ Github项目地址 &lt;a class="link" href="https://github.com/Jackroyal/cmcc520
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt; &lt;/p&gt;
 &lt;p&gt; &lt;/p&gt;
-&lt;p&gt;2014/11/24&lt;/p&gt;</description></item><item><title>chrome扩展开发手记-chrome扩展开始第一步manfest.json</title><link>https://jackroyal.github.io/post/chrome-extention-3/</link><pubDate>Mon, 24 Nov 2014 15:16:00 +0000</pubDate><guid>https://jackroyal.github.io/post/chrome-extention-3/</guid><description>&lt;p&gt;参考文档   &lt;a class="link" href="https://lmk123.duapp.com/" target="_blank" rel="noopener"
+&lt;p&gt;2014/11/24&lt;/p&gt;</description></item><item><title>chrome扩展开发手记-chrome扩展开始第一步manfest.json</title><link>https://blog.huirongis.me/post/chrome-extention-3/</link><pubDate>Mon, 24 Nov 2014 15:16:00 +0000</pubDate><guid>https://blog.huirongis.me/post/chrome-extention-3/</guid><description>&lt;p&gt;参考文档   &lt;a class="link" href="https://lmk123.duapp.com/" target="_blank" rel="noopener"
 &gt;https://lmk123.duapp.com/&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;下面开始写chrome扩展了,第一步就是看文档,官方文档有入门指导,先要过一遍&lt;/p&gt;
 &lt;p&gt;我们首先来编写第一个文件manfest.json,这是一个清单文件,告诉系统,我有哪些文件,需要申请哪些权限都在里面,下卖弄给出我的manfest.json&lt;/p&gt;
@@ -4721,10 +4721,10 @@ Github项目地址 &lt;a class="link" href="https://github.com/Jackroyal/cmcc520
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;persistent&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;false&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; },
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;比如我的这个 后台执行就是这样的&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/20141124194616706.jpg"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/20141124194616706.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;采用pageaction还是browseraction取决于你是否想让图标一直可见.`&lt;img src="https://jackroyal.github.io/images/20141124193151343.jpg"
+&lt;p&gt;采用pageaction还是browseraction取决于你是否想让图标一直可见.`&lt;img src="https://blog.huirongis.me/images/20141124193151343.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;如图,绿色的是广告终结者,他的图标是pageAction,后面的印象笔记还有switchproxy是browserAction.一般来说,适用于少数页面的扩展建议使用pageaction,适用于大多数页面的建议使用browseraction&lt;/p&gt;
@@ -4739,7 +4739,7 @@ JavaScript 和 CSS 文件,详细情况请看这里&lt;a class="link" href="https
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;default&amp;#34;&lt;/span&gt;&lt;span style="color:#f92672"&gt;:&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#34;Alt+X&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; }
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>chrome扩展开发手记&lt;2&gt;-登录原理分析</title><link>https://jackroyal.github.io/post/chrome-extention-2/</link><pubDate>Mon, 24 Nov 2014 11:18:00 +0000</pubDate><guid>https://jackroyal.github.io/post/chrome-extention-2/</guid><description>&lt;p&gt;上一篇,我们 介绍了一下登录的流程,但是用程序进行登录的话,我们肯定不能那样一步一步,太过复杂,所以我们接下来分下一下登录的具体过程,看看能不能作一些简化&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description></item><item><title>chrome扩展开发手记&lt;2&gt;-登录原理分析</title><link>https://blog.huirongis.me/post/chrome-extention-2/</link><pubDate>Mon, 24 Nov 2014 11:18:00 +0000</pubDate><guid>https://blog.huirongis.me/post/chrome-extention-2/</guid><description>&lt;p&gt;上一篇,我们 介绍了一下登录的流程,但是用程序进行登录的话,我们肯定不能那样一步一步,太过复杂,所以我们接下来分下一下登录的具体过程,看看能不能作一些简化&lt;/p&gt;
 &lt;p&gt;我们接下来,给几个页面编个号,下面好分析一点
 A   最原始的跳转 &lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
 &gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU&lt;/a&gt;
@@ -4757,7 +4757,7 @@ B  第一次改ssid  &lt;a class="link" href="http://120.202.164.10:8080/port
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;第一次改ssid,也就是从A到B,这个过程也没什么,只是一个单纯的地址跳转,B地址中有一个表单&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://jackroyal.github.io/images/20141124134725891.jpg"
+&lt;img src="https://blog.huirongis.me/images/20141124134725891.jpg"
 loading="lazy"
 &gt;&lt;!-- raw HTML omitted --&gt;
 这个表单里面 主要包含四个字段,
@@ -4769,7 +4769,7 @@ ssid:iWuhan-Free
 &lt;li&gt;
 &lt;p&gt;我们第一次点击 请提交登录,所做的操作就是把上面的表单提交到  &lt;a class="link" href="http://120.202.164.10:8080/portal/servlets/SingleLoginServlet" target="_blank" rel="noopener"
 &gt;http://120.202.164.10:8080/portal/servlets/SingleLoginServlet&lt;/a&gt;&lt;!-- raw HTML omitted --&gt;
-服务器返回的地址是C,这一步的表单提交主要是为了获取C的地址,就是因为多了的那个loginFree.jsp,这样下一步才能改ssid为CMCC520,否则,如果你越过这一步直接改ssid为CMCC520,就会跳转到其他的页面,比如下面这个&lt;img src="https://jackroyal.github.io/images/20141124133708801.jpg"
+服务器返回的地址是C,这一步的表单提交主要是为了获取C的地址,就是因为多了的那个loginFree.jsp,这样下一步才能改ssid为CMCC520,否则,如果你越过这一步直接改ssid为CMCC520,就会跳转到其他的页面,比如下面这个&lt;img src="https://blog.huirongis.me/images/20141124133708801.jpg"
 loading="lazy"
 &gt;&lt;!-- raw HTML omitted --&gt;
 这个地址如果点击提交,是没有办法正常登陆的,我们必须要到武汉的那个页面才行.&lt;/p&gt;
@@ -4807,8 +4807,8 @@ __&lt;/p&gt;
 &lt;p&gt;ATTRIBUTE_USERNAME:iWuhanFree4300&lt;/p&gt;
 &lt;p&gt;ATTRIBUTE_UUID:26FBE9A694B6221958CF6DE2704F0ECA&lt;/p&gt;
 &lt;p&gt;ATTRIBUTE_IPADDRESS:10.80.97.209&lt;/p&gt;
-&lt;p&gt;cancelAutomatismLogin:false&lt;/p&gt;</description></item><item><title>chrome扩展开发手记&lt;1&gt;-需求分析</title><link>https://jackroyal.github.io/post/chrome-extention-1/</link><pubDate>Fri, 21 Nov 2014 18:17:00 +0000</pubDate><guid>https://jackroyal.github.io/post/chrome-extention-1/</guid><description>&lt;p&gt;本人的学校在武汉,有CMCC-EDU的网络覆盖,中国移动和武汉市政府搞了一个活动,可以免费公益上网,说白了,就是可以免费使用EDU的网络,如图.
-&lt;img src="https://jackroyal.github.io/images/20141121181910580.jpg"
+&lt;p&gt;cancelAutomatismLogin:false&lt;/p&gt;</description></item><item><title>chrome扩展开发手记&lt;1&gt;-需求分析</title><link>https://blog.huirongis.me/post/chrome-extention-1/</link><pubDate>Fri, 21 Nov 2014 18:17:00 +0000</pubDate><guid>https://blog.huirongis.me/post/chrome-extention-1/</guid><description>&lt;p&gt;本人的学校在武汉,有CMCC-EDU的网络覆盖,中国移动和武汉市政府搞了一个活动,可以免费公益上网,说白了,就是可以免费使用EDU的网络,如图.
+&lt;img src="https://blog.huirongis.me/images/20141121181910580.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;以上是前提.&lt;/p&gt;
@@ -4818,17 +4818,17 @@ loading="lazy"
 都会跳转到 &lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
 &gt;&lt;/a&gt;&lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
 &gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU&lt;/a&gt;  界面如图所示&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://jackroyal.github.io/images/20141124103645611.jpg"
+&lt;img src="https://blog.huirongis.me/images/20141124103645611.jpg"
 loading="lazy"
 &gt;&lt;/li&gt;
 &lt;li&gt;接下来我们手动更改最上面的网址栏,把ssid改为iWuhan-Free,(注意大小写)&lt;!-- raw HTML omitted --&gt;
 修改后的网址如下&lt;a class="link" href="http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC-EDU" target="_blank" rel="noopener"
 &gt;http://120.202.164.10:8080/portal/?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free&lt;/a&gt;界面如下&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://jackroyal.github.io/images/20141124104120281.jpg"
+&lt;img src="https://blog.huirongis.me/images/20141124104120281.jpg"
 loading="lazy"
 &gt;&lt;/li&gt;
 &lt;li&gt;接下来我们点击,请点击登录按钮,系统反馈如下&lt;!-- raw HTML omitted --&gt;
-&lt;img src="https://jackroyal.github.io/images/20141124104623968.jpg"
+&lt;img src="https://blog.huirongis.me/images/20141124104623968.jpg"
 loading="lazy"
 &gt;&lt;!-- raw HTML omitted --&gt;
 我们忽略这个警告,可以注意到,上面的地址栏已经变掉了,多了个loginFree.jsp完整的地址&lt;a class="link" href="http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free" target="_blank" rel="noopener"
@@ -4836,45 +4836,45 @@ loading="lazy"
 &lt;li&gt;接下来,我们再改一次ssid,改为CMCC520,完整地址如下&lt;a class="link" href="http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=iWuhan-Free" target="_blank" rel="noopener"
 &gt;http://120.202.164.10:8080/portal/loginFree.jsp?wlanacname=1022.0027.270.00&amp;amp;wlanuserip=10.80.97.209&amp;amp;ssid=CMCC520&lt;/a&gt; 界面还是和上图一样,就不贴图了,我们再点击一次,请点击登录,然后就会跳到一个计时页面,这样就表示你登录成功,可以上网了&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;登录的流程走完了,下一篇,接下来我们分析一下登录的原理,简化一下登录的流程&lt;/p&gt;</description></item><item><title>wamp与sql_server_因为端口80冲突,无法开启wamp</title><link>https://jackroyal.github.io/post/wamp-sql_server-80-error/</link><pubDate>Fri, 14 Nov 2014 18:09:00 +0000</pubDate><guid>https://jackroyal.github.io/post/wamp-sql_server-80-error/</guid><description>&lt;p&gt;因为80端口占用,导致无法启动,其实不必关闭sql server太多的东西,只需要关闭SQL Server Reporting Services 就行了,这样也不会影响sql server的使用&lt;/p&gt;
+&lt;p&gt;登录的流程走完了,下一篇,接下来我们分析一下登录的原理,简化一下登录的流程&lt;/p&gt;</description></item><item><title>wamp与sql_server_因为端口80冲突,无法开启wamp</title><link>https://blog.huirongis.me/post/wamp-sql_server-80-error/</link><pubDate>Fri, 14 Nov 2014 18:09:00 +0000</pubDate><guid>https://blog.huirongis.me/post/wamp-sql_server-80-error/</guid><description>&lt;p&gt;因为80端口占用,导致无法启动,其实不必关闭sql server太多的东西,只需要关闭SQL Server Reporting Services 就行了,这样也不会影响sql server的使用&lt;/p&gt;
 &lt;p&gt;如图
-&lt;img src="https://jackroyal.github.io/images/20141114175909339.jpg"
+&lt;img src="https://blog.huirongis.me/images/20141114175909339.jpg"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;打开sqlserver 配置管理器,关闭以上服务&lt;/p&gt;
 &lt;p&gt;或者打开控制面板-&amp;gt;管理-&amp;gt;服务工具-&amp;gt;SQL Server Reporting Services&lt;/p&gt;
-&lt;p&gt;然后就可以打开wamp了&lt;/p&gt;</description></item><item><title>sql中left_join和right_join混用</title><link>https://jackroyal.github.io/post/the-use-of-left_join-and-right_join-in-sql/</link><pubDate>Fri, 08 Aug 2014 10:02:00 +0000</pubDate><guid>https://jackroyal.github.io/post/the-use-of-left_join-and-right_join-in-sql/</guid><description>&lt;p&gt;left join(左联接) 返回包括左表中的所有记录和右表中联结字段相等的记录 &lt;/p&gt;
+&lt;p&gt;然后就可以打开wamp了&lt;/p&gt;</description></item><item><title>sql中left_join和right_join混用</title><link>https://blog.huirongis.me/post/the-use-of-left_join-and-right_join-in-sql/</link><pubDate>Fri, 08 Aug 2014 10:02:00 +0000</pubDate><guid>https://blog.huirongis.me/post/the-use-of-left_join-and-right_join-in-sql/</guid><description>&lt;p&gt;left join(左联接) 返回包括左表中的所有记录和右表中联结字段相等的记录 &lt;/p&gt;
 &lt;p&gt;right join(右联接) 返回包括右表中的所有记录和左表中联结字段相等的记录&lt;/p&gt;
 &lt;p&gt;inner join(等值连接) 只返回两个表中联结字段相等的行&lt;/p&gt;
 &lt;p&gt;如上所言,我们只做一下left join的实验,right join和left join 类似&lt;/p&gt;
 &lt;p&gt;测试一共三张表,a  b   c
-&lt;img src="https://jackroyal.github.io/"
+&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;表结构和数据分别如下&lt;/p&gt;
 &lt;p&gt;a表                                                                  b表                                                              c表
-&lt;img src="https://jackroyal.github.io/"
+&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
-&gt;         &lt;img src="https://jackroyal.github.io/"
+&gt;         &lt;img src="https://blog.huirongis.me/"
 loading="lazy"
-&gt;          &lt;img src="https://jackroyal.github.io/"
+&gt;          &lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;然后我们来试一下左连接&lt;/p&gt;
 &lt;p&gt;1,  我们来查询a b两张表,连接他们aid=bid的选项
 sql&amp;raquo;SELECT *  FROM a   LEFT JOIN b on aid=bid&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;看图很好理解,因为是a左连接b,所以b中为空的元素 ,在查询结果中以NULL的形式补全&lt;/p&gt;
 &lt;p&gt;同理可得&lt;/p&gt;
 &lt;p&gt;sql&amp;raquo;SELECT * FROM a LEFT JOIN c on aid=cid
-&lt;img src="https://jackroyal.github.io/"
+&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;sql&amp;raquo;SELECT * FROM c LEFT JOIN b on bid=cid
 sql&amp;raquo;SELECT * FROM c LEFT JOIN b on cid=bid&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;也就是on后面的顺序无所谓,无论是bid=cid还是cid=bid,重点是前面的left join还是right join&lt;/p&gt;
@@ -4882,16 +4882,16 @@ loading="lazy"
 &lt;p&gt;sql&amp;raquo;SELECT * FROM a&lt;/p&gt;
 &lt;p&gt;           LEFT JOIN b on bid=aid &lt;/p&gt;
 &lt;p&gt;           LEFT JOIN c on aid=cid
-&lt;img src="https://jackroyal.github.io/"
+&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;sql&amp;raquo;SELECT * FROM a LEFT JOIN b on bid=aid LEFT JOIN c on bid=cid
-&lt;img src="https://jackroyal.github.io/"
+&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;3,如果我用了一个right join呢?&lt;/p&gt;
 &lt;p&gt;sql&amp;raquo;SELECT * FROM a LEFT JOIN b on bid=aid RIGHT JOIN c on bid=cid
-&lt;img src="https://jackroyal.github.io/"
+&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;这里该怎么理解呢?
@@ -4900,21 +4900,21 @@ loading="lazy"
 &lt;p&gt;我们理解的时候可以把它拆成两部分去理解&lt;/p&gt;
 &lt;p&gt;比如第一部分
 sql&amp;raquo;SELECT * FROM a LEFT JOIN b on bid=aid&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;然后再思考第二部分,假如上图是一张表  我们叫它a_b&lt;/p&gt;
 &lt;p&gt;你可以新建一个视图,就可以真成为一张虚表了&lt;/p&gt;
 &lt;p&gt;sql&amp;raquo;create  VIEW a_b  as (SELECT * FROM a LEFT JOIN b on bid=aid)
-&lt;img src="https://jackroyal.github.io/"
+&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;然后我们继续做下面一部分&lt;/p&gt;
 &lt;p&gt;sql&amp;raquo;select * from a_b right join c on bid=cid
-&lt;img src="https://jackroyal.github.io/"
+&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;可见,与上面的结果是一样的,当然这是我们理解的过程,实际数据库服务器执行的时候可能不是这样的,它会做一些优化,提高效率&lt;/p&gt;</description></item><item><title>阿里云windows_server_2003_搭建邮件服务器</title><link>https://jackroyal.github.io/post/aliyun-windows-server-2008-mail-server/</link><pubDate>Sat, 28 Jun 2014 22:30:00 +0000</pubDate><guid>https://jackroyal.github.io/post/aliyun-windows-server-2008-mail-server/</guid><description>&lt;p&gt;    笔者最近遇到一个在阿里云上搭建邮件服务器的问题，总算搞定，记录一下。&lt;/p&gt;
+&lt;p&gt;可见,与上面的结果是一样的,当然这是我们理解的过程,实际数据库服务器执行的时候可能不是这样的,它会做一些优化,提高效率&lt;/p&gt;</description></item><item><title>阿里云windows_server_2003_搭建邮件服务器</title><link>https://blog.huirongis.me/post/aliyun-windows-server-2008-mail-server/</link><pubDate>Sat, 28 Jun 2014 22:30:00 +0000</pubDate><guid>https://blog.huirongis.me/post/aliyun-windows-server-2008-mail-server/</guid><description>&lt;p&gt;    笔者最近遇到一个在阿里云上搭建邮件服务器的问题，总算搞定，记录一下。&lt;/p&gt;
 &lt;p&gt;     整个搭建过程，包括pop3服务的安装和开启，smtp服务的安装和开启，dns服务的安装和设置。
     参考文章&lt;a class="link" href="http://hi.baidu.com/senya/item/63bd6588b6817056e63d1996" target="_blank" rel="noopener"
 &gt;http://hi.baidu.com/senya/item/63bd6588b6817056e63d1996&lt;/a&gt;
@@ -4942,7 +4942,7 @@ loading="lazy"
 &lt;p&gt;图十一&lt;/p&gt;
 &lt;p&gt;__　　三、配置smtp__&lt;/p&gt;
 &lt;p&gt;　　方法和上面类似，在图二的画面中我们选择应用程序服务器&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;如图，我的已经开启了。&lt;/p&gt;
@@ -4950,44 +4950,44 @@ loading="lazy"
 &lt;p&gt;&lt;strong&gt;四、配置DNS&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;服务器已经配置好了，我们接下来设置下dns，这样才能解析到，不然还是无法使用的&lt;/p&gt;
 &lt;p&gt;依次打开，“开始-程序-管理工具-配置您的服务器向导”&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;选择自定义配置&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;选择dns服务器，下一步&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;点击正向查找域里面的区域名称，在右边的空白处点击右键，新建主机，分别新建POP3，smtp等主机&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;还是空白处，右键，新建邮件交换器，分别新建smtp和pop3的邮件交换器&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://jackroyal.github.io/"
+&lt;p&gt;&lt;img src="https://blog.huirongis.me/"
 loading="lazy"
 &gt;&lt;/p&gt;
 &lt;p&gt;注意：完全合格的域名后面没有点号，邮件服务器的完全合格的域名后面有点号，例如是smtp.ip-tcp.com.&lt;/p&gt;
@@ -4997,4 +4997,4 @@ loading="lazy"
 &lt;p&gt;经过我的测试，可以收邮件，但是不能发邮件（可以自己给自己发，但是不能给qq，网易等邮箱发），一直报错550 5.7.1 Unable to relay for &lt;a class="link" href="mailto:xxx@xxx.com" &gt;&lt;/a&gt;&lt;a class="link" href="mailto:xxx@xxx.com" &gt;xxx@xxx.com&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;最后找到答案&lt;/p&gt;
 &lt;p&gt;在IIS管理器里打开“默认SMTP虚拟服务器”的属性设置对话框，在“访问”选项卡中，点击“中继”按钮，弹出“中继限制”对话框，默认为选中了“仅以下列表”，修改为选中“仅以下列表除外”即可。&lt;/p&gt;
-&lt;p&gt;另外下面的“允许所有通过身份验证的计算机进行中继，而忽略上表”一项要保持选中状态（默认是选中的）。&lt;/p&gt;</description></item><item><title>Search</title><link>https://jackroyal.github.io/page/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://jackroyal.github.io/page/search/</guid><description/></item></channel></rss>
+&lt;p&gt;另外下面的“允许所有通过身份验证的计算机进行中继，而忽略上表”一项要保持选中状态（默认是选中的）。&lt;/p&gt;</description></item><item><title>Search</title><link>https://blog.huirongis.me/page/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.huirongis.me/page/search/</guid><description/></item></channel></rss>

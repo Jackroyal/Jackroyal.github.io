@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/python/</link><description>Recent content in Python on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 28 Aug 2026 16:43:57 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://jackroyal.github.io/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on 搁浅St的blog</title><link>https://blog.huirongis.me/tags/python/</link><description>Recent content in Python on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 05 Nov 2026 07:14:17 +0000</lastBuildDate><atom:link href="https://blog.huirongis.me/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>基于python的requests库，模拟登录csdn博客</title><link>https://blog.huirongis.me/post/python-requests-login-csdn-blog/</link><pubDate>Sat, 23 May 2015 19:06:04 +0000</pubDate><guid>https://blog.huirongis.me/post/python-requests-login-csdn-blog/</guid><description>&lt;p&gt;还是继续我的python学习。以前写的爬虫用的urllib2来实现，也用过scrapy的爬虫框架，这次试试requests，刚开始用，用起来确实比urllib2好，封装的更好一些，使用起来简单方便很多。&lt;/p&gt;
 &lt;h1 id="安装requests库"&gt;安装requests库
 &lt;/h1&gt;&lt;p&gt;在ubuntu下面安装很简单&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;pip install requests
@@ -25,19 +25,19 @@
 这个链接，前面部分是登录的网址，问号后面的参数，顾名思义，referer，就是你从哪里跳过来的，也许是一个页面跳转到登录的，toolbar就是我自己点击顶部导航栏，然后跳转到登录页面的。&lt;/p&gt;
 &lt;h2 id="2-清除相关的cookie"&gt;2 清除相关的cookie
 &lt;/h2&gt;&lt;p&gt;为了排除不必要的干扰，我们先清除掉所有的相关的cookie，这样方便我们分析哪些参数是必须的。
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegc1itw2j20qu075779.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esegc1itw2j20qu075779.jpg"
 loading="lazy"
 alt="firefox中，清除cookie"
 &gt;&lt;/p&gt;
 &lt;h2 id="3-登录过程分析"&gt;3 登录过程分析
 &lt;/h2&gt;&lt;p&gt;清除了cookie后，我们刷新一下页面&lt;code&gt;https://passport.csdn.net/account/login?ref=toolbar&lt;/code&gt;，重新获取对应的cookie。
 然后我们就开始用tamper data来拦截请求。
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esegfztiz7j20s40ftdjw.jpg"
 loading="lazy"
 alt="使用tamper data"
 &gt;
 我们点击&lt;code&gt;start tamper&lt;/code&gt;，在网页中填写用户名和密码。点击&lt;code&gt;登录&lt;/code&gt;，会发出一个请求，然后tamper data会拦截下这个请求，询问我们是否拦截，点击tamper，我们可以在这个请求提交之前，查看请求的内容，还可以做删改。
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1esegkslypyj20y20gntdt.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1esegkslypyj20y20gntdt.jpg"
 loading="lazy"
 alt="发出第一个登录请求前拦截下来，查看表单内容"
 &gt;
@@ -126,7 +126,7 @@ csdn的登录过程比较简单，发送一个登录表单过去，就登录成�
 2 &lt;a class="link" href="http://www.crummy.com/software/BeautifulSoup/bs4/doc/index.zh.html" target="_blank" rel="noopener"
 &gt;beautifuisoup官方文档&lt;/a&gt;
 3 &lt;a class="link" href="http://stackoverflow.com/questions/13030095/how-to-save-requests-python-cookies-to-a-file" target="_blank" rel="noopener"
-&gt;python的requests如何保存cookie到文件&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下使用scrapy抓取cnblogs</title><link>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</link><pubDate>Sun, 26 Apr 2015 16:52:28 +0000</pubDate><guid>https://jackroyal.github.io/post/ubuntu-scrapy-stackoverflow/</guid><description>&lt;p&gt;今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。&lt;/p&gt;
+&gt;python的requests如何保存cookie到文件&lt;/a&gt;&lt;/p&gt;</description></item><item><title>ubuntu下使用scrapy抓取cnblogs</title><link>https://blog.huirongis.me/post/ubuntu-scrapy-stackoverflow/</link><pubDate>Sun, 26 Apr 2015 16:52:28 +0000</pubDate><guid>https://blog.huirongis.me/post/ubuntu-scrapy-stackoverflow/</guid><description>&lt;p&gt;今天在伯乐在线上看到一篇翻译的博客，讲的是使用scrapy来抓取stackoverflow上的问题，刚好好久没用这个，于是一并捡起来玩一下。&lt;/p&gt;
 &lt;h1 id="软件安装"&gt;软件安装
 &lt;/h1&gt;&lt;p&gt;我的环境是：ubuntu 14.04 lts
 需要安装相关软件&lt;/p&gt;
@@ -196,7 +196,7 @@ stack
 &lt;/h1&gt;&lt;p&gt;ok，上述工作基本完成，我们来测试一下&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;还可以这样测试一下，使用shell命令
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1erjvd7qeqdj213z0j9h2h.jpg"
 loading="lazy"
 alt="用shell测试xpath"
 &gt;
@@ -347,7 +347,7 @@ Setting up python-twisted-conch (1:13.2.0-1ubuntu1) ...
 在这里，我遇到一个大坑，无论是伯乐在线翻译的博客
 还是网上搜索到的一般教程，都是使用pymongo.Connection来连接数据库，可是妈蛋，你使用&lt;code&gt;pip install pymongo&lt;/code&gt;安装的版本都是最新版本3.0.1，那个Connection的写法已经不支持，被丢弃了，擦。
 我们来看一下版本，我学到一个新命令&lt;code&gt;pip show pymongo&lt;/code&gt;，用来查看某一个包的版本的。
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjct36jnrj20df038dgf.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1erjct36jnrj20df038dgf.jpg"
 loading="lazy"
 alt="查看pymongo版本"
 &gt;
@@ -403,7 +403,7 @@ alt="查看pymongo版本"
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;ok,搞定，我们再测试一把&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;scrapy crawl stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id="执行效果如下"&gt;执行效果如下
-&lt;/h2&gt;&lt;p&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
+&lt;/h2&gt;&lt;p&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1erjv5to5w3j20w70g8wio.jpg"
 loading="lazy"
 alt="mongodb数据库管理"
 &gt;&lt;/p&gt;
@@ -413,7 +413,7 @@ alt="mongodb数据库管理"
 2 &lt;a class="link" href="http://stackoverflow.com/questions/8671071/error-to-execute-python-scrappy-module" target="_blank" rel="noopener"
 &gt;http://stackoverflow.com/questions/8671071/error-to-execute-python-scrappy-module&lt;/a&gt;
 3 &lt;a class="link" href="http://python.jobbole.com/81320/" target="_blank" rel="noopener"
-&gt;Python下用Scrapy和MongoDB构建爬虫系统（1）&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸检测</title><link>https://jackroyal.github.io/post/face-detection/</link><pubDate>Sun, 26 Apr 2015 12:54:24 +0000</pubDate><guid>https://jackroyal.github.io/post/face-detection/</guid><description>&lt;p&gt;这两个星期，都在搞这个，就把代码都分享一下，太烂，就不分享到github了。&lt;/p&gt;
+&gt;Python下用Scrapy和MongoDB构建爬虫系统（1）&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸检测</title><link>https://blog.huirongis.me/post/face-detection/</link><pubDate>Sun, 26 Apr 2015 12:54:24 +0000</pubDate><guid>https://blog.huirongis.me/post/face-detection/</guid><description>&lt;p&gt;这两个星期，都在搞这个，就把代码都分享一下，太烂，就不分享到github了。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# !/usr/bin/env python&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# -*- coding:utf-8-*-&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;__author__ &lt;span style="color:#f92672"&gt;=&lt;/span&gt; &lt;span style="color:#e6db74"&gt;&amp;#39;chen&amp;#39;&lt;/span&gt;
@@ -472,7 +472,7 @@ alt="mongodb数据库管理"
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://blog.csdn.net/u012162613/article/details/43523507" target="_blank" rel="noopener"
 &gt;Python-OpenCV人脸检测(代码)&lt;/a&gt;
 2 &lt;a class="link" href="http://wangwei007.blog.51cto.com/68019/1104940" target="_blank" rel="noopener"
-&gt;python os.path模块常用方法详解&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸识别</title><link>https://jackroyal.github.io/post/face-recognizer/</link><pubDate>Sun, 26 Apr 2015 10:50:00 +0000</pubDate><guid>https://jackroyal.github.io/post/face-recognizer/</guid><description>&lt;p&gt;最近搞了两个星期的opencv，人脸识别方向，感觉没有什么前途，看不到论文在哪里啊。&lt;/p&gt;
+&gt;python os.path模块常用方法详解&lt;/a&gt;&lt;/p&gt;</description></item><item><title>使用opencv实现人脸识别</title><link>https://blog.huirongis.me/post/face-recognizer/</link><pubDate>Sun, 26 Apr 2015 10:50:00 +0000</pubDate><guid>https://blog.huirongis.me/post/face-recognizer/</guid><description>&lt;p&gt;最近搞了两个星期的opencv，人脸识别方向，感觉没有什么前途，看不到论文在哪里啊。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# !/usr/bin/env python&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#75715e"&gt;# -*- coding:utf-8-*-&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt;&lt;span style="color:#f92672"&gt;import&lt;/span&gt; os
@@ -620,7 +620,7 @@ alt="mongodb数据库管理"
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; &lt;span style="color:#66d9ef"&gt;if&lt;/span&gt; out_dir &lt;span style="color:#f92672"&gt;is&lt;/span&gt; &lt;span style="color:#66d9ef"&gt;None&lt;/span&gt;:
 &lt;/span&gt;&lt;/span&gt;&lt;span style="display:flex;"&gt;&lt;span&gt; cv2&lt;span style="color:#f92672"&gt;.&lt;/span&gt;waitKey(&lt;span style="color:#ae81ff"&gt;0&lt;/span&gt;)
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;代码执行效果如下
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eriuc3wsckj20nr08qn2q.jpg"
 loading="lazy"
 alt="人脸识别执行效果"
 &gt;
@@ -631,7 +631,7 @@ alt="人脸识别执行效果"
 &lt;/h1&gt;&lt;p&gt;1 &lt;a class="link" href="http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html" target="_blank" rel="noopener"
 &gt;http://docs.opencv.org/modules/contrib/doc/facerec/facerec_tutorial.html&lt;/a&gt;
 2 &lt;a class="link" href="https://code.google.com/p/pythonxy/source/browse/src/python/OpenCV/DOC/samples/python2/facerec_demo.py?repo=xy-27&amp;amp;r=a2e41c7a3cb6db536b948747872cab71c696b44e" target="_blank" rel="noopener"
-&gt;python调用opencv实现人脸识别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>blog2markdown程序打包,csdn爬虫</title><link>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</link><pubDate>Sun, 29 Mar 2015 22:08:22 +0000</pubDate><guid>https://jackroyal.github.io/post/blog2markdown-csdn-windows/</guid><description>&lt;blockquote&gt;
+&gt;python调用opencv实现人脸识别&lt;/a&gt;&lt;/p&gt;</description></item><item><title>blog2markdown程序打包,csdn爬虫</title><link>https://blog.huirongis.me/post/blog2markdown-csdn-windows/</link><pubDate>Sun, 29 Mar 2015 22:08:22 +0000</pubDate><guid>https://blog.huirongis.me/post/blog2markdown-csdn-windows/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;项目地址&lt;a class="link" href="https://github.com/Jackroyal/blog2markdown.git" target="_blank" rel="noopener"
 &gt;https://github.com/Jackroyal/blog2markdown.git&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -672,11 +672,11 @@ wait_time=5
 所以应该放在全英文的目录下
 C:/software/spider.exe
 运行结果如图
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmymt6bhrj20ip0cata6.jpg"
 loading="lazy"
 alt="spider运行截图"
 &gt;
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmyur9uihj20mb0gqmzf.jpg"
 loading="lazy"
 alt="运行结果截图"
 &gt;&lt;/p&gt;
@@ -691,7 +691,7 @@ python spider.py
 不过抓取是没有问题的,此处就不纠结了哈,能用就好~~~~&lt;/p&gt;
 &lt;pre tabindex="0"&gt;&lt;code&gt;# 在win下,没有权限的问题,直接执行就好了
 python spider.py
-&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>python学习笔记--python和beautifulsoup遇到的编码问题</title><link>https://jackroyal.github.io/post/python-blog-spider/</link><pubDate>Sun, 29 Mar 2015 14:43:45 +0000</pubDate><guid>https://jackroyal.github.io/post/python-blog-spider/</guid><description>&lt;p&gt;在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;</description></item><item><title>python学习笔记--python和beautifulsoup遇到的编码问题</title><link>https://blog.huirongis.me/post/python-blog-spider/</link><pubDate>Sun, 29 Mar 2015 14:43:45 +0000</pubDate><guid>https://blog.huirongis.me/post/python-blog-spider/</guid><description>&lt;p&gt;在刚开始使用github pages的时候,我用python写了一个爬虫,计划是从csdn和cnblogs等博客网站上,把自己之前写的博客爬取下来,然后再转换成hexo用的markdown格式,样就可以直接添加到我的github pages.&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;项目主页: &lt;a class="link" href="https://github.com/Jackroyal/blog2markdown" target="_blank" rel="noopener"
 &gt;https://github.com/Jackroyal/blog2markdown&lt;/a&gt;&lt;/p&gt;
@@ -705,7 +705,7 @@ python spider.py
 &lt;ul&gt;
 &lt;li&gt;1.1 编辑器编码
 &lt;ul&gt;
-&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmn535qb7j208u028t8k.jpg"
+&lt;li&gt;我们有时候会犯一个错误,我在py文件的头部声明当前文件是按照utf-8来编码.但是文件实际保存的编却不是utf-8,这样也会导致乱码.建议使用可以查看当前文件编码的编辑器,比如sublime text或者notepad++ 或者pycharm.&lt;!-- raw HTML omitted --&gt;在sublime下如图所示&lt;!-- raw HTML omitted --&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmn535qb7j208u028t8k.jpg"
 loading="lazy"
 alt="sublime显示当前文件编码"
 &gt;&lt;/li&gt;
@@ -714,10 +714,10 @@ alt="sublime显示当前文件编码"
 &lt;/li&gt;
 &lt;li&gt;1.2 python解释器
 &lt;ul&gt;
-&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
+&lt;li&gt;如果是Python的IDLE，如果你没修改defaultencoding，那么就使用默认的字符编码可以通过sys.getdefaultencoding()而获得，比如此处获得是：ascii&lt;!-- raw HTML omitted --&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmnd8fgrjj20b205kabi.jpg"
 loading="lazy"
 alt="win中python解释器编码"
-&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
+&gt;&lt;!-- raw HTML omitted --&gt;&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqmnfd29u7j20k5047wfv.jpg"
 loading="lazy"
 alt="ubuntu终端解释器的编码"
 &gt;&lt;/li&gt;
@@ -813,7 +813,7 @@ print self.soup.originalEncoding # 修正后代码正确返回&amp;#39;utf-8&amp
 &gt;【总结】Python 2.x中常见字符编码和解码方面的错误及其解决办法&lt;/a&gt;
 2 &lt;a class="link" href="http://www.crifan.com/resolved_python_garbled_chinese_characters_gb2312_gbk_gb18030-related_issues/" target="_blank" rel="noopener"
 &gt;【已解决】python中文字符乱码（GB2312，GBK，GB18030相关的问题）&lt;/a&gt;
-参考资料太多,贴不过来啊,主要都是cifan的博客,里面资料很多,一步一步都有过程,非常好用,谢谢cifan作者&lt;/p&gt;</description></item><item><title>python学习笔记--一个简单聊天室的实现</title><link>https://jackroyal.github.io/post/python-im/</link><pubDate>Thu, 26 Mar 2015 21:33:35 +0000</pubDate><guid>https://jackroyal.github.io/post/python-im/</guid><description>&lt;p&gt;最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.
+参考资料太多,贴不过来啊,主要都是cifan的博客,里面资料很多,一步一步都有过程,非常好用,谢谢cifan作者&lt;/p&gt;</description></item><item><title>python学习笔记--一个简单聊天室的实现</title><link>https://blog.huirongis.me/post/python-im/</link><pubDate>Thu, 26 Mar 2015 21:33:35 +0000</pubDate><guid>https://blog.huirongis.me/post/python-im/</guid><description>&lt;p&gt;最近项目真多,一个接一个的失之交臂,全部都错过了.最近状态有些不好,容易胡思乱想.
 这是来自书上的一个python聊天程序,我照着敲了一遍,然后给扩展了一下,加了多个房间和创建选择房间的功能,写了好久好久,感觉都拖了一个星期了.
 下一步是做一个gui,恩,那将是我的第一个gui程序.&lt;/p&gt;
 &lt;h1 id="先贴一下代码-server5py"&gt;先贴一下代码 server5.py
@@ -982,10 +982,10 @@ try:
 asyncore.loop()
 except KeyboardInterrupt: print
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;效果如图所示
-&lt;img src="https://jackroyal.github.io/images/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
+&lt;img src="https://blog.huirongis.me/images/692869a3gw1eqjhaekoz0j20ii0h5q62.jpg"
 loading="lazy"
 alt="运行效果"
-&gt;&lt;/p&gt;</description></item><item><title>python学习笔记--socket编程端口复用</title><link>https://jackroyal.github.io/post/python-socket-port-reuse/</link><pubDate>Wed, 18 Mar 2015 08:47:02 +0000</pubDate><guid>https://jackroyal.github.io/post/python-socket-port-reuse/</guid><description>&lt;p&gt;最近在学习socket编程,遇到一个问题:
+&gt;&lt;/p&gt;</description></item><item><title>python学习笔记--socket编程端口复用</title><link>https://blog.huirongis.me/post/python-socket-port-reuse/</link><pubDate>Wed, 18 Mar 2015 08:47:02 +0000</pubDate><guid>https://blog.huirongis.me/post/python-socket-port-reuse/</guid><description>&lt;p&gt;最近在学习socket编程,遇到一个问题:
 我先bind一个端口后,如果通过ctr+c关闭进程.接下来执行程序的时候,就会提示&lt;code&gt;socket.error: Address already in use&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;照例google一番,找到&lt;a class="link" href="http://blog.csdn.net/xl_xunzhao/article/details/3130037" target="_blank" rel="noopener"
 &gt;这个&lt;/a&gt;.博主说的情况和我的一样.

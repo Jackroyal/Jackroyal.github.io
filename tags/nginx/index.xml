@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nginx on 搁浅St的blog</title><link>https://jackroyal.github.io/tags/nginx/</link><description>Recent content in Nginx on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 28 Aug 2026 16:43:57 +0000</lastBuildDate><atom:link href="https://jackroyal.github.io/tags/nginx/index.xml" rel="self" type="application/rss+xml"/><item><title>将hexo部署到自己的个人服务器上</title><link>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</link><pubDate>Sat, 08 Apr 2017 19:22:22 +0000</pubDate><guid>https://jackroyal.github.io/post/deploy-hexo-in-my-own-vps/</guid><description>&lt;blockquote&gt;
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nginx on 搁浅St的blog</title><link>https://blog.huirongis.me/tags/nginx/</link><description>Recent content in Nginx on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 05 Nov 2026 07:14:17 +0000</lastBuildDate><atom:link href="https://blog.huirongis.me/tags/nginx/index.xml" rel="self" type="application/rss+xml"/><item><title>将hexo部署到自己的个人服务器上</title><link>https://blog.huirongis.me/post/deploy-hexo-in-my-own-vps/</link><pubDate>Sat, 08 Apr 2017 19:22:22 +0000</pubDate><guid>https://blog.huirongis.me/post/deploy-hexo-in-my-own-vps/</guid><description>&lt;blockquote&gt;
 &lt;p&gt;本文假设你已经配置好了hexo了,这是前提&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;前面两篇文章主要是用来配置自己的服务器.服务器部署完成后,后面就可以开始写博客了.但是每次&lt;code&gt;hexo d&lt;/code&gt;推送到gihub的服务器上了,还需要手动将文件复制到自己的服务器对应网站的根目录,对的,要手动,当然不能忍.&lt;/p&gt;
@@ -242,7 +242,7 @@ ok,大功告成啦,赶快&lt;code&gt;hexo d -g&lt;/code&gt;看看效果吧&lt;/p
 &gt;使用 Git Hook 自动部署 Hexo 到个人 VPS&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="http://blog.csdn.net/linghe301/article/details/8211305#" target="_blank" rel="noopener"
 &gt;Linux启动或禁止SSH用户及IP的登录&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>Nginx上多站点的https配置</title><link>https://jackroyal.github.io/post/nginx-https-setting-on-multiple-sites/</link><pubDate>Wed, 05 Apr 2017 13:09:24 +0000</pubDate><guid>https://jackroyal.github.io/post/nginx-https-setting-on-multiple-sites/</guid><description>&lt;p&gt;&lt;strong&gt;更新&lt;/strong&gt;&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>Nginx上多站点的https配置</title><link>https://blog.huirongis.me/post/nginx-https-setting-on-multiple-sites/</link><pubDate>Wed, 05 Apr 2017 13:09:24 +0000</pubDate><guid>https://blog.huirongis.me/post/nginx-https-setting-on-multiple-sites/</guid><description>&lt;p&gt;&lt;strong&gt;更新&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;2017-06-13 修改证书生成目录,为方便后续的git push自动更新,将acme验证目录移出网站根目录&lt;/li&gt;
 &lt;/ul&gt;
@@ -492,7 +492,7 @@ alt="小绿锁"
 &gt;本博客 Nginx 配置之完整篇&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class="link" href="https://imququ.com/post/sth-about-switch-to-https.html#toc-2" target="_blank" rel="noopener"
 &gt;关于启用 HTTPS 的一些经验分享（一）&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>在ubuntu上安装和配置Nginx</title><link>https://jackroyal.github.io/post/nginx-installation-and-setting-in-ubuntu-server/</link><pubDate>Wed, 05 Apr 2017 10:51:24 +0000</pubDate><guid>https://jackroyal.github.io/post/nginx-installation-and-setting-in-ubuntu-server/</guid><description>&lt;p&gt;废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了&lt;/p&gt;
+&lt;/ul&gt;</description></item><item><title>在ubuntu上安装和配置Nginx</title><link>https://blog.huirongis.me/post/nginx-installation-and-setting-in-ubuntu-server/</link><pubDate>Wed, 05 Apr 2017 10:51:24 +0000</pubDate><guid>https://blog.huirongis.me/post/nginx-installation-and-setting-in-ubuntu-server/</guid><description>&lt;p&gt;废话:最近一直想写博客,憋了好几篇,但是一直没时间,从年前拖到了年后,一直拖到4月份,真是伤不起,不过,总算开动了&lt;/p&gt;
 &lt;h1 id="1-系统环境"&gt;1 系统环境
 &lt;/h1&gt;&lt;p&gt;服务器:ubuntu server 16.04.2 LTS
 主要工具:xshell&lt;/p&gt;
