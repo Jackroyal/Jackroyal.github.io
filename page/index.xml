@@ -1,1 +1,23 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on 搁浅St的blog</title><link>https://blog.huirongis.me/page/</link><description>Recent content in Pages on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 08 Nov 2026 13:56:37 +0000</lastBuildDate><atom:link href="https://blog.huirongis.me/page/index.xml" rel="self" type="application/rss+xml"/><item><title>Archives</title><link>https://blog.huirongis.me/page/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://blog.huirongis.me/page/archives/</guid><description/></item><item><title>Search</title><link>https://blog.huirongis.me/page/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.huirongis.me/page/search/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pages on 搁浅St的blog</title><link>https://blog.huirongis.me/page/</link><description>Recent content in Pages on 搁浅St的blog</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 08 Nov 2026 16:13:53 +0000</lastBuildDate><atom:link href="https://blog.huirongis.me/page/index.xml" rel="self" type="application/rss+xml"/><item><title>Archives</title><link>https://blog.huirongis.me/page/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://blog.huirongis.me/page/archives/</guid><description/></item><item><title>Search</title><link>https://blog.huirongis.me/page/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.huirongis.me/page/search/</guid><description/></item><item><title>隐私政策</title><link>https://blog.huirongis.me/page/privacy/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blog.huirongis.me/page/privacy/</guid><description>&lt;p&gt;本站是一个个人技术博客，主要记录 Home Assistant、智能家居和开发相关的内容。这份说明只讲两件事：本站收集什么、第三方会拿到什么。&lt;/p&gt;
+&lt;h2 id="本站自己收集的信息"&gt;本站自己收集的信息
+&lt;/h2&gt;&lt;p&gt;本站是静态站点，没有注册、登录、评论账号体系，也没有自建的数据库。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;访问日志&lt;/strong&gt;：站点由 GitHub Pages 托管，前面有 Cloudflare 做解析和缓存。IP 地址、浏览器标识这类请求信息会由这两家服务按各自的策略记录，本站不单独保存。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;评论&lt;/strong&gt;：文章评论使用 giscus，数据存放在 GitHub Discussions。你在那里留下的内容受 GitHub 的隐私政策约束。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;搜索&lt;/strong&gt;：站内搜索在浏览器本地完成，搜索词不发送到任何服务器。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="第三方广告"&gt;第三方广告
+&lt;/h2&gt;&lt;p&gt;本站使用 Google AdSense 展示广告。Google 及其合作伙伴可能会：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;使用 Cookie 或类似技术，根据你此前访问本站及其他站点的记录投放个性化广告；&lt;/li&gt;
+&lt;li&gt;收集与广告展示、点击相关的设备信息和使用数据，用于统计和计费。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;你可以通过 &lt;a class="link" href="https://adssettings.google.com/" target="_blank" rel="noopener"
+&gt;Google 广告设置&lt;/a&gt; 关闭个性化广告，或访问 &lt;a class="link" href="https://www.aboutads.info/" target="_blank" rel="noopener"
+&gt;aboutads.info&lt;/a&gt; 了解如何停用第三方广告商的 Cookie。关闭个性化广告后你仍会看到广告，只是不再基于你的兴趣。&lt;/p&gt;
+&lt;p&gt;如果你所在地区适用《通用数据保护条例》（GDPR）或类似法规，你可以要求了解、更正或删除与你相关的数据。由于本站不保存个人信息，这类请求通常需要向 Google 提出。&lt;/p&gt;
+&lt;h2 id="外部链接"&gt;外部链接
+&lt;/h2&gt;&lt;p&gt;文章里可能链接到其他网站。点开后你就在对方的隐私政策管辖范围内了，本站无法控制。&lt;/p&gt;
+&lt;h2 id="变更"&gt;变更
+&lt;/h2&gt;&lt;p&gt;这份说明如果调整，会直接更新本页面，不另行通知。&lt;/p&gt;
+&lt;p&gt;最后更新：2026-11-09&lt;/p&gt;</description></item></channel></rss>
